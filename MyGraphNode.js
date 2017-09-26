@@ -1,41 +1,39 @@
 /**
- * MyGraphNode class, representing an intermediate node in the scene graph.
- * @constructor
+* MyGraphNode class, representing an intermediate node in the scene graph.
+* @constructor
 **/
 
 function MyGraphNode(graph, nodeID) {
-    this.graph = graph;
+	this.graph = graph;
 
-    this.nodeID = nodeID;
-    
-    // IDs of child nodes.
-    this.children = [];
+	this.nodeID = nodeID;
 
-    // IDs of child nodes.
-    this.leaves = [];
+	// IDs of child nodes.
+	this.children = [];
 
-    // The material ID.
-    this.materialID = null ;
+	// IDs of child nodes.
+	this.leaves = [];
 
-    // The texture ID.
-    this.textureID = null ;
+	// The material ID.MyGraphNode
+	this.materialID = null ;
 
-    this.transformMatrix = mat4.create();
-    mat4.identity(this.transformMatrix);
+	// The texture ID.
+	this.textureID = null ;
+
+	this.transformMatrix = mat4.create();
+	mat4.identity(this.transformMatrix);
 }
 
 /**
- * Adds the reference (ID) of another node to this node's children array.
- */
+* Adds the reference (ID) of another node to this node's children array.
+*/
 MyGraphNode.prototype.addChild = function(nodeID) {
-    this.children.push(nodeID);
+	this.children.push(nodeID);
 }
 
 /**
- * Adds a leaf to this node's leaves array.
- */
+* Adds a leaf to this node's leaves array.
+*/
 MyGraphNode.prototype.addChild = function(leaf) {
-    this.leaves.push(leaf);
+	this.leaves.push(leaf);
 }
-
-
