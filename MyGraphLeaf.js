@@ -7,5 +7,4 @@
 function MyGraphLeaf(graph, xmlelem, type) {
 	this.graph = graph;
 	this.type = type;
-	this.leafID = xmlelem;
 }

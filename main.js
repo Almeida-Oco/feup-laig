@@ -9,9 +9,9 @@ function getUrlVars() {
 		vars[decodeURIComponent(key)] = decodeURIComponent(value);
 	});
 	return vars;
-}	 
+}
 
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
+serialInclude(['../lib/CGF.js', 'MySceneGraph.js', 'XMLscene.js',
 'MyGraphNode.js', 'MyGraphLeaf.js', 'MyInterface.js',
 
 main=function()
