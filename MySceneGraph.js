@@ -1348,7 +1348,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						this.warn("Error in leaf");
 					//TODO Parse Leaves
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j], type);
+					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j], type));
 
 					sizeChildren++;
 				}
@@ -1420,10 +1420,48 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 /**
-* Displays the scene, processing each node, starting in the root node.
-*/
+ * @brief Used to render the scene
+ * @detail Using a DFS it will render every object of the scene starting at the root node.
+ * For every children a node contains the node's material, texture and transform matrix will be pushed into the respective stack
+ * this means there will be multiple repeated elements in the stack which will be popped every time the function processes one of the children.
+ * Possibly a more space efficient method available, for now it stays like this.
+ * TODO check if there is a need to ensure element was not previously discovered
+ * TODO render graph
+ */
 MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
-	this.log("Graph should be rendered here...");
+
+	var node_stack = [], mat_stack = [], text_stack = [], matrix_stack = [];
+	node_stack.push(this.nodes[this.rootID]);
+	var material = this.nodes[this.rootID].materialID, texture = this.nodes[this.rootID].textureID,
+			matrix = this.nodes[this.rootID].transformMatrix; //load into variable root node informations
+
+
+	while ( node_stack.length > 0 ){
+		var curr_node = node_stack.pop();
+
+		if ( curr_node.materialID == "null" )
+			material = mat_stack.pop();
+		else
+			mat_stack.pop();
+
+		if ( curr_node.textureID == "null" )
+			texture = text_stack.pop();
+		else //if its defined or "clear"
+			text_stack.pop();
+
+		//pretty sure not how you're supposed to multiply matrixes but oh well
+		matrix = curr_node.transformMatrix * matrix_stack.pop();
+
+		for ( var i = 0 ; i < curr_node.leaves.length ; i++ ) { // if there are leaves to render
+			//apply material, texture and matrix to leaf and render
+		}
+
+		for ( var i = 0 ; i < curr_node.children.length ; i++ ){
+			node_stack.push(curr_node.children[i]);
+			mat_stack.push(material);
+			text_stack.push(texture);
+			matrix_stack.push(matrix);
+		}
+	}
+
 }
