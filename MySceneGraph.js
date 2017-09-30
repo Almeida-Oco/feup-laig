@@ -14,7 +14,7 @@ var NODES_INDEX = 6;
 * @constructor
 */
 function MySceneGraph(filename, scene) {
-	this.loadedOk = null ;
+	this.loadedOk = null;
 
 	// Establish bidirectional references between scene and graph.
 	this.scene = scene;
@@ -1343,11 +1343,11 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
 
 					if (type != null)
-					this.log("   Leaf: "+ type);
+						this.log("   Leaf: "+ type);
 					else
-					this.warn("Error in leaf");
+						this.warn("Error in leaf");
+					//TODO Parse Leaves
 
-					//parse leaf
 					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j], type);
 
 					sizeChildren++;
