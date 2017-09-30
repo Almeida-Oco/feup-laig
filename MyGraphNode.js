@@ -12,7 +12,7 @@ function MyGraphNode(graph, nodeID) {
 	this.children = [];
 
 	// IDs of child nodes.
-	this.leaves = [];
+	this.leaves = new Array();
 
 	// The material ID.MyGraphNode
 	this.materialID = null ;

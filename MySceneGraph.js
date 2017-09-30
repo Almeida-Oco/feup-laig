@@ -22,7 +22,7 @@ function MySceneGraph(filename, scene) {
 
 	this.nodes = [];
 
-	this.idRoot = null;                    // The id of the root element.
+	this.root_id = null;                    // The id of the root element.
 
 	this.axisCoords = [];
 	this.axisCoords['x'] = [1, 0, 0];
@@ -1171,23 +1171,23 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 		var nodeName;
 		if ((nodeName = children[i].nodeName) == "ROOT") {
 			// Retrieves root node.
-			if (this.idRoot != null )
-			return "there can only be one root node";
+			if (this.root_id != null )
+				return "there can only be one root node";
 			else {
 				var root = this.reader.getString(children[i], 'id');
 				if (root == null )
-				return "failed to retrieve root node ID";
-				this.idRoot = root;
+					return "failed to retrieve root node ID";
+				this.root_id = root;
 			}
 		}
 		else if (nodeName == "NODE") {
 			// Retrieves node ID.
 			var nodeID = this.reader.getString(children[i], 'id');
 			if (nodeID == null )
-			return "failed to retrieve node ID";
+				return "failed to retrieve node ID";
 			// Checks if ID is valid.
 			if (this.nodes[nodeID] != null )
-			return "node ID must be unique (conflict: ID = " + nodeID + ")";
+				return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
 			this.log("Processing node "+nodeID);
 
@@ -1348,7 +1348,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						this.warn("Error in leaf");
 					//TODO Parse Leaves
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j], type));
+					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,this.scene, type));
 
 					sizeChildren++;
 				}
@@ -1431,9 +1431,9 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
 
 	var node_stack = [], mat_stack = [], text_stack = [], matrix_stack = [];
-	node_stack.push(this.nodes[this.rootID]);
-	var material = this.nodes[this.rootID].materialID, texture = this.nodes[this.rootID].textureID,
-			matrix = this.nodes[this.rootID].transformMatrix; //load into variable root node informations
+	node_stack.push( this.nodes[this.root_id] );
+	var material = this.nodes[this.root_id].materialID, texture = this.nodes[this.root_id].textureID,
+			matrix = this.nodes[this.root_id].transformMatrix; //load into variable root node informations
 
 
 	while ( node_stack.length > 0 ){
@@ -1452,12 +1452,11 @@ MySceneGraph.prototype.displayScene = function() {
 		//pretty sure not how you're supposed to multiply matrixes but oh well
 		matrix = curr_node.transformMatrix * matrix_stack.pop();
 
-		for ( var i = 0 ; i < curr_node.leaves.length ; i++ ) { // if there are leaves to render
-			//apply material, texture and matrix to leaf and render
-		}
+		for ( var i = 0 ; i < curr_node.leaves.length ; i++ ) // if there are leaves to render
+			curr_node.leaves[i].render(material, texture, matrix);
 
 		for ( var i = 0 ; i < curr_node.children.length ; i++ ){
-			node_stack.push(curr_node.children[i]);
+			node_stack.push( this.nodes[curr_node.children[i]] );
 			mat_stack.push(material);
 			text_stack.push(texture);
 			matrix_stack.push(matrix);

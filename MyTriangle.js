@@ -2,11 +2,7 @@
 * MyTriangle
 * @constructor
 */
-function MyTriangle(scene) {
-    CGFobject.call(this,scene);
-
-    this.initBuffers();
-};
+function MyTriangle() {};
 
 MyTriangle.prototype = Object.create(CGFobject.prototype);
 MyTriangle.prototype.constructor = MyTriangle;
