@@ -4,9 +4,19 @@
 * @constructor
 **/
 
-function MyGraphLeaf(graph, type) {
+function MyGraphLeaf(graph, type, args, scene) {
 	this.graph = graph;
 	this.type = type;
+	this.primitive;
+
+	if ( "triangle" == this.type )
+		this.primitive = new MyTriangle(scene,args);
+	else if ( "sphere" == this.type)
+		this.primitive = new MySemiCircle(scene,args,10);
+	else if ( "rectangle" == this.type)
+		this.primitive = new MyQuad(scene,args,0,1,0,1);
+	else if ( "cylinder" == this.type)
+		this.primitive = new MyCylinder(scene,args, 10, 1);
 }
 
 //TODO render primitive
@@ -17,18 +27,6 @@ function MyGraphLeaf(graph, type) {
  * @param matrix Matrix to apply to the primitive before rendering
  */
 MyGraphLeaf.prototype.render = function(material, texture, scene){
-	var primitive;
-	if ( "triangle" == this.type )
-		primitive = new MyTriangle(scene);
-	else{
-		primitive = new MyTriangle(scene);
-		//Rest of primitives
-
-
-	}
-	//primitive.apply();
-	primitive.display();
-
-	//console.log("Rendered pimitive type "+this.type);
-
+	material.apply();
+	this.primitive.display();
 }

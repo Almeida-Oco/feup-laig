@@ -1341,14 +1341,15 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 				if (descendants[j].nodeName == "LEAF")
 				{
 					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-
+					var args=this.reader.getString(descendants[j],'args').split(' ');
+					console.log(args);
 					if (type != null)
 						this.log("   Leaf: "+ type);
 					else
 						this.warn("Error in leaf");
 					//TODO Parse Leaves
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type));
+					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, args, this.scene));
 
 					sizeChildren++;
 				}
@@ -1429,24 +1430,30 @@ MySceneGraph.generateRandomString = function(length) {
  * TODO render graph
  */
 MySceneGraph.prototype.displayScene = function() {
+	var quad = new MyCylinder(this.scene,15,1);
+	quad.display();
+
+
 	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
 			text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();
-	this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
+	if ( this.nodes[this.root_id].transformMatrix != null )
+		this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
 	for (var i = 0 ; i < leav.length ; i++)
 		leav[i].render( this.materials[mat_id], this.textures[text_id], this.scene);
 
 	for (var i = 0 ; i < child.length ; i++ )
 		this.displayNodes(child[i], mat_id, text_id);
-		
+
 	this.scene.popMatrix();
 }
 
 MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	var node = this.nodes[node_id];
 	this.scene.pushMatrix();
-	this.scene.multMatrix( node.transformMatrix );
+	if ( node.transformMatrix != null )
+		this.scene.multMatrix( node.transformMatrix );
 
 	if ( node.materialID == "null" )
 		mat = material_id;
@@ -1455,15 +1462,13 @@ MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 
 	if ( node.textureID == "null" )
 		text = texture_id;
-	else if ( this.textureID != "clear" )
-		text = node.textureID;
 	else
-		text = NULL;
+		text = node.textureID;
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
 		this.displayNodes( node.children[i], mat, text)
 	for ( var i = 0 ; i < node.leaves.length ; i++)
-		node.leaves[i].render( this.materials[mat], this.textures[text], this.scene);
+		node.leaves[i].render( this.materials[mat], ( (text == "clear") ? null : this.textures[text] ), this.scene);
 
 	this.scene.popMatrix();
 }

@@ -32,18 +32,13 @@ MySemiCircle.prototype.initBuffers = function () {
 		this.normals.push(0,-1,0);
 	}
 
-
-
 	var i = 0;
 	for(i = 1 ; i < this.sides ; i++)
 		this.indices.push( i+1 , i , 0 );
-	
+
 
 	for(i ; i < (this.sides*2) ; i++)
 		this.indices.push( i , i+1 , 0 );
-	
-
-
 
 	this.primitiveType = this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
