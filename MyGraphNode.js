@@ -37,3 +37,16 @@ MyGraphNode.prototype.addChild = function(nodeID) {
 MyGraphNode.prototype.addLeaf = function(leaf) {
 	this.leaves.push(leaf);
 }
+
+MyGraphNode.prototype.render = function(material, texture, scene){
+	scene.pushMatrix();
+	scene.multMatrix( this.transformMatrix );
+
+	for (unsigned int i = 0 ; i < this.children ; i++ )
+		this.children[i].render(material, texture, scene);
+
+	for ( unsigned int i = 0 ; i < this.leaves ; i++ )
+		this.leaves[i].render(material, texture, scene);
+
+	scene.popMatrix();
+}

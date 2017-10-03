@@ -1429,42 +1429,14 @@ MySceneGraph.generateRandomString = function(length) {
  * TODO render graph
  */
 MySceneGraph.prototype.displayScene = function() {
+	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves;
+	this.scene.pushMatrix();
+	this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
-	var node_stack = [], mat_stack = [], text_stack = [], matrix_stack = [];
-	node_stack.push( this.nodes[this.root_id] );
-	var material_id = this.nodes[this.root_id].materialID, texture_id = this.nodes[this.root_id].textureID,
-			matrix = this.nodes[this.root_id].transformMatrix; //load into variable root node informations
+	for (unsigned int i = 0 ; i < child.length ; i++ )
+		child[i].render(this.nodes[this.root_id].materialID, this.nodes[this.root_id].textureID, this.scene);
 
-
-	while ( node_stack.length > 0 ){
-		var curr_node = node_stack.pop();
-
-		if ( curr_node.materialID == "null" )
-			material_id = mat_stack.pop();
-		else
-			mat_stack.pop();
-
-		if ( curr_node.textureID == "null" )
-			texture_id = text_stack.pop();
-		else //if its defined or "clear"
-			text_stack.pop();
-
-		//pretty sure not how you're supposed to multiply matrixes but oh well
-		matrix = curr_node.transformMatrix * matrix_stack.pop();
-
-		for ( var i = 0 ; i < curr_node.leaves.length ; i++ ){ // if there are leaves to render
-			curr_node.leaves[i].render( this.materials[material_id] ,
-																(texture_id == "clear") ? NULL : this.textures[texture_id] ,
-																matrix);
-		}
-
-		for ( var i = 0 ; i < curr_node.children.length ; i++ ){
-			node_stack.push( this.nodes[curr_node.children[i]] );
-			mat_stack.push(material_id);
-			text_stack.push(texture_id);
-			matrix_stack.push(matrix);
-		}
-	}
-
-	console.log("FINISHED RENDERING SCENE!\n");
+	for (unsigned int i = 0 ; i < leav.length ; i++)
+		leav[i].render(this.nodes[this.root_id].materialID, this.nodes[this.root_id].textureID, this.scene);
+	this.scene.popMatrix();
 }

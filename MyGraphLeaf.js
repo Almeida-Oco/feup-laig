@@ -4,10 +4,9 @@
 * @constructor
 **/
 
-function MyGraphLeaf(graph, scene, type) {
+function MyGraphLeaf(graph, type) {
 	this.graph = graph;
 	this.type = type;
-	this.scene = scene;
 }
 
 //TODO render primitive
@@ -17,16 +16,21 @@ function MyGraphLeaf(graph, scene, type) {
  * @param texture The texture to apply to the primitive, null if no texture to apply
  * @param matrix Matrix to apply to the primitive before rendering
  */
-MyGraphLeaf.prototype.render = function(material, texture, matrix){
+MyGraphLeaf.prototype.render = function(material, texture, scene){
 	var primitive;
 	if ( "triangle" == this.type )
 		primitive = new MyTriangle(this.scene);
 	else{
 		primitive = new MyTriangle(this.scene);
 		//Rest of primitives
+
+
 	}
-	
+
+	this.scene.multMatrix(matrix);
+	primitive.apply();
+	primitive.display();
 
 	//console.log("Rendered pimitive type "+this.type);
-	primitive.display();
+
 }
