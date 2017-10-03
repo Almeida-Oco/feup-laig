@@ -4,7 +4,6 @@
 */
 function MyTriangle(scene) {
 	this.scene = scene;
-
 	this.initBuffers();
 };
 

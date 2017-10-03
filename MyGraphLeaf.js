@@ -19,16 +19,14 @@ function MyGraphLeaf(graph, type) {
 MyGraphLeaf.prototype.render = function(material, texture, scene){
 	var primitive;
 	if ( "triangle" == this.type )
-		primitive = new MyTriangle(this.scene);
+		primitive = new MyTriangle(scene);
 	else{
-		primitive = new MyTriangle(this.scene);
+		primitive = new MyTriangle(scene);
 		//Rest of primitives
 
 
 	}
-
-	this.scene.multMatrix(matrix);
-	primitive.apply();
+	//primitive.apply();
 	primitive.display();
 
 	//console.log("Rendered pimitive type "+this.type);

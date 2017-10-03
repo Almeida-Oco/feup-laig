@@ -1348,7 +1348,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						this.warn("Error in leaf");
 					//TODO Parse Leaves
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,this.scene, type));
+					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type));
 
 					sizeChildren++;
 				}
@@ -1429,14 +1429,41 @@ MySceneGraph.generateRandomString = function(length) {
  * TODO render graph
  */
 MySceneGraph.prototype.displayScene = function() {
-	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves;
+	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
+			text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();
 	this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
-	for (unsigned int i = 0 ; i < child.length ; i++ )
-		child[i].render(this.nodes[this.root_id].materialID, this.nodes[this.root_id].textureID, this.scene);
+	for (var i = 0 ; i < leav.length ; i++)
+		leav[i].render( this.materials[mat_id], this.textures[text_id], this.scene);
 
-	for (unsigned int i = 0 ; i < leav.length ; i++)
-		leav[i].render(this.nodes[this.root_id].materialID, this.nodes[this.root_id].textureID, this.scene);
+	for (var i = 0 ; i < child.length ; i++ )
+		this.displayNodes(child[i], mat_id, text_id);
+		
+	this.scene.popMatrix();
+}
+
+MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
+	var node = this.nodes[node_id];
+	this.scene.pushMatrix();
+	this.scene.multMatrix( node.transformMatrix );
+
+	if ( node.materialID == "null" )
+		mat = material_id;
+	else
+		mat = node.materialID;
+
+	if ( node.textureID == "null" )
+		text = texture_id;
+	else if ( this.textureID != "clear" )
+		text = node.textureID;
+	else
+		text = NULL;
+
+	for ( var i = 0 ; i < node.children.length ; i++ )
+		this.displayNodes( node.children[i], mat, text)
+	for ( var i = 0 ; i < node.leaves.length ; i++)
+		node.leaves[i].render( this.materials[mat], this.textures[text], this.scene);
+
 	this.scene.popMatrix();
 }
