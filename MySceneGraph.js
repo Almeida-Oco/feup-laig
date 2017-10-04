@@ -1430,10 +1430,6 @@ MySceneGraph.generateRandomString = function(length) {
  * TODO render graph
  */
 MySceneGraph.prototype.displayScene = function() {
-	var quad = new MySphere(this.scene,50,10);
-	quad.display();
-
-
 	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
 			text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();

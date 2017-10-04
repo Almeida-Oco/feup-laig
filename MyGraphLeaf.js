@@ -12,7 +12,7 @@ function MyGraphLeaf(graph, type, args, scene) {
 	if ( "triangle" == this.type )
 		this.primitive = new MyTriangle(scene,args);
 	else if ( "sphere" == this.type)
-		this.primitive = new MySphere(scene,10,1);
+		this.primitive = new MySphere(scene,args);
 	else if ( "rectangle" == this.type)
 		this.primitive = new MyQuad(scene,args,0,1,0,1);
 	else if ( "cylinder" == this.type)
@@ -27,6 +27,7 @@ function MyGraphLeaf(graph, type, args, scene) {
  * @param matrix Matrix to apply to the primitive before rendering
  */
 MyGraphLeaf.prototype.render = function(material, texture, scene){
+	//texture.bind();
 	material.apply();
 	this.primitive.display();
 }

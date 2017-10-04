@@ -2,11 +2,13 @@
 * MyCylinder
 * @constructor
 */
-function MyCylinder(scene, slices, stacks) {
+function MyCylinder(scene, args) {
 	CGFobject.call(this,scene);
-
-	this.slices = slices;
-	this.stacks = stacks;
+	this.height = args[0];
+	this.b_radius = args[1];
+	this.t_radius = args[2];
+	this.slices = args[4];
+	this.stacks = args[3];
 
 	this.initBuffers();
 };
@@ -15,10 +17,7 @@ MyCylinder.prototype = Object.create(CGFobject.prototype);
 MyCylinder.prototype.constructor = MyCylinder;
 
 MyCylinder.prototype.initBuffers = function() {
-
-
-
-	var t = Math.PI*2/this.slices;
+	var t = Math.PI*2/this.slices, delta = (this.t_radius - this.b_radius)/this.stacks;
 	var ang = 0;
 
 	this.indices = [];
@@ -29,31 +28,34 @@ MyCylinder.prototype.initBuffers = function() {
 
 	for(j = 0; j <= this.stacks; j++)
 	{
-		this.vertices.push(1, 0, j / this.stacks);
-		this.normals.push(1, 0, 0);
-		this.texCoords.push(0,j / this.stacks);
-		verts += 1;
+		var x = (this.b_radius*Math.cos(ang)) + (j*delta*Math.cos(ang)),
+				y = y = (this.b_radius*Math.sin(ang)) + (j*delta*Math.sin(ang)),
+				z = this.height * ( j / this.stacks);
+		this.vertices.push(x, y,  z);
+		this.normals.push(x, y, 0);
+		this.texCoords.push(0, z / this.height );
+		verts++;
 
-		for(i = 1; i <= this.slices; i++)
+		for(i = 1; i <= this.slices	; i++)
 		{
 			ang+=t;
-			x = Math.cos(ang);
-			y = Math.sin(ang);
-			this.vertices.push(x, y, j / this.stacks);
+			x = (this.b_radius*Math.cos(ang)) + (j*delta*Math.cos(ang));
+			y = (this.b_radius*Math.sin(ang)) + (j*delta*Math.sin(ang));
+			this.vertices.push(x, y, z);
 			this.normals.push(x, y, 0);
-			this.texCoords.push(i / this.slices, j / this.stacks);
+			this.texCoords.push(i / this.slices, z / this.height );
 			verts++;
 
 			if(j > 0 && i > 0)
 			{
 				this.indices.push(verts-1, verts-2, verts-this.slices-2);
 				this.indices.push(verts-this.slices-3, verts-this.slices-2, verts-2);
+				//console.log("Verts = "+verts);
+				// console.log("Index1 ["+(verts-1)+","+(verts-2)+","+(verts-this.slices-2)+"]");
+				// console.log("Index2 ["+(verts-this.slices-3)+","+(verts-this.slices-2)+","+(verts-2)+"]");
 			}
 		}
 	}
-
-
-
 
 	this.primitiveType = this.scene.gl.TRIANGLES;
 

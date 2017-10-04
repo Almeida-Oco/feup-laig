@@ -5,11 +5,12 @@
 * @param slices Number of lines horizontally
 * @param stacks Number of lines vertically
 */
-function MySphere(scene, slices, stacks)
+function MySphere(scene, args)
 {
+	this.radius = args[0];
 	this.scene = scene;
-	this.slices = slices;
-	this.stacks = stacks;
+	this.slices = parseFloat(args[1]);
+	this.stacks = parseFloat(args[2]);
 	this.minS = 0.0
 	this.maxS = 1.0
 	this.minT = 0.0
