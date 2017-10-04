@@ -12,7 +12,7 @@ function MyGraphLeaf(graph, type, args, scene) {
 	if ( "triangle" == this.type )
 		this.primitive = new MyTriangle(scene,args);
 	else if ( "sphere" == this.type)
-		this.primitive = new MySemiCircle(scene,args,10);
+		this.primitive = new MySphere(scene,10,1);
 	else if ( "rectangle" == this.type)
 		this.primitive = new MyQuad(scene,args,0,1,0,1);
 	else if ( "cylinder" == this.type)

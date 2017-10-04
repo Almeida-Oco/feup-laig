@@ -1430,7 +1430,7 @@ MySceneGraph.generateRandomString = function(length) {
  * TODO render graph
  */
 MySceneGraph.prototype.displayScene = function() {
-	var quad = new MyCylinder(this.scene,15,1);
+	var quad = new MySphere(this.scene,50,10);
 	quad.display();
 
 
