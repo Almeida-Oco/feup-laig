@@ -31,12 +31,19 @@ MyTriangle.prototype.initBuffers = function() {
         0,1,0
     ];
 
-    this.texCoords=[
-        0,0,
-        1,1,
-        0,1];
-
-
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };
+
+MyTriangle.prototype.defTextCoords = function(afs, aft){
+	this.texCoords = [
+					0,0,
+					(this.x_axis[0]-this.x_axis[1])/afs , (this.y_axis[0]-this.y_axis[1])/aft,
+					(this.x_axis[0]-this.x_axis[2])/afs , (this.y_axis[0]-this.y_axis[2])/aft
+	]
+}
+
+MyTriangle.prototype.render = function(afs, aft){
+	this.defTextCoords(afs,aft);
+	this.display();
+}

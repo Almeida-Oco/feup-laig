@@ -26,8 +26,7 @@ MyCylinder.prototype.initBuffers = function() {
 	this.texCoords = [];
 	verts = 0;
 
-	for(j = 0; j <= this.stacks; j++)
-	{
+	for(j = 0; j <= this.stacks; j++){
 		var x = (this.b_radius*Math.cos(ang)) + (j*delta*Math.cos(ang)),
 				y = y = (this.b_radius*Math.sin(ang)) + (j*delta*Math.sin(ang)),
 				z = this.height * ( j / this.stacks);
@@ -36,8 +35,7 @@ MyCylinder.prototype.initBuffers = function() {
 		this.texCoords.push(0, z / this.height );
 		verts++;
 
-		for(i = 1; i <= this.slices	; i++)
-		{
+		for(i = 1; i <= this.slices	; i++){
 			ang+=t;
 			x = (this.b_radius*Math.cos(ang)) + (j*delta*Math.cos(ang));
 			y = (this.b_radius*Math.sin(ang)) + (j*delta*Math.sin(ang));
@@ -46,13 +44,9 @@ MyCylinder.prototype.initBuffers = function() {
 			this.texCoords.push(i / this.slices, z / this.height );
 			verts++;
 
-			if(j > 0 && i > 0)
-			{
+			if(j > 0 && i > 0){
 				this.indices.push(verts-1, verts-2, verts-this.slices-2);
 				this.indices.push(verts-this.slices-3, verts-this.slices-2, verts-2);
-				//console.log("Verts = "+verts);
-				// console.log("Index1 ["+(verts-1)+","+(verts-2)+","+(verts-this.slices-2)+"]");
-				// console.log("Index2 ["+(verts-this.slices-3)+","+(verts-this.slices-2)+","+(verts-2)+"]");
 			}
 		}
 	}
@@ -61,3 +55,7 @@ MyCylinder.prototype.initBuffers = function() {
 
 	this.initGLBuffers();
 };
+
+MyCylinder.prototype.render = function(afs, aft){
+	this.display();
+}

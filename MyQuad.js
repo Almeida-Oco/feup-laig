@@ -3,13 +3,8 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyQuad(scene,args,minS,maxS,minT,maxT) {
+function MyQuad(scene,args) {
     CGFobject.call(this,scene);
-
-    this.minS = minS;
-    this.minT = minT;
-    this.maxS = maxS;
-    this.maxT = maxT;
 
 		this.x1 = args[0];
 		this.y1 = args[1];
@@ -41,13 +36,21 @@ MyQuad.prototype.initBuffers = function () {
              0,0,1,
              0,0,1
         ];
-
-    this.texCoords = [
-            this.minS,this.maxT,
-            this.maxS,this.maxT,
-            this.minS,this.minT,
-            this.maxS,this.minT
-    ]
     this.primitiveType=this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };
+
+MyQuad.prototype.defTextCoords = function(afs, aft){
+	var s = this.x2/afs, t = this.y1/aft;
+	this.texCoords = [
+					0, t,
+					0, 0,
+					s, t,
+					s,0
+	]
+}
+
+MyQuad.prototype.render = function(afs, aft){
+	this.defTextCoords(afs,aft);
+	this.display();
+}

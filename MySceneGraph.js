@@ -877,11 +877,11 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 				var name = texSpecs[j].nodeName;
 				if (name == "file") {
 					if (filepath != null )
-					return "duplicate file paths in texture with ID = " + textureID;
+						return "duplicate file paths in texture with ID = " + textureID;
 
 					filepath = this.reader.getString(texSpecs[j], 'path');
 					if (filepath == null )
-					return "unable to parse texture file path for ID = " + textureID;
+						return "unable to parse texture file path for ID = " + textureID;
 				}
 				else if (name == "amplif_factor") {
 					if (amplifFactorS != null  || amplifFactorT != null )
@@ -904,11 +904,11 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 			}
 
 			if (filepath == null )
-			return "file path undefined for texture with ID = " + textureID;
+				return "file path undefined for texture with ID = " + textureID;
 			else if (amplifFactorS == null )
-			return "s amplification factor undefined for texture with ID = " + textureID;
+				return "s amplification factor undefined for texture with ID = " + textureID;
 			else if (amplifFactorT == null )
-			return "t amplification factor undefined for texture with ID = " + textureID;
+				return "t amplification factor undefined for texture with ID = " + textureID;
 
 			var texture = new CGFtexture(this.scene,"./scenes/" + filepath);
 
@@ -1342,7 +1342,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 				{
 					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
 					var args=this.reader.getString(descendants[j],'args').split(' ');
-					console.log(args);
 					if (type != null)
 						this.log("   Leaf: "+ type);
 					else
@@ -1423,9 +1422,6 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * @brief Used to render the scene
  * @detail Using a DFS it will render every object of the scene starting at the root node.
- * For every children a node contains the node's material, texture and transform matrix will be pushed into the respective stack
- * this means there will be multiple repeated elements in the stack which will be popped every time the function processes one of the children.
- * Possibly a more space efficient method available, for now it stays like this.
  * TODO check if there is a need to ensure element was not previously discovered
  * TODO render graph
  */
@@ -1445,6 +1441,12 @@ MySceneGraph.prototype.displayScene = function() {
 	this.scene.popMatrix();
 }
 
+/**
+ * @brief Handles the inheritance of nodes
+ * @param node_id ID of the father node
+ * @param material_id ID of the material inherited
+ * @param texture_id ID of the texture inherited
+ */
 MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	var node = this.nodes[node_id];
 	this.scene.pushMatrix();
@@ -1458,13 +1460,16 @@ MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 
 	if ( node.textureID == "null" )
 		text = texture_id;
-	else
+	else //if texture is "clear" just leave it at that
 		text = node.textureID;
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
 		this.displayNodes( node.children[i], mat, text)
 	for ( var i = 0 ; i < node.leaves.length ; i++)
-		node.leaves[i].render( this.materials[mat], ( (text == "clear") ? null : this.textures[text] ), this.scene);
+		if ( text == "clear" )
+			node.leaves[i].render( this.materials[mat], null, this.scene);
+		else
+			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene);
 
 	this.scene.popMatrix();
 }

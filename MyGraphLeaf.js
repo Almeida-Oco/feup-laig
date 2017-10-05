@@ -27,7 +27,13 @@ function MyGraphLeaf(graph, type, args, scene) {
  * @param matrix Matrix to apply to the primitive before rendering
  */
 MyGraphLeaf.prototype.render = function(material, texture, scene){
-	//texture.bind();
-	material.apply();
-	this.primitive.display();
+	if ( texture != null ){
+		material.apply();
+		texture[0].bind();
+		this.primitive.render(texture[1],texture[2]);
+	}
+	else {
+		material.apply();
+		this.primitive.display();
+	}
 }
