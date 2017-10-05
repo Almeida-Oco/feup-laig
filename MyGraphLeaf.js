@@ -30,6 +30,7 @@ MyGraphLeaf.prototype.render = function(material, texture, scene){
 	if ( texture != null ){
 		material.apply();
 		texture[0].bind();
+		material.setTextureWrap('REPEAT','REPEAT');
 		this.primitive.render(texture[1],texture[2]);
 	}
 	else {

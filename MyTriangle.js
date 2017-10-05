@@ -32,7 +32,7 @@ MyTriangle.prototype.initBuffers = function() {
     ];
 
     this.primitiveType = this.scene.gl.TRIANGLES;
-    this.initGLBuffers();
+
 };
 
 MyTriangle.prototype.defTextCoords = function(afs, aft){
@@ -40,7 +40,9 @@ MyTriangle.prototype.defTextCoords = function(afs, aft){
 					0,0,
 					(this.x_axis[0]-this.x_axis[1])/afs , (this.y_axis[0]-this.y_axis[1])/aft,
 					(this.x_axis[0]-this.x_axis[2])/afs , (this.y_axis[0]-this.y_axis[2])/aft
-	]
+	];
+	// console.log(this.texCoords);
+	this.initGLBuffers();
 }
 
 MyTriangle.prototype.render = function(afs, aft){

@@ -1427,7 +1427,7 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
 	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
-			text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
+	 		text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();
 	if ( this.nodes[this.root_id].transformMatrix != null )
 		this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );

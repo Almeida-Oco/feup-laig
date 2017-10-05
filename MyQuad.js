@@ -18,36 +18,37 @@ MyQuad.prototype = Object.create(CGFobject.prototype);
 MyQuad.prototype.constructor=MyQuad;
 
 MyQuad.prototype.initBuffers = function () {
-    this.vertices = [
-            this.x1, this.y1, 0,
-            this.x1, this.y2, 0,
-            this.x2, this.y1, 0,
-            this.x2, this.y2, 0
-            ];
+  this.vertices = [
+    this.x1, this.y1, 0,
+    this.x1, this.y2, 0,
+    this.x2, this.y1, 0,
+    this.x2, this.y2, 0
+  ];
 
-    this.indices = [
-            0, 1, 2,
-            3, 2, 1
-        ];
+  this.indices = [
+    0, 1, 2,
+    3, 2, 1
+  ];
 
-    this.normals = [
-             0,0,1,
-             0,0,1,
-             0,0,1,
-             0,0,1
-        ];
-    this.primitiveType=this.scene.gl.TRIANGLES;
-    this.initGLBuffers();
+  this.normals = [
+		this.x1, this.y1, 1,
+    this.x1, this.y2, 1,
+    this.x2, this.y1, 1,
+    this.x2, this.y2, 1
+  ];
+  this.primitiveType=this.scene.gl.TRIANGLES;
+
 };
 
 MyQuad.prototype.defTextCoords = function(afs, aft){
-	var s = this.x2/afs, t = this.y1/aft;
+	var s = 1, t = 1;
 	this.texCoords = [
-					0, t,
-					0, 0,
-					s, t,
-					s,0
-	]
+		0, t,
+		0, 0,
+		s, t,
+		s,0
+	];
+	this.initGLBuffers();
 }
 
 MyQuad.prototype.render = function(afs, aft){
