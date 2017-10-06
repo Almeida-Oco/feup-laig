@@ -14,9 +14,9 @@ function MyGraphLeaf(graph, type, args, scene) {
 	else if ( "sphere" == this.type)
 		this.primitive = new MySphere(scene,args);
 	else if ( "rectangle" == this.type)
-		this.primitive = new MyQuad(scene,args,0,1,0,1);
+		this.primitive = new MyQuad(scene,args);
 	else if ( "cylinder" == this.type)
-		this.primitive = new MyCylinder(scene,args, 10, 1);
+		this.primitive = new MyCylinder(scene,args);
 }
 
 //TODO render primitive
