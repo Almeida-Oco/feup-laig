@@ -3,7 +3,7 @@
  * @constructor
  */
 function MyPatch(scene,args) {
-		var degree1=args[0], degree2=args[0], parts_u=args[1], parts_v=args[2], control_vertexes=args[3];
+		var degree1=args[0], degree2=args[1], parts_u=args[2], parts_v=args[3], control_vertexes=args[4];
 		var knots1 = this.getKnotsVector(degree1);
 		var knots2 = this.getKnotsVector(degree2);
 

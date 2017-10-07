@@ -1348,7 +1348,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
 					var args = [];
 					if ("patch" == type){
-						args.push(parseFloat(this.reader.getString(descendants[j],'order')));
+						args.push(parseFloat(this.reader.getString(descendants[j],'orderU')));
+						args.push(parseFloat(this.reader.getString(descendants[j],'orderV')));
 						args.push(parseFloat(this.reader.getString(descendants[j],'partsU')));
 						args.push(parseFloat(this.reader.getString(descendants[j],'partsV')));
 
