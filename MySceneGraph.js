@@ -1340,13 +1340,32 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 				else
 				if (descendants[j].nodeName == "LEAF")
 				{
-					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-					var args=this.reader.getString(descendants[j],'args').split(' ');
+					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle','patch']);
 					if (type != null)
 						this.log("   Leaf: "+ type);
 					else
 						this.warn("Error in leaf");
-					//TODO Parse Leaves
+
+					var args = [];
+					if ("patch" == type){
+						args.push(parseFloat(this.reader.getString(descendants[j],'order')));
+						args.push(parseFloat(this.reader.getString(descendants[j],'partsU')));
+						args.push(parseFloat(this.reader.getString(descendants[j],'partsV')));
+
+						var control_p = descendants[j].getElementsByTagName('controlpoint');
+						var control_points = [];
+						var ln = control_p.length;
+						for (var k = 0 ; k < ln ; k++){
+							var x = this.reader.getFloat(control_p[k],'x',false);
+							var y = this.reader.getFloat(control_p[k],'y',false);
+							var z = this.reader.getFloat(control_p[k],'z',false);
+							control_points.push([x,y,z,1]);
+						}
+						args.push(control_points);
+					}
+					else {
+						args=this.reader.getString(descendants[j],'args').split(' ');
+					}
 
 					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, args, this.scene));
 

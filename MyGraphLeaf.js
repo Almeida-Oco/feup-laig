@@ -11,12 +11,14 @@ function MyGraphLeaf(graph, type, args, scene) {
 
 	if ( "triangle" == this.type )
 		this.primitive = new MyTriangle(scene,args);
-	else if ( "sphere" == this.type)
+	else if ("sphere" == this.type)
 		this.primitive = new MySphere(scene,args);
-	else if ( "rectangle" == this.type)
+	else if ("rectangle" == this.type)
 		this.primitive = new MyQuad(scene,args);
-	else if ( "cylinder" == this.type)
+	else if ("cylinder" == this.type)
 		this.primitive = new MyCylinder(scene,args);
+	else if ("patch" == this.type)
+		this.primitive = new MyPatch(scene,args);
 }
 
 //TODO render primitive
@@ -35,6 +37,7 @@ MyGraphLeaf.prototype.render = function(material, texture, scene){
 	}
 	else {
 		material.apply();
+		this.primitive.render(1,1);
 		this.primitive.display();
 	}
 }

@@ -69,11 +69,7 @@
 			<amplif_factor s="3" t="4" />
 		</TEXTURE>
 
-		<!-- Rocks -->
-		<TEXTURE id="rocks">
-			<file path="images/rocks.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+
 
 		<!-- Glass work -->
 		<TEXTURE id="vidral">
