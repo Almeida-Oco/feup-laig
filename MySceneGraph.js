@@ -1360,7 +1360,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							var x = this.reader.getFloat(control_p[k],'x',false);
 							var y = this.reader.getFloat(control_p[k],'y',false);
 							var z = this.reader.getFloat(control_p[k],'z',false);
-							control_points.push([x,y,z,1]);
+							var w = this.reader.getFloat(control_p[k],'w',false);
+							control_points.push([x,y,z,w]);
 						}
 						args.push(control_points);
 					}
