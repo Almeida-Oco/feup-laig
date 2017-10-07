@@ -132,42 +132,78 @@
 			<TEXTURE id="rocks"/>
 
 			<DESCENDANTS>
-				<LEAF type="patch" orderU="4" orderV="5" partsU="20" partsV="20" >
-					<controlpoint x="-0.15" y="0" z="-4" />
-					<controlpoint x="-0.1" y="0" z="-4" />
-					<controlpoint x="0.1" y="0" z="-4" />
-					<controlpoint x="0.15" y="0" z="-4" />
-					<controlpoint x="0.1" y="0" z="-4" />
-					<controlpoint x="-0.1" y="0" z="-4" />
+				<LEAF type="patch" orderU="8" orderV="6" partsU="20" partsV="20" >
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0" y="-0.5" z="-5"/>
+					<controlpoint x="0" y="-3" z="-4"/>
+					<controlpoint x="0" y="-3" z="0"/>
+					<controlpoint x="0" y="-3" z="4"/>
+					<controlpoint x="0" y="-0.5" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 
-					<controlpoint x="-1.5" y="0" z="-2" />
-					<controlpoint x="-1.25" y="0.5" z="-2" />
-					<controlpoint x="1.25" y="0.5" z="-2" />
-					<controlpoint x="1.5" y="0" z="-2" />
-					<controlpoint x="1.25" y="-0.5" z="-2" />
-					<controlpoint x="-1.25" y="-0.5" z="-2" />
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0.353" y="-0.353" z="-5"/>
+					<controlpoint x="2.12" y="-2.12" z="-4"/>
+					<controlpoint x="2.12" y="-2.12" z="0"/>
+					<controlpoint x="2.12" y="-2.12" z="4"/>
+					<controlpoint x="0.353" y="-0.353" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 
-					<controlpoint x="-3" y="0" z="0" />
-					<controlpoint x="-2.5" y="1" z="0" />
-					<controlpoint x="2.5" y="1" z="0" />
-					<controlpoint x="3" y="0" z="0" />
-					<controlpoint x="2.5" y="-1" z="0" />
-					<controlpoint x="-2.5" y="-1" z="0" />
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0.5" y="0" z="-5"/>
+					<controlpoint x="3" y="0" z="-4"/>
+					<controlpoint x="3" y="0" z="0"/>
+					<controlpoint x="3" y="0" z="4"/>
+					<controlpoint x="0.5" y="0" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 
-					<controlpoint x="-1.5" y="0" z="2" />
-					<controlpoint x="-1.25" y="0.5" z="2" />
-					<controlpoint x="1.25" y="0.5" z="2" />
-					<controlpoint x="1.5" y="0" z="2" />
-					<controlpoint x="1.25" y="-0.5" z="2" />
-					<controlpoint x="-1.25" y="-0.5" z="2" />
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0.353" y="0.353" z="-5"/>
+					<controlpoint x="2.12" y="2.12" z="-4"/>
+					<controlpoint x="2.12" y="2.12" z="0"/>
+					<controlpoint x="2.12" y="2.12" z="4"/>
+					<controlpoint x="0.353" y="0.353" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 
-					<controlpoint x="-0.15" y="0" z="4" />
-					<controlpoint x="-0.1" y="0" z="4" />
-					<controlpoint x="0.1" y="0" z="4" />
-					<controlpoint x="0.15" y="0" z="4" />
-					<controlpoint x="0.1" y="0" z="4" />
-					<controlpoint x="-0.1" y="0" z="4" />
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0" y="0.5" z="-5"/>
+					<controlpoint x="0" y="3" z="-4"/>
+					<controlpoint x="0" y="3" z="0"/>
+					<controlpoint x="0" y="3" z="4"/>
+					<controlpoint x="0" y="0.5" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="-0.353" y="0.353" z="-5"/>
+					<controlpoint x="-2.12" y="2.12" z="-4"/>
+					<controlpoint x="-2.12" y="2.12" z="0"/>
+					<controlpoint x="-2.12" y="2.12" z="4"/>
+					<controlpoint x="-0.353" y="0.353" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
+
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="-0.5" y="0" z="-5"/>
+					<controlpoint x="-3" y="0" z="-4"/>
+					<controlpoint x="-3" y="0" z="0"/>
+					<controlpoint x="-3" y="0" z="4"/>
+					<controlpoint x="-0.5" y="0" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
+
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="-0.353" y="-0.353" z="-5"/>
+					<controlpoint x="-2.12" y="-2.12" z="-4"/>
+					<controlpoint x="-2.12" y="-2.12" z="0"/>
+					<controlpoint x="-2.12" y="-2.12" z="4"/>
+					<controlpoint x="-0.353" y="-0.353" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
+
+					<controlpoint x="0" y="0" z="-5.5"/>
+					<controlpoint x="0" y="-0.5" z="-5"/>
+					<controlpoint x="0" y="-3" z="-4"/>
+					<controlpoint x="0" y="-3" z="0"/>
+					<controlpoint x="0" y="-3" z="4"/>
+					<controlpoint x="0" y="-0.5" z="5"/>
+					<controlpoint x="0" y="0" z="4.8"/>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
