@@ -68,12 +68,10 @@
 			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<NODEREF id="zeppelin"/>-->
-				<NODEREF id="cauda"/>
-				<NODEREF id="corpo"/>
-				<NODEREF id="cara"/>
-			<!--<NODEREF id="towers" />
-				<NODEREF id="chao" /> -->
+				<NODEREF id="zeppelin"/>
+				<NODEREF id="helicopter"/>
+				<NODEREF id="towers"/>
+				<NODEREF id="floor" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -85,54 +83,54 @@
 			<TRANSLATION x="10" y="10" z="10"/>
 
 			<DESCENDANTS>
-				<NODEREF id="balao"/>
-				<NODEREF id="asas"/>
+				<NODEREF id="ballon"/>
+				<NODEREF id="wings"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="asas" >
+		<NODE id="wings" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<NODEREF id="asas_vert"/>
-				<NODEREF id="asas_hor"/>
+				<NODEREF id="wings_vert"/>
+				<NODEREF id="wings_hor"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="asas_vert" >
+		<NODE id="wings_vert" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<NODEREF id="vert_baixo"/>
-				<NODEREF id="vert_cima"/>
+				<NODEREF id="vert_down"/>
+				<NODEREF id="vert_up"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="asas_hor" >
+		<NODE id="wings_hor" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<NODEREF id="hor_esq"/>
-				<NODEREF id="hor_dir"/>
+				<NODEREF id="hor_left"/>
+				<NODEREF id="hor_right"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="vert_cima" >
+		<NODE id="vert_up" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="0" y="0.9" z="0"/>
 
 			<DESCENDANTS>
-				<NODEREF id="asa1"/>
-				<NODEREF id="asa2"/>
+				<NODEREF id="wing1"/>
+				<NODEREF id="wing2"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="vert_baixo" >
+		<NODE id="vert_down" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -140,12 +138,12 @@
 			<ROTATION axis="x" angle="180"/>
 
 			<DESCENDANTS>
-				<NODEREF id="asa1"/>
-				<NODEREF id="asa2"/>
+				<NODEREF id="wing1"/>
+				<NODEREF id="wing2"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="hor_esq" >
+		<NODE id="hor_left" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -153,12 +151,12 @@
 			<ROTATION axis="x" angle="90"/>
 
 			<DESCENDANTS>
-				<NODEREF id="asa1"/>
-				<NODEREF id="asa2"/>
+				<NODEREF id="wing1"/>
+				<NODEREF id="wing2"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="hor_dir" >
+		<NODE id="hor_right" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -166,12 +164,12 @@
 			<ROTATION axis="x" angle="-90"/>
 
 			<DESCENDANTS>
-				<NODEREF id="asa1"/>
-				<NODEREF id="asa2"/>
+				<NODEREF id="wing1"/>
+				<NODEREF id="wing2"/>
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="asa1">
+		<NODE id="wing1">
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -192,7 +190,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="asa2">
+		<NODE id="wing2">
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -213,7 +211,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="balao" >
+		<NODE id="ballon" >
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -298,7 +296,19 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="cauda">
+		<NODE id="helicopter" >
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="bank"/>
+
+			<DESCENDANTS>
+				<NODEREF id="chopper_tail"/>
+				<NODEREF id="chopper_body"/>
+				<NODEREF id="chopper_front"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="chopper_tail">
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -386,7 +396,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="corpo">
+		<NODE id="chopper_body">
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -512,7 +522,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="cara">
+		<NODE id="chopper_front">
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="bank"/>
 
@@ -661,7 +671,7 @@
 		</NODE>
 
 		<!-- The floor -->
-		<NODE id="chao">
+		<NODE id="floor">
 			<MATERIAL id="null" />
 			<TEXTURE id="nwfloor" />
 
@@ -891,87 +901,5 @@
 <LEAF type="rectangle" args="10 0 12 6"/>
 </DESCENDANTS>
 </NODE>
-
-<NODE id="cauda" >
-<MATERIAL id="piramide"/>
-<TEXTURE id="bank"/>
-
-<TRANSLATION x="5" y="5" z="0" />
-
-<DESCENDANTS>
-<LEAF type="patch" orderU="8" orderV="6" partsU="20" partsV="20" >
-<controlpoint x="0" y="0" z="-6" w="2"/>
-<controlpoint x="0" y="-0.5" z="-5" w="0.3"/>
-<controlpoint x="0" y="-3" z="-4" w="0.3"/>
-<controlpoint x="0" y="-3" z="0" w="0.3"/>
-<controlpoint x="0" y="-3" z="4" w="0.3"/>
-<controlpoint x="0" y="-0.5" z="5" w="0.3"/>
-<controlpoint x="0" y="0" z="4.8" w="2"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="0.353" y="-0.353" z="-5" w="1"/>
-<controlpoint x="2.12" y="-2.12" z="-4" w="1"/>
-<controlpoint x="2.12" y="-2.12" z="0" w="1"/>
-<controlpoint x="2.12" y="-2.12" z="4" w="1"/>
-<controlpoint x="0.353" y="-0.353" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="0.5" y="0" z="-5" w="1"/>
-<controlpoint x="3" y="0" z="-4" w="1"/>
-<controlpoint x="3" y="0" z="0" w="1"/>
-<controlpoint x="3" y="0" z="4" w="1"/>
-<controlpoint x="0.5" y="0" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="0.353" y="0.353" z="-5" w="1"/>
-<controlpoint x="2.12" y="2.12" z="-4" w="1"/>
-<controlpoint x="2.12" y="2.12" z="0" w="1"/>
-<controlpoint x="2.12" y="2.12" z="4" w="1"/>
-<controlpoint x="0.353" y="0.353" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="0" y="0.5" z="-5" w="1"/>
-<controlpoint x="0" y="3" z="-4" w="1"/>
-<controlpoint x="0" y="3" z="0" w="1"/>
-<controlpoint x="0" y="3" z="4" w="1"/>
-<controlpoint x="0" y="0.5" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="-0.353" y="0.353" z="-5" w="1"/>
-<controlpoint x="-2.12" y="2.12" z="-4" w="1"/>
-<controlpoint x="-2.12" y="2.12" z="0" w="1"/>
-<controlpoint x="-2.12" y="2.12" z="4" w="1"/>
-<controlpoint x="-0.353" y="0.353" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="-0.5" y="0" z="-5" w="1"/>
-<controlpoint x="-3" y="0" z="-4" w="1"/>
-<controlpoint x="-3" y="0" z="0" w="1"/>
-<controlpoint x="-3" y="0" z="4" w="1"/>
-<controlpoint x="-0.5" y="0" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="1"/>
-<controlpoint x="-0.353" y="-0.353" z="-5" w="1"/>
-<controlpoint x="-2.12" y="-2.12" z="-4" w="1"/>
-<controlpoint x="-2.12" y="-2.12" z="0" w="1"/>
-<controlpoint x="-2.12" y="-2.12" z="4" w="1"/>
-<controlpoint x="-0.353" y="-0.353" z="5" w="1"/>
-<controlpoint x="0" y="0" z="4.8" w="1"/>
-
-<controlpoint x="0" y="0" z="-6" w="2"/>
-<controlpoint x="0" y="-0.5" z="-5" w="0.3"/>
-<controlpoint x="0" y="-3" z="-4" w="0.3"/>
-<controlpoint x="0" y="-3" z="0" w="0.3"/>
-<controlpoint x="0" y="-3" z="4" w="0.3"/>
-<controlpoint x="0" y="-0.5" z="5" w="0.3"/>
-<controlpoint x="0" y="0" z="4.8" w="2"/>
-</LEAF>
-</DESCENDANTS>
 </NODE>
 -->
