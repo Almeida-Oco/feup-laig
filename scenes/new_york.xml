@@ -35,9 +35,15 @@
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
-		<!-- New york floor bench -->
+		<!-- New york floor -->
 		<TEXTURE id="nwfloor">
 			<file path="images/nwfloor.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<!-- Tower face -->
+		<TEXTURE id="twface">
+			<file path="images/skyscraper.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
@@ -66,8 +72,8 @@
 				<NODEREF id="cauda"/>
 				<NODEREF id="corpo"/>
 				<NODEREF id="cara"/>
-				<!--<NODEREF id="towers" />-->
-				<!--<NODEREF id="chao" />-->
+			<!--<NODEREF id="towers" />
+				<NODEREF id="chao" /> -->
 			</DESCENDANTS>
 
 		</NODE>
@@ -674,7 +680,7 @@
 		<!-- TWIN TOWERS PRE 2001 -->
 		<NODE id="towers">
 			<MATERIAL id="piramide" />
-			<TEXTURE id="bank" />
+			<TEXTURE id="twface" />
 			<SCALE sx="3" sy="3" sz="3" />
 			<ROTATION axis="z" angle="-90" />
 			<ROTATION axis="x" angle="90" />
