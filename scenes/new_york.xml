@@ -30,8 +30,8 @@
 
 	<TEXTURES>
 		<!-- Rocks -->
-		<TEXTURE id="rocks">
-			<file path="images/rocks.jpg" />
+		<TEXTURE id="bank">
+			<file path="images/bank.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
@@ -59,10 +59,10 @@
 
 		<NODE id="root">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<!--<NODEREF id="zeppelin"/>-->
+				<NODEREF id="zeppelin"/>-->
 				<NODEREF id="cauda"/>
 				<NODEREF id="corpo"/>
 				<NODEREF id="cara"/>
@@ -74,7 +74,7 @@
 
 		<NODE id="zeppelin">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="10" y="10" z="10"/>
 
@@ -86,7 +86,7 @@
 
 		<NODE id="asas" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
 				<NODEREF id="asas_vert"/>
@@ -96,7 +96,7 @@
 
 		<NODE id="asas_vert" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
 				<NODEREF id="vert_baixo"/>
@@ -106,7 +106,7 @@
 
 		<NODE id="asas_hor" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
 				<NODEREF id="hor_esq"/>
@@ -116,7 +116,7 @@
 
 		<NODE id="vert_cima" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="0" y="0.9" z="0"/>
 
@@ -128,7 +128,7 @@
 
 		<NODE id="vert_baixo" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="0" y="-1.3" z="0"/>
 			<ROTATION axis="x" angle="180"/>
@@ -141,7 +141,7 @@
 
 		<NODE id="hor_esq" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="0" y="0" z="1"/>
 			<ROTATION axis="x" angle="90"/>
@@ -154,7 +154,7 @@
 
 		<NODE id="hor_dir" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="0" y="0" z="-1"/>
 			<ROTATION axis="x" angle="-90"/>
@@ -167,7 +167,7 @@
 
 		<NODE id="asa1">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
 
@@ -188,7 +188,7 @@
 
 		<NODE id="asa2">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
 
@@ -209,7 +209,7 @@
 
 		<NODE id="balao" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<TRANSLATION x="-3" y="0" z="0"/>
 			<ROTATION axis="y" angle="-90"/>
@@ -294,7 +294,7 @@
 
 		<NODE id="cauda">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
 				<LEAF id="tail" type="patch" orderU="6" orderV="6" partsU="20" partsV="20" >
@@ -382,7 +382,7 @@
 
 		<NODE id="corpo">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
 				<LEAF id="junction" type="patch" orderU="5" orderV="6" partsU="20" partsV="20">
@@ -508,10 +508,10 @@
 
 		<NODE id="cara">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="rocks"/>
+			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<LEAF id="face" type="patch" orderU="5" orderV="6" partsU="20" partsV="20">
+				<LEAF id="eyes" type="patch" orderU="6" orderV="6" partsU="20" partsV="20">
 					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
 					<controlpoint x="-1.7" y="0" z="6.0" w="0.10" />
 					<controlpoint x="-2.5" y="2.5" z="6.0" w="5" />
@@ -529,36 +529,126 @@
 					<controlpoint x="2.2" y="-1.2" z="6.3" w="1" />
 
 					<controlpoint x="-2.2" y="-1.2" z="6.6" w="1" />
-					<controlpoint x="-1.5" y="0" z="6.6" w="0.10" />
+					<controlpoint x="-2.2" y="0" z="6.6" w="0.10" />
 					<controlpoint x="-2.3" y="2.5" z="6.6" w="5" />
 					<controlpoint x="0" y="3.6" z="6.6" w="0.50" />
 					<controlpoint x="2.3" y="2.5" z="6.6" w="5" />
-					<controlpoint x="1.5" y="0" z="6.6" w="0.10" />
+					<controlpoint x="2.2" y="0" z="6.6" w="0.10" />
 					<controlpoint x="2.2" y="-1.2" z="6.6" w="1" />
 
-					<controlpoint x="-2.1" y="-1.2" z="7.2" w="1" />
-					<controlpoint x="-1.5" y="0" z="7.2" w="0.10" />
-					<controlpoint x="-2.2" y="1.8" z="7.2" w="5" />
-					<controlpoint x="0" y="2.5" z="7.2" w="0.50" />
-					<controlpoint x="2.2" y="1.8" z="7.2" w="5" />
-					<controlpoint x="1.5" y="0" z="7.2" w="0.10" />
-					<controlpoint x="2.1" y="-1.2" z="7.2" w="1" />
+					<controlpoint x="-2.1" y="-1.2" z="7.1" w="1" />
+					<controlpoint x="-2.1" y="0" z="7.1" w="0.10" />
+					<controlpoint x="-2.2" y="1.8" z="7.1" w="5" />
+					<controlpoint x="0" y="2.5" z="7.1" w="0.50" />
+					<controlpoint x="2.2" y="1.8" z="7.1" w="5" />
+					<controlpoint x="2.1" y="0" z="7.1" w="0.10" />
+					<controlpoint x="2.1" y="-1.2" z="7.1" w="1" />
 
-					<controlpoint x="-1.9" y="-1.2" z="7.8" w="1" />
-					<controlpoint x="-1.4" y="0" z="7.8" w="0.10" />
-					<controlpoint x="-2.1" y="1.2" z="7.8" w="5" />
-					<controlpoint x="0" y="1.8" z="7.8" w="0.50" />
-					<controlpoint x="2.1" y="1.2" z="7.8" w="5" />
-					<controlpoint x="1.4" y="0" z="7.8" w="0.10" />
-					<controlpoint x="1.9" y="-1.2" z="7.8" w="1" />
+					<controlpoint x="-1.9" y="-1.2" z="7.6" w="1" />
+					<controlpoint x="-1.9" y="0" z="7.6" w="0.10" />
+					<controlpoint x="-2.1" y="1.2" z="7.6" w="5" />
+					<controlpoint x="0" y="1.8" z="7.6" w="0.50" />
+					<controlpoint x="2.1" y="1.2" z="7.6" w="5" />
+					<controlpoint x="1.9" y="0" z="7.6" w="0.10" />
+					<controlpoint x="1.9" y="-1.2" z="7.6" w="1" />
 
-					<controlpoint x="-1.9" y="-1.2" z="8.4" w="1" />
-					<controlpoint x="-1.3" y="0" z="8.4" w="0.10" />
-					<controlpoint x="-2.0" y="0.87" z="8.4" w="5" />
-					<controlpoint x="0" y="1.2" z="8.4" w="0.50" />
-					<controlpoint x="2.0" y="0.87" z="8.4" w="5" />
-					<controlpoint x="1.3" y="0" z="8.4" w="0.10" />
-					<controlpoint x="1.9" y="-1.2" z="8.4" w="1" />
+					<controlpoint x="-1.9" y="-1.2" z="8.1" w="1" />
+					<controlpoint x="-1.9" y="0" z="8.1" w="0.10" />
+					<controlpoint x="-2.0" y="0.87" z="8.1" w="5" />
+					<controlpoint x="0" y="1.2" z="8.1" w="0.50" />
+					<controlpoint x="2.0" y="0.87" z="8.1" w="5" />
+					<controlpoint x="1.9" y="0" z="8.1" w="0.10" />
+					<controlpoint x="1.9" y="-1.2" z="8.1" w="1" />
+
+					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+					<controlpoint x="-1.8" y="0" z="8.6" w="0.10" />
+					<controlpoint x="-1.9" y="0.61" z="8.6" w="5" />
+					<controlpoint x="0" y="0.86" z="8.6" w="0.50" />
+					<controlpoint x="1.9" y="0.61" z="8.6" w="5" />
+					<controlpoint x="1.8" y="0" z="8.6" w="0.10" />
+					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+				</LEAF>
+
+				<LEAF id="nose" type="patch" orderU="4" orderV="6" partsU="20" partsV="20">
+					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+					<controlpoint x="-1.8" y="0" z="8.6" w="0.10" />
+					<controlpoint x="-1.9" y="0.61" z="8.6" w="5" />
+					<controlpoint x="0" y="0.86" z="8.6" w="0.50" />
+					<controlpoint x="1.9" y="0.61" z="8.6" w="5" />
+					<controlpoint x="1.8" y="0" z="8.6" w="0.10" />
+					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+
+					<controlpoint x="-1.3" y="-1.2" z="9.0" w="1" />
+					<controlpoint x="-1.9" y="-1.6" z="9.0" w="0.10" />
+					<controlpoint x="-1.3" y="0.40" z="9.0" w="5" />
+					<controlpoint x="0" y="0.38" z="9.0" w="0.50" />
+					<controlpoint x="1.3" y="0.40" z="9.0" w="5" />
+					<controlpoint x="1.9" y="-1.6" z="9.0" w="0.10" />
+					<controlpoint x="1.3" y="-1.2" z="9.0" w="1" />
+
+					<controlpoint x="-1.0" y="-1.15" z="9.4" w="1" />
+					<controlpoint x="-1.5" y="-1.5" z="9.4" w="0.10" />
+					<controlpoint x="-1.1" y="0.17" z="9.4" w="5" />
+					<controlpoint x="0" y="0.16" z="9.4" w="0.50" />
+					<controlpoint x="1.1" y="0.17" z="9.4" w="5" />
+					<controlpoint x="1.5" y="-1.5" z="9.4" w="0.10" />
+					<controlpoint x="1.0" y="-1.15" z="9.4" w="1" />
+
+					<controlpoint x="-0.37" y="-0.95" z="9.8" w="1" />
+					<controlpoint x="-0.56" y="-1.3" z="9.8" w="0.10" />
+					<controlpoint x="-0.40" y="-0.091" z="9.8" w="5" />
+					<controlpoint x="0" y="-0.086" z="9.8" w="0.50" />
+					<controlpoint x="0.40" y="-0.091" z="9.8" w="5" />
+					<controlpoint x="0.56" y="-1.3" z="9.8" w="0.10" />
+					<controlpoint x="0.37" y="-0.95" z="9.8" w="1" />
+
+					<controlpoint x="-0.35" y="-0.7" z="9.85" w="1" />
+					<controlpoint x="-0.5" y="-0.7" z="9.85" w="1" />
+					<controlpoint x="-0.3" y="-0.7" z="9.85" w="5" />
+					<controlpoint x="0" y="-0.7" z="9.85" w="0.50" />
+					<controlpoint x="0.3" y="-0.7" z="9.85" w="5" />
+					<controlpoint x="0.5" y="-0.7" z="9.85" w="1" />
+					<controlpoint x="0.35" y="-0.7" z="9.85" w="1" />
+				</LEAF>
+
+				<LEAF id="eyes_floor" type="patch" orderU="6" orderV="1" partsU="20" partsV="20">
+					<controlpoint x="2.2" y="-1.2" z="6.0" w="1" />
+					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
+
+					<controlpoint x="2.2" y="-1.2" z="6.3" w="1" />
+					<controlpoint x="-2.2" y="-1.2" z="6.3" w="1" />
+
+					<controlpoint x="2.2" y="-1.2" z="6.6" w="1" />
+					<controlpoint x="-2.2" y="-1.2" z="6.6" w="1" />
+
+					<controlpoint x="2.1" y="-1.2" z="7.1" w="1" />
+					<controlpoint x="-2.1" y="-1.2" z="7.1" w="1" />
+
+					<controlpoint x="1.9" y="-1.2" z="7.6" w="1" />
+					<controlpoint x="-1.9" y="-1.2" z="7.6" w="1" />
+
+					<controlpoint x="1.9" y="-1.2" z="8.1" w="1" />
+					<controlpoint x="-1.9" y="-1.2" z="8.1" w="1" />
+
+					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+				</LEAF>
+
+				<LEAF id="nose_floor" type="patch" orderU="4" orderV="1" partsU="20" partsV="20">
+					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+
+					<controlpoint x="1.3" y="-1.2" z="9.0" w="1" />
+					<controlpoint x="-1.3" y="-1.2" z="9.0" w="1" />
+
+					<controlpoint x="1.0" y="-1.15" z="9.4" w="1" />
+					<controlpoint x="-1.0" y="-1.15" z="9.4" w="1" />
+
+					<controlpoint x="0.37" y="-0.95" z="9.8" w="1" />
+					<controlpoint x="-0.37" y="-0.95" z="9.8" w="1" />
+
+					<controlpoint x="0.35" y="-0.7" z="9.85" w="1" />
+					<controlpoint x="-0.35" y="-0.7" z="9.85" w="1" />
 				</LEAF>
 			</DESCENDANTS>
 
@@ -584,7 +674,7 @@
 		<!-- TWIN TOWERS PRE 2001 -->
 		<NODE id="towers">
 			<MATERIAL id="piramide" />
-			<TEXTURE id="rocks" />
+			<TEXTURE id="bank" />
 			<SCALE sx="3" sy="3" sz="3" />
 			<ROTATION axis="z" angle="-90" />
 			<ROTATION axis="x" angle="90" />
@@ -731,7 +821,7 @@
 <!--
 <NODE id="helices" >
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <ROTATION axis="y" angle="180" />
 <SCALE sx="1" sy="1" sz="1" />
@@ -744,7 +834,7 @@
 
 <NODE id="topo" >
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <DESCENDANTS>
 <NODEREF id="hel1"/>
@@ -756,7 +846,7 @@
 
 <NODE id="hel1">
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <DESCENDANTS>
 <LEAF type="rectangle" args="10 0 12 6"/>
@@ -765,7 +855,7 @@
 
 <NODE id="hel2">
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <ROTATION axis="z" angle="90"/>
 
@@ -776,7 +866,7 @@
 
 <NODE id="hel3">
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <ROTATION axis="z" angle="-90"/>
 
@@ -787,7 +877,7 @@
 
 <NODE id="hel4">
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <ROTATION axis="z" angle="180"/>
 
@@ -798,7 +888,7 @@
 
 <NODE id="cauda" >
 <MATERIAL id="piramide"/>
-<TEXTURE id="rocks"/>
+<TEXTURE id="bank"/>
 
 <TRANSLATION x="5" y="5" z="0" />
 
