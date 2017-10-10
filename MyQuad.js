@@ -45,8 +45,8 @@ MyQuad.prototype.defTextCoords = function(afs, aft){
 	this.texCoords = [
 		0, t,
 		0, 0,
-		s, t,
-		s,0
+		s,0,
+		s, t
 	];
 	this.initGLBuffers();
 }

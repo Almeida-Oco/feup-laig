@@ -45,8 +45,8 @@ MyTriangle.prototype.defTextCoords = function(afs, aft){
 			cosb = ( Math.pow(a,2) - Math.pow(b,2) + Math.pow(c,2))/(2*a*c);
 	this.texCoords = [
 		0,0,
-		(c-a*cosb)/afs , a*(Math.sqrt(1-Math.pow(cosb,2)))/aft,
-		c/afs , 0
+		c/afs , 0,
+		(c-a*cosb)/afs , -a*(Math.sqrt(1-Math.pow(cosb,2)))/aft
 	];
 	this.initGLBuffers();
 }
