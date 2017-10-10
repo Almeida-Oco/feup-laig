@@ -14,7 +14,7 @@
 	<!-- Illumination and clear color -->
 	<ILLUMINATION>
 		<ambient r="0.2" g="0.2" b="0.2" a="1" />
-		<background r="0" g="0" b="0" a="1" />
+		<background r="0" g="0.55" b="0.55" a="1" />
 	</ILLUMINATION>
 
 	<!-- Lights -->
@@ -80,6 +80,14 @@
 			<diffuse r="1.0" g="0.68" b="0.4" a="1" />
 			<ambient r="0.2" g="0.2" b="0.2" a="1" />
 			<emission r="0.0" g="0.0" b="0.0" a="1" />
+		</MATERIAL>
+
+		<MATERIAL id="metal">
+			<shininess value="20" />
+			<specular r="0.8" g="0.8" b="0.8" a="1"/>
+			<diffuse r="0.2" g="0.2" b="0.2" a="1" />
+			<ambient r="0.05" g="0.05" b="0.05" a="1"/>
+			<emission r="0" g="0" b="0" a="1"/>
 		</MATERIAL>
 	</MATERIALS>
 
@@ -321,7 +329,7 @@
 		</NODE>
 
 		<NODE id="helicopter" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
 			<DESCENDANTS>
@@ -335,7 +343,7 @@
 		</NODE>
 
 		<NODE id="chopper_tail">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -400,7 +408,7 @@
 		</NODE>
 
 		<NODE id="chopper_body">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -490,18 +498,18 @@
 		</NODE>
 
 		<NODE id="chopper_front">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_nose"/>
-				<NODEREF id="chopper_window"/>
+				<NODEREF id="chopper_window_base"/>
 			</DESCENDANTS>
 
 		</NODE>
 
 		<NODE id="chopper_nose">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -549,8 +557,8 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="chopper_window">
-			<MATERIAL id="piramide"/>
+		<NODE id="chopper_window_base">
+			<MATERIAL id="null"/>
 			<TEXTURE id="hel_metal"/>
 
 			<DESCENDANTS>
@@ -615,7 +623,7 @@
 		</NODE>
 
 		<NODE id="chopper_top" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="3.5" z="4"/>
@@ -627,7 +635,7 @@
 		</NODE>
 
 		<NODE id="chopper_floor">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="metal"/>
 			<TEXTURE id="red_plastic"/>
 
 			<DESCENDANTS>
@@ -657,8 +665,8 @@
 					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
 					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
 
-					<controlpoint x="1.3" y="-1.2" z="9.0" w="1" />
-					<controlpoint x="-1.3" y="-1.2" z="9.0" w="1" />
+					<controlpoint x="1.3" y="-1.1" z="9.0" w="1" />
+					<controlpoint x="-1.3" y="-1.1" z="9.0" w="1" />
 
 					<controlpoint x="1.0" y="-1.15" z="9.4" w="1" />
 					<controlpoint x="-1.0" y="-1.15" z="9.4" w="1" />
@@ -731,12 +739,13 @@
 			<TEXTURE id="black_metal"/>
 
 
-			<TRANSLATION x="0" y ="-1" z="0"/>
+			<TRANSLATION x="0" y ="-1.1" z="0"/>
 			<ROTATION axis="x" angle="-90"/>
 
 			<DESCENDANTS>
 				<LEAF type="cylinder" args="1.2 0.5 0 3 20"/>
 			</DESCENDANTS>
+
 		</NODE>
 
 		<NODE id="helices" >

@@ -69,8 +69,6 @@
 			<amplif_factor s="3" t="4" />
 		</TEXTURE>
 
-
-
 		<!-- Glass work -->
 		<TEXTURE id="vidral">
 			<file path="images/vidral.jpg" />
@@ -79,6 +77,12 @@
 
 		<!-- Street bench -->
 		<TEXTURE id="banco">
+			<file path="images/bank.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<!-- Street bench -->
+		<TEXTURE id="rocks">
 			<file path="images/bank.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
@@ -142,12 +146,6 @@
 		</MATERIAL>
 
 	</MATERIALS>
-
-
-	<!-- The leaves -->
-	<LEAVES>
-	</LEAVES>
-
 
 	<!-- The nodes -->
 	<NODES>
