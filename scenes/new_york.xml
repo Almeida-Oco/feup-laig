@@ -35,6 +35,11 @@
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
+		<TEXTURE id="marble">
+			<file path="images/marble_tex.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
 		<!-- New york floor -->
 		<TEXTURE id="nwfloor">
 			<file path="images/nwfloor.jpg" />
@@ -72,6 +77,11 @@
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
+		<TEXTURE id="earth">
+			<file path="images/earth.jpeg"/>
+			<amplif_factor s="1" t="1"/>
+		</TEXTURE>
+
 		<TEXTURE id="pillar">
 			<file path="images/pillar.jpg"/>
 			<amplif_factor s="1" t="1"/>
@@ -84,6 +94,14 @@
 			<specular r="0" g="0" b="0" a="1" />
 			<diffuse r="1.0" g="0.68" b="0.4" a="1" />
 			<ambient r="0.2" g="0.2" b="0.2" a="1" />
+			<emission r="0.0" g="0.0" b="0.0" a="1" />
+		</MATERIAL>
+
+		<MATERIAL id="panth_mat">
+			<shininess value="0.1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+			<diffuse r="0.93" g="0.90" b="0.35" a="1" />
+			<ambient r="0.3" g="0.3" b="0.3" a="1" />
 			<emission r="0.0" g="0.0" b="0.0" a="1" />
 		</MATERIAL>
 
@@ -874,18 +892,31 @@
 
 		</NODE>
 
+
+
+
+
+
+
+
 		<NODE id="parthenon">
-			<MATERIAL id="piramide"/>
-			<TEXTURE id="black_metal"/>
+			<MATERIAL id="panth_mat"/>
+			<TEXTURE id="marble"/>
+
+			<TRANSLATION x="-7" y="-28" z="-35"/>
+			<ROTATION axis="y" angle="-90"/>
 
 			<DESCENDANTS>
 				<NODEREF id="ceiling"/>
+				<NODEREF id="columns"/>
+				<NODEREF id="floors"/>
+				<NODEREF id="statue"/>
 			</DESCENDANTS>
 		</NODE>
 
 		<NODE id="ceiling">
-			<MATERIAL id="piramide"/>
-			<TEXTURE id="black_metal"/>
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
 				<NODEREF id="ceil1"/>
@@ -895,8 +926,8 @@
 		</NODE>
 
 		<NODE id="ceil1">
-			<MATERIAL id="piramide"/>
-			<TEXTURE id="red_plastic"/>
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="10" z="-14.5"/>
 			<ROTATION axis="x" angle="75"/>
@@ -908,8 +939,8 @@
 		</NODE>
 
 		<NODE id="ceil2">
-			<MATERIAL id="piramide"/>
-			<TEXTURE id="red_plastic"/>
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
 
 
 			<TRANSLATION x="0" y="10" z="-5"/>
@@ -922,8 +953,8 @@
 		</NODE>
 
 		<NODE id="ceil_floor">
-			<MATERIAL id="piramide"/>
-			<TEXTURE id="red_plastic"/>
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="8" z="-10"/>
 			<ROTATION axis="x" angle="90"/>
@@ -933,6 +964,402 @@
 				<NODEREF id="cube"/>
 			</DESCENDANTS>
 		</NODE>
+
+
+		<NODE id="columns">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y="8" z="-10"/>
+			<ROTATION axis="x" angle="90"/>
+			<SCALE sx="20" sy="19.7" sz="1.5"/>
+
+			<DESCENDANTS>
+				<NODEREF id="column1"/>
+				<NODEREF id="column2"/>
+				<NODEREF id="column3"/>
+				<NODEREF id="column4"/>
+				<NODEREF id="column5"/>
+				<NODEREF id="column5"/>
+				<NODEREF id="column6"/>
+				<NODEREF id="column7"/>
+				<NODEREF id="column8"/>
+				<NODEREF id="column9"/>
+				<NODEREF id="column10"/>
+				<NODEREF id="column11"/>
+				<NODEREF id="column12"/>
+				<NODEREF id="column13"/>
+				<NODEREF id="column14"/>
+				<NODEREF id="column15"/>
+				<NODEREF id="column16"/>
+				<NODEREF id="column17"/>
+				<NODEREF id="column18"/>
+				<NODEREF id="column19"/>
+				<NODEREF id="column20"/>
+				<NODEREF id="column21"/>
+			</DESCENDANTS>
+		</NODE>
+
+		
+		<NODE id="column1">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column2">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column3">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.15" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column4">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.15" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column5">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.15" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column6">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.30" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column7">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.30" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column8">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.45" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column9">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0.45" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column10">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.15" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column11">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.15" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column12">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.15" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column13">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.30" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column14">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.30" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column15">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column16">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="-0.45" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column17">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="0" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column18">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="0.30" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column19">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="0.15" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column20">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="-0.15" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="column21">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-0.45" y ="-0.30" z="0"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+
+		<NODE id="floors">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y="8" z="-10"/>
+			<ROTATION axis="x" angle="90"/>
+			<SCALE sx="20" sy="19.7" sz="1.5"/>
+
+			<DESCENDANTS>
+				<NODEREF id="floor_big"/>
+				<NODEREF id="floor_smaller"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="floor_smaller">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y ="0" z="8"/>
+			<SCALE sx="1" sy="1" sz="0.7"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="floor_big">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y ="0" z="8.7"/>
+			<SCALE sx="1.15" sy="1.15" sz="0.7"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+
+
+
+		<NODE id="statue">
+			<MATERIAL id="null"/>
+			<TEXTURE id="red_plastic"/>
+
+			<TRANSLATION x="-1" y="1" z="-10"/>
+			<ROTATION axis ="x" angle="90"/>
+
+			<DESCENDANTS>
+				<NODEREF id="pillar"/>
+				<NODEREF id="base"/>
+				<NODEREF id="globe"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillar">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<SCALE sx="13" sy="13.7" sz="0.8"/>
+
+			<DESCENDANTS>
+				<LEAF type="cylinder" args="8 0.05 0.05 3 20"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="base">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="0" y="0" z="4.5"/>
+			<SCALE sx="3" sy="3" sz="1.2"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="globe">
+			<MATERIAL id="null"/>
+			<TEXTURE id="earth"/>
+
+			<TRANSLATION x="0" y ="0" z="-1"/>
+			<SCALE sx="2" sy="2" sz="2"/>
+			<ROTATION axis ="x" angle="-90"/>
+
+			<DESCENDANTS>
+				<LEAF type="sphere" args="1 190 190"/>
+			</DESCENDANTS>
+
+		</NODE>
+
+
+
+
+
+
+
+
+
+
+
 
 		<NODE id="cube">
 			<MATERIAL id="null"/>
