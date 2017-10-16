@@ -43,8 +43,8 @@ MyQuad.prototype.initBuffers = function () {
 MyQuad.prototype.defTextCoords = function(afs, aft){
 	var s = 1, t = 1;
 	this.texCoords = [
-		0, t/aft,
 		0, 0,
+		0, t/aft,
 		s/afs,0,
 		s/afs, t/aft
 	];

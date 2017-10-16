@@ -71,6 +71,11 @@
 			<file path="images/leaves.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
+
+		<TEXTURE id="pillar">
+			<file path="images/pillar.jpg"/>
+			<amplif_factor s="1" t="1"/>
+		</TEXTURE>
 	</TEXTURES>
 
 	<MATERIALS>
@@ -102,8 +107,9 @@
 			<DESCENDANTS>
 				<NODEREF id="zeppelin"/>
 				<NODEREF id="helicopter"/>
-				<NODEREF id="tower"/>
+				<!--<NODEREF id="tower"/>-->
 				<NODEREF id="floor" />
+				<NODEREF id="parthenon"/>
 			</DESCENDANTS>
 
 		</NODE>
@@ -331,6 +337,8 @@
 		<NODE id="helicopter" >
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
+
+			<TRANSLATION x="0" y="0" z="10"/>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_tail"/>
@@ -861,7 +869,76 @@
 			<ROTATION axis="x" angle="90" />
 
 			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
 
+		</NODE>
+
+		<NODE id="parthenon">
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="black_metal"/>
+
+			<DESCENDANTS>
+				<NODEREF id="ceiling"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceiling">
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="black_metal"/>
+
+			<DESCENDANTS>
+				<NODEREF id="ceil1"/>
+				<NODEREF id="ceil2"/>
+				<NODEREF id="ceil_floor"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil1">
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="red_plastic"/>
+
+			<TRANSLATION x="0" y="10" z="-14.5"/>
+			<ROTATION axis="x" angle="75"/>
+			<SCALE sx="20" sy="10" sz="0.5"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil2">
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="red_plastic"/>
+
+
+			<TRANSLATION x="0" y="10" z="-5"/>
+			<ROTATION axis="x" angle="-75"/>
+			<SCALE sx="20" sy="10" sz="0.5"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil_floor">
+			<MATERIAL id="piramide"/>
+			<TEXTURE id="red_plastic"/>
+
+			<TRANSLATION x="0" y="8" z="-10"/>
+			<ROTATION axis="x" angle="90"/>
+			<SCALE sx="20" sy="19.7" sz="1.5"/>
+
+			<DESCENDANTS>
+				<NODEREF id="cube"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="cube">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<DESCENDANTS>
 				<NODEREF id="faceCubo1" />
 				<NODEREF id="faceCubo2" />
 				<NODEREF id="faceCubo3" />
@@ -877,10 +954,10 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
-			<TRANSLATION x="2.5" y="4" z="7.5" />
+			<TRANSLATION x="0" y="0" z="0.5"/>
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -890,11 +967,11 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
-			<TRANSLATION x="2.5" y="4" z="2.5" />
+			<TRANSLATION x="-0.5" y="0" z="0"/>
 			<ROTATION axis="y" angle="-90" />
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -904,11 +981,11 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
-			<TRANSLATION x="7.5" y="4" z="7.5" />
+			<TRANSLATION x="0.5" y="0" z="0"/>
 			<ROTATION axis="y" angle="90" />
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -918,11 +995,11 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
-			<TRANSLATION x="7.5" y="4" z="2.5" />
+			<TRANSLATION x="0" y="0" z="-0.5"/>
 			<ROTATION axis="y" angle="180" />
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -932,12 +1009,11 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
+			<TRANSLATION x="0" y="0.5" z="0"/>
 			<ROTATION axis="x" angle="-90" />
-			<TRANSLATION x="2.5" y="-7.5" z="8" />
-			<SCALE sx="1" sy="1.25" sz="1" />
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -947,12 +1023,11 @@
 			<MATERIAL id="null" />
 			<TEXTURE id="null" />
 
-			<TRANSLATION x="2.5" y="4" z="2.5" />
+			<TRANSLATION x="0" y="-0.5" z="0"/>
 			<ROTATION axis="x" angle="90" />
-			<SCALE sx="1" sy="1.25" sz="1" />
 
 			<DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
+				<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
 			</DESCENDANTS>
 
 		</NODE>
