@@ -1348,21 +1348,29 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
 					var args = [];
 					if ("patch" == type){
-						args.push(parseFloat(this.reader.getString(descendants[j],'orderU')));
-						args.push(parseFloat(this.reader.getString(descendants[j],'orderV')));
+						var cplines = descendants[j].children, control_points=[];
+						let max_order = cplines[0].children.length;
+						args.push(cplines.length-1);
+						args.push(cplines[0].children.length-1);
 						args.push(parseFloat(this.reader.getString(descendants[j],'partsU')));
 						args.push(parseFloat(this.reader.getString(descendants[j],'partsV')));
 
-						var control_p = descendants[j].getElementsByTagName('controlpoint');
-						var control_points = [];
-						var ln = control_p.length;
-						for (var k = 0 ; k < ln ; k++){
-							var x = this.reader.getFloat(control_p[k],'x',false);
-							var y = this.reader.getFloat(control_p[k],'y',false);
-							var z = this.reader.getFloat(control_p[k],'z',false);
-							var w = this.reader.getFloat(control_p[k],'w',false);
-							control_points.push([x,y,z,w]);
+						for (var cplines_i = 0 ; cplines_i < cplines.length ; cplines_i++){
+							if (cplines[cplines_i].children.length != max_order){
+								console.log("ERROR! OrderV not unidorm!\n");
+								exit(1);
+							}
+							for (var cpts_i = 0 ; cpts_i < cplines[cplines_i].children.length ; cpts_i++){
+								let pts = cplines[cplines_i].children[cpts_i];
+								var x = this.reader.getFloat(pts,'xx',false);
+								var y = this.reader.getFloat(pts,'yy',false);
+								var z = this.reader.getFloat(pts,'zz',false);
+								var w = this.reader.getFloat(pts,'ww',false);
+								control_points.push([x,y,z,w]);
+							}
+
 						}
+
 						args.push(control_points);
 					}
 					else {
@@ -1469,20 +1477,19 @@ MySceneGraph.prototype.displayScene = function() {
  * @param texture_id ID of the texture inherited
  */
 MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
-	var node = this.nodes[node_id];
+	var node = this.nodes[node_id],
+			mat=material_id, text=texture_id;
 	this.scene.pushMatrix();
 	if ( node.transformMatrix != null )
 		this.scene.multMatrix( node.transformMatrix );
 
-	if ( node.materialID == "null" )
-		mat = material_id;
-	else
+	if ( node.materialID != "null" )
 		mat = node.materialID;
 
-	if ( node.textureID == "null" )
-		text = texture_id;
-	else //if texture is "clear" just leave it at that
+	if ( node.textureID != "null" )
 		text = node.textureID;
+
+	//console.log(node.nodeID+" - text = "+text);
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
 		this.displayNodes( node.children[i], mat, text)

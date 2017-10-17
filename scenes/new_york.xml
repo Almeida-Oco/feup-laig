@@ -82,7 +82,7 @@
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
-		<TEXTURE id="pillar">
+		<TEXTURE id="pillar_text">
 			<file path="images/pillar.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
@@ -111,6 +111,15 @@
 			<diffuse r="0.2" g="0.2" b="0.2" a="1" />
 			<ambient r="0.05" g="0.05" b="0.05" a="1"/>
 			<emission r="0" g="0" b="0" a="1"/>
+		</MATERIAL>
+
+		<MATERIAL id="earth_mat">
+			<shininess value="1"/>
+			<specular r="0.1" g="0.1" b="0.5" a="1"/>
+			<diffuse r="0.95" g="0.95" b="0.95" a="1" />
+			<ambient r="0.2" g="0.2" b="0.2" a="1"/>
+			<emission r="0" g="0" b="0" a="1"/>
+
 		</MATERIAL>
 	</MATERIALS>
 
@@ -232,16 +241,20 @@
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
 
 			<DESCENDANTS>
-				<LEAF type="patch" orderU="1" orderV="3" partsU="20" partsV="20" >
-					<controlpoint x="0" y="0" z="0" w="1" />
-					<controlpoint x="0.4" y="0.9" z="0" w="3" />
-					<controlpoint x="2" y="1" z="0" w="10" />
-					<controlpoint x="2.1" y="0" z="0" w="1" />
+				<LEAF type="patch" partsU="20" partsV="20" >
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="0" ww="1" />
+						<CPOINT xx="0.4" yy="0.9" zz="0" ww="3" />
+						<CPOINT xx="2" yy="1" zz="0" ww="10" />
+						<CPOINT xx="2.1" yy="0" zz="0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="0" w="1" />
-					<controlpoint x="0.3" y="-0.6" z="0" w="1" />
-					<controlpoint x="2" y="-0.5" z="0" w="5" />
-					<controlpoint x="2.1" y="0" z="0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="0" ww="1" />
+						<CPOINT xx="0.3" yy="-0.6" zz="0" ww="1" />
+						<CPOINT xx="2" yy="-0.5" zz="0" ww="5" />
+						<CPOINT xx="2.1" yy="0" zz="0" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -253,16 +266,20 @@
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
 
 			<DESCENDANTS>
-				<LEAF type="patch" orderU="1" orderV="3" partsU="20" partsV="20" >
-					<controlpoint x="2.1" y="0" z="0" w="1" />
-					<controlpoint x="2" y="1" z="0" w="10" />
-					<controlpoint x="0.4" y="0.9" z="0" w="3" />
-					<controlpoint x="0" y="0" z="0" w="1" />
+				<LEAF type="patch" partsU="20" partsV="20" >
+					<CPLINE>
+						<CPOINT xx="2.1" yy="0" zz="0" ww="1" />
+						<CPOINT xx="2" yy="1" zz="0" ww="10" />
+						<CPOINT xx="0.4" yy="0.9" zz="0" ww="3" />
+						<CPOINT xx="0" yy="0" zz="0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.1" y="0" z="0" w="1" />
-					<controlpoint x="2" y="-0.5" z="0" w="5" />
-					<controlpoint x="0.3" y="-0.6" z="0" w="1" />
-					<controlpoint x="0" y="0" z="0" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.1" yy="0" zz="0" ww="1" />
+						<CPOINT xx="2" yy="-0.5" zz="0" ww="5" />
+						<CPOINT xx="0.3" yy="-0.6" zz="0" ww="1" />
+						<CPOINT xx="0" yy="0" zz="0" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -276,78 +293,96 @@
 			<SCALE sx="1.2" sy="1.2" sz="1.2"/>
 
 			<DESCENDANTS>
-				<LEAF type="patch" orderU="8" orderV="6" partsU="20" partsV="20" >
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0" y="-0.5" z="-5" w="0.3"/>
-					<controlpoint x="0" y="-3" z="-4" w="0.3"/>
-					<controlpoint x="0" y="-3" z="0" w="0.3"/>
-					<controlpoint x="0" y="-3" z="4" w="0.3"/>
-					<controlpoint x="0" y="-0.5" z="5" w="0.3"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+				<LEAF type="patch" orderU="8" orderV="6" partsU="40" partsV="40" >
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0" yy="-0.5" zz="-5" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="-4" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="0" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="4" ww="0.3"/>
+						<CPOINT xx="0" yy="-0.5" zz="5" ww="0.3"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0.353" y="-0.353" z="-5" w="1"/>
-					<controlpoint x="2.12" y="-2.12" z="-4" w="1"/>
-					<controlpoint x="2.12" y="-2.12" z="0" w="1"/>
-					<controlpoint x="2.12" y="-2.12" z="4" w="1"/>
-					<controlpoint x="0.353" y="-0.353" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0.353" yy="-0.353" zz="-5" ww="1"/>
+						<CPOINT xx="2.12" yy="-2.12" zz="-4" ww="1"/>
+						<CPOINT xx="2.12" yy="-2.12" zz="0" ww="1"/>
+						<CPOINT xx="2.12" yy="-2.12" zz="4" ww="1"/>
+						<CPOINT xx="0.353" yy="-0.353" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0.5" y="0" z="-5" w="1"/>
-					<controlpoint x="3" y="0" z="-4" w="1"/>
-					<controlpoint x="3" y="0" z="0" w="1"/>
-					<controlpoint x="3" y="0" z="4" w="1"/>
-					<controlpoint x="0.5" y="0" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0.5" yy="0" zz="-5" ww="1"/>
+						<CPOINT xx="3" yy="0" zz="-4" ww="1"/>
+						<CPOINT xx="3" yy="0" zz="0" ww="1"/>
+						<CPOINT xx="3" yy="0" zz="4" ww="1"/>
+						<CPOINT xx="0.5" yy="0" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0.353" y="0.353" z="-5" w="1"/>
-					<controlpoint x="2.12" y="2.12" z="-4" w="1"/>
-					<controlpoint x="2.12" y="2.12" z="0" w="1"/>
-					<controlpoint x="2.12" y="2.12" z="4" w="1"/>
-					<controlpoint x="0.353" y="0.353" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0.353" yy="0.353" zz="-5" ww="1"/>
+						<CPOINT xx="2.12" yy="2.12" zz="-4" ww="1"/>
+						<CPOINT xx="2.12" yy="2.12" zz="0" ww="1"/>
+						<CPOINT xx="2.12" yy="2.12" zz="4" ww="1"/>
+						<CPOINT xx="0.353" yy="0.353" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0" y="0.5" z="-5" w="1"/>
-					<controlpoint x="0" y="3" z="-4" w="1"/>
-					<controlpoint x="0" y="3" z="0" w="1"/>
-					<controlpoint x="0" y="3" z="4" w="1"/>
-					<controlpoint x="0" y="0.5" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0" yy="0.5" zz="-5" ww="1"/>
+						<CPOINT xx="0" yy="3" zz="-4" ww="1"/>
+						<CPOINT xx="0" yy="3" zz="0" ww="1"/>
+						<CPOINT xx="0" yy="3" zz="4" ww="1"/>
+						<CPOINT xx="0" yy="0.5" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="-0.353" y="0.353" z="-5" w="1"/>
-					<controlpoint x="-2.12" y="2.12" z="-4" w="1"/>
-					<controlpoint x="-2.12" y="2.12" z="0" w="1"/>
-					<controlpoint x="-2.12" y="2.12" z="4" w="1"/>
-					<controlpoint x="-0.353" y="0.353" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="-0.353" yy="0.353" zz="-5" ww="1"/>
+						<CPOINT xx="-2.12" yy="2.12" zz="-4" ww="1"/>
+						<CPOINT xx="-2.12" yy="2.12" zz="0" ww="1"/>
+						<CPOINT xx="-2.12" yy="2.12" zz="4" ww="1"/>
+						<CPOINT xx="-0.353" yy="0.353" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="-0.5" y="0" z="-5" w="1"/>
-					<controlpoint x="-3" y="0" z="-4" w="1"/>
-					<controlpoint x="-3" y="0" z="0" w="1"/>
-					<controlpoint x="-3" y="0" z="4" w="1"/>
-					<controlpoint x="-0.5" y="0" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="-0.5" yy="0" zz="-5" ww="1"/>
+						<CPOINT xx="-3" yy="0" zz="-4" ww="1"/>
+						<CPOINT xx="-3" yy="0" zz="0" ww="1"/>
+						<CPOINT xx="-3" yy="0" zz="4" ww="1"/>
+						<CPOINT xx="-0.5" yy="0" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="-0.353" y="-0.353" z="-5" w="1"/>
-					<controlpoint x="-2.12" y="-2.12" z="-4" w="1"/>
-					<controlpoint x="-2.12" y="-2.12" z="0" w="1"/>
-					<controlpoint x="-2.12" y="-2.12" z="4" w="1"/>
-					<controlpoint x="-0.353" y="-0.353" z="5" w="1"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="-0.353" yy="-0.353" zz="-5" ww="1"/>
+						<CPOINT xx="-2.12" yy="-2.12" zz="-4" ww="1"/>
+						<CPOINT xx="-2.12" yy="-2.12" zz="0" ww="1"/>
+						<CPOINT xx="-2.12" yy="-2.12" zz="4" ww="1"/>
+						<CPOINT xx="-0.353" yy="-0.353" zz="5" ww="1"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 
-					<controlpoint x="0" y="0" z="-6" w="2"/>
-					<controlpoint x="0" y="-0.5" z="-5" w="0.3"/>
-					<controlpoint x="0" y="-3" z="-4" w="0.3"/>
-					<controlpoint x="0" y="-3" z="0" w="0.3"/>
-					<controlpoint x="0" y="-3" z="4" w="0.3"/>
-					<controlpoint x="0" y="-0.5" z="5" w="0.3"/>
-					<controlpoint x="0" y="0" z="4.8" w="0.5"/>
+					<CPLINE>
+						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
+						<CPOINT xx="0" yy="-0.5" zz="-5" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="-4" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="0" ww="0.3"/>
+						<CPOINT xx="0" yy="-3" zz="4" ww="0.3"/>
+						<CPOINT xx="0" yy="-0.5" zz="5" ww="0.3"/>
+						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -373,62 +408,76 @@
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
-				<LEAF id="tail" type="patch" orderU="6" orderV="6" partsU="20" partsV="20" >
-					<controlpoint x="-0.0" y="-0.0" z="-5.1" w="1" />
-					<controlpoint x="-0.0" y="0" z="-5.1" w="0.10" />
-					<controlpoint x="-0.0" y="0.0" z="-5.1" w="5" />
-					<controlpoint x="0" y="0.0" z="-5.1" w="0.50" />
-					<controlpoint x="0.0" y="0.0" z="-5.1" w="5" />
-					<controlpoint x="0.0" y="0" z="-5.1" w="0.10" />
-					<controlpoint x="0.0" y="-0.0" z="-5.1" w="1" />
+				<LEAF id="tail" type="patch" partsU="20" partsV="20" >
+					<CPLINE>
+						<CPOINT xx="-0.0" yy="-0.0" zz="-5.1" ww="1" />
+						<CPOINT xx="-0.0" yy="0" zz="-5.1" ww="0.10" />
+						<CPOINT xx="-0.0" yy="0.0" zz="-5.1" ww="5" />
+						<CPOINT xx="0" yy="0.0" zz="-5.1" ww="0.50" />
+						<CPOINT xx="0.0" yy="0.0" zz="-5.1" ww="5" />
+						<CPOINT xx="0.0" yy="0" zz="-5.1" ww="0.10" />
+						<CPOINT xx="0.0" yy="-0.0" zz="-5.1" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.28" y="-0.28" z="-5.0" w="1" />
-					<controlpoint x="-0.28" y="0" z="-5.0" w="0.10" />
-					<controlpoint x="-0.42" y="0.42" z="-5.0" w="5" />
-					<controlpoint x="0" y="0.60" z="-5.0" w="0.50" />
-					<controlpoint x="0.42" y="0.42" z="-5.0" w="5" />
-					<controlpoint x="0.28" y="0" z="-5.0" w="0.10" />
-					<controlpoint x="0.28" y="-0.28" z="-5.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.28" yy="-0.28" zz="-5.0" ww="1" />
+						<CPOINT xx="-0.28" yy="0" zz="-5.0" ww="0.10" />
+						<CPOINT xx="-0.42" yy="0.42" zz="-5.0" ww="5" />
+						<CPOINT xx="0" yy="0.60" zz="-5.0" ww="0.50" />
+						<CPOINT xx="0.42" yy="0.42" zz="-5.0" ww="5" />
+						<CPOINT xx="0.28" yy="0" zz="-5.0" ww="0.10" />
+						<CPOINT xx="0.28" yy="-0.28" zz="-5.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.42" y="-0.42" z="-4.0" w="1" />
-					<controlpoint x="-0.42" y="0" z="-4.0" w="0.10" />
-					<controlpoint x="-0.64" y="0.64" z="-4.0" w="5" />
-					<controlpoint x="0" y="0.90" z="-4.0" w="0.50" />
-					<controlpoint x="0.64" y="0.64" z="-4.0" w="5" />
-					<controlpoint x="0.42" y="0" z="-4.0" w="0.10" />
-					<controlpoint x="0.42" y="-0.42" z="-4.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.42" yy="-0.42" zz="-4.0" ww="1" />
+						<CPOINT xx="-0.42" yy="0" zz="-4.0" ww="0.10" />
+						<CPOINT xx="-0.64" yy="0.64" zz="-4.0" ww="5" />
+						<CPOINT xx="0" yy="0.90" zz="-4.0" ww="0.50" />
+						<CPOINT xx="0.64" yy="0.64" zz="-4.0" ww="5" />
+						<CPOINT xx="0.42" yy="0" zz="-4.0" ww="0.10" />
+						<CPOINT xx="0.42" yy="-0.42" zz="-4.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.57" y="-0.57" z="-3.0" w="1" />
-					<controlpoint x="-0.57" y="0" z="-3.0" w="0.10" />
-					<controlpoint x="-0.85" y="0.85" z="-3.0" w="5" />
-					<controlpoint x="0" y="1.2" z="-3.0" w="0.50" />
-					<controlpoint x="0.85" y="0.85" z="-3.0" w="5" />
-					<controlpoint x="0.57" y="0" z="-3.0" w="0.10" />
-					<controlpoint x="0.57" y="-0.57" z="-3.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.57" yy="-0.57" zz="-3.0" ww="1" />
+						<CPOINT xx="-0.57" yy="0" zz="-3.0" ww="0.10" />
+						<CPOINT xx="-0.85" yy="0.85" zz="-3.0" ww="5" />
+						<CPOINT xx="0" yy="1.2" zz="-3.0" ww="0.50" />
+						<CPOINT xx="0.85" yy="0.85" zz="-3.0" ww="5" />
+						<CPOINT xx="0.57" yy="0" zz="-3.0" ww="0.10" />
+						<CPOINT xx="0.57" yy="-0.57" zz="-3.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.71" y="-0.71" z="-2.0" w="1" />
-					<controlpoint x="-0.71" y="0" z="-2.0" w="0.10" />
-					<controlpoint x="-1.1" y="1.1" z="-2.0" w="5" />
-					<controlpoint x="0" y="1.5" z="-2.0" w="0.50" />
-					<controlpoint x="1.1" y="1.1" z="-2.0" w="5" />
-					<controlpoint x="0.71" y="0" z="-2.0" w="0.10" />
-					<controlpoint x="0.71" y="-0.71" z="-2.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.71" yy="-0.71" zz="-2.0" ww="1" />
+						<CPOINT xx="-0.71" yy="0" zz="-2.0" ww="0.10" />
+						<CPOINT xx="-1.1" yy="1.1" zz="-2.0" ww="5" />
+						<CPOINT xx="0" yy="1.5" zz="-2.0" ww="0.50" />
+						<CPOINT xx="1.1" yy="1.1" zz="-2.0" ww="5" />
+						<CPOINT xx="0.71" yy="0" zz="-2.0" ww="0.10" />
+						<CPOINT xx="0.71" yy="-0.71" zz="-2.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.85" y="-0.85" z="-1.0" w="1" />
-					<controlpoint x="-0.85" y="0" z="-1.0" w="0.10" />
-					<controlpoint x="-1.3" y="1.3" z="-1.0" w="5" />
-					<controlpoint x="0" y="1.8" z="-1.0" w="0.50" />
-					<controlpoint x="1.3" y="1.3" z="-1.0" w="5" />
-					<controlpoint x="0.85" y="0" z="-1.0" w="0.10" />
-					<controlpoint x="0.85" y="-0.85" z="-1.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.85" yy="-0.85" zz="-1.0" ww="1" />
+						<CPOINT xx="-0.85" yy="0" zz="-1.0" ww="0.10" />
+						<CPOINT xx="-1.3" yy="1.3" zz="-1.0" ww="5" />
+						<CPOINT xx="0" yy="1.8" zz="-1.0" ww="0.50" />
+						<CPOINT xx="1.3" yy="1.3" zz="-1.0" ww="5" />
+						<CPOINT xx="0.85" yy="0" zz="-1.0" ww="0.10" />
+						<CPOINT xx="0.85" yy="-0.85" zz="-1.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.99" y="-0.99" z="0.0" w="1" />
-					<controlpoint x="-0.99" y="0" z="0.0" w="0.10" />
-					<controlpoint x="-1.5" y="1.5" z="0.0" w="5" />
-					<controlpoint x="0" y="2.1" z="0.0" w="0.50" />
-					<controlpoint x="1.5" y="1.5" z="0.0" w="5" />
-					<controlpoint x="0.99" y="0" z="0.0" w="0.10" />
-					<controlpoint x="0.99" y="-0.99" z="0.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.99" yy="-0.99" zz="0.0" ww="1" />
+						<CPOINT xx="-0.99" yy="0" zz="0.0" ww="0.10" />
+						<CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="5" />
+						<CPOINT xx="0" yy="2.1" zz="0.0" ww="0.50" />
+						<CPOINT xx="1.5" yy="1.5" zz="0.0" ww="5" />
+						<CPOINT xx="0.99" yy="0" zz="0.0" ww="0.10" />
+						<CPOINT xx="0.99" yy="-0.99" zz="0.0" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -438,87 +487,107 @@
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
-				<LEAF id="junction" type="patch" orderU="5" orderV="6" partsU="20" partsV="20">
-					<controlpoint x="-0.99" y="-0.99" z="0.0" w="1" />
-					<controlpoint x="-0.99" y="0" z="0.0" w="0.10" />
-					<controlpoint x="-1.5" y="1.5" z="0.0" w="5" />
-					<controlpoint x="0" y="2.1" z="0.0" w="0.50" />
-					<controlpoint x="1.5" y="1.5" z="0.0" w="5" />
-					<controlpoint x="0.99" y="0" z="0.0" w="0.10" />
-					<controlpoint x="0.99" y="-0.99" z="0.0" w="1" />
+				<LEAF id="junction" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="-0.99" yy="-0.99" zz="0.0" ww="1" />
+						<CPOINT xx="-0.99" yy="0" zz="0.0" ww="0.10" />
+						<CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="5" />
+						<CPOINT xx="0" yy="2.1" zz="0.0" ww="0.50" />
+						<CPOINT xx="1.5" yy="1.5" zz="0.0" ww="5" />
+						<CPOINT xx="0.99" yy="0" zz="0.0" ww="0.10" />
+						<CPOINT xx="0.99" yy="-0.99" zz="0.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.2" y="-1.0" z="0.55" w="1" />
-					<controlpoint x="-1.1" y="0" z="0.55" w="0.10" />
-					<controlpoint x="-1.7" y="1.7" z="0.55" w="5" />
-					<controlpoint x="0" y="2.4" z="0.55" w="0.50" />
-					<controlpoint x="1.7" y="1.7" z="0.55" w="5" />
-					<controlpoint x="1.1" y="0" z="0.55" w="0.10" />
-					<controlpoint x="1.2" y="-1.0" z="0.55" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.2" yy="-1.0" zz="0.55" ww="1" />
+						<CPOINT xx="-1.1" yy="0" zz="0.55" ww="0.10" />
+						<CPOINT xx="-1.7" yy="1.7" zz="0.55" ww="5" />
+						<CPOINT xx="0" yy="2.4" zz="0.55" ww="0.50" />
+						<CPOINT xx="1.7" yy="1.7" zz="0.55" ww="5" />
+						<CPOINT xx="1.1" yy="0" zz="0.55" ww="0.10" />
+						<CPOINT xx="1.2" yy="-1.0" zz="0.55" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.5" y="-1.1" z="0.60" w="1" />
-					<controlpoint x="-1.3" y="0" z="0.60" w="0.10" />
-					<controlpoint x="-2.0" y="2.0" z="0.60" w="5" />
-					<controlpoint x="0" y="2.8" z="0.60" w="0.50" />
-					<controlpoint x="2.0" y="2.0" z="0.60" w="5" />
-					<controlpoint x="1.3" y="0" z="0.60" w="0.10" />
-					<controlpoint x="1.5" y="-1.1" z="0.60" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.5" yy="-1.1" zz="0.60" ww="1" />
+						<CPOINT xx="-1.3" yy="0" zz="0.60" ww="0.10" />
+						<CPOINT xx="-2.0" yy="2.0" zz="0.60" ww="5" />
+						<CPOINT xx="0" yy="2.8" zz="0.60" ww="0.50" />
+						<CPOINT xx="2.0" yy="2.0" zz="0.60" ww="5" />
+						<CPOINT xx="1.3" yy="0" zz="0.60" ww="0.10" />
+						<CPOINT xx="1.5" yy="-1.1" zz="0.60" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.7" y="-1.1" z="0.90" w="1" />
-					<controlpoint x="-1.5" y="0" z="0.90" w="0.10" />
-					<controlpoint x="-2.3" y="2.3" z="0.90" w="5" />
-					<controlpoint x="0" y="3.2" z="0.90" w="0.50" />
-					<controlpoint x="2.3" y="2.3" z="0.90" w="5" />
-					<controlpoint x="1.5" y="0" z="0.90" w="0.10" />
-					<controlpoint x="1.7" y="-1.1" z="0.90" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.7" yy="-1.1" zz="0.90" ww="1" />
+						<CPOINT xx="-1.5" yy="0" zz="0.90" ww="0.10" />
+						<CPOINT xx="-2.3" yy="2.3" zz="0.90" ww="5" />
+						<CPOINT xx="0" yy="3.2" zz="0.90" ww="0.50" />
+						<CPOINT xx="2.3" yy="2.3" zz="0.90" ww="5" />
+						<CPOINT xx="1.5" yy="0" zz="0.90" ww="0.10" />
+						<CPOINT xx="1.7" yy="-1.1" zz="0.90" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.9" y="-1.2" z="1.2" w="1" />
-					<controlpoint x="-1.6" y="0" z="1.2" w="0.10" />
-					<controlpoint x="-2.4" y="2.45" z="1.2" w="5" />
-					<controlpoint x="0" y="3.4" z="1.2" w="0.50" />
-					<controlpoint x="2.4" y="2.45" z="1.2" w="5" />
-					<controlpoint x="1.6" y="0" z="1.2" w="0.10" />
-					<controlpoint x="1.9" y="-1.2" z="1.2" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.9" yy="-1.2" zz="1.2" ww="1" />
+						<CPOINT xx="-1.6" yy="0" zz="1.2" ww="0.10" />
+						<CPOINT xx="-2.4" yy="2.45" zz="1.2" ww="5" />
+						<CPOINT xx="0" yy="3.4" zz="1.2" ww="0.50" />
+						<CPOINT xx="2.4" yy="2.45" zz="1.2" ww="5" />
+						<CPOINT xx="1.6" yy="0" zz="1.2" ww="0.10" />
+						<CPOINT xx="1.9" yy="-1.2" zz="1.2" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="1.5" w="1" />
-					<controlpoint x="-1.7" y="0" z="1.5" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="1.5" w="5" />
-					<controlpoint x="0" y="3.6" z="1.5" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="1.5" w="5" />
-					<controlpoint x="1.7" y="0" z="1.5" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="1.5" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="1.5" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="1.5" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="1.5" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="1.5" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="1.5" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="1.5" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="1.5" ww="1" />
+					</CPLINE>
 				</LEAF>
-				<LEAF id="body" type="patch" orderU="3" orderV="6" partsU="20" partsV="20">
-					<controlpoint x="-2.2" y="-1.2" z="1.5" w="1" />
-					<controlpoint x="-1.7" y="0" z="1.5" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="1.5" w="5" />
-					<controlpoint x="0" y="3.6" z="1.5" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="1.5" w="5" />
-					<controlpoint x="1.7" y="0" z="1.5" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="1.5" w="1" />
+				<LEAF id="body" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="1.5" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="1.5" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="1.5" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="1.5" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="1.5" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="1.5" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="1.5" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="3.0" w="1" />
-					<controlpoint x="-1.7" y="0" z="3.0" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="3.0" w="5" />
-					<controlpoint x="0" y="3.6" z="3.0" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="3.0" w="5" />
-					<controlpoint x="1.7" y="0" z="3.0" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="3.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="3.0" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="3.0" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="3.0" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="3.0" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="3.0" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="3.0" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="3.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="4.5" w="1" />
-					<controlpoint x="-1.7" y="0" z="4.5" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="4.5" w="5" />
-					<controlpoint x="0" y="3.6" z="4.5" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="4.5" w="5" />
-					<controlpoint x="1.7" y="0" z="4.5" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="4.5" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="4.5" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="4.5" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="4.5" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="4.5" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="4.5" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="4.5" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="4.5" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
-					<controlpoint x="-1.7" y="0" z="6.0" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="6.0" w="5" />
-					<controlpoint x="0" y="3.6" z="6.0" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="6.0" w="5" />
-					<controlpoint x="1.7" y="0" z="6.0" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="6.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.0" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="6.0" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="6.0" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="6.0" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="6.0" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="6.0" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="6.0" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -539,46 +608,56 @@
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
-				<LEAF id="nose" type="patch" orderU="4" orderV="6" partsU="20" partsV="20">
-					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
-					<controlpoint x="-1.8" y="0" z="8.6" w="0.10" />
-					<controlpoint x="-1.9" y="0.61" z="8.6" w="5" />
-					<controlpoint x="0" y="0.86" z="8.6" w="0.50" />
-					<controlpoint x="1.9" y="0.61" z="8.6" w="5" />
-					<controlpoint x="1.8" y="0" z="8.6" w="0.10" />
-					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+				<LEAF id="nose" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="-1.8" yy="-1.2" zz="8.6" ww="1" />
+						<CPOINT xx="-1.8" yy="0" zz="8.6" ww="0.10" />
+						<CPOINT xx="-1.9" yy="0.61" zz="8.6" ww="5" />
+						<CPOINT xx="0" yy="0.86" zz="8.6" ww="0.50" />
+						<CPOINT xx="1.9" yy="0.61" zz="8.6" ww="5" />
+						<CPOINT xx="1.8" yy="0" zz="8.6" ww="0.10" />
+						<CPOINT xx="1.8" yy="-1.2" zz="8.6" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.3" y="-1.1" z="9.0" w="1" />
-					<controlpoint x="-2.0" y="-1.6" z="9.0" w="0.10" />
-					<controlpoint x="-1.4" y="0.48" z="9.0" w="5" />
-					<controlpoint x="0" y="0.45" z="9.0" w="0.50" />
-					<controlpoint x="1.4" y="0.48" z="9.0" w="5" />
-					<controlpoint x="2.0" y="-1.6" z="9.0" w="0.10" />
-					<controlpoint x="1.3" y="-1.1" z="9.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.3" yy="-1.1" zz="9.0" ww="1" />
+						<CPOINT xx="-2.0" yy="-1.6" zz="9.0" ww="0.10" />
+						<CPOINT xx="-1.4" yy="0.48" zz="9.0" ww="5" />
+						<CPOINT xx="0" yy="0.45" zz="9.0" ww="0.50" />
+						<CPOINT xx="1.4" yy="0.48" zz="9.0" ww="5" />
+						<CPOINT xx="2.0" yy="-1.6" zz="9.0" ww="0.10" />
+						<CPOINT xx="1.3" yy="-1.1" zz="9.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.0" y="-1.15" z="9.4" w="1" />
-					<controlpoint x="-1.5" y="-1.5" z="9.4" w="0.10" />
-					<controlpoint x="-1.1" y="0.17" z="9.4" w="5" />
-					<controlpoint x="0" y="0.16" z="9.4" w="0.50" />
-					<controlpoint x="1.1" y="0.17" z="9.4" w="5" />
-					<controlpoint x="1.5" y="-1.5" z="9.4" w="0.10" />
-					<controlpoint x="1.0" y="-1.15" z="9.4" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.0" yy="-1.15" zz="9.4" ww="1" />
+						<CPOINT xx="-1.5" yy="-1.5" zz="9.4" ww="0.10" />
+						<CPOINT xx="-1.1" yy="0.17" zz="9.4" ww="5" />
+						<CPOINT xx="0" yy="0.16" zz="9.4" ww="0.50" />
+						<CPOINT xx="1.1" yy="0.17" zz="9.4" ww="5" />
+						<CPOINT xx="1.5" yy="-1.5" zz="9.4" ww="0.10" />
+						<CPOINT xx="1.0" yy="-1.15" zz="9.4" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.37" y="-0.95" z="9.8" w="1" />
-					<controlpoint x="-0.56" y="-1.3" z="9.8" w="0.10" />
-					<controlpoint x="-0.40" y="-0.091" z="9.8" w="5" />
-					<controlpoint x="0" y="-0.086" z="9.8" w="0.50" />
-					<controlpoint x="0.40" y="-0.091" z="9.8" w="5" />
-					<controlpoint x="0.56" y="-1.3" z="9.8" w="0.10" />
-					<controlpoint x="0.37" y="-0.95" z="9.8" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.37" yy="-0.95" zz="9.8" ww="1" />
+						<CPOINT xx="-0.56" yy="-1.3" zz="9.8" ww="0.10" />
+						<CPOINT xx="-0.40" yy="-0.091" zz="9.8" ww="5" />
+						<CPOINT xx="0" yy="-0.086" zz="9.8" ww="0.50" />
+						<CPOINT xx="0.40" yy="-0.091" zz="9.8" ww="5" />
+						<CPOINT xx="0.56" yy="-1.3" zz="9.8" ww="0.10" />
+						<CPOINT xx="0.37" yy="-0.95" zz="9.8" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-0.35" y="-0.7" z="9.85" w="1" />
-					<controlpoint x="-0.5" y="-0.7" z="9.85" w="1" />
-					<controlpoint x="-0.3" y="-0.7" z="9.85" w="5" />
-					<controlpoint x="0" y="-0.7" z="9.85" w="0.50" />
-					<controlpoint x="0.3" y="-0.7" z="9.85" w="5" />
-					<controlpoint x="0.5" y="-0.7" z="9.85" w="1" />
-					<controlpoint x="0.35" y="-0.7" z="9.85" w="1" />
+					<CPLINE>
+						<CPOINT xx="-0.35" yy="-0.7" zz="9.85" ww="1" />
+						<CPOINT xx="-0.5" yy="-0.7" zz="9.85" ww="1" />
+						<CPOINT xx="-0.3" yy="-0.7" zz="9.85" ww="5" />
+						<CPOINT xx="0" yy="-0.7" zz="9.85" ww="0.50" />
+						<CPOINT xx="0.3" yy="-0.7" zz="9.85" ww="5" />
+						<CPOINT xx="0.5" yy="-0.7" zz="9.85" ww="1" />
+						<CPOINT xx="0.35" yy="-0.7" zz="9.85" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -588,62 +667,76 @@
 			<TEXTURE id="hel_metal"/>
 
 			<DESCENDANTS>
-				<LEAF id="window" type="patch" orderU="6" orderV="6" partsU="20" partsV="20">
-					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
-					<controlpoint x="-1.7" y="0" z="6.0" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="6.0" w="5" />
-					<controlpoint x="0" y="3.6" z="6.0" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="6.0" w="5" />
-					<controlpoint x="1.7" y="0" z="6.0" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="6.0" w="1" />
+				<LEAF id="window" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.0" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="6.0" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="6.0" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="6.0" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="6.0" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="6.0" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="6.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="6.3" w="1" />
-					<controlpoint x="-1.7" y="0" z="6.3" w="0.10" />
-					<controlpoint x="-2.5" y="2.5" z="6.3" w="5" />
-					<controlpoint x="0" y="3.6" z="6.3" w="0.50" />
-					<controlpoint x="2.5" y="2.5" z="6.3" w="5" />
-					<controlpoint x="1.7" y="0" z="6.3" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="6.3" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.3" ww="1" />
+						<CPOINT xx="-1.7" yy="0" zz="6.3" ww="0.10" />
+						<CPOINT xx="-2.5" yy="2.5" zz="6.3" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="6.3" ww="0.50" />
+						<CPOINT xx="2.5" yy="2.5" zz="6.3" ww="5" />
+						<CPOINT xx="1.7" yy="0" zz="6.3" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="6.3" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.2" y="-1.2" z="6.6" w="1" />
-					<controlpoint x="-2.2" y="0" z="6.6" w="0.10" />
-					<controlpoint x="-2.3" y="2.5" z="6.6" w="5" />
-					<controlpoint x="0" y="3.6" z="6.6" w="0.50" />
-					<controlpoint x="2.3" y="2.5" z="6.6" w="5" />
-					<controlpoint x="2.2" y="0" z="6.6" w="0.10" />
-					<controlpoint x="2.2" y="-1.2" z="6.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.6" ww="1" />
+						<CPOINT xx="-2.2" yy="0" zz="6.6" ww="0.10" />
+						<CPOINT xx="-2.3" yy="2.5" zz="6.6" ww="5" />
+						<CPOINT xx="0" yy="3.6" zz="6.6" ww="0.50" />
+						<CPOINT xx="2.3" yy="2.5" zz="6.6" ww="5" />
+						<CPOINT xx="2.2" yy="0" zz="6.6" ww="0.10" />
+						<CPOINT xx="2.2" yy="-1.2" zz="6.6" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-2.1" y="-1.2" z="7.1" w="1" />
-					<controlpoint x="-2.1" y="0" z="7.1" w="0.10" />
-					<controlpoint x="-2.2" y="1.8" z="7.1" w="5" />
-					<controlpoint x="0" y="2.5" z="7.1" w="0.50" />
-					<controlpoint x="2.2" y="1.8" z="7.1" w="5" />
-					<controlpoint x="2.1" y="0" z="7.1" w="0.10" />
-					<controlpoint x="2.1" y="-1.2" z="7.1" w="1" />
+					<CPLINE>
+						<CPOINT xx="-2.1" yy="-1.2" zz="7.1" ww="1" />
+						<CPOINT xx="-2.1" yy="0" zz="7.1" ww="0.10" />
+						<CPOINT xx="-2.2" yy="1.8" zz="7.1" ww="5" />
+						<CPOINT xx="0" yy="2.5" zz="7.1" ww="0.50" />
+						<CPOINT xx="2.2" yy="1.8" zz="7.1" ww="5" />
+						<CPOINT xx="2.1" yy="0" zz="7.1" ww="0.10" />
+						<CPOINT xx="2.1" yy="-1.2" zz="7.1" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.9" y="-1.2" z="7.6" w="1" />
-					<controlpoint x="-1.9" y="0" z="7.6" w="0.10" />
-					<controlpoint x="-2.1" y="1.2" z="7.6" w="5" />
-					<controlpoint x="0" y="1.8" z="7.6" w="0.50" />
-					<controlpoint x="2.1" y="1.2" z="7.6" w="5" />
-					<controlpoint x="1.9" y="0" z="7.6" w="0.10" />
-					<controlpoint x="1.9" y="-1.2" z="7.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.9" yy="-1.2" zz="7.6" ww="1" />
+						<CPOINT xx="-1.9" yy="0" zz="7.6" ww="0.10" />
+						<CPOINT xx="-2.1" yy="1.2" zz="7.6" ww="5" />
+						<CPOINT xx="0" yy="1.8" zz="7.6" ww="0.50" />
+						<CPOINT xx="2.1" yy="1.2" zz="7.6" ww="5" />
+						<CPOINT xx="1.9" yy="0" zz="7.6" ww="0.10" />
+						<CPOINT xx="1.9" yy="-1.2" zz="7.6" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.9" y="-1.2" z="8.1" w="1" />
-					<controlpoint x="-1.9" y="0" z="8.1" w="0.10" />
-					<controlpoint x="-2.0" y="0.87" z="8.1" w="5" />
-					<controlpoint x="0" y="1.2" z="8.1" w="0.50" />
-					<controlpoint x="2.0" y="0.87" z="8.1" w="5" />
-					<controlpoint x="1.9" y="0" z="8.1" w="0.10" />
-					<controlpoint x="1.9" y="-1.2" z="8.1" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.9" yy="-1.2" zz="8.1" ww="1" />
+						<CPOINT xx="-1.9" yy="0" zz="8.1" ww="0.10" />
+						<CPOINT xx="-2.0" yy="0.87" zz="8.1" ww="5" />
+						<CPOINT xx="0" yy="1.2" zz="8.1" ww="0.50" />
+						<CPOINT xx="2.0" yy="0.87" zz="8.1" ww="5" />
+						<CPOINT xx="1.9" yy="0" zz="8.1" ww="0.10" />
+						<CPOINT xx="1.9" yy="-1.2" zz="8.1" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
-					<controlpoint x="-1.8" y="0" z="8.6" w="0.10" />
-					<controlpoint x="-1.9" y="0.61" z="8.6" w="5" />
-					<controlpoint x="0" y="0.86" z="8.6" w="0.50" />
-					<controlpoint x="1.9" y="0.61" z="8.6" w="5" />
-					<controlpoint x="1.8" y="0" z="8.6" w="0.10" />
-					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="-1.8" yy="-1.2" zz="8.6" ww="1" />
+						<CPOINT xx="-1.8" yy="0" zz="8.6" ww="0.10" />
+						<CPOINT xx="-1.9" yy="0.61" zz="8.6" ww="5" />
+						<CPOINT xx="0" yy="0.86" zz="8.6" ww="0.50" />
+						<CPOINT xx="1.9" yy="0.61" zz="8.6" ww="5" />
+						<CPOINT xx="1.8" yy="0" zz="8.6" ww="0.10" />
+						<CPOINT xx="1.8" yy="-1.2" zz="8.6" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -665,97 +758,156 @@
 			<TEXTURE id="red_plastic"/>
 
 			<DESCENDANTS>
-				<LEAF id="window_floor" type="patch" orderU="6" orderV="1" partsU="20" partsV="20">
-					<controlpoint x="2.2" y="-1.2" z="6.0" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
+				<LEAF id="window_floor" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="6.0" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="6.3" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="6.3" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="6.3" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.3" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="6.6" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="6.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="6.6" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.6" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.1" y="-1.2" z="7.1" w="1" />
-					<controlpoint x="-2.1" y="-1.2" z="7.1" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.1" yy="-1.2" zz="7.1" ww="1" />
+						<CPOINT xx="-2.1" yy="-1.2" zz="7.1" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.9" y="-1.2" z="7.6" w="1" />
-					<controlpoint x="-1.9" y="-1.2" z="7.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.9" yy="-1.2" zz="7.6" ww="1" />
+						<CPOINT xx="-1.9" yy="-1.2" zz="7.6" ww="1" />
 
-					<controlpoint x="1.9" y="-1.2" z="8.1" w="1" />
-					<controlpoint x="-1.9" y="-1.2" z="8.1" w="1" />
+					</CPLINE>
 
-					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
-					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.9" yy="-1.2" zz="8.1" ww="1" />
+						<CPOINT xx="-1.9" yy="-1.2" zz="8.1" ww="1" />
+					</CPLINE>
+
+					<CPLINE>
+						<CPOINT xx="1.8" yy="-1.2" zz="8.6" ww="1" />
+						<CPOINT xx="-1.8" yy="-1.2" zz="8.6" ww="1" />
+					</CPLINE>
 				</LEAF>
-				<LEAF id="nose_floor" type="patch" orderU="4" orderV="1" partsU="20" partsV="20">
-					<controlpoint x="1.8" y="-1.2" z="8.6" w="1" />
-					<controlpoint x="-1.8" y="-1.2" z="8.6" w="1" />
+				<LEAF id="nose_floor" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="1.8" yy="-1.2" zz="8.6" ww="1" />
+						<CPOINT xx="-1.8" yy="-1.2" zz="8.6" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.3" y="-1.1" z="9.0" w="1" />
-					<controlpoint x="-1.3" y="-1.1" z="9.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.3" yy="-1.1" zz="9.0" ww="1" />
+						<CPOINT xx="-1.3" yy="-1.1" zz="9.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.0" y="-1.15" z="9.4" w="1" />
-					<controlpoint x="-1.0" y="-1.15" z="9.4" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.0" yy="-1.15" zz="9.4" ww="1" />
+						<CPOINT xx="-1.0" yy="-1.15" zz="9.4" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.37" y="-0.95" z="9.8" w="1" />
-					<controlpoint x="-0.37" y="-0.95" z="9.8" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.37" yy="-0.95" zz="9.8" ww="1" />
+						<CPOINT xx="-0.37" yy="-0.95" zz="9.8" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.35" y="-0.7" z="9.85" w="1" />
-					<controlpoint x="-0.35" y="-0.7" z="9.85" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.35" yy="-0.7" zz="9.85" ww="1" />
+						<CPOINT xx="-0.35" yy="-0.7" zz="9.85" ww="1" />
+					</CPLINE>
 				</LEAF>
-				<LEAF id="junction_floor" type="patch" orderU="5" orderV="1" partsU="20" partsV="20">
-					<controlpoint x="0.99" y="-0.99" z="0.0" w="1" />
-					<controlpoint x="-0.99" y="-0.99" z="0.0" w="1" />
+				<LEAF id="junction_floor" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="0.99" yy="-0.99" zz="0.0" ww="1" />
+						<CPOINT xx="-0.99" yy="-0.99" zz="0.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.2" y="-1.0" z="0.55" w="1" />
-					<controlpoint x="-1.2" y="-1.0" z="0.55" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.2" yy="-1.0" zz="0.55" ww="1" />
+						<CPOINT xx="-1.2" yy="-1.0" zz="0.55" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.5" y="-1.1" z="0.60" w="1" />
-					<controlpoint x="-1.5" y="-1.1" z="0.60" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.5" yy="-1.1" zz="0.60" ww="1" />
+						<CPOINT xx="-1.5" yy="-1.1" zz="0.60" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.7" y="-1.1" z="0.90" w="1" />
-					<controlpoint x="-1.7" y="-1.1" z="0.90" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.7" yy="-1.1" zz="0.90" ww="1" />
+						<CPOINT xx="-1.7" yy="-1.1" zz="0.90" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="1.9" y="-1.2" z="1.2" w="1" />
-					<controlpoint x="-1.9" y="-1.2" z="1.2" w="1" />
+					<CPLINE>
+						<CPOINT xx="1.9" yy="-1.2" zz="1.2" ww="1" />
+						<CPOINT xx="-1.9" yy="-1.2" zz="1.2" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="1.5" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="1.5" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="1.5" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="1.5" ww="1" />
+					</CPLINE>
 				</LEAF>
-				<LEAF id="body_floor" type="patch" orderU="3" orderV="1" partsU="20" partsV="20">
-					<controlpoint x="2.2" y="-1.2" z="1.5" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="1.5" w="1" />
+				<LEAF id="body_floor" type="patch" partsU="20" partsV="20">
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="1.5" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="1.5" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="3.0" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="3.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="3.0" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="3.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="4.5" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="4.5" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="4.5" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="4.5" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="2.2" y="-1.2" z="6.0" w="1" />
-					<controlpoint x="-2.2" y="-1.2" z="6.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="2.2" yy="-1.2" zz="6.0" ww="1" />
+						<CPOINT xx="-2.2" yy="-1.2" zz="6.0" ww="1" />
+					</CPLINE>
 				</LEAF>
 				<LEAF id="tail_floor" type="patch" orderU="6" orderV="1" partsU="20" partsV="20" >
-					<controlpoint x="0.0" y="-0.0" z="-5.1" w="1" />
-					<controlpoint x="-0.0" y="-0.0" z="-5.1" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.0" yy="-0.0" zz="-5.1" ww="1" />
+						<CPOINT xx="-0.0" yy="-0.0" zz="-5.1" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.28" y="-0.28" z="-5.0" w="1" />
-					<controlpoint x="-0.28" y="-0.28" z="-5.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.28" yy="-0.28" zz="-5.0" ww="1" />
+						<CPOINT xx="-0.28" yy="-0.28" zz="-5.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.42" y="-0.42" z="-4.0" w="1" />
-					<controlpoint x="-0.42" y="-0.42" z="-4.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.42" yy="-0.42" zz="-4.0" ww="1" />
+						<CPOINT xx="-0.42" yy="-0.42" zz="-4.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.57" y="-0.57" z="-3.0" w="1" />
-					<controlpoint x="-0.57" y="-0.57" z="-3.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.57" yy="-0.57" zz="-3.0" ww="1" />
+						<CPOINT xx="-0.57" yy="-0.57" zz="-3.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.71" y="-0.71" z="-2.0" w="1" />
-					<controlpoint x="-0.71" y="-0.71" z="-2.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.71" yy="-0.71" zz="-2.0" ww="1" />
+						<CPOINT xx="-0.71" yy="-0.71" zz="-2.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.85" y="-0.85" z="-1.0" w="1" />
-					<controlpoint x="-0.85" y="-0.85" z="-1.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.85" yy="-0.85" zz="-1.0" ww="1" />
+						<CPOINT xx="-0.85" yy="-0.85" zz="-1.0" ww="1" />
+					</CPLINE>
 
-					<controlpoint x="0.99" y="-0.99" z="0.0" w="1" />
-					<controlpoint x="-0.99" y="-0.99" z="0.0" w="1" />
+					<CPLINE>
+						<CPOINT xx="0.99" yy="-0.99" zz="0.0" ww="1" />
+						<CPOINT xx="-0.99" yy="-0.99" zz="0.0" ww="1" />
+					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
 		</NODE>
@@ -919,9 +1071,18 @@
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
+				<NODEREF id="ceiling_top"/>
+				<NODEREF id="ceil_floor"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceiling_top">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<DESCENDANTS>
 				<NODEREF id="ceil1"/>
 				<NODEREF id="ceil2"/>
-				<NODEREF id="ceil_floor"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -968,7 +1129,7 @@
 
 		<NODE id="columns">
 			<MATERIAL id="null"/>
-			<TEXTURE id="null"/>
+			<TEXTURE id="pillar_text"/>
 
 			<TRANSLATION x="0" y="8" z="-10"/>
 			<ROTATION axis="x" angle="90"/>
@@ -1000,7 +1161,6 @@
 			</DESCENDANTS>
 		</NODE>
 
-		
 		<NODE id="column1">
 			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
@@ -1294,9 +1454,6 @@
 
 		</NODE>
 
-
-
-
 		<NODE id="statue">
 			<MATERIAL id="null"/>
 			<TEXTURE id="red_plastic"/>
@@ -1313,7 +1470,7 @@
 
 		<NODE id="pillar">
 			<MATERIAL id="null"/>
-			<TEXTURE id="null"/>
+			<TEXTURE id="pillar_text"/>
 
 			<SCALE sx="13" sy="13.7" sz="0.8"/>
 
@@ -1337,12 +1494,13 @@
 		</NODE>
 
 		<NODE id="globe">
-			<MATERIAL id="null"/>
+			<MATERIAL id="earth_mat"/>
 			<TEXTURE id="earth"/>
 
 			<TRANSLATION x="0" y ="0" z="-1"/>
 			<SCALE sx="2" sy="2" sz="2"/>
 			<ROTATION axis ="x" angle="-90"/>
+			<ROTATION axis="y" angle="180"/>
 
 			<DESCENDANTS>
 				<LEAF type="sphere" args="1 190 190"/>

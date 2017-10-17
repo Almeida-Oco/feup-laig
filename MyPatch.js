@@ -1,6 +1,7 @@
 /**
  * MyObject
  * @constructor
+ * @param args [partsU, partsV, orderU, orderV, controlV]
  */
 function MyPatch(scene,args) {
 		var degree1=args[0], degree2=args[1], parts_u=args[2], parts_v=args[3], control_vertexes=args[4];
