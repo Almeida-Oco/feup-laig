@@ -41,12 +41,12 @@ MyQuad.prototype.initBuffers = function () {
 };
 
 MyQuad.prototype.defTextCoords = function(afs, aft){
-	var s = 1, t = 1;
+	var s = this.x1-this.x2, t = this.y1-this.y2;
 	this.texCoords = [
 		0, 0,
 		0, t/aft,
-		s/afs,0,
-		s/afs, t/aft
+		s/afs, t/aft,
+		s/afs,0
 	];
 	this.initGLBuffers();
 }

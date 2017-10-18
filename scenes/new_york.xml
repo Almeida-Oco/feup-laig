@@ -132,9 +132,8 @@
 			<TEXTURE id="bank"/>
 
 			<DESCENDANTS>
-				<NODEREF id="zeppelin"/>
+				<!--<NODEREF id="zeppelin"/>-->
 				<NODEREF id="helicopter"/>
-				<!--<NODEREF id="tower"/>-->
 				<NODEREF id="floor" />
 				<NODEREF id="parthenon"/>
 			</DESCENDANTS>
@@ -1028,35 +1027,12 @@
 
 		</NODE>
 
-		<!-- Generic tower -->
-		<NODE id="tower">
-			<MATERIAL id="piramide" />
-			<TEXTURE id="twface" />
-
-			<TRANSLATION x="12.5" y="-11.5" z="2" />
-			<SCALE sx="1.5" sy="3" sz="1.5" />
-			<ROTATION axis="z" angle="-90" />
-			<ROTATION axis="x" angle="90" />
-
-			<DESCENDANTS>
-				<NODEREF id="cube"/>
-			</DESCENDANTS>
-
-		</NODE>
-
-
-
-
-
-
-
-
 		<NODE id="parthenon">
 			<MATERIAL id="panth_mat"/>
 			<TEXTURE id="marble"/>
 
-			<TRANSLATION x="-7" y="-28" z="-35"/>
-			<ROTATION axis="y" angle="-90"/>
+			<!--<TRANSLATION x="-7" y="-28" z="-35"/>-->
+			<!--<ROTATION axis="y" angle="-90"/>-->
 
 			<DESCENDANTS>
 				<NODEREF id="ceiling"/>
@@ -1073,6 +1049,7 @@
 			<DESCENDANTS>
 				<NODEREF id="ceiling_top"/>
 				<NODEREF id="ceil_floor"/>
+				<NODEREF id="ceil_lids"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -1080,9 +1057,25 @@
 			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
+			<TRANSLATION x="0" y="10" z="0"/>
+
 			<DESCENDANTS>
 				<NODEREF id="ceil1"/>
 				<NODEREF id="ceil2"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil_lids">
+			<MATERIAL id="null"/>
+			<TEXTURE id="earth"/>
+
+			<TRANSLATION x="9.4" y="18.275" z="-10"/>
+			<ROTATION axis="y" angle="-90"/>
+			<SCALE sx="9.6" sy="2.575" sz="1"/>
+
+
+			<DESCENDANTS>
+				<LEAF type="triangle" args="1 0 0 -1 0 0 0 1 0"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -1090,9 +1083,9 @@
 			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
-			<TRANSLATION x="0" y="10" z="-14.5"/>
+			<TRANSLATION x="0" y="9.82" z="-14.8"/>
 			<ROTATION axis="x" angle="75"/>
-			<SCALE sx="20" sy="10" sz="0.5"/>
+			<SCALE sx="19.8" sy="10.075" sz="0.5"/>
 
 			<DESCENDANTS>
 				<NODEREF id="cube"/>
@@ -1104,9 +1097,9 @@
 			<TEXTURE id="null"/>
 
 
-			<TRANSLATION x="0" y="10" z="-5"/>
+			<TRANSLATION x="0" y="9.82" z="-5.2"/>
 			<ROTATION axis="x" angle="-75"/>
-			<SCALE sx="20" sy="10" sz="0.5"/>
+			<SCALE sx="19.8" sy="10.075" sz="0.5"/>
 
 			<DESCENDANTS>
 				<NODEREF id="cube"/>
