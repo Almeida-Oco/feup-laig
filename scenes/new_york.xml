@@ -13,7 +13,7 @@
 
 	<!-- Illumination and clear color -->
 	<ILLUMINATION>
-		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<ambient r="0.4" g="0.4" b="0.4" a="1" />
 		<background r="0" g="0.55" b="0.55" a="1" />
 	</ILLUMINATION>
 
@@ -26,29 +26,25 @@
 			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 		</LIGHT>
+
+		<LIGHT id="light1">
+			<enable value ="1" />
+			<position  x="0" y="35" z="-20" w="1" />
+			<ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+		</LIGHT>
 	</LIGHTS>
 
 	<TEXTURES>
-		<!-- Rocks -->
-		<TEXTURE id="bank">
-			<file path="images/bank.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
-
 		<TEXTURE id="marble">
 			<file path="images/marble_tex.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
 		<!-- New york floor -->
-		<TEXTURE id="nwfloor">
-			<file path="images/nwfloor.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
-
-		<!-- Tower face -->
-		<TEXTURE id="twface">
-			<file path="images/skyscraper.jpg" />
+		<TEXTURE id="grass">
+			<file path="images/grass.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
@@ -57,13 +53,13 @@
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
 
-		<TEXTURE id="red_plastic">
+		<TEXTURE id="red">
 			<file path="images/red.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
 		<TEXTURE id="hel_metal">
-			<file path="images/metal.jpg"/>
+			<file path="images/camouflage.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
@@ -73,7 +69,7 @@
 		</TEXTURE>
 
 		<TEXTURE id="black_metal">
-			<file path="images/leaves.jpg"/>
+			<file path="images/b_metal.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
@@ -86,6 +82,22 @@
 			<file path="images/pillar.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
+
+		<TEXTURE id="stone_cravings">
+			<file path="images/marble2.jpg"/>
+			<amplif_factor s="1" t="1"/>
+		</TEXTURE>
+
+		<TEXTURE id="hel_window_front">
+			<file path="images/camouflage_window.jpg"/>
+			<amplif_factor s="1" t="1"/>
+		</TEXTURE>
+
+		<TEXTURE id="hel_window_body">
+			<file path="images/cam_wind_body.jpg"/>
+			<amplif_factor s="1" t="1"/>
+		</TEXTURE>
+
 	</TEXTURES>
 
 	<MATERIALS>
@@ -118,7 +130,7 @@
 			<specular r="0.1" g="0.1" b="0.5" a="1"/>
 			<diffuse r="0.95" g="0.95" b="0.95" a="1" />
 			<ambient r="0.2" g="0.2" b="0.2" a="1"/>
-			<emission r="0" g="0" b="0" a="1"/>
+			<emission r="1" g="1" b="1" a="1"/>
 
 		</MATERIAL>
 	</MATERIALS>
@@ -129,10 +141,10 @@
 
 		<NODE id="root">
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="bank"/>
+			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
-				<!--<NODEREF id="zeppelin"/>-->
+				<NODEREF id="zeppelin"/>
 				<NODEREF id="helicopter"/>
 				<NODEREF id="floor" />
 				<NODEREF id="parthenon"/>
@@ -144,7 +156,7 @@
 			<MATERIAL id="piramide"/>
 			<TEXTURE id="goodyear"/>
 
-			<TRANSLATION x="10" y="10" z="10"/>
+			<TRANSLATION x="10" y="20" z="10"/>
 
 			<DESCENDANTS>
 				<NODEREF id="ballon"/>
@@ -154,7 +166,7 @@
 
 		<NODE id="pads" >
 			<MATERIAL id="piramide"/>
-			<TEXTURE id="red_plastic"/>
+			<TEXTURE id="red"/>
 
 			<DESCENDANTS>
 				<NODEREF id="pads_vert"/>
@@ -390,7 +402,7 @@
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
-			<TRANSLATION x="0" y="0" z="10"/>
+			<TRANSLATION x="0" y="30" z="-30"/>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_tail"/>
@@ -483,7 +495,7 @@
 
 		<NODE id="chopper_body">
 			<MATERIAL id="null"/>
-			<TEXTURE id="null"/>
+			<TEXTURE id="hel_window_body"/>
 
 			<DESCENDANTS>
 				<LEAF id="junction" type="patch" partsU="20" partsV="20">
@@ -663,7 +675,7 @@
 
 		<NODE id="chopper_window_base">
 			<MATERIAL id="null"/>
-			<TEXTURE id="hel_metal"/>
+			<TEXTURE id="hel_window_front"/>
 
 			<DESCENDANTS>
 				<LEAF id="window" type="patch" partsU="20" partsV="20">
@@ -754,7 +766,7 @@
 
 		<NODE id="chopper_floor">
 			<MATERIAL id="metal"/>
-			<TEXTURE id="red_plastic"/>
+			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
 				<LEAF id="window_floor" type="patch" partsU="20" partsV="20">
@@ -1014,10 +1026,10 @@
 		<!-- The floor -->
 		<NODE id="floor">
 			<MATERIAL id="null" />
-			<TEXTURE id="nwfloor" />
+			<TEXTURE id="grass" />
 
 			<SCALE sx="40" sy="1" sz="85" />
-			<TRANSLATION x="0" y="-33.5" z="0" />
+			<TRANSLATION x="0" y="-5.5" z="0" />
 			<ROTATION axis="x" angle="-90" />
 			<TRANSLATION x="-2.5" y="-1.5" z="0" />
 
@@ -1057,8 +1069,6 @@
 			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
-			<TRANSLATION x="0" y="10" z="0"/>
-
 			<DESCENDANTS>
 				<NODEREF id="ceil1"/>
 				<NODEREF id="ceil2"/>
@@ -1067,15 +1077,11 @@
 
 		<NODE id="ceil_lids">
 			<MATERIAL id="null"/>
-			<TEXTURE id="earth"/>
-
-			<TRANSLATION x="9.4" y="18.275" z="-10"/>
-			<ROTATION axis="y" angle="-90"/>
-			<SCALE sx="9.6" sy="2.575" sz="1"/>
-
+			<TEXTURE id="stone_cravings"/>
 
 			<DESCENDANTS>
-				<LEAF type="triangle" args="1 0 0 -1 0 0 0 1 0"/>
+				<NODEREF id="ceil_lid1"/>
+				<NODEREF id="ceil_lid2"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -1103,6 +1109,32 @@
 
 			<DESCENDANTS>
 				<NODEREF id="cube"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil_lid1">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="9.4" y="8.275" z="-10"/>
+			<ROTATION axis="y" angle="-90"/>
+			<SCALE sx="9.6" sy="2.575" sz="1"/>
+
+			<DESCENDANTS>
+				<LEAF type="triangle" args="1 0 0 -1 0 0 0 1 0"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="ceil_lid2">
+			<MATERIAL id="null"/>
+			<TEXTURE id="null"/>
+
+			<TRANSLATION x="-9.4" y="8.275" z="-10"/>
+			<ROTATION axis="y" angle="90"/>
+			<SCALE sx="9.6" sy="2.575" sz="1"/>
+
+			<DESCENDANTS>
+				<LEAF type="triangle" args="1 0 0 -1 0 0 0 1 0"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -1449,7 +1481,7 @@
 
 		<NODE id="statue">
 			<MATERIAL id="null"/>
-			<TEXTURE id="red_plastic"/>
+			<TEXTURE id="red"/>
 
 			<TRANSLATION x="-1" y="1" z="-10"/>
 			<ROTATION axis ="x" angle="90"/>
