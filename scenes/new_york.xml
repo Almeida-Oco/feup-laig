@@ -83,7 +83,7 @@
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
 
-		<TEXTURE id="stone_cravings">
+		<TEXTURE id="lid__marble">
 			<file path="images/marble2.jpg"/>
 			<amplif_factor s="1" t="1"/>
 		</TEXTURE>
@@ -101,14 +101,6 @@
 	</TEXTURES>
 
 	<MATERIALS>
-		<MATERIAL id="piramide">
-			<shininess value="1" />
-			<specular r="0" g="0" b="0" a="1" />
-			<diffuse r="1.0" g="0.68" b="0.4" a="1" />
-			<ambient r="0.2" g="0.2" b="0.2" a="1" />
-			<emission r="0.0" g="0.0" b="0.0" a="1" />
-		</MATERIAL>
-
 		<MATERIAL id="panth_mat">
 			<shininess value="0.1" />
 			<specular r="0.1" g="0.1" b="0.1" a="1" />
@@ -130,9 +122,34 @@
 			<specular r="0.1" g="0.1" b="0.5" a="1"/>
 			<diffuse r="0.95" g="0.95" b="0.95" a="1" />
 			<ambient r="0.2" g="0.2" b="0.2" a="1"/>
-			<emission r="1" g="1" b="1" a="1"/>
-
+			<emission r="0.1" g="0.1" b="1" a="1"/>
 		</MATERIAL>
+
+		<MATERIAL id="ballon_mat">
+			<shininess value="5"/>
+			<specular r="0.9" g="0.9" b="0.9" a="1"/>
+			<diffuse r="0.6" g="0.6" b="0.7" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1"/>
+			<emission r="0" g="0" b="0" a="1"/>
+		</MATERIAL>
+
+		<MATERIAL id="pads_mat">
+			<shininess value="20"/>
+			<specular r="0.7" g="0.7" b="0.8" a="1"/>
+			<diffuse r="0.6" g="0.6" b="0.7" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1"/>
+			<emission r="0" g="0" b="0" a="1"/>
+		</MATERIAL>
+
+		<MATERIAL id="grass">
+			<shininess value="0.1"/>
+			<specular r="0.1" g="0.1" b="0.1" a="1"/>
+			<diffuse r="0.05" g="0.05" b="0.05" a="1" />
+			<ambient r="0.25" g="0.25" b="0.25" a="1"/>
+			<emission r="0" g="0" b="0" a="1"/>
+		</MATERIAL>
+
+
 	</MATERIALS>
 
 	<!-- The nodes -->
@@ -140,7 +157,7 @@
 		<ROOT id="root" />
 
 		<NODE id="root">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="grass"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -153,7 +170,7 @@
 		</NODE>
 
 		<NODE id="zeppelin">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="ballon_mat"/>
 			<TEXTURE id="goodyear"/>
 
 			<TRANSLATION x="10" y="20" z="10"/>
@@ -165,7 +182,7 @@
 		</NODE>
 
 		<NODE id="pads" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="pads_mat"/>
 			<TEXTURE id="red"/>
 
 			<DESCENDANTS>
@@ -175,7 +192,7 @@
 		</NODE>
 
 		<NODE id="pads_vert" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -185,7 +202,7 @@
 		</NODE>
 
 		<NODE id="pads_hor" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<DESCENDANTS>
@@ -195,7 +212,7 @@
 		</NODE>
 
 		<NODE id="upper_pad" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="0.9" z="0"/>
@@ -207,7 +224,7 @@
 		</NODE>
 
 		<NODE id="lower_pad" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="-1.3" z="0"/>
@@ -220,7 +237,7 @@
 		</NODE>
 
 		<NODE id="left_pad" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="0" z="1"/>
@@ -233,7 +250,7 @@
 		</NODE>
 
 		<NODE id="right_pad" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="0" z="-1"/>
@@ -246,7 +263,7 @@
 		</NODE>
 
 		<NODE id="pad1">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
@@ -271,7 +288,7 @@
 		</NODE>
 
 		<NODE id="pad2">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<SCALE sx="1.2" sy="1.1" sz="1"/>
@@ -296,7 +313,7 @@
 		</NODE>
 
 		<NODE id="ballon" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="ballon_mat"/>
 			<TEXTURE id="goodyear"/>
 
 			<TRANSLATION x="-3" y="0" z="0"/>
@@ -938,7 +955,7 @@
 		</NODE>
 
 		<NODE id="helices" >
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="metal"/>
 			<TEXTURE id="grey_metal"/>
 
 			<ROTATION axis="x" angle="90" />
@@ -952,7 +969,7 @@
 		</NODE>
 
 		<NODE id="hel1">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="-0.25" z="0"/>
@@ -964,7 +981,7 @@
 		</NODE>
 
 		<NODE id="hel2">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0.25" y="0" z="0"/>
@@ -977,7 +994,7 @@
 		</NODE>
 
 		<NODE id="hel3">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="-0.25" y="0" z="0"/>
@@ -990,7 +1007,7 @@
 		</NODE>
 
 		<NODE id="hel4">
-			<MATERIAL id="piramide"/>
+			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
 			<TRANSLATION x="0" y="0.25" z="0"/>
@@ -1077,7 +1094,7 @@
 
 		<NODE id="ceil_lids">
 			<MATERIAL id="null"/>
-			<TEXTURE id="stone_cravings"/>
+			<TEXTURE id="lid__marble"/>
 
 			<DESCENDANTS>
 				<NODEREF id="ceil_lid1"/>
