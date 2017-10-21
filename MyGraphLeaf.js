@@ -1,11 +1,10 @@
 /**
-* MyGraphLeaf class, representing a leaf in the scene graph.
-* Possible types: rectangle, cylinder, sphere, triangle, patch]
-* @constructor
-**/
-
-function MyGraphLeaf(graph, type, args, scene) {
-	this.graph = graph;
+ * @description Constructor for MyGraphLeaf
+ * @param type Type of leaf to create
+ * @param args Arguments of given leaf, will vary according to type
+ * @param scene The scene to render the leaf in
+ */
+function MyGraphLeaf(type, args, scene) {
 	this.type = type;
 	this.primitive;
 
@@ -19,11 +18,12 @@ function MyGraphLeaf(graph, type, args, scene) {
 		this.primitive = new MyCylinder(scene,args);
 	else if ("patch" == this.type)
 		this.primitive = new MyPatch(scene,args);
+	else
+		console.log("Unknown type: "+this.type+" aborting!");
 }
 
-//TODO render primitive
 /**
- * @brief Renders the leaf with correct parameters
+ * @description Renders the leaf with correct parameters
  * @param material The material to apply to the primitive
  * @param texture The texture to apply to the primitive, null if no texture to apply
  * @param matrix Matrix to apply to the primitive before rendering

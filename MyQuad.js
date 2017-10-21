@@ -1,7 +1,7 @@
 /**
- * MyObject
- * @param gl {WebGLRenderingContext}
- * @constructor
+ * @description Constructor of MyQuad
+ * @param scene Scene to render primitive in
+ * @param args Array with the following elements [x1, y1, x2, y2]
  */
 function MyQuad(scene,args) {
     CGFobject.call(this,scene);
@@ -17,6 +17,9 @@ function MyQuad(scene,args) {
 MyQuad.prototype = Object.create(CGFobject.prototype);
 MyQuad.prototype.constructor=MyQuad;
 
+/**
+ * @description Initializes the arrays needed for rendering
+ */
 MyQuad.prototype.initBuffers = function () {
   this.vertices = [
     this.x1, this.y1, 0,
@@ -40,6 +43,11 @@ MyQuad.prototype.initBuffers = function () {
 
 };
 
+/**
+ * @description Defines the texture coordinates of each vertex
+ * @param afs Amplification factor in the X axis
+ * @param aft Amplification factor in the Y axis
+ */
 MyQuad.prototype.defTextCoords = function(afs, aft){
 	var s = this.x1-this.x2, t = this.y1-this.y2;
 	this.texCoords = [
@@ -51,6 +59,11 @@ MyQuad.prototype.defTextCoords = function(afs, aft){
 	this.initGLBuffers();
 }
 
+/**
+ * @description Renders the primitive, but first defines the texture coordinates
+ * @param afs Amplification factor in the X axis to be set
+ * @param aft Amplification factor in the Y axis to be set
+ */
 MyQuad.prototype.render = function(afs, aft){
 	this.defTextCoords(afs,aft);
 	this.display();

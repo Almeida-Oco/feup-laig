@@ -1,7 +1,8 @@
 /**
-* MyTriangle
-* @constructor
-*/
+ * @description Constructor for MyTriangle
+ * @param scene Scene to render primitive in
+ * @param args Array containing the following elements: [x1, y1, z1, x2, y2, z2, x3, y3, z3]
+ */
 function MyTriangle(scene, args) {
 	this.scene = scene;
 	this.x = [args[0],args[3],args[6]];
@@ -13,6 +14,9 @@ function MyTriangle(scene, args) {
 MyTriangle.prototype = Object.create(CGFobject.prototype);
 MyTriangle.prototype.constructor = MyTriangle;
 
+/**
+ * @description Initializes the arrays needed for rendering
+ */
 MyTriangle.prototype.initBuffers = function() {
 
 	this.vertices = [
@@ -35,6 +39,11 @@ MyTriangle.prototype.initBuffers = function() {
 
 };
 
+/**
+ * @description Defines the texture coordinates of each vertex
+ * @param afs Amplification factor in the X axis
+ * @param aft Amplification factor in the Y axis
+ */
 MyTriangle.prototype.defTextCoords = function(afs, aft){
 	var a = Math.sqrt(Math.pow(this.x[2]-this.x[1],2) + Math.pow(this.y[2]-this.y[1],2) + Math.pow(this.z[2]-this.z[1],2)),
 			b = Math.sqrt(Math.pow(this.x[0]-this.x[2],2) + Math.pow(this.y[0]-this.y[2],2) + Math.pow(this.z[0]-this.z[2],2)),
@@ -51,6 +60,11 @@ MyTriangle.prototype.defTextCoords = function(afs, aft){
 	this.initGLBuffers();
 }
 
+/**
+ * @description Renders the primitive, but first defines the texture coordinates
+ * @param afs Amplification factor in the X axis to be set
+ * @param aft Amplification factor in the Y axis to be set
+ */
 MyTriangle.prototype.render = function(afs, aft){
 	this.defTextCoords(afs,aft);
 	this.display();

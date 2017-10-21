@@ -1,7 +1,7 @@
 /**
- * MyObject
- * @constructor
- * @param args [partsU, partsV, orderU, orderV, controlV]
+ * @description Constructor of MyPath
+ * @param scene Scene to render patch in
+ * @param args Array with following elements [partsU, partsV, orderU, orderV, controlV]
  */
 function MyPatch(scene,args) {
 		var degree1=args[0], degree2=args[1], parts_u=args[2], parts_v=args[3], control_vertexes=args[4];
@@ -28,11 +28,20 @@ function MyPatch(scene,args) {
 MyPatch.prototype = Object.create(CGFobject.prototype);
 MyPatch.prototype.constructor=MyPatch;
 
+/**
+ * @description Renders the patch
+ * @param afs Not needed in this primitive
+ * @param aft Not needed in this primitive
+ */
 MyPatch.prototype.render = function(afs, aft){
 	this.primitive.display();
 }
 
-//TODO merge 2 loops into 1
+/**
+ * @description Returns the knots vector needed to render the patch
+ * @param degree The degree of the knots vector to generate
+ * @return The knots vector
+ */
 MyPatch.prototype.getKnotsVector = function(degree) {
 	var v = new Array();
 	for (var i=0; i<=degree; i++) {

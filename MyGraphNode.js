@@ -1,11 +1,8 @@
 /**
-* MyGraphNode class, representing an intermediate node in the scene graph.
-* @constructor
-**/
-
-function MyGraphNode(graph, nodeID) {
-	this.graph = graph;
-
+ * @description Constructor for MyGraphNode
+ * @param nodeID ID of the node
+ */
+function MyGraphNode(nodeID) {
 	this.nodeID = nodeID;
 
 	// IDs of child nodes.
@@ -25,15 +22,17 @@ function MyGraphNode(graph, nodeID) {
 }
 
 /**
-* Adds the reference (ID) of another node to this node's children array.
-*/
+ * @description Adds a new child to this node
+ * @param nodeID ID of the child to add, stored as a string
+ */
 MyGraphNode.prototype.addChild = function(nodeID) {
 	this.children.push(nodeID);
 }
 
 /**
-* Adds a leaf to this node's leaves array.
-*/
+ * @description Adds a new leaf to this node
+ * @param leaf The leaf to add to the leaves array
+ */
 MyGraphNode.prototype.addLeaf = function(leaf) {
 	this.leaves.push(leaf);
 }

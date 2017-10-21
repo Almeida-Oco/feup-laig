@@ -1,12 +1,9 @@
 /**
-* MySphere
-* @constructor
+* @description Constructor of MySphere
 * @param scene Scene to display sphere in
-* @param slices Number of lines horizontally
-* @param stacks Number of lines vertically
+* @param args Array containing the following elements: [radius, slices, stacks]
 */
-function MySphere(scene, args)
-{
+function MySphere(scene, args){
 	this.radius = args[0];
 	this.scene = scene;
 	this.slices = parseFloat(args[1]);
@@ -23,8 +20,10 @@ function MySphere(scene, args)
 MySphere.prototype = Object.create(CGFobject.prototype);
 MySphere.prototype.constructor = MySphere;
 
-MySphere.prototype.initBuffers = function()
-{
+/**
+ * @description Initializes the arrays needed for rendering
+ */
+MySphere.prototype.initBuffers = function(){
 	this.indices = [];
 	this.normals = [];
 	this.texCoords = [];
@@ -79,6 +78,11 @@ MySphere.prototype.initBuffers = function()
 	this.initGLBuffers();
 };
 
+/**
+ * @description Renders the primitive
+ * @param afs Amplification factor in the X axis
+ * @param aft Amplification factor in the Y axis
+ */
 MySphere.prototype.render = function(afs, aft){
 	this.display();
 }

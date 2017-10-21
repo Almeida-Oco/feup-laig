@@ -1192,7 +1192,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 			this.log("Processing node "+nodeID);
 
 			// Creates node.
-			this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+			this.nodes[nodeID] = new MyGraphNode(nodeID);
 
 			// Gathers child nodes.
 			var nodeSpecs = children[i].children;
@@ -1377,7 +1377,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						args=this.reader.getString(descendants[j],'args').split(' ');
 					}
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, args, this.scene));
+					this.nodes[nodeID].addLeaf(new MyGraphLeaf(type, args, this.scene));
 
 					sizeChildren++;
 				}
