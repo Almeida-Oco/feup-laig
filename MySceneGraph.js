@@ -10,9 +10,10 @@ var LEAVES_INDEX = 5;
 var NODES_INDEX = 6;
 
 /**
-* MySceneGraph class, representing the scene graph.
-* @constructor
-*/
+ * @description Contructor for MySceneGraph
+ * @param file_name Name of the xml file to open
+ * @param scene Scene to render the graph
+ */
 function MySceneGraph(filename, scene) {
 	this.loadedOk = null;
 
@@ -41,9 +42,9 @@ function MySceneGraph(filename, scene) {
 	this.reader.open('scenes/' + filename, this);
 }
 
-/*
-* Callback to be executed after successful reading
-*/
+/**
+ * @description Called when the XML is ready to be read
+ */
 MySceneGraph.prototype.onXMLReady = function()
 {
 	console.log("XML Loading finished.");
@@ -64,8 +65,10 @@ MySceneGraph.prototype.onXMLReady = function()
 }
 
 /**
-* Parses the LSX file, processing each block.
-*/
+ * @description Parses the xml file one block at a time
+ * @param root_element The root of the graph, where the rendering will start
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 	if (rootElement.nodeName != "SCENE")
 	return "root tag <SCENE> missing";
@@ -153,8 +156,10 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 }
 
 /**
-* Parses the <INITIALS> block.
-*/
+ * @description Parses the Initials block
+ * @param initials_node Root node of the initials block, member children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseInitials = function(initialsNode) {
 
 	var children = initialsNode.children;
@@ -408,8 +413,10 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 }
 
 /**
-* Parses the <ILLUMINATION> block.
-*/
+ * @description Parses the Illumination block
+ * @param illumination_node The root node of the illumination block, children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
 	// Reads the ambient and background values.
@@ -542,8 +549,10 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 }
 
 /**
-* Parses the <LIGHTS> node.
-*/
+ * @description Parses the Lights block
+ * @param lights_node The root node of the lights block, member children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseLights = function(lightsNode) {
 
 	var children = lightsNode.children;
@@ -846,8 +855,10 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 }
 
 /**
-* Parses the <TEXTURES> block.
-*/
+ * @description Parses the Textures block
+ * @param lights_node The root node of the textures block, member children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseTextures = function(texturesNode) {
 
 	this.textures = [];
@@ -926,8 +937,10 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 }
 
 /**
-* Parses the <MATERIALS> node.
-*/
+ * @description Parses the Materials block
+ * @param lights_node The root node of the material block, member children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
 	var children = materialsNode.children;
@@ -1158,10 +1171,11 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 	console.log("Parsed materials");
 }
 
-
 /**
-* Parses the <NODES> block.
-*/
+ * @description Parses the Nodes block
+ * @param lights_node The root node of the node block, member children contains the elements
+ * @return null if there was no error, error message otherwise
+ */
 MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
 	// Traverses nodes.
@@ -1396,29 +1410,33 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 	return null ;
 }
 
-/*
-* Callback to be executed on any read error
-*/
+
+
+/**
+ * @description Called when there is an error to report
+ */
 MySceneGraph.prototype.onXMLError = function(message) {
 	console.error("XML Loading Error: " + message);
 	this.loadedOk = false;
 }
 
 /**
-* Callback to be executed on any minor error, showing a warning on the console.
-*/
+ * @description Called when there is a warning to report
+ */
 MySceneGraph.prototype.onXMLMinorError = function(message) {
 	console.warn("Warning: " + message);
 }
 
+/**
+ * @description Called when there is a simple log to report
+ */
 MySceneGraph.prototype.log = function(message) {
 	console.log("   " + message);
 }
 
 /**
-* Generates a default material, with a random name. This material will be passed onto the root node, which
-* may override it.
-*/
+ * @description Generates a default material with a random name
+ */
 MySceneGraph.prototype.generateDefaultMaterial = function() {
 	var materialDefault = new CGFappearance(this.scene);
 	materialDefault.setShininess(1);
@@ -1436,8 +1454,10 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 }
 
 /**
-* Generates a random string of the specified length.
-*/
+ * @description Generates a random string of specified legth
+ * @param length Length of the string to generate
+ * @return Generated string
+ */
 MySceneGraph.generateRandomString = function(length) {
 	// Generates an array of random integer ASCII codes of the specified length
 	// and returns a string of the specified length.
@@ -1449,10 +1469,7 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 /**
- * @brief Used to render the scene
- * @detail Using a DFS it will render every object of the scene starting at the root node.
- * TODO check if there is a need to ensure element was not previously discovered
- * TODO render graph
+ * @description Used to start rendering the scene, handles only the root node
  */
 MySceneGraph.prototype.displayScene = function() {
 	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
@@ -1471,7 +1488,7 @@ MySceneGraph.prototype.displayScene = function() {
 }
 
 /**
- * @brief Handles the inheritance of nodes
+ * @description Handles the inheritance of nodes
  * @param node_id ID of the father node
  * @param material_id ID of the material inherited
  * @param texture_id ID of the texture inherited
