@@ -90,7 +90,7 @@
 
 		<TEXTURE id="hel_window_front">
 			<file path="images/camouflage_window.jpg"/>
-			<amplif_factor s="1" t="1"/>
+			<amplif_factor s="1" t="2"/>
 		</TEXTURE>
 
 		<TEXTURE id="hel_window_body">
@@ -329,7 +329,7 @@
 						<CPOINT xx="0" yy="-3" zz="0" ww="0.3"/>
 						<CPOINT xx="0" yy="-3" zz="4" ww="0.3"/>
 						<CPOINT xx="0" yy="-0.5" zz="5" ww="0.3"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -339,7 +339,7 @@
 						<CPOINT xx="2.12" yy="-2.12" zz="0" ww="1"/>
 						<CPOINT xx="2.12" yy="-2.12" zz="4" ww="1"/>
 						<CPOINT xx="0.353" yy="-0.353" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -349,7 +349,7 @@
 						<CPOINT xx="3" yy="0" zz="0" ww="1"/>
 						<CPOINT xx="3" yy="0" zz="4" ww="1"/>
 						<CPOINT xx="0.5" yy="0" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -359,7 +359,7 @@
 						<CPOINT xx="2.12" yy="2.12" zz="0" ww="1"/>
 						<CPOINT xx="2.12" yy="2.12" zz="4" ww="1"/>
 						<CPOINT xx="0.353" yy="0.353" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -369,7 +369,7 @@
 						<CPOINT xx="0" yy="3" zz="0" ww="1"/>
 						<CPOINT xx="0" yy="3" zz="4" ww="1"/>
 						<CPOINT xx="0" yy="0.5" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -379,7 +379,7 @@
 						<CPOINT xx="-2.12" yy="2.12" zz="0" ww="1"/>
 						<CPOINT xx="-2.12" yy="2.12" zz="4" ww="1"/>
 						<CPOINT xx="-0.353" yy="0.353" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -389,7 +389,7 @@
 						<CPOINT xx="-3" yy="0" zz="0" ww="1"/>
 						<CPOINT xx="-3" yy="0" zz="4" ww="1"/>
 						<CPOINT xx="-0.5" yy="0" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -399,7 +399,7 @@
 						<CPOINT xx="-2.12" yy="-2.12" zz="0" ww="1"/>
 						<CPOINT xx="-2.12" yy="-2.12" zz="4" ww="1"/>
 						<CPOINT xx="-0.353" yy="-0.353" zz="5" ww="1"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 
 					<CPLINE>
@@ -409,7 +409,7 @@
 						<CPOINT xx="0" yy="-3" zz="0" ww="0.3"/>
 						<CPOINT xx="0" yy="-3" zz="4" ww="0.3"/>
 						<CPOINT xx="0" yy="-0.5" zz="5" ww="0.3"/>
-						<CPOINT xx="0" yy="0" zz="4.9" ww="0.5"/>
+						<CPOINT xx="0" yy="0" zz="5" ww="0.5"/>
 					</CPLINE>
 				</LEAF>
 			</DESCENDANTS>
@@ -1205,7 +1205,7 @@
 
 		<NODE id="column1">
 			<MATERIAL id="null"/>
-			<TEXTURE id="null"/>
+			<TEXTURE id="hel_metal"/>
 
 			<TRANSLATION x="0" y ="-0.45" z="0"/>
 

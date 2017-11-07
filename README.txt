@@ -8,5 +8,9 @@ Adapted by:
 - Rui Rodrigues - rui.rodrigues@fe.up.pt
 
 Completed by:
-- Gonçalo Moreno - up201503871@fe.up.pt
-- João Almeida - up201505866@fe.up.pt
+
+Class 1
+Group 3
+Elements:
+ - Gonçalo Moreno - up201503871@fe.up.pt
+ - João Almeida - up201505866@fe.up.pt
