@@ -6,15 +6,16 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 5;
+var LEAVES_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
- * @description Contructor for MySceneGraph
+ * @description Contructor for SceneGraph
  * @param file_name Name of the xml file to open
  * @param scene Scene to render the graph
  */
-function MySceneGraph(filename, scene) {
+function SceneGraph(filename, scene) {
 	this.loadedOk = null;
 
 	// Establish bidirectional references between scene and graph.
@@ -26,7 +27,7 @@ function MySceneGraph(filename, scene) {
 	this.root_id = null;                    // The id of the root element.
 
 	this.axisCoords = [];
-	this.axisCoords['x'] = [1, 0, 0];
+	this.axisCoords["x"] = [1, 0, 0];
 	this.axisCoords['y'] = [0, 1, 0];
 	this.axisCoords['z'] = [0, 0, 1];
 
@@ -45,7 +46,7 @@ function MySceneGraph(filename, scene) {
 /**
  * @description Called when the XML is ready to be read
  */
-MySceneGraph.prototype.onXMLReady = function()
+SceneGraph.prototype.onXMLReady = function()
 {
 	console.log("XML Loading finished.");
 	var rootElement = this.reader.xmlDoc.documentElement;
@@ -62,14 +63,14 @@ MySceneGraph.prototype.onXMLReady = function()
 
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 	this.scene.onGraphLoaded();
-}
+};
 
 /**
  * @description Parses the xml file one block at a time
  * @param root_element The root of the graph, where the rendering will start
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseLSXFile = function(rootElement) {
+SceneGraph.prototype.parseLSXFile = function(rootElement) {
 	if (rootElement.nodeName != "SCENE")
 	return "root tag <SCENE> missing";
 
@@ -142,6 +143,17 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 		return error;
 	}
 
+	// <ANIMATIONS>
+	if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+		return "tag <ANIMATIONS> missing";
+	else {
+		if (index != ANIMATIONS_INDEX)
+			this.onXMLMinorError("tag <ANIMATIONS> out of order");
+
+		if ((error = this.parseAnimations(nodes[index])) != null )
+			return error;
+	}
+
 	// <NODES>
 	if ((index = nodeNames.indexOf("NODES")) == -1)
 	return "tag <NODES> missing";
@@ -153,14 +165,14 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 		return error;
 	}
 
-}
+};
 
 /**
  * @description Parses the Initials block
  * @param initials_node Root node of the initials block, member children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseInitials = function(initialsNode) {
+SceneGraph.prototype.parseInitials = function(initialsNode) {
 
 	var children = initialsNode.children;
 
@@ -289,7 +301,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 	if (thirdRotationIndex != -1) {
 		axis = this.reader.getItem(children[thirdRotationIndex], 'axis', ['x', 'y', 'z']);
 		if (axis != null ) {
-			var angle = this.reader.getFloat(children[thirdRotationIndex], 'angle');
+			let angle = this.reader.getFloat(children[thirdRotationIndex], 'angle');
 			if (angle != null && !isNaN(angle)) {
 				initialRotations[axis] += angle;
 				if (!rotationDefined[axis])
@@ -304,7 +316,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 	if (secondRotationIndex != -1) {
 		axis = this.reader.getItem(children[secondRotationIndex], 'axis', ['x', 'y', 'z']);
 		if (axis != null ) {
-			var angle = this.reader.getFloat(children[secondRotationIndex], 'angle');
+			let angle = this.reader.getFloat(children[secondRotationIndex], 'angle');
 			if (angle != null && !isNaN(angle)) {
 				initialRotations[axis] += angle;
 				if (!rotationDefined[axis])
@@ -319,7 +331,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 	if (firstRotationIndex != -1) {
 		axis = this.reader.getItem(children[firstRotationIndex], 'axis', ['x', 'y', 'z']);
 		if (axis != null ) {
-			var angle = this.reader.getFloat(children[firstRotationIndex], 'angle');
+			let angle = this.reader.getFloat(children[firstRotationIndex], 'angle');
 			if (angle != null && !isNaN(angle)) {
 				initialRotations[axis] += angle;
 				if (!rotationDefined[axis])
@@ -410,14 +422,14 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 	console.log("Parsed initials");
 
 	return null ;
-}
+};
 
 /**
  * @description Parses the Illumination block
  * @param illumination_node The root node of the illumination block, children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
+SceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
 	// Reads the ambient and background values.
 	var children = illuminationNode.children;
@@ -546,14 +558,14 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 	console.log("Parsed illumination");
 
 	return null ;
-}
+};
 
 /**
  * @description Parses the Lights block
  * @param lights_node The root node of the lights block, member children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseLights = function(lightsNode) {
+SceneGraph.prototype.parseLights = function(lightsNode) {
 
 	var children = lightsNode.children;
 
@@ -852,14 +864,14 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 	console.log("Parsed lights");
 
 	return null ;
-}
+};
 
 /**
  * @description Parses the Textures block
  * @param lights_node The root node of the textures block, member children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseTextures = function(texturesNode) {
+SceneGraph.prototype.parseTextures = function(texturesNode) {
 
 	this.textures = [];
 
@@ -941,8 +953,7 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
  * @param lights_node The root node of the material block, member children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseMaterials = function(materialsNode) {
-
+SceneGraph.prototype.parseMaterials = function(materialsNode) {
 	var children = materialsNode.children;
 	// Each material.
 
@@ -958,10 +969,10 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
 		var materialID = this.reader.getString(children[i], 'id');
 		if (materialID == null )
-		return "no ID defined for material";
+			return "no ID defined for material";
 
 		if (this.materials[materialID] != null )
-		return "ID must be unique for each material (conflict: ID = " + materialID + ")";
+			return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
 		var materialSpecs = children[i].children;
 
@@ -974,14 +985,14 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 		// Shininess.
 		var shininessIndex = nodeNames.indexOf("shininess");
 		if (shininessIndex == -1)
-		return "no shininess value defined for material with ID = " + materialID;
+			return "no shininess value defined for material with ID = " + materialID;
 		var shininess = this.reader.getFloat(materialSpecs[shininessIndex], 'value');
 		if (shininess == null )
-		return "unable to parse shininess value for material with ID = " + materialID;
+			return "unable to parse shininess value for material with ID = " + materialID;
 		else if (isNaN(shininess))
-		return "'shininess' is a non numeric value";
+			return "'shininess' is a non numeric value";
 		else if (shininess <= 0)
-		return "'shininess' must be positive";
+			return "'shininess' must be positive";
 
 		// Specular component.
 		var specularIndex = nodeNames.indexOf("specular");
@@ -1171,12 +1182,151 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 	console.log("Parsed materials");
 }
 
+SceneGraph.prototype.parseAnimations = function(animations_node) {
+	var children = animations_node.children;
+	this.animations = [];
+
+	for (var i = 0; i < children.length; i++) {
+		var child = children[i];
+		if (child.nodeName != "ANIMATION") {
+			this.onXMLMinorError("unknown tag name <" + child.nodeName + ">");
+			continue;
+		}
+
+		let animation_id = this.reader.getString(child, 'id');
+		if (animation_id == NULL)
+			return "no ID defined for animation";
+		if (this.animations[animation_id] != null)
+			return "ID for animation must be unique: " + animation_id;
+
+		let animation_type = this.reader.getString(child, 'type'),
+				possible_values= ["linear", "circular", "bezier", "combo"];
+		if (animation_type == NULL)
+			return "no type defined for animation: " + animation_id;
+		if (possible_values.indexOf(animation_type) == -1)
+			return "unknown animation type: " + possible_values;
+
+		if (animation_type != "combo"){ //combo has no speed
+			let animation_speed = this.reader.getString(child, 'speed');
+			if (animation_speed == NULL)
+			return "no speed defined for animation: " + animation_id;
+			animation_speed = parseFloat(animation_speed);
+		}
+
+
+
+	}
+}
+
+SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) {
+	let children = animation_node.children, args = [];
+	for (let i = 0; i < children.length; i++) {
+		let child = children[i], pts = [];
+		if (child.nodeName != "controlpoint") {
+			this.onXMLMinorError("unknown linear animation tag name <" + child.nodeName + ">");
+			continue;
+		}
+
+		let x = this.reader.getFloat(child, 'xx'),
+				y = this.reader.getFloat(child, 'yy'),
+				z = this.reader.getFloat(child, 'zz');
+
+		if (x == NULL)
+			return "no x point defined in control point of linear animation: " + id;
+		if (y == NULL)
+			return "no y point defined in control point of linear animation: " + id;
+		if (z == NULL)
+			return "no z point defined in control point of linear animation: " + id;
+
+		pts.push(x); pts.push(y); pts.push(z);
+		args.push(pts);
+	}
+
+	//TODO constructor of linear animation here
+
+	return NULL;
+}
+
+SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed) {
+	let centerx = this.reader.getFloat(animation_node, 'centerx' ),
+			centery = this.reader.getFloat(animation_node, 'centery' ),
+			centerz = this.reader.getFloat(animation_node, 'centerz' ),
+			radius  = this.reader.getFloat(animation_node, 'radius'  ),
+			startang= this.reader.getFloat(animation_node, 'startang'),
+			rotang  = this.reader.getFloat(animation_node, 'rotang'  );
+
+	if (centerx == NULL)
+		return "no centerx defined for animation: " + id;
+	if (centery == NULL)
+		return "no centery defined for animation: " + id;
+	if (centerz == NULL)
+		return "no centerz defined for animation: " + id;
+	if (radius == NULL)
+		return "no radius defined for animation:" + id;
+	if (startang == NULL)
+		return "no startang defined for animation: " + id;
+	if (rotang == NULL)
+		return "no rotang defined for animation: " + id;
+
+	//TODO add animation constructor here
+
+	return NULL;
+}
+
+SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) {
+	let children = animation_node.children, args = [];
+	for (let i = 0; i < children.length; i++) {
+		let child = children[i], pts = [];
+
+		let x = this.reader.getFloat(child, 'xx'),
+				y = this.reader.getFloat(child, 'yy'),
+				z = this.reader.getFloat(child, 'zz');
+
+		if (x == NULL)
+			return "no x defined in control point of bezier animation: " + id;
+		if (y == NULL)
+			return "no y defined in control point of bezier animation: " + id;
+		if (z == NULL)
+			return "no z defined in control point of bezier animation: " + id;
+
+		pts.push(x); pts.push(y); pts.push(z);
+		args.push(pts);
+	}
+
+	//TODO constructor of bezier animation here
+
+	return NULL
+}
+
+SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
+	let children = animation_node.children, i = 0, args = [];
+
+	for (i = 0; i < children.length; i++){
+		let child = children[i];
+		if (child.nodeName != "SPANREF"){
+			this.onXMLMinorError("unknown combo animation tag name <" + child.nodeName + ">");
+			continue;
+		}
+		let animation_id = this.reader.getString(child, 'id');
+		if (animation_id == NULL)
+			return "no animation id defined in combo animation: " + id;
+
+		args.push(animation_id);
+	}
+	if (i == 0)
+		return "at least one animation must be specified in combo animation: " + id;
+
+	//TODO add constructor for combo animation here
+
+	return NULL;
+}
+
 /**
  * @description Parses the Nodes block
  * @param lights_node The root node of the node block, member children contains the elements
  * @return null if there was no error, error message otherwise
  */
-MySceneGraph.prototype.parseNodes = function(nodesNode) {
+SceneGraph.prototype.parseNodes = function(nodesNode) {
 
 	// Traverses nodes.
 	var children = nodesNode.children;
@@ -1415,7 +1565,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 /**
  * @description Called when there is an error to report
  */
-MySceneGraph.prototype.onXMLError = function(message) {
+SceneGraph.prototype.onXMLError = function(message) {
 	console.error("XML Loading Error: " + message);
 	this.loadedOk = false;
 }
@@ -1423,21 +1573,21 @@ MySceneGraph.prototype.onXMLError = function(message) {
 /**
  * @description Called when there is a warning to report
  */
-MySceneGraph.prototype.onXMLMinorError = function(message) {
+SceneGraph.prototype.onXMLMinorError = function(message) {
 	console.warn("Warning: " + message);
 }
 
 /**
  * @description Called when there is a simple log to report
  */
-MySceneGraph.prototype.log = function(message) {
+SceneGraph.prototype.log = function(message) {
 	console.log("   " + message);
 }
 
 /**
  * @description Generates a default material with a random name
  */
-MySceneGraph.prototype.generateDefaultMaterial = function() {
+SceneGraph.prototype.generateDefaultMaterial = function() {
 	var materialDefault = new CGFappearance(this.scene);
 	materialDefault.setShininess(1);
 	materialDefault.setSpecular(0, 0, 0, 1);
@@ -1447,7 +1597,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 
 	// Generates random material ID not currently in use.
 	this.defaultMaterialID = null;
-	do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
+	do this.defaultMaterialID = SceneGraph.generateRandomString(5);
 	while (this.materials[this.defaultMaterialID] != null);
 
 	this.materials[this.defaultMaterialID] = materialDefault;
@@ -1458,7 +1608,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
  * @param length Length of the string to generate
  * @return Generated string
  */
-MySceneGraph.generateRandomString = function(length) {
+SceneGraph.generateRandomString = function(length) {
 	// Generates an array of random integer ASCII codes of the specified length
 	// and returns a string of the specified length.
 	var numbers = [];
@@ -1471,7 +1621,7 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * @description Used to start rendering the scene, handles only the root node
  */
-MySceneGraph.prototype.displayScene = function() {
+SceneGraph.prototype.displayScene = function() {
 	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
 	 		text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();
@@ -1493,7 +1643,7 @@ MySceneGraph.prototype.displayScene = function() {
  * @param material_id ID of the material inherited
  * @param texture_id ID of the texture inherited
  */
-MySceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
+SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	var node = this.nodes[node_id],
 			mat=material_id, text=texture_id;
 	this.scene.pushMatrix();
