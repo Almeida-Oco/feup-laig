@@ -1,9 +1,9 @@
 /**
- * @description Constructor of MyQuad
+ * @description Constructor of Quad
  * @param scene Scene to render primitive in
  * @param args Array with the following elements [x1, y1, x2, y2]
  */
-function MyQuad(scene,args) {
+function Quad(scene,args) {
     CGFobject.call(this,scene);
 
 		this.x1 = args[0];
@@ -14,13 +14,13 @@ function MyQuad(scene,args) {
     this.initBuffers();
 };
 
-MyQuad.prototype = Object.create(CGFobject.prototype);
-MyQuad.prototype.constructor=MyQuad;
+Quad.prototype = Object.create(CGFobject.prototype);
+Quad.prototype.constructor=Quad;
 
 /**
  * @description Initializes the arrays needed for rendering
  */
-MyQuad.prototype.initBuffers = function () {
+Quad.prototype.initBuffers = function () {
   this.vertices = [
     this.x1, this.y1, 0,
     this.x1, this.y2, 0,
@@ -48,7 +48,7 @@ MyQuad.prototype.initBuffers = function () {
  * @param afs Amplification factor in the X axis
  * @param aft Amplification factor in the Y axis
  */
-MyQuad.prototype.defTextCoords = function(afs, aft){
+Quad.prototype.defTextCoords = function(afs, aft){
 	var s = this.x1-this.x2, t = this.y1-this.y2;
 	this.texCoords = [
 		0, 0,
@@ -64,7 +64,7 @@ MyQuad.prototype.defTextCoords = function(afs, aft){
  * @param afs Amplification factor in the X axis to be set
  * @param aft Amplification factor in the Y axis to be set
  */
-MyQuad.prototype.render = function(afs, aft){
+Quad.prototype.render = function(afs, aft){
 	this.defTextCoords(afs,aft);
 	this.display();
 }

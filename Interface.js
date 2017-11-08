@@ -1,21 +1,21 @@
 /**
-* MyInterface class, creating a GUI interface.
+* Interface class, creating a GUI interface.
 * @constructor
 */
-function MyInterface() {
+function Interface() {
 	//call CGFinterface constructor
 	CGFinterface.call(this);
 }
 ;
 
-MyInterface.prototype = Object.create(CGFinterface.prototype);
-MyInterface.prototype.constructor = MyInterface;
+Interface.prototype = Object.create(CGFinterface.prototype);
+Interface.prototype.constructor = Interface;
 
 /**
 * Initializes the interface.
 * @param {CGFapplication} application
 */
-MyInterface.prototype.init = function(application) {
+Interface.prototype.init = function(application) {
 	// call CGFinterface init
 	CGFinterface.prototype.init.call(this, application);
 
@@ -32,7 +32,7 @@ MyInterface.prototype.init = function(application) {
 /**
 * Adds a folder containing the IDs of the lights passed as parameter.
 */
-MyInterface.prototype.addLightsGroup = function(lights) {
+Interface.prototype.addLightsGroup = function(lights) {
 
 	var group = this.gui.addFolder("Lights");
 	group.open();

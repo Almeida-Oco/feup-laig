@@ -1,23 +1,23 @@
 /**
- * @description Constructor for MyGraphLeaf
+ * @description Constructor for GraphLeaf
  * @param type Type of leaf to create
  * @param args Arguments of given leaf, will vary according to type
  * @param scene The scene to render the leaf in
  */
-function MyGraphLeaf(type, args, scene) {
+function GraphLeaf(type, args, scene) {
 	this.type = type;
 	this.primitive;
 
 	if ( "triangle" == this.type )
-		this.primitive = new MyTriangle(scene,args);
+		this.primitive = new Triangle(scene,args);
 	else if ("sphere" == this.type)
-		this.primitive = new MySphere(scene,args);
+		this.primitive = new Sphere(scene,args);
 	else if ("rectangle" == this.type)
-		this.primitive = new MyQuad(scene,args);
+		this.primitive = new Quad(scene,args);
 	else if ("cylinder" == this.type)
-		this.primitive = new MyCylinder(scene,args);
+		this.primitive = new Cylinder(scene,args);
 	else if ("patch" == this.type)
-		this.primitive = new MyPatch(scene,args);
+		this.primitive = new Patch(scene,args);
 	else
 		console.log("Unknown type: "+this.type+" aborting!");
 }
@@ -28,7 +28,7 @@ function MyGraphLeaf(type, args, scene) {
  * @param texture The texture to apply to the primitive, null if no texture to apply
  * @param matrix Matrix to apply to the primitive before rendering
  */
-MyGraphLeaf.prototype.render = function(material, texture, scene){
+GraphLeaf.prototype.render = function(material, texture, scene){
 	if ( texture != null ){
 		material.apply();
 		texture[0].bind();

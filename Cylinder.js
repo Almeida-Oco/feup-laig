@@ -1,9 +1,9 @@
 /**
-* @description Constructor for MyCylinder
+* @description Constructor for Cylinder
 * @param scene The scene to render the cylinder
 * @param args An array with following arguments [height, bottom base radius, top base radius, slices, stacks]
 */
-function MyCylinder(scene, args) {
+function Cylinder(scene, args) {
 	CGFobject.call(this,scene);
 	this.height = args[0];
 	this.b_radius = args[1];
@@ -14,13 +14,13 @@ function MyCylinder(scene, args) {
 	this.initBuffers();
 };
 
-MyCylinder.prototype = Object.create(CGFobject.prototype);
-MyCylinder.prototype.constructor = MyCylinder;
+Cylinder.prototype = Object.create(CGFobject.prototype);
+Cylinder.prototype.constructor = Cylinder;
 
 /**
  * @description Initializes the needed arrays for rendering the object
  */
-MyCylinder.prototype.initBuffers = function() {
+Cylinder.prototype.initBuffers = function() {
 	var t = Math.PI*2/this.slices, delta = (this.t_radius - this.b_radius)/this.stacks;
 	var ang = 0;
 
@@ -65,6 +65,6 @@ MyCylinder.prototype.initBuffers = function() {
  * @param afs Not needed in this leaf
  * @param aft Not needed in this leaf
  */
-MyCylinder.prototype.render = function(afs, aft){
+Cylinder.prototype.render = function(afs, aft){
 	this.display();
 }

@@ -1183,44 +1183,57 @@ SceneGraph.prototype.parseMaterials = function(materialsNode) {
 }
 
 SceneGraph.prototype.parseAnimations = function(animations_node) {
-	var children = animations_node.children;
+	let children = animations_node.children;
 	this.animations = [];
 
-	for (var i = 0; i < children.length; i++) {
-		var child = children[i];
+	for (let i = 0; i < children.length; i++) {
+		let child = children[i], animation_speed = 0;
 		if (child.nodeName != "ANIMATION") {
 			this.onXMLMinorError("unknown tag name <" + child.nodeName + ">");
 			continue;
 		}
 
-		let animation_id = this.reader.getString(child, 'id');
-		if (animation_id == NULL)
+		let animation_id = this.reader.getString(child, 'id'),
+				animation_type = this.reader.getString(child, 'type'),
+				possible_values= ["linear", "circular", "bezier", "combo"];
+
+		if (animation_id == null)
 			return "no ID defined for animation";
 		if (this.animations[animation_id] != null)
 			return "ID for animation must be unique: " + animation_id;
 
-		let animation_type = this.reader.getString(child, 'type'),
-				possible_values= ["linear", "circular", "bezier", "combo"];
-		if (animation_type == NULL)
+		if (animation_type == null)
 			return "no type defined for animation: " + animation_id;
 		if (possible_values.indexOf(animation_type) == -1)
 			return "unknown animation type: " + possible_values;
 
 		if (animation_type != "combo"){ //combo has no speed
-			let animation_speed = this.reader.getString(child, 'speed');
-			if (animation_speed == NULL)
-			return "no speed defined for animation: " + animation_id;
-			animation_speed = parseFloat(animation_speed);
+			animation_speed = this.reader.getFloat(child, 'speed');
+			if (animation_speed == null)
+				return "no speed defined for animation: " + animation_id;
 		}
 
+		let ret_val;
+		if ("linear" == animation_type)
+			ret_val = this.parseLinearAnimation(child, animation_id, animation_speed);
+		else if ("circular" == animation_type)
+			ret_val = this.parseCircularAnimation(child, animation_id, animation_speed);
+		else if ("bezier" == animation_type)
+			ret_val = this.parseBezierAnimation(child, animation_id, animation_speed);
+		else if ("combo" == animation_type)
+			ret_val = this.parseComboAnimation(child, animation_id, animation_speed);
+		else
+			return "?how did I get here? animation_type: " + animation_type;
 
-
+		if (ret_val != null) //an animation parse error
+			return ret_val;
 	}
 }
 
+
 SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) {
-	let children = animation_node.children, args = [];
-	for (let i = 0; i < children.length; i++) {
+	let children = animation_node.children, args = [], i = 0;
+	for (i = 0; i < children.length; i++) {
 		let child = children[i], pts = [];
 		if (child.nodeName != "controlpoint") {
 			this.onXMLMinorError("unknown linear animation tag name <" + child.nodeName + ">");
@@ -1231,20 +1244,22 @@ SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) 
 				y = this.reader.getFloat(child, 'yy'),
 				z = this.reader.getFloat(child, 'zz');
 
-		if (x == NULL)
+		if (x == null)
 			return "no x point defined in control point of linear animation: " + id;
-		if (y == NULL)
+		if (y == null)
 			return "no y point defined in control point of linear animation: " + id;
-		if (z == NULL)
+		if (z == null)
 			return "no z point defined in control point of linear animation: " + id;
 
 		pts.push(x); pts.push(y); pts.push(z);
 		args.push(pts);
 	}
+	if (i == 0)
+		return "no control point defined of linear animation: " + id;
 
-	//TODO constructor of linear animation here
+	this.animations[id] = new LinearAnimation(id, speed, args);
 
-	return NULL;
+	return null;
 }
 
 SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed) {
@@ -1253,24 +1268,28 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 			centerz = this.reader.getFloat(animation_node, 'centerz' ),
 			radius  = this.reader.getFloat(animation_node, 'radius'  ),
 			startang= this.reader.getFloat(animation_node, 'startang'),
-			rotang  = this.reader.getFloat(animation_node, 'rotang'  );
+			rotang  = this.reader.getFloat(animation_node, 'rotang'  ),
+			args 	 	= [];
 
-	if (centerx == NULL)
+	if (centerx == null)
 		return "no centerx defined for animation: " + id;
-	if (centery == NULL)
+	if (centery == null)
 		return "no centery defined for animation: " + id;
-	if (centerz == NULL)
+	if (centerz == null)
 		return "no centerz defined for animation: " + id;
-	if (radius == NULL)
+	if (radius == null)
 		return "no radius defined for animation:" + id;
-	if (startang == NULL)
+	if (startang == null)
 		return "no startang defined for animation: " + id;
-	if (rotang == NULL)
+	if (rotang == null)
 		return "no rotang defined for animation: " + id;
 
-	//TODO add animation constructor here
+	args.push(centerx); args.push(centery); 	args.push(centerz);
+	args.push(radius);  args.push(startang);	args.push(rotang);
 
-	return NULL;
+	this.animations[id] = new CircularAnimation(id, speed, args);
+
+	return null;
 }
 
 SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) {
@@ -1282,24 +1301,26 @@ SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) 
 				y = this.reader.getFloat(child, 'yy'),
 				z = this.reader.getFloat(child, 'zz');
 
-		if (x == NULL)
+		if (x == null)
 			return "no x defined in control point of bezier animation: " + id;
-		if (y == NULL)
+		if (y == null)
 			return "no y defined in control point of bezier animation: " + id;
-		if (z == NULL)
+		if (z == null)
 			return "no z defined in control point of bezier animation: " + id;
 
 		pts.push(x); pts.push(y); pts.push(z);
 		args.push(pts);
 	}
 
-	//TODO constructor of bezier animation here
+	this.animations[id] = new BezierAnimation(id, speed, args);
 
-	return NULL
+	return null
 }
 
 SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
-	let children = animation_node.children, i = 0, args = [];
+	let children = animation_node.children,
+			i = 0,
+			args = [];
 
 	for (i = 0; i < children.length; i++){
 		let child = children[i];
@@ -1308,7 +1329,7 @@ SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
 			continue;
 		}
 		let animation_id = this.reader.getString(child, 'id');
-		if (animation_id == NULL)
+		if (animation_id == null)
 			return "no animation id defined in combo animation: " + id;
 
 		args.push(animation_id);
@@ -1316,9 +1337,9 @@ SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
 	if (i == 0)
 		return "at least one animation must be specified in combo animation: " + id;
 
-	//TODO add constructor for combo animation here
+	this.animations[id] = new ComboAnimation(args);
 
-	return NULL;
+	return null;
 }
 
 /**
@@ -1327,8 +1348,6 @@ SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
  * @return null if there was no error, error message otherwise
  */
 SceneGraph.prototype.parseNodes = function(nodesNode) {
-
-	// Traverses nodes.
 	var children = nodesNode.children;
 
 	for (var i = 0; i < children.length; i++) {
@@ -1341,140 +1360,130 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 				var root = this.reader.getString(children[i], 'id');
 				if (root == null )
 					return "failed to retrieve root node ID";
+
 				this.root_id = root;
 			}
 		}
 		else if (nodeName == "NODE") {
-			// Retrieves node ID.
-			var nodeID = this.reader.getString(children[i], 'id');
+			let nodeID = this.reader.getString(children[i], 'id'),
+					node_select = this.reader.getBoolean(children[i], 'selectable');
 			if (nodeID == null )
 				return "failed to retrieve node ID";
-			// Checks if ID is valid.
+			if (node_select == null)
+				node_select = false;
+
 			if (this.nodes[nodeID] != null )
 				return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
 			this.log("Processing node "+nodeID);
 
 			// Creates node.
-			this.nodes[nodeID] = new MyGraphNode(nodeID);
+			this.nodes[nodeID] = new GraphNode(nodeID, node_select);
 
 			// Gathers child nodes.
 			var nodeSpecs = children[i].children;
 			var specsNames = [];
-			var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+			var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
 			for (var j = 0; j < nodeSpecs.length; j++) {
 				var name = nodeSpecs[j].nodeName;
 				specsNames.push(nodeSpecs[j].nodeName);
 
 				// Warns against possible invalid tag names.
 				if (possibleValues.indexOf(name) == -1)
-				this.onXMLMinorError("unknown tag <" + name + ">");
+					this.onXMLMinorError("unknown tag <" + name + ">");
 			}
 
 			// Retrieves material ID.
 			var materialIndex = specsNames.indexOf("MATERIAL");
 			if (materialIndex == -1)
-			return "material must be defined (node ID = " + nodeID + ")";
+				return "material must be defined (node ID = " + nodeID + ")";
 			var materialID = this.reader.getString(nodeSpecs[materialIndex], 'id');
 			if (materialID == null )
-			return "unable to parse material ID (node ID = " + nodeID + ")";
+				return "unable to parse material ID (node ID = " + nodeID + ")";
 			if (materialID != "null" && this.materials[materialID] == null )
-			return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
+				return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
 
 			this.nodes[nodeID].materialID = materialID;
 
 			// Retrieves texture ID.
 			var textureIndex = specsNames.indexOf("TEXTURE");
 			if (textureIndex == -1)
-			return "texture must be defined (node ID = " + nodeID + ")";
+				return "texture must be defined (node ID = " + nodeID + ")";
 			var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
 			if (textureID == null )
-			return "unable to parse texture ID (node ID = " + nodeID + ")";
+				return "unable to parse texture ID (node ID = " + nodeID + ")";
 			if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
-			return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
+				return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
 			this.nodes[nodeID].textureID = textureID;
 
-			// Retrieves possible transformations.
+			// Possible values in node
 			for (var j = 0; j < nodeSpecs.length; j++) {
-				switch (nodeSpecs[j].nodeName) {
-					case "TRANSLATION":
-					// Retrieves translation parameters.
-					var x = this.reader.getFloat(nodeSpecs[j], 'x');
-					if (x == null ) {
-						this.onXMLMinorError("unable to parse x-coordinate of translation; discarding transform");
-						break;
-					}
-					else if (isNaN(x))
-					return "non-numeric value for x-coordinate of translation (node ID = " + nodeID + ")";
+				let name = nodeSpecs[j].nodeName;
 
-					var y = this.reader.getFloat(nodeSpecs[j], 'y');
-					if (y == null ) {
-						this.onXMLMinorError("unable to parse y-coordinate of translation; discarding transform");
-						break;
+				if ("TRANSLATION" == name) {
+					let x = this.reader.getFloat(nodeSpecs[j], 'x'),
+							y = this.reader.getFloat(nodeSpecs[j], 'y'),
+							z = this.reader.getFloat(nodeSpecs[j], 'z');
+					if (x == null || isNaN(x)) {
+						this.onXMLMinorError("unable to parse x-coordinate of translation (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					else if (isNaN(y))
-					return "non-numeric value for y-coordinate of translation (node ID = " + nodeID + ")";
-
-					var z = this.reader.getFloat(nodeSpecs[j], 'z');
-					if (z == null ) {
-						this.onXMLMinorError("unable to parse z-coordinate of translation; discarding transform");
-						break;
+					if (y == null || isNaN(y)) {
+						this.onXMLMinorError("unable to parse y-coordinate of translation (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					else if (isNaN(z))
-					return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
-
+					if (z == null || isNaN(z)) {
+						this.onXMLMinorError("unable to parse z-coordinate of translation (node ID = " + nodeID + ") discarding transform");
+						continue;
+					}
 					mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
-					break;
-					case "ROTATION":
-					// Retrieves rotation parameters.
-					var axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']);
-					if (axis == null ) {
-						this.onXMLMinorError("unable to parse rotation axis; discarding transform");
-						break;
+				}
+				else if ("ROTATION" == name) {
+					let axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']),
+							angle= this.reader.getFloat(nodeSpecs[j], 'angle');
+
+					if (axis == null) {
+						this.onXMLMinorError("unable to parse rotation axis (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					var angle = this.reader.getFloat(nodeSpecs[j], 'angle');
-					if (angle == null ) {
-						this.onXMLMinorError("unable to parse rotation angle; discarding transform");
-						break;
+					if (angle == null || isNaN(angle)) {
+						this.onXMLMinorError("unable to parse rotation angle (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					else if (isNaN(angle))
-					return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
 
 					mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-					break;
-					case "SCALE":
-					// Retrieves scale parameters.
-					var sx = this.reader.getFloat(nodeSpecs[j], 'sx');
-					if (sx == null ) {
-						this.onXMLMinorError("unable to parse x component of scaling; discarding transform");
-						break;
-					}
-					else if (isNaN(sx))
-					return "non-numeric value for x component of scaling (node ID = " + nodeID + ")";
+				}
+				else if ("SCALE" == name) {
+					let sx = this.reader.getFloat(nodeSpecs[j], 'sx'),
+							sy = this.reader.getFloat(nodeSpecs[j], 'sy'),
+							sz = this.reader.getFloat(nodeSpecs[j], 'sz');
 
-					var sy = this.reader.getFloat(nodeSpecs[j], 'sy');
-					if (sy == null ) {
-						this.onXMLMinorError("unable to parse y component of scaling; discarding transform");
-						break;
+					if (sx == null || isNaN(sx)) {
+						this.onXMLMinorError("unable to parse x component of scaling (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					else if (isNaN(sy))
-					return "non-numeric value for y component of scaling (node ID = " + nodeID + ")";
-
-					var sz = this.reader.getFloat(nodeSpecs[j], 'sz');
-					if (sz == null ) {
-						this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
-						break;
+					if (sy == null || isNaN(sy)) {
+						this.onXMLMinorError("unable to parse y component of scaling (node ID = " + nodeID + ") discarding transform");
+						continue;
 					}
-					else if (isNaN(sz))
-					return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
+					if (sz == null || isNaN(sz)) {
+						this.onXMLMinorError("unable to parse z component of scaling(node ID = " + nodeID + ") discarding transform");
+						continue;
+					}
 
 					mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
-					break;
-					default:
-					break;
+				}
+				else if ("ANIMATIONREFS" == name) {
+					let animation_id = this.reader.parseString(nodeSpecs[j], 'id');
+					if (animation_id == null || this.animations[animation_id] == null) {
+						this.onXMLMinorError("Animation ID does not correspond to a valid animation in (node ID = " + nodeID + ") discarding animation");
+						continue;
+					}
+					this.nodes[nodeID].addAnimation(this.animations[animation_id]);
 				}
 			}
+
 
 			// Retrieves information about children.
 			var descendantsIndex = specsNames.indexOf("DESCENDANTS");
@@ -1541,7 +1550,7 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 						args=this.reader.getString(descendants[j],'args').split(' ');
 					}
 
-					this.nodes[nodeID].addLeaf(new MyGraphLeaf(type, args, this.scene));
+					this.nodes[nodeID].addLeaf(new GraphLeaf(type, args, this.scene));
 
 					sizeChildren++;
 				}
@@ -1559,7 +1568,6 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 	console.log("Parsed nodes");
 	return null ;
 }
-
 
 
 /**
@@ -1659,7 +1667,7 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	//console.log(node.nodeID+" - text = "+text);
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
-		this.displayNodes( node.children[i], mat, text)
+		this.displayNodes( node.children[i], mat, text);
 	for ( var i = 0 ; i < node.leaves.length ; i++)
 		if ( text == "clear" )
 			node.leaves[i].render( this.materials[mat], null, this.scene);

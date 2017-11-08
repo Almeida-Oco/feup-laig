@@ -1,9 +1,9 @@
 /**
-* @description Constructor of MySphere
+* @description Constructor of Sphere
 * @param scene Scene to display sphere in
 * @param args Array containing the following elements: [radius, slices, stacks]
 */
-function MySphere(scene, args){
+function Sphere(scene, args){
 	this.radius = args[0];
 	this.scene = scene;
 	this.slices = parseFloat(args[1]);
@@ -17,13 +17,13 @@ function MySphere(scene, args){
 	this.initBuffers();
 };
 
-MySphere.prototype = Object.create(CGFobject.prototype);
-MySphere.prototype.constructor = MySphere;
+Sphere.prototype = Object.create(CGFobject.prototype);
+Sphere.prototype.constructor = Sphere;
 
 /**
  * @description Initializes the arrays needed for rendering
  */
-MySphere.prototype.initBuffers = function(){
+Sphere.prototype.initBuffers = function(){
 	this.indices = [];
 	this.normals = [];
 	this.texCoords = [];
@@ -83,6 +83,6 @@ MySphere.prototype.initBuffers = function(){
  * @param afs Amplification factor in the X axis
  * @param aft Amplification factor in the Y axis
  */
-MySphere.prototype.render = function(afs, aft){
+Sphere.prototype.render = function(afs, aft){
 	this.display();
 }

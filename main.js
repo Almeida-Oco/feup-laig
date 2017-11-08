@@ -12,15 +12,15 @@ function getUrlVars() {
 }
 
 serialInclude(['../lib/CGF.js', 'SceneGraph.js', 'XMLscene.js',
-'MyGraphNode.js', 'MyGraphLeaf.js', 'MyInterface.js', 'MyTriangle.js',
-'MySphere.js', 'MyQuad.js', 'MyUnitCubeQuad.js', 'MyCylinder.js',
-'MyPatch.js',
+'GraphNode.js', 'GraphLeaf.js', 'Interface.js', 'Triangle.js',
+'Sphere.js', 'Quad.js', 'MyUnitCubeQuad.js', 'Cylinder.js',
+'Patch.js',
 
 main=function()
 {
 	// Standard application, scene and interface setup
 	var app = new CGFapplication(document.body);
-	var myInterface = new MyInterface();
+	var myInterface = new Interface();
 	var myScene = new XMLscene(myInterface);
 
 	app.init();

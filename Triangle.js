@@ -1,9 +1,9 @@
 /**
- * @description Constructor for MyTriangle
+ * @description Constructor for Triangle
  * @param scene Scene to render primitive in
  * @param args Array containing the following elements: [x1, y1, z1, x2, y2, z2, x3, y3, z3]
  */
-function MyTriangle(scene, args) {
+function Triangle(scene, args) {
 	this.scene = scene;
 	this.x = [args[0],args[3],args[6]];
 	this.y = [args[1],args[4],args[7]];
@@ -11,13 +11,13 @@ function MyTriangle(scene, args) {
 	this.initBuffers();
 };
 
-MyTriangle.prototype = Object.create(CGFobject.prototype);
-MyTriangle.prototype.constructor = MyTriangle;
+Triangle.prototype = Object.create(CGFobject.prototype);
+Triangle.prototype.constructor = Triangle;
 
 /**
  * @description Initializes the arrays needed for rendering
  */
-MyTriangle.prototype.initBuffers = function() {
+Triangle.prototype.initBuffers = function() {
 
 	this.vertices = [
 		this.x[0],this.y[0],this.z[0],
@@ -44,7 +44,7 @@ MyTriangle.prototype.initBuffers = function() {
  * @param afs Amplification factor in the X axis
  * @param aft Amplification factor in the Y axis
  */
-MyTriangle.prototype.defTextCoords = function(afs, aft){
+Triangle.prototype.defTextCoords = function(afs, aft){
 	var a = Math.sqrt(Math.pow(this.x[2]-this.x[1],2) + Math.pow(this.y[2]-this.y[1],2) + Math.pow(this.z[2]-this.z[1],2)),
 			b = Math.sqrt(Math.pow(this.x[0]-this.x[2],2) + Math.pow(this.y[0]-this.y[2],2) + Math.pow(this.z[0]-this.z[2],2)),
 			c = Math.sqrt(Math.pow(this.x[1]-this.x[0],2) + Math.pow(this.y[1]-this.y[0],2) + Math.pow(this.z[1]-this.z[0],2));
@@ -65,7 +65,7 @@ MyTriangle.prototype.defTextCoords = function(afs, aft){
  * @param afs Amplification factor in the X axis to be set
  * @param aft Amplification factor in the Y axis to be set
  */
-MyTriangle.prototype.render = function(afs, aft){
+Triangle.prototype.render = function(afs, aft){
 	this.defTextCoords(afs,aft);
 	this.display();
 }

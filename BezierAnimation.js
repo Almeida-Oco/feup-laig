@@ -6,9 +6,13 @@
  */
 class BezierAnimation extends Animation {
 	constructor(id, speed, args) {
+		super();
+		this.pts = args;
+		this.speed = speed;
+		this.id = id;
 	}
 
-	apply() {
+	tickTock() {
 		console.log("\n\n MEOW \n\n");
 	}
 };

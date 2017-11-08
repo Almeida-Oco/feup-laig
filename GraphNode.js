@@ -1,38 +1,48 @@
 /**
- * @description Constructor for MyGraphNode
+ * @description Constructor for GraphNode
  * @param nodeID ID of the node
  */
-function MyGraphNode(nodeID) {
-	this.nodeID = nodeID;
 
-	// IDs of child nodes.
-	this.children = [];
+class GraphNode {
+	constructor (nodeID, selectable) {
+		this.nodeID = nodeID;
+		this.selectable = selectable;
 
-	// IDs of child nodes.
-	this.leaves = new Array();
+		this.children = [];
 
-	// The material ID.MyGraphNode
-	this.materialID = null ;
+		this.animations = [];
 
-	// The texture ID.
-	this.textureID = null ;
+		this.leaves = new Array();
 
-	this.transformMatrix = mat4.create();
-	mat4.identity(this.transformMatrix);
-}
+		this.materialID = null ;
 
-/**
- * @description Adds a new child to this node
- * @param nodeID ID of the child to add, stored as a string
- */
-MyGraphNode.prototype.addChild = function(nodeID) {
-	this.children.push(nodeID);
-}
+		this.textureID = null ;
 
-/**
- * @description Adds a new leaf to this node
- * @param leaf The leaf to add to the leaves array
- */
-MyGraphNode.prototype.addLeaf = function(leaf) {
-	this.leaves.push(leaf);
-}
+		this.transformMatrix = mat4.create();
+		mat4.identity(this.transformMatrix);
+	}
+
+	/**
+	 * @description Adds a new child to this node
+	 * @param nodeID ID of the child to add, stored as a string
+	 */
+	set addChild (node_id) {
+		this.children.push(node_id);
+	}
+
+	/**
+	 * @description Adds a new leaf to this node
+	 * @param leaf The leaf to add to the leaves array
+	 */
+	set addLeaf (leaf) {
+		this.leaves.push(leaf);
+	}
+
+	/**
+	 * @description Adds a new animation to the node
+	 * @param animation Animation to add
+	 */
+	set addAnimation (animation) {
+		this.animations.push(animation);
+	}
+};

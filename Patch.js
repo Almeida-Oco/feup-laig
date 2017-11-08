@@ -3,7 +3,7 @@
  * @param scene Scene to render patch in
  * @param args Array with following elements [partsU, partsV, orderU, orderV, controlV]
  */
-function MyPatch(scene,args) {
+function Patch(scene,args) {
 		var degree1=args[0], degree2=args[1], parts_u=args[2], parts_v=args[3], control_vertexes=args[4];
 		var knots1 = this.getKnotsVector(degree1);
 		var knots2 = this.getKnotsVector(degree2);
@@ -25,15 +25,15 @@ function MyPatch(scene,args) {
 		this.primitive = new CGFnurbsObject(scene, getSurfacePoint, parts_u, parts_v );
 };
 
-MyPatch.prototype = Object.create(CGFobject.prototype);
-MyPatch.prototype.constructor=MyPatch;
+Patch.prototype = Object.create(CGFobject.prototype);
+Patch.prototype.constructor=Patch;
 
 /**
  * @description Renders the patch
  * @param afs Not needed in this primitive
  * @param aft Not needed in this primitive
  */
-MyPatch.prototype.render = function(afs, aft){
+Patch.prototype.render = function(afs, aft){
 	this.primitive.display();
 }
 
@@ -42,7 +42,7 @@ MyPatch.prototype.render = function(afs, aft){
  * @param degree The degree of the knots vector to generate
  * @return The knots vector
  */
-MyPatch.prototype.getKnotsVector = function(degree) {
+Patch.prototype.getKnotsVector = function(degree) {
 	var v = new Array();
 	for (var i=0; i<=degree; i++) {
 		v.push(0);
