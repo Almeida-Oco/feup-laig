@@ -26,7 +26,7 @@ class GraphNode {
 	 * @description Adds a new child to this node
 	 * @param nodeID ID of the child to add, stored as a string
 	 */
-	set addChild (node_id) {
+	addChild (node_id) {
 		this.children.push(node_id);
 	}
 
@@ -34,7 +34,7 @@ class GraphNode {
 	 * @description Adds a new leaf to this node
 	 * @param leaf The leaf to add to the leaves array
 	 */
-	set addLeaf (leaf) {
+	addLeaf (leaf) {
 		this.leaves.push(leaf);
 	}
 
@@ -42,7 +42,7 @@ class GraphNode {
 	 * @description Adds a new animation to the node
 	 * @param animation Animation to add
 	 */
-	set addAnimation (animation) {
+	addAnimation (animation) {
 		this.animations.push(animation);
 	}
 };

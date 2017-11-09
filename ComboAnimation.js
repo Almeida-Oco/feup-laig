@@ -13,8 +13,13 @@ class ComboAnimation extends Animation {
 		console.log("\n\n MEOW \n\n");
 	}
 
-	set setAnimations(animations) {
-		for (let i = 0; i < animations_id; i++)
-			this.animations.push(animations[animations_id[i]]);
+	setAnimations(animations) {
+		for (let i = 0; i < this.animations_id.length; i++) {
+			this.animations.push(animations.get(this.animations_id[i]));
+		}
+	}
+
+	getType() {
+		return "ComboAnimation";
 	}
 };

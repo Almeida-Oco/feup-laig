@@ -1,5 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
-
+var getClassOf = Function.prototype.call.bind(Object.prototype.toString);
 // Order of the groups in the XML document.
 var INITIALS_INDEX = 0;
 var ILLUMINATION_INDEX = 1;
@@ -1184,7 +1184,7 @@ SceneGraph.prototype.parseMaterials = function(materialsNode) {
 
 SceneGraph.prototype.parseAnimations = function(animations_node) {
 	let children = animations_node.children;
-	this.animations = [];
+	this.animations = new Map();
 
 	for (let i = 0; i < children.length; i++) {
 		let child = children[i], animation_speed = 0;
@@ -1228,6 +1228,14 @@ SceneGraph.prototype.parseAnimations = function(animations_node) {
 		if (ret_val != null) //an animation parse error
 			return ret_val;
 	}
+
+	let animations_it = this.animations.values();
+	for (let animation of animations_it){
+		if (animation.constructor.name == "ComboAnimation"){
+			animation.setAnimations(this.animations);
+		}
+	}
+
 }
 
 
@@ -1257,7 +1265,7 @@ SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) 
 	if (i == 0)
 		return "no control point defined of linear animation: " + id;
 
-	this.animations[id] = new LinearAnimation(id, speed, args);
+	this.animations.set(id, new LinearAnimation(speed, args));
 
 	return null;
 }
@@ -1287,7 +1295,7 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 	args.push(centerx); args.push(centery); 	args.push(centerz);
 	args.push(radius);  args.push(startang);	args.push(rotang);
 
-	this.animations[id] = new CircularAnimation(id, speed, args);
+	this.animations.set(id, new CircularAnimation(speed, args));
 
 	return null;
 }
@@ -1312,7 +1320,7 @@ SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) 
 		args.push(pts);
 	}
 
-	this.animations[id] = new BezierAnimation(id, speed, args);
+	this.animations.set(id, new BezierAnimation(speed, args));
 
 	return null
 }
@@ -1337,7 +1345,7 @@ SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
 	if (i == 0)
 		return "at least one animation must be specified in combo animation: " + id;
 
-	this.animations[id] = new ComboAnimation(args);
+	this.animations.set(id, new ComboAnimation(args));
 
 	return null;
 }
@@ -1366,7 +1374,11 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 		}
 		else if (nodeName == "NODE") {
 			let nodeID = this.reader.getString(children[i], 'id'),
-					node_select = this.reader.getBoolean(children[i], 'selectable');
+					node_select = null;
+
+			if (this.reader.hasAttribute(children[i], 'selectable'))
+				node_select = this.reader.getBoolean(children[i], 'selectable');
+
 			if (nodeID == null )
 				return "failed to retrieve node ID";
 			if (node_select == null)

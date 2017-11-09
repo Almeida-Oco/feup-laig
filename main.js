@@ -13,7 +13,8 @@ function getUrlVars() {
 
 serialInclude(['../lib/CGF.js', 'SceneGraph.js', 'XMLscene.js',
 'GraphNode.js', 'GraphLeaf.js', 'Interface.js', 'Triangle.js',
-'Sphere.js', 'Quad.js', 'MyUnitCubeQuad.js', 'Cylinder.js',
+'Sphere.js', 'Quad.js', 'Cylinder.js', 'LinearAnimation.js',
+'CircularAnimation.js', 'BezierAnimation.js', 'ComboAnimation.js',
 'Patch.js',
 
 main=function()
@@ -33,7 +34,7 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check SceneGraph constructor)
 
-	var filename=getUrlVars()['file'] || "greek.xml";
+	var filename=getUrlVars()['file'] || "demo.xml";
 
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors

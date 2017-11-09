@@ -5,9 +5,8 @@
  * @param args Remaining arguments [centerx, centery, centerz, radius, startang, rotang]
  */
 class CircularAnimation extends Animation {
-	constructor(id, speed, args) {
+	constructor(speed, args) {
 		super();
-		this.id = id;
 		this.linear_speed = speed;
 		this.center_x = args[0];
 		this.center_y = args[1];
@@ -19,5 +18,9 @@ class CircularAnimation extends Animation {
 
 	tickTock() {
 		console.log("\n\n MEOW \n\n");
+	}
+
+	get getType() {
+		return "CircularAnimation";
 	}
 };

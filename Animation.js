@@ -13,6 +13,10 @@ class Animation {
 		if (this.tickTock === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement tickTock()");
 		}
+
+		if (this.getType === Animation) {
+			throw new TypeError("Classes inheriting from Animation must implement getType()");
+		}
 	}
 
 	/**
@@ -37,4 +41,12 @@ class Animation {
 			total += ( (arr1[i]/div1)*(arr2[i]/div2) );
 		return total;
 	}
+
+	setAnimations(animations) {
+		console.log("		--- CALLED FATHER FUNC --- \n");
+	};
+
+	getType() {
+		console.log("		--- CALLED FATHER FUNC --- \n");
+	};
 };
