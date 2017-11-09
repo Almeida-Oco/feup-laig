@@ -47,7 +47,6 @@ class GraphNode {
 	}
 
 	applyAnimations() {
-		console.log("Applying to node:" + this.nodeID);
 		for (let i = 0; i < this.animations.length; i++) {
 			this.animations[i].updateMatrix(this.transformMatrix);
 		}

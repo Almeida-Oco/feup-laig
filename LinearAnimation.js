@@ -7,14 +7,13 @@
 class LinearAnimation extends Animation {
 	constructor(speed, args) {
 		super();
-		this.current_time = new Date();
-		this.old_time;
-		
+
 		this.pts = args;
 		this.pt_i = 0;
-		this.curr_end_pt = args[this.pt_i++];
-		this.init_pos = [];
-
+		this.curr_end_pt = args[this.pt_i];
+		this.pt_i ++;
+		this.init_pos = [0,0,0];
+		console.log("TIME = "+this.start_time);
 		// 1unit / s
 		this.speed = speed;
 	}
@@ -30,7 +29,7 @@ class LinearAnimation extends Animation {
 				new_point[1] == this.curr_end_pt[1] &&
 				new_point[2] == this.curr_end_pt[2])
 		{
-			if (this.pt_i < this.args.length) { // there are still more points
+			if (this.pt_i < this.pts.length) { // there are still more points
 				this.init_pos = new_point;
 				return 1;
 			}
@@ -49,44 +48,38 @@ class LinearAnimation extends Animation {
 	 * @param curr_pos Current position of the object
 	 * @return The new position of the object
 	 */
-	updateMatrix(transformation_matrix) {
+	updateMatrix(delta, transformation_matrix) {
 		if (!this.animation_over) {
-			if (this.old_time == 0) { //begin animation
-				this.old_time = this.current_time.getTime();
-				this.init_pos = initial_pos;
-			}
-			else{
-				let init_x = this.init_pos[0], init_y = this.init_pos[1], init_z = this.init_pos[2],
-						end_x = this.curr_end_pt[0], end_y = this.curr_end_pt[1], end_z = this.curr_end_pt[2],
-						sec = (this.current_time.getTime() - this.old_time) / 1000, //seconds passed
-						distance = this.speed * sec,
-						distance_to_end_pt = Math.sqrt( Math.pow(init_x - end_x,2) + Math.pow(init_y - end_y, 2) + Math.pow(init_z - end_z, 2) ),
-						t_x, t_y, t_z;
+			let init_x = this.init_pos[0], init_y = this.init_pos[1], init_z = this.init_pos[2],
+					end_x = this.curr_end_pt[0], end_y = this.curr_end_pt[1], end_z = this.curr_end_pt[2],
+					distance = this.speed * delta,
+					distance_to_end_pt = Math.sqrt( Math.pow(init_x - end_x,2) + Math.pow(init_y - end_y, 2) + Math.pow(init_z - end_z, 2) ),
+					t_x, t_y, t_z;
 
-				if (distance > distance_to_end_pt)
-					distance = distance_to_end_pt;
+			if (distance > distance_to_end_pt)
+				distance = distance_to_end_pt;
 
-				t_x = distance * Math.cos(this.curr_end_pt[0]);
-				t_y = distance * Math.cos(this.curr_end_pt[1]);
-				t_z = distance * Math.cos(this.curr_end_pt[2]);
+			t_x = distance * Math.cos(this.curr_end_pt[0]);
+			t_y = distance * Math.cos(this.curr_end_pt[1]);
+			t_z = distance * Math.cos(this.curr_end_pt[2]);
 
-				mat4.translate(transformation_matrix, transformation_matrix, [t_x, t_y, t_z]);
+			mat4.translate(transformation_matrix, transformation_matrix, [t_x, t_y, t_z]);
 
-				let new_point = this.checkNewEndPt([t_x, t_y, t_z]);
-				if (1 == new_point)
-					this.curr_end_pt = this.args[this.pt_i++];
-				else if (-1 == new_point)
-					this.animation_over = true;
+			let new_point = this.checkNewEndPt([t_x, t_y, t_z]);
+			if (1 == new_point)
+				this.curr_end_pt = this.args[this.pt_i++];
+			else if (-1 == new_point)
+				this.animation_over = true;
 
-			}
 		}
 
 		return transformation_matrix;
 	}
 
 	get getType() {
-		super.getType();
 		return "LinearAnimation";
 	}
 
 };
+
+LinearAnimation.prototype.getCurrentTime() = Animation;

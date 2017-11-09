@@ -4,8 +4,6 @@
  */
 class Animation {
 	constructor() {
-		this.current_time = new Date();
-		this.old_time = 0;
 		this.animation_over = false;
 
 		if (this.constructor === Animation) {
@@ -16,10 +14,10 @@ class Animation {
 			throw new TypeError("Classes inheriting from Animation must implement updateMatrix()");
 		}
 
-		if (this.getType === Animation) {
+		if (this.getType === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement getType()");
 		}
-	}
+	};
 
 	/**
 	 * @description Calculates the dot product between the two vectors, normalizing them first
@@ -42,17 +40,9 @@ class Animation {
 		for (i = 0; i < arr1.length; i++)
 			total += ( (arr1[i]/div1)*(arr2[i]/div2) );
 		return total;
-	}
+	};
 
 	get animationOver() {
 		return this.animation_over;
-	}
-
-	setAnimations(animations) {
-		console.log("		--- CALLED FATHER FUNC --- \n");
-	};
-
-	getType() {
-		console.log("		--- CALLED FATHER FUNC --- \n");
 	};
 };

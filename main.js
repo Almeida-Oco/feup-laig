@@ -13,12 +13,11 @@ function getUrlVars() {
 
 serialInclude(['../lib/CGF.js', 'SceneGraph.js', 'XMLscene.js',
 'GraphNode.js', 'GraphLeaf.js', 'Interface.js', 'Triangle.js',
-'Sphere.js', 'Quad.js', 'Cylinder.js', 'LinearAnimation.js',
-'CircularAnimation.js', 'BezierAnimation.js', 'ComboAnimation.js',
-'Patch.js',
+'Animation.js', 'Sphere.js', 'Quad.js', 'Cylinder.js',
+'LinearAnimation.js', 'CircularAnimation.js', 'BezierAnimation.js',
+'ComboAnimation.js', 'Patch.js',
 
-main=function()
-{
+main=function() {
 	// Standard application, scene and interface setup
 	var app = new CGFapplication(document.body);
 	var myInterface = new Interface();
@@ -42,6 +41,4 @@ main=function()
 
 	// start
 	app.run();
-}
-
-]);
+}]);

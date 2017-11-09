@@ -18,6 +18,8 @@ var NODES_INDEX = 7;
 function SceneGraph(filename, scene) {
 	this.loadedOk = null;
 
+	this.start_time = 0;
+
 	// Establish bidirectional references between scene and graph.
 	this.scene = scene;
 	scene.graph = this;
@@ -64,6 +66,23 @@ SceneGraph.prototype.onXMLReady = function()
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 	this.scene.onGraphLoaded();
 };
+
+/**
+ * @description Gets the time elapsed from previous function call
+ * @return Number of seconds passed
+ */
+SceneGraph.prototype.getTimeElapsed = function() {
+	let time_elapsed = ((Date.now() - this.start_time)*1.0)/1000.0;
+	if (this.start_time === 0) {
+		this.start_time = Date.now();
+		return -1;
+	}
+	else {
+		this.start_time = Date.now();
+		console.log("Time Elapsed: " + time_elapsed);
+		return time_elapsed;
+	}
+}
 
 /**
  * @description Parses the xml file one block at a time
@@ -1265,7 +1284,8 @@ SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) 
 	if (i == 0)
 		return "no control point defined of linear animation: " + id;
 
-	this.animations.set(id, new LinearAnimation(speed, args));
+	let value = new LinearAnimation(speed, args);
+	this.animations.set(id, value);
 
 	return null;
 }
@@ -1295,7 +1315,8 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 	args.push(centerx); args.push(centery); 	args.push(centerz);
 	args.push(radius);  args.push(startang);	args.push(rotang);
 
-	this.animations.set(id, new CircularAnimation(speed, args));
+	let value = new CircularAnimation(speed, args);
+	this.animations.set(id, value);
 
 	return null;
 }
@@ -1320,7 +1341,8 @@ SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) 
 		args.push(pts);
 	}
 
-	this.animations.set(id, new BezierAnimation(speed, args));
+	let value = new BezierAnimation(speed, args);
+	this.animations.set(id, value);
 
 	return null
 }
@@ -1345,7 +1367,8 @@ SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
 	if (i == 0)
 		return "at least one animation must be specified in combo animation: " + id;
 
-	this.animations.set(id, new ComboAnimation(args));
+	let value = new ComboAnimation(args);
+	this.animations.set(id, value);
 
 	return null;
 }
@@ -1656,7 +1679,9 @@ SceneGraph.prototype.displayScene = function() {
 	if (node.transformMatrix != null)
 		this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
-	//node.applyAnimations();
+	let time_passed = this.getTimeElapsed();
+	if (time_passed != -1)
+		node.applyAnimations(time_passed, node.transformMatrix);
 
 	for (var i = 0 ; i < leav.length ; i++)
 		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
@@ -1680,7 +1705,10 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	if ( node.transformMatrix != null )
 		this.scene.multMatrix( node.transformMatrix );
 
-	node.applyAnimations();
+	let time_passed = this.getTimeElapsed();
+	if (time_passed != -1)
+			node.applyAnimations(time_passed, node.transformMatrix);
+
 	if ( node.materialID != "null" )
 		mat = node.materialID;
 

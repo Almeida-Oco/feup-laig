@@ -149,7 +149,7 @@
 
 <ANIMATIONS>
 	<ANIMATION id="linear1" speed="1" type="linear">
-		<controlpoint xx="0" yy="0" zz="0" />
+		<controlpoint xx="1" yy="1" zz="0" />
 		<controlpoint xx="3" yy="3" zz="3" />
 	</ANIMATION>
 
