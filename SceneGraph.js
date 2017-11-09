@@ -1199,7 +1199,7 @@ SceneGraph.prototype.parseAnimations = function(animations_node) {
 
 		if (animation_id == null)
 			return "no ID defined for animation";
-		if (this.animations[animation_id] != null)
+		if (this.animations.get(animation_id) != null)
 			return "ID for animation must be unique: " + animation_id;
 
 		if (animation_type == null)
@@ -1487,12 +1487,17 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 					mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
 				}
 				else if ("ANIMATIONREFS" == name) {
-					let animation_id = this.reader.parseString(nodeSpecs[j], 'id');
-					if (animation_id == null || this.animations[animation_id] == null) {
-						this.onXMLMinorError("Animation ID does not correspond to a valid animation in (node ID = " + nodeID + ") discarding animation");
-						continue;
+					let animation_childs = nodeSpecs[j].children;
+					for (let k = 0; k < animation_childs.length; k++) {
+						let animation_id = this.reader.getString(animation_childs[k], 'id');
+						if (animation_id == null || this.animations.get(animation_id) == null) {
+							this.onXMLMinorError("Animation ID does not correspond to a valid animation in (node ID = " + nodeID + ") discarding animation");
+							continue;
+						}
+						console.log("Adding animation : "+animation_id+" to node: "+nodeID);
+						this.nodes[nodeID].addAnimation(this.animations.get(animation_id));
 					}
-					this.nodes[nodeID].addAnimation(this.animations[animation_id]);
+
 				}
 			}
 
@@ -1642,14 +1647,19 @@ SceneGraph.generateRandomString = function(length) {
  * @description Used to start rendering the scene, handles only the root node
  */
 SceneGraph.prototype.displayScene = function() {
-	var child = this.nodes[this.root_id].children, leav = this.nodes[this.root_id].leaves,
-	 		text_id = this.nodes[this.root_id].textureID, mat_id = this.nodes[this.root_id].materialID;
+	let child = this.nodes[this.root_id].children,
+			leav = this.nodes[this.root_id].leaves,
+			node = this.nodes[this.root_id],
+	 		text_id = this.nodes[this.root_id].textureID,
+			mat_id = this.nodes[this.root_id].materialID;
 	this.scene.pushMatrix();
-	if ( this.nodes[this.root_id].transformMatrix != null )
+	if (node.transformMatrix != null)
 		this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
+	//node.applyAnimations();
+
 	for (var i = 0 ; i < leav.length ; i++)
-		leav[i].render( this.materials[mat_id], this.textures[text_id], this.scene);
+		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
 
 	for (var i = 0 ; i < child.length ; i++ )
 		this.displayNodes(child[i], mat_id, text_id);
@@ -1670,13 +1680,12 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	if ( node.transformMatrix != null )
 		this.scene.multMatrix( node.transformMatrix );
 
+	node.applyAnimations();
 	if ( node.materialID != "null" )
 		mat = node.materialID;
 
 	if ( node.textureID != "null" )
 		text = node.textureID;
-
-	//console.log(node.nodeID+" - text = "+text);
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
 		this.displayNodes( node.children[i], mat, text);

@@ -7,48 +7,16 @@
 class LinearAnimation extends Animation {
 	constructor(speed, args) {
 		super();
-
-		this.animation_over = false;
+		this.current_time = new Date();
+		this.old_time;
+		
 		this.pts = args;
 		this.pt_i = 0;
 		this.curr_end_pt = args[this.pt_i++];
+		this.init_pos = [];
 
 		// 1unit / s
 		this.speed = speed;
-	}
-
-	//TODO check if this is working
-	tickTock(curr_pos) {
-		if (!this.animation_over){
-			if (this.old_time == 0) { //begin animation
-				this.old_time = this.current_time.getTime();
-				return curr_pos;
-			}
-			let x = curr_pos[0], y = curr_pos[1], z = curr_pos[2],
-					end_x = this.curr_end_pt[0], end_y = this.curr_end_pt[1], end_z = this.curr_end_pt[2],
-					sec = (this.current_time.getTime() - this.old_time) / 1000, //seconds passed
-					distance_to_pt = Math.sqrt(Math.pow(x-end_x,2) + Math.pow(y-end_y,2) + Math.pow(z-end_z,2)),
-					new_x, new_y, new_z, distance;
-
-			if (distance_to_pt > this.speed*sec)
-				distance = this.speed * sec;
-			else
-				distance = distance_to_pt;
-
-			new_x = x + distance * Math.cos( this.dotProduct([1,0,0], this.curr_end_pt));
-			new_y = y + distance * Math.cos( this.dotProduct([0,1,0], this.curr_end_pt));
-			new_z = z + distance * Math.cos( this.dotProduct([0,0,1], this.curr_end_pt));
-
-			let new_point = checkNewEndPt([new_x, new_y, new_z]);
-			if (1 == new_point)
-				this.curr_end_pt = this.args[this.pt_i++];
-			else if (-1 == new_point)
-				this.animation_over = true;
-
-			return [new_x, new_y, new_z];
-		}
-
-		return curr_pos;
 	}
 
 	/**
@@ -62,13 +30,58 @@ class LinearAnimation extends Animation {
 				new_point[1] == this.curr_end_pt[1] &&
 				new_point[2] == this.curr_end_pt[2])
 		{
-			if (this.pt_i < this.args.length)
+			if (this.pt_i < this.args.length) { // there are still more points
+				this.init_pos = new_point;
 				return 1;
-			else
+			}
+			else { //animation over
 				return -1;
+			}
 		}
-		else
+		else //current end point not reached
 			return 0;
+	}
+
+
+	//TODO check if this is working
+	/**
+	 * @description Updates the position of the object
+	 * @param curr_pos Current position of the object
+	 * @return The new position of the object
+	 */
+	updateMatrix(transformation_matrix) {
+		if (!this.animation_over) {
+			if (this.old_time == 0) { //begin animation
+				this.old_time = this.current_time.getTime();
+				this.init_pos = initial_pos;
+			}
+			else{
+				let init_x = this.init_pos[0], init_y = this.init_pos[1], init_z = this.init_pos[2],
+						end_x = this.curr_end_pt[0], end_y = this.curr_end_pt[1], end_z = this.curr_end_pt[2],
+						sec = (this.current_time.getTime() - this.old_time) / 1000, //seconds passed
+						distance = this.speed * sec,
+						distance_to_end_pt = Math.sqrt( Math.pow(init_x - end_x,2) + Math.pow(init_y - end_y, 2) + Math.pow(init_z - end_z, 2) ),
+						t_x, t_y, t_z;
+
+				if (distance > distance_to_end_pt)
+					distance = distance_to_end_pt;
+
+				t_x = distance * Math.cos(this.curr_end_pt[0]);
+				t_y = distance * Math.cos(this.curr_end_pt[1]);
+				t_z = distance * Math.cos(this.curr_end_pt[2]);
+
+				mat4.translate(transformation_matrix, transformation_matrix, [t_x, t_y, t_z]);
+
+				let new_point = this.checkNewEndPt([t_x, t_y, t_z]);
+				if (1 == new_point)
+					this.curr_end_pt = this.args[this.pt_i++];
+				else if (-1 == new_point)
+					this.animation_over = true;
+
+			}
+		}
+
+		return transformation_matrix;
 	}
 
 	get getType() {

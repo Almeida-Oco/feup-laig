@@ -16,7 +16,7 @@ class CircularAnimation extends Animation {
 		this.rotang 	= args[5];
 	}
 
-	tickTock() {
+	updateMatrix(transformation_matrix) {
 		console.log("\n\n MEOW \n\n");
 	}
 

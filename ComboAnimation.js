@@ -9,7 +9,7 @@ class ComboAnimation extends Animation {
 		this.animations_id = args;
 	}
 
-	tickTock() {
+	updateMatrix(transformation_matrix) {
 		console.log("\n\n MEOW \n\n");
 	}
 

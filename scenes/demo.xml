@@ -327,6 +327,10 @@
             <NODEREF id="banco2" />
         </DESCENDANTS>
 
+				<ANIMATIONREFS>
+					<ANIMATIONREF id="linear1"/>
+				</ANIMATIONREFS>
+
     </NODE>
 
     <!-- One bench -->

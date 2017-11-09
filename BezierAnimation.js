@@ -11,7 +11,7 @@ class BezierAnimation extends Animation {
 		this.speed = speed;
 	}
 
-	tickTock() {
+	updateMatrix(transformation_matrix) {
 		console.log("\n\n MEOW \n\n");
 	}
 
