@@ -1720,9 +1720,9 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 		this.displayNodes( node.children[i], mat, text);
 	for ( var i = 0 ; i < node.leaves.length ; i++)
 		if ( text == "clear" )
-			node.leaves[i].render( this.materials[mat], null, this.scene);
+			node.leaves[i].render( this.materials[mat], null, this.scene, node.selectable);
 		else
-			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene);
+			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene, node.selectable);
 
 	this.scene.popMatrix();
 }

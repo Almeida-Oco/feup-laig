@@ -425,7 +425,7 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore">
+    <NODE id="troncoArvore" selectable="true">
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="trunk" />
 
