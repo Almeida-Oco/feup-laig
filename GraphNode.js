@@ -48,7 +48,8 @@ class GraphNode {
 
 	applyAnimations(delta, matrix) {
 		for (let i = 0; i < this.animations.length; i++) {
-			matrix = this.animations[i].updateMatrix(delta, matrix);
+			if (!this.animations[i].animationOver())
+				matrix = this.animations[i].updateMatrix(delta, matrix);
 		}
 
 		return matrix;

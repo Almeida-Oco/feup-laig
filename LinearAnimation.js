@@ -10,7 +10,7 @@ class LinearAnimation extends Animation {
 		this.pts = args;
 		this.pt_i = 1;
 		this.curr_end_pt = args[this.pt_i++];
-		this.pt_i ++;
+		this.duration = Animation.calculateDuration(this.pts[this.pt_i-1], this.pts[this.pt_i], this.speed);
 		this.init_pos = args[0];
 	}
 
@@ -19,11 +19,11 @@ class LinearAnimation extends Animation {
 	 * @param new_point Newest point of object [x,y,z]
 	 * @return 1 If it is the end point and the end point should be updated, 0 if it is not, -1 if animation over
 	 */
-	checkNewEndPt(new_point) {
+	checkNewEndPt() {
 		//if new point is equal to current end point
 		if (this.total_time >= this.duration) {
 			if (this.pt_i < this.pts.length) { // there are still more points
-				this.init_pos = new_point;
+				this.init_pos = this.curr_end_pt;
 				return 1;
 			}
 			else { //animation over
@@ -34,16 +34,15 @@ class LinearAnimation extends Animation {
 			return 0;
 	}
 
-
-	//TODO check if this is working
+	//TODO Check time units
+	//TODO Add rotation
 	/**
 	 * @description Updates the position of the object
 	 * @param curr_pos Current position of the object
 	 * @return The new position of the object
 	 */
 	updateMatrix(delta, transformation_matrix) {
-		//console.log(delta);
-		delta = (delta*1.0)/10
+		delta /= 10;
 		if (!this.animation_over) {
 			let init_x = this.init_pos[0], init_y = this.init_pos[1], init_z = this.init_pos[2],
 					end_x = this.curr_end_pt[0], end_y = this.curr_end_pt[1], end_z = this.curr_end_pt[2],
@@ -52,14 +51,16 @@ class LinearAnimation extends Animation {
 			tx = super.linearInterpolation(init_x, end_x, delta) - init_x;
 			ty = super.linearInterpolation(init_y, end_y, delta) - init_y;
 			tz = super.linearInterpolation(init_z, end_z, delta) - init_z;
-
 			mat4.translate(transformation_matrix, transformation_matrix, [tx, ty, tz]);
 
 			let new_point = this.checkNewEndPt([tx, ty, tz]);
-			if (1 == new_point)
-				this.curr_end_pt = this.args[this.pt_i++];
-			else if (-1 == new_point){
-				console.log("		ANIMATION OVER! 	\n");
+			if (1 === new_point){
+				this.curr_end_pt = this.pts[this.pt_i];
+				this.duration = Animation.calculateDuration(this.pts[this.pt_i], this.pts[this.pt_i-1], this.speed);
+				this.pt_i++;
+				this.total_time = 0;
+			}
+			else if (-1 === new_point){
 				this.animation_over = true;
 			}
 
