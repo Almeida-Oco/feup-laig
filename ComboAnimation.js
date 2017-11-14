@@ -9,8 +9,18 @@ class ComboAnimation extends Animation {
 		this.animations_id = args;
 	}
 
-	updateMatrix(transformation_matrix) {
-		console.log("\n\n MEOW \n\n");
+	updateMatrix(delta, matrix) {
+		for (let i = 0; i < this.animations.length; i++) {
+			if (!this.animations[i].animationOver()) {
+				matrix = this.animations[i].updateMatrix(delta, matrix);
+				break;
+			}
+			else{
+				continue;
+			}
+		}
+
+		return matrix;
 	}
 
 	setAnimations(animations) {
