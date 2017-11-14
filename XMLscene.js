@@ -1,5 +1,6 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
+
 /**
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
@@ -90,6 +91,8 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
+	this.setupshaders();
+
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
 }
@@ -103,6 +106,8 @@ XMLscene.prototype.display = function() {
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+	this.gl.clearColor(0.1, 0.1, 0.1, 1.0);
+
 
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
@@ -147,9 +152,47 @@ XMLscene.prototype.display = function() {
 		this.axis.display();
 	}
 
+	
+	this.updateScaleFactor(performance.now());	
 
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
+
+}
+
+XMLscene.prototype.updateScaleFactor=function(scale_fac)
+{
+
+	if(scale_fac != undefined){
+		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.01)});
+	}else {
+		this.sel_shader.setUniformsValues({normScale: 1});		
+	}
+}
+
+XMLscene.prototype.setupshaders = function(){
+
+/*
+	this.shaders=[
+		new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
+		new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag"),
+		new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag"),
+		new CGFshader(this.gl, "shaders/texture1.vert", "shaders/texture1.frag"),
+		new CGFshader(this.gl, "shaders/texture2.vert", "shaders/texture2.frag"),
+		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/texture3.frag"),
+		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/sepia.frag"),
+		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/convolution.frag")
+	];
+*/
+	this.sel_shader = new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag");
+
+	// texture will have to be bound to unit 1 later, when using the shader, with "this.texture2.bind(1);"
+	//this.testShaders[4].setUniformsValues({uSampler2: 1});
+	//this.testShaders[5].setUniformsValues({uSampler2: 1});
+
+	//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
+	
+	this.updateScaleFactor(1);
 
 }
