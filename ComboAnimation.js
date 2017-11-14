@@ -4,7 +4,7 @@
  */
 class ComboAnimation extends Animation {
 	constructor(args) {
-		super();
+		super(0, args);
 		this.animations = [];
 		this.animations_id = args;
 	}

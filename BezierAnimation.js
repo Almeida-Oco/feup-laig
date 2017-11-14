@@ -6,7 +6,7 @@
  */
 class BezierAnimation extends Animation {
 	constructor(speed, args) {
-		super();
+		super(speed, args);
 		this.pts = args;
 		this.speed = speed;
 	}

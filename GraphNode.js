@@ -46,9 +46,11 @@ class GraphNode {
 		this.animations.push(animation);
 	}
 
-	applyAnimations() {
+	applyAnimations(delta, matrix) {
 		for (let i = 0; i < this.animations.length; i++) {
-			this.animations[i].updateMatrix(this.transformMatrix);
+			matrix = this.animations[i].updateMatrix(delta, matrix);
 		}
+
+		return matrix;
 	}
 };

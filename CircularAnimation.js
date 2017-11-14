@@ -6,7 +6,7 @@
  */
 class CircularAnimation extends Animation {
 	constructor(speed, args) {
-		super();
+		super(speed, args);
 		this.linear_speed = speed;
 		this.center_x = args[0];
 		this.center_y = args[1];

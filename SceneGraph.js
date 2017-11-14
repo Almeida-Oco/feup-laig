@@ -7,8 +7,7 @@ var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
 var ANIMATIONS_INDEX = 5;
-var LEAVES_INDEX = 6;
-var NODES_INDEX = 7;
+var NODES_INDEX = 6;
 
 /**
  * @description Contructor for SceneGraph
@@ -69,17 +68,16 @@ SceneGraph.prototype.onXMLReady = function()
 
 /**
  * @description Gets the time elapsed from previous function call
- * @return Number of seconds passed
+ * @return Number of milliseconds passed
  */
 SceneGraph.prototype.getTimeElapsed = function() {
-	let time_elapsed = ((Date.now() - this.start_time)*1.0)/1000.0;
+	let time_elapsed = performance.now() - this.start_time;
 	if (this.start_time === 0) {
-		this.start_time = Date.now();
+		this.start_time = performance.now();
 		return -1;
 	}
 	else {
-		this.start_time = Date.now();
-		console.log("Time Elapsed: " + time_elapsed);
+		this.start_time = performance.now();
 		return time_elapsed;
 	}
 }
@@ -1675,13 +1673,14 @@ SceneGraph.prototype.displayScene = function() {
 			node = this.nodes[this.root_id],
 	 		text_id = this.nodes[this.root_id].textureID,
 			mat_id = this.nodes[this.root_id].materialID;
-	this.scene.pushMatrix();
-	if (node.transformMatrix != null)
-		this.scene.multMatrix( this.nodes[this.root_id].transformMatrix );
 
+	this.scene.pushMatrix();
 	let time_passed = this.getTimeElapsed();
 	if (time_passed != -1)
-		node.applyAnimations(time_passed, node.transformMatrix);
+		node.transformMatrix = node.applyAnimations(time_passed, node.transformMatrix);
+
+	if (node.transformMatrix != null)
+		this.scene.multMatrix( node.transformMatrix );
 
 	for (var i = 0 ; i < leav.length ; i++)
 		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
@@ -1701,13 +1700,15 @@ SceneGraph.prototype.displayScene = function() {
 SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 	var node = this.nodes[node_id],
 			mat=material_id, text=texture_id;
-	this.scene.pushMatrix();
-	if ( node.transformMatrix != null )
-		this.scene.multMatrix( node.transformMatrix );
 
+	this.scene.pushMatrix();
 	let time_passed = this.getTimeElapsed();
 	if (time_passed != -1)
-			node.applyAnimations(time_passed, node.transformMatrix);
+			node.transformMatrix = node.applyAnimations(time_passed, node.transformMatrix);
+	if (node.transformMatrix != null)
+		this.scene.multMatrix( node.transformMatrix );
+
+
 
 	if ( node.materialID != "null" )
 		mat = node.materialID;
