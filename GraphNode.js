@@ -6,20 +6,17 @@
 class GraphNode {
 	constructor (nodeID, selectable) {
 		this.nodeID = nodeID;
-		this.selectable = selectable;
-
 		this.children = [];
-
-		this.animations = [];
-
 		this.leaves = new Array();
-
 		this.materialID = null ;
-
 		this.textureID = null ;
 
 		this.transformMatrix = mat4.create();
 		mat4.identity(this.transformMatrix);
+
+		this.selectable = selectable;
+		this.animations = []; //list of pairs [[Animation1, assigned_index1], [Animation2, assigned_index2] (...)]
+		this.last_time = 0;
 	}
 
 	/**
@@ -43,15 +40,37 @@ class GraphNode {
 	 * @param animation Animation to add
 	 */
 	addAnimation (animation) {
-		this.animations.push(animation);
+		this.animations.push([animation, animation.assignIndex()]);
 	}
 
-	applyAnimations(delta, matrix) {
-		for (let i = 0; i < this.animations.length; i++) {
-			if (!this.animations[i].animationOver())
-				matrix = this.animations[i].updateMatrix(delta, matrix);
+	applyAnimations(matrix) {
+		let delta = this.getTimeElapsed();
+		for (let i = 0; (i < this.animations.length && delta !== -1); i++) { //if it aint the first time running
+			let animation = this.animations[i][0], assigned_index = this.animations[i][1];
+
+			if (!animation.animationOver(assigned_index)) {
+				matrix = animation.updateMatrix(assigned_index, delta, matrix);
+				break; //stop at first successfull animation
+			}
 		}
 
 		return matrix;
 	}
+
+	/**
+	 * @description Gets the time elapsed from previous function call
+	 * @return Number of milliseconds passed
+	 */
+	getTimeElapsed () {
+		let time_elapsed = performance.now() - this.last_time;
+		if (this.last_time === 0){
+			this.last_time = performance.now();
+			return -1;
+		}
+		else {
+			this.last_time = performance.now();
+			return time_elapsed;
+		}
+	}
+
 };

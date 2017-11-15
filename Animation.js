@@ -3,16 +3,11 @@
  * @abstract
  */
 class Animation {
-	animationOver() {
-		return this.animation_over;
-	};
-
 	constructor(speed, args) {
-		// 1unit / s
-		this.speed = speed;
-		this.animation_over = false;
-		this.duration = 0; //the total duration of this animation
-		this.total_time = 0;
+		this.speed = speed; 					// 1unit / s
+		this.animations_over = [];		// if the animation is over
+		this.durations = []; 					// the total duration of the animations
+		this.total_time = []; 				// will hold the different progresses of the nodes
 
 		if (this.constructor === Animation) {
       throw new TypeError("Can't instantiate abstract class!");
@@ -25,22 +20,43 @@ class Animation {
 		if (this.getType === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement getType()");
 		}
+
+		if (this.assignIndex === undefined) {
+			throw new TypeError("Classes inheriting from Animation must implement assignIndex()");
+
+		}
 	};
 
-	linearInterpolation (min, max, t) {
-		let passed = t / this.duration;
-		if (t > this.duration) //interpolation over
+	getDuration (assigned_index) {
+		return this.durations[assigned_index];
+	}
+
+	animationOver (assigned_index) {
+		return this.animations_over[assigned_index];
+	}
+
+	getTotalTime (assigned_index) {
+		return this.total_time[assigned_index];
+	}
+
+	setAnimationOver (assigned_index) {
+		this.animations_over[assigned_index] = true;
+	}
+
+	incTotalTime (assigned_index, inc) {
+		this.total_time[assigned_index] += inc;
+	}
+
+	resetTotalTime (assigned_index) {
+		this.total_time[assigned_index] = 0;
+	}
+
+	linearInterpolation (assigned_index, min, max, t) {
+		let duration = this.getDuration(assigned_index), passed = t / duration;
+		if (t > duration) //interpolation over
 			return max;
 		else{
 			return (1 - passed) * min + (passed * max);
 		}
 	}
-
-	static calculateDuration(pt1, pt2, speed) {
-		return this.ptsDistance(pt1, pt2) / speed;
-	};
-
-	static ptsDistance(pt1, pt2) {
-		return Math.sqrt(Math.pow(pt1[0]-pt2[0], 2) + Math.pow(pt1[1]-pt2[1], 2) + Math.pow(pt1[2]-pt2[2], 2));
-	};
 };

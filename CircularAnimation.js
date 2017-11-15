@@ -23,4 +23,8 @@ class CircularAnimation extends Animation {
 	get getType() {
 		return "CircularAnimation";
 	}
+
+	assignIndex () {
+		console.log("MEOW");
+	}
 };

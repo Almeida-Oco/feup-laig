@@ -67,22 +67,6 @@ SceneGraph.prototype.onXMLReady = function()
 };
 
 /**
- * @description Gets the time elapsed from previous function call
- * @return Number of milliseconds passed
- */
-SceneGraph.prototype.getTimeElapsed = function() {
-	let time_elapsed = performance.now() - this.start_time;
-	if (this.start_time === 0) {
-		this.start_time = performance.now();
-		return -1;
-	}
-	else {
-		this.start_time = performance.now();
-		return time_elapsed;
-	}
-}
-
-/**
  * @description Parses the xml file one block at a time
  * @param root_element The root of the graph, where the rendering will start
  * @return null if there was no error, error message otherwise
@@ -1675,9 +1659,8 @@ SceneGraph.prototype.displayScene = function() {
 			mat_id = this.nodes[this.root_id].materialID;
 
 	this.scene.pushMatrix();
-	let time_passed = this.getTimeElapsed();
-	if (time_passed != -1)
-		node.transformMatrix = node.applyAnimations(time_passed, node.transformMatrix);
+	node.transformMatrix = node.applyAnimations(node.transformMatrix);
+
 
 	if (node.transformMatrix != null)
 		this.scene.multMatrix( node.transformMatrix );
@@ -1691,6 +1674,7 @@ SceneGraph.prototype.displayScene = function() {
 	this.scene.popMatrix();
 }
 
+//TODO check if calling displayNodes(this.root_id, null, null) works
 /**
  * @description Handles the inheritance of nodes
  * @param node_id ID of the father node
@@ -1702,13 +1686,11 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 			mat=material_id, text=texture_id;
 
 	this.scene.pushMatrix();
-	let time_passed = this.getTimeElapsed();
-	if (time_passed != -1)
-			node.transformMatrix = node.applyAnimations(time_passed, node.transformMatrix);
+	node.transformMatrix = node.applyAnimations(node.transformMatrix);
+
+
 	if (node.transformMatrix != null)
 		this.scene.multMatrix( node.transformMatrix );
-
-
 
 	if ( node.materialID != "null" )
 		mat = node.materialID;

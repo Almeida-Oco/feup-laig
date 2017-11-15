@@ -18,4 +18,8 @@ class BezierAnimation extends Animation {
 	get getType() {
 		return "BezierAnimation";
 	}
+
+	assignIndex () {
+		console.log("MEOW");
+	}
 };

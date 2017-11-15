@@ -29,6 +29,10 @@ class ComboAnimation extends Animation {
 		}
 	}
 
+	assignIndex () {
+		console.log("MEOW");
+	}
+
 	getType() {
 		return "ComboAnimation";
 	}
