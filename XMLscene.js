@@ -31,6 +31,8 @@ XMLscene.prototype.init = function(application) {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
+	this.selectable = false;
+
     this.axis = new CGFaxis(this);
 }
 
@@ -167,18 +169,20 @@ XMLscene.prototype.setupshaders = function(){
 
 	// texture will have to be bound to unit 1 later, when using the shader, with "this.texture2.bind(1);"
 	//this.testShaders[4].setUniformsValues({uSampler2: 1});
-	//this.testShaders[5].setUniformsValues({uSampler2: 1});
+	this.sel_shader.setUniformsValues({uSampler2: 1});
 
 	//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
-
+	
 	this.updateScaleFactor(1);
 
 }
 
 XMLscene.prototype.updateScaleFactor=function(scale_fac)
 {
+
+	console.log('Interpolation Value:' + Math.sin(scale_fac*0.007));
 	if(scale_fac != undefined){
-		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.01)});
+		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.007)});
 	}else {
 		this.sel_shader.setUniformsValues({normScale: 1});
 	}
