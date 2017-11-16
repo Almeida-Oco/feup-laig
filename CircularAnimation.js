@@ -26,13 +26,13 @@ class CircularAnimation extends Animation {
 		super.incTotalTime(assigned_index, delta);
 		console.log("Total = "+super.getTotalTime(assigned_index)+", Duration ="+super.getDuration(assigned_index));
 
-		reset_x = (this.radius * Math.cos(start_angle)) + this.center_x;
-		reset_z = (this.radius * Math.sin(start_angle)) + this.center_z;
+		reset_x = (this.radius * Math.sin(start_angle));
+		reset_z = (this.radius * Math.cos(start_angle));
 		angle = super.linearInterpolation(assigned_index, start_angle, this.rotang, delta) - start_angle;
 
-		mat4.translate(matrix, matrix, [reset_x, 0, reset_z]);
+	 	mat4.translate(matrix, matrix, [-reset_x, 0, -reset_z]);
 		mat4.rotate		(matrix, matrix, angle*DEGREE_TO_RAD, [0,1,0]);
-		mat4.translate(matrix, matrix, [-reset_x, 0, -reset_z]);
+		mat4.translate(matrix, matrix, [reset_x, 0, reset_z]);
 
 		if (this.checkAnimationOver(assigned_index)) {
 			super.setAnimationOver(assigned_index);
