@@ -1242,6 +1242,10 @@ SceneGraph.prototype.parseAnimations = function(animations_node) {
 
 SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) {
 	let children = animation_node.children, args = [], i = 0;
+	if (children.length < 2) {
+		return "at least 2 controlpoints must be defined for linear animation: " + id;
+	}
+
 	for (i = 0; i < children.length; i++) {
 		let child = children[i], pts = [];
 		if (child.nodeName != "controlpoint") {

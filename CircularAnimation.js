@@ -24,7 +24,6 @@ class CircularAnimation extends Animation {
 		let start_angle = this.getCurrAngle(assigned_index),
 				angle, reset_x, reset_z;
 		super.incTotalTime(assigned_index, delta);
-		console.log("Total = "+super.getTotalTime(assigned_index)+", Duration ="+super.getDuration(assigned_index));
 
 		reset_x = (this.radius * Math.sin(start_angle));
 		reset_z = (this.radius * Math.cos(start_angle));

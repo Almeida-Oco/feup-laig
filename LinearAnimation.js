@@ -64,12 +64,12 @@ class LinearAnimation extends Animation {
 	updatePts (assigned_index) {
 		let ret = this.checkNewEndPt(assigned_index);
 
-		if (1 === ret) {
+		if (1 === ret) { //next segment
 			this.indexes[assigned_index]++;
 			this.durations[assigned_index] = this.calculateDuration(this.getBeginPt(assigned_index), this.getEndPt(assigned_index));
 			super.resetTotalTime(assigned_index);
 		}
-		else if (-1 === ret) {
+		else if (-1 === ret) { //animation over
 			super.setAnimationOver(assigned_index);
 		}
 	}
