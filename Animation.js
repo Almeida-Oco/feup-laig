@@ -55,7 +55,8 @@ class Animation {
 	}
 
 	linearInterpolation (assigned_index, min, max, t) {
-		let duration = this.getDuration(assigned_index), passed = t / duration;
+		let duration = this.getDuration(assigned_index),
+				passed = t / duration;
 		if (t > duration) //interpolation over
 			return max;
 		else{
