@@ -91,7 +91,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-	// this.setupshaders();
+	this.setupshaders();
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
@@ -153,29 +153,17 @@ XMLscene.prototype.display = function() {
 	}
 
 
-	// this.updateScaleFactor(performance.now());
+	this.updateScaleFactor(performance.now());
 
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
 
 }
-/*
+
 XMLscene.prototype.setupshaders = function(){
 
-/*
-	this.shaders=[
-		new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
-		new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag"),
-		new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag"),
-		new CGFshader(this.gl, "shaders/texture1.vert", "shaders/texture1.frag"),
-		new CGFshader(this.gl, "shaders/texture2.vert", "shaders/texture2.frag"),
-		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/texture3.frag"),
-		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/sepia.frag"),
-		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/convolution.frag")
-	];
-
-	this.sel_shader = new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag");
+	this.sel_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/sel.frag");
 
 	// texture will have to be bound to unit 1 later, when using the shader, with "this.texture2.bind(1);"
 	//this.testShaders[4].setUniformsValues({uSampler2: 1});
@@ -195,4 +183,4 @@ XMLscene.prototype.updateScaleFactor=function(scale_fac)
 		this.sel_shader.setUniformsValues({normScale: 1});
 	}
 }
-*/
+
