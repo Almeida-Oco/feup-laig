@@ -160,8 +160,10 @@
 						 radius="20" startang="0" rotang="180"/>
 
 	<ANIMATION id="bezier1" speed="1" type="bezier">
-		<controlpoint xx="1" yy="1" zz="1" />
-		<controlpoint xx="1.5" yy="0" zz="3" />
+		<controlpoint xx="0" yy="0" zz="0" />
+		<controlpoint xx="1" yy="0" zz="0" />
+		<controlpoint xx="1" yy="1" zz="0" />
+		<controlpoint xx="0" yy="1" zz="0" />
 	</ANIMATION>
 
 	<ANIMATION id="combo1" type="combo">
@@ -396,7 +398,9 @@
     <NODE id="arvore1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-
+				<ANIMATIONREFS>
+					<ANIMATIONREF id="bezier1" />
+				</ANIMATIONREFS>
         <TRANSLATION x="-2" y="0" z="5" />
 
         <DESCENDANTS>
