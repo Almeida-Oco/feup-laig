@@ -73,7 +73,7 @@ SceneGraph.prototype.onXMLReady = function()
  */
 SceneGraph.prototype.parseLSXFile = function(rootElement) {
 	if (rootElement.nodeName != "SCENE")
-	return "root tag <SCENE> missing";
+		return "root tag <SCENE> missing";
 
 	var nodes = rootElement.children;
 

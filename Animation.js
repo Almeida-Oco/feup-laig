@@ -23,7 +23,10 @@ class Animation {
 
 		if (this.assignIndex === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement assignIndex()");
+		}
 
+		if (this.calculateDuration === undefined) {
+			throw new TypeError("Classes inheriting from Animation must implement calculateDuration()");
 		}
 	};
 

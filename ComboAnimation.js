@@ -23,6 +23,10 @@ class ComboAnimation extends Animation {
 		return matrix;
 	}
 
+	calculateDuration () {
+		console.log("MEOW");
+	}
+
 	setAnimations(animations) {
 		for (let i = 0; i < this.animations_id.length; i++) {
 			this.animations.push(animations.get(this.animations_id[i]));

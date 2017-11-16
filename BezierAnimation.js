@@ -19,6 +19,10 @@ class BezierAnimation extends Animation {
 		return "BezierAnimation";
 	}
 
+	calculateDuration () {
+		console.log("MEOW");
+	}
+
 	assignIndex () {
 		console.log("MEOW");
 	}

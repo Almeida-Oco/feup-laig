@@ -12,7 +12,7 @@ class LinearAnimation extends Animation {
 	}
 
 	assignIndex() {
-		let assigned_index = this.indexes.length;
+		let assigned_index = this.animations_over.length;
 		this.indexes.push(0);
 		this.total_time.push(0);
 		this.animations_over.push(false);
@@ -38,7 +38,7 @@ class LinearAnimation extends Animation {
 		tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], delta) - init_pt[2];
 		mat4.translate(matrix, matrix, [tx, ty, tz]);
 
-		this.updatePts(assigned_index, [tx, ty, tz]);
+		this.updatePts(assigned_index);
 		return matrix;
 	}
 
@@ -48,7 +48,7 @@ class LinearAnimation extends Animation {
 	 * @param new_point Newest point of object [x,y,z]
 	 * @return 1 If it is the end point and the end point should be updated, 0 if it is not, -1 if animation over
 	 */
-	checkNewEndPt(assigned_index, curr_pt) {
+	checkNewEndPt(assigned_index) {
 		if (super.getTotalTime(assigned_index) >= super.getDuration(assigned_index)) {
 			if (this.indexes[assigned_index] < (this.pts.length-2)) { // there are still more points
 				return 1;
@@ -61,8 +61,8 @@ class LinearAnimation extends Animation {
 			return 0;
 	}
 
-	updatePts (assigned_index, t_matrix) {
-		let ret = this.checkNewEndPt(assigned_index, t_matrix);
+	updatePts (assigned_index) {
+		let ret = this.checkNewEndPt(assigned_index);
 
 		if (1 === ret) {
 			this.indexes[assigned_index]++;

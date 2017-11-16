@@ -91,7 +91,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-	this.setupshaders();
+	// this.setupshaders();
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
@@ -152,25 +152,15 @@ XMLscene.prototype.display = function() {
 		this.axis.display();
 	}
 
-	
-	this.updateScaleFactor(performance.now());	
+
+	// this.updateScaleFactor(performance.now());
 
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
 
 }
-
-XMLscene.prototype.updateScaleFactor=function(scale_fac)
-{
-
-	if(scale_fac != undefined){
-		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.01)});
-	}else {
-		this.sel_shader.setUniformsValues({normScale: 1});		
-	}
-}
-
+/*
 XMLscene.prototype.setupshaders = function(){
 
 /*
@@ -184,7 +174,7 @@ XMLscene.prototype.setupshaders = function(){
 		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/sepia.frag"),
 		new CGFshader(this.gl, "shaders/texture3.vert", "shaders/convolution.frag")
 	];
-*/
+
 	this.sel_shader = new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag");
 
 	// texture will have to be bound to unit 1 later, when using the shader, with "this.texture2.bind(1);"
@@ -192,7 +182,17 @@ XMLscene.prototype.setupshaders = function(){
 	//this.testShaders[5].setUniformsValues({uSampler2: 1});
 
 	//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
-	
+
 	this.updateScaleFactor(1);
 
 }
+
+XMLscene.prototype.updateScaleFactor=function(scale_fac)
+{
+	if(scale_fac != undefined){
+		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.01)});
+	}else {
+		this.sel_shader.setUniformsValues({normScale: 1});
+	}
+}
+*/
