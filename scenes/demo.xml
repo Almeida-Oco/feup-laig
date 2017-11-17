@@ -161,9 +161,9 @@
 
 	<ANIMATION id="bezier1" speed="1" type="bezier">
 		<controlpoint xx="0" yy="0" zz="0" />
-		<controlpoint xx="1" yy="0" zz="0" />
-		<controlpoint xx="1" yy="1" zz="0" />
-		<controlpoint xx="0" yy="1" zz="0" />
+		<controlpoint xx="5" yy="0" zz="0" />
+		<controlpoint xx="5" yy="5" zz="0" />
+		<controlpoint xx="0" yy="5" zz="0" />
 	</ANIMATION>
 
 	<ANIMATION id="combo1" type="combo">

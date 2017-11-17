@@ -30,7 +30,9 @@ class BezierAnimation extends Animation {
 		bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)) - this.prev_pts[assigned_index][1];
 		bezier_z = this.getPoint(assigned_index, this.getCoordinate(2)) - this.prev_pts[assigned_index][2];
 
-		this.prev_pts[assigned_index] = [bezier_x, bezier_y, bezier_z];
+		this.prev_pts[assigned_index][0] += bezier_x;
+		this.prev_pts[assigned_index][1] += bezier_y;
+		this.prev_pts[assigned_index][2] += bezier_z;
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
 
 		if (super.checkAnimationOver(assigned_index)){
