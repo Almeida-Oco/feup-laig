@@ -13,7 +13,6 @@ class BezierAnimation extends Animation {
 	}
 
 	updateMatrix(assigned_index, delta, matrix) {
-		delta /= 1000;
 		let bezier_x, bezier_y, bezier_z;
 		super.incTotalTime(assigned_index, delta);
 		bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.prev_pts[assigned_index][0];
@@ -39,7 +38,8 @@ class BezierAnimation extends Animation {
 		this.animations_over.push(false);
 		this.total_time.push(0);
 		this.prev_pts.push([0,0,0]);
-
+		this.durations.push(this.deCasteljau(1) / this.speed);
+		
 		return ret;
 	}
 
@@ -68,5 +68,82 @@ class BezierAnimation extends Animation {
 	 */
 	getCoordinate (coordinate) {
 		return [this.pts[0][coordinate], this.pts[1][coordinate], this.pts[2][coordinate], this.pts[3][coordinate]];
+	}
+
+	deCasteljau (depth) {
+		let base_pts = [], mid_pts  = []; //3 Nested arrays
+		base_pts[0] = [this.pts[0], this.pts[1], this.pts[2], this.pts[3]];
+		updateMidPts(base_pts, mid_pts, 0);
+
+		for (let i = 0 ; i < depth ; i++) {
+			updateBasePts(base_pts, mid_pts, index);
+			for (let index = 0; index < base_pts.length; index++) {
+				updateMidPts(base_pts[index], mid_pts[index]);
+			}
+		}
+
+		let total_distance = 0;
+		for (let pts in mid_pts) {
+			total_distance += calcSegmentLength(pts);
+		}
+
+		return total_distance;
+	}
+
+	calcMiddlePoint (pt1, pt2) {
+		return [(pt2[0] + pt1[0]) / 2 , (pt2[1] + pt1[1]) / 2, (pt2[2] + pt1[2]) / 2];
+	}
+
+	/**
+	 * @description Calculates the given segment total distance
+	 * @param pts Array of arrays that contain the 4 points of the segment
+	 * @return The total length of the segment
+	 */
+	calcSegmentLength (pts) {
+		let dist1 = Math.sqrt(Math.pow((pts[0][0]+pts[1][0]), 2) + Math.pow((pts[0][1]+pts[1][1]), 2) + Math.pow((pts[0][2]+pts[1][2]), 2)),
+				dist2 = Math.sqrt(Math.pow((pts[1][0]+pts[2][0]), 2) + Math.pow((pts[1][1]+pts[2][1]), 2) + Math.pow((pts[1][2]+pts[2][2]), 2)),
+				dist3 = Math.sqrt(Math.pow((pts[2][0]+pts[3][0]), 2) + Math.pow((pts[2][1]+pts[3][1]), 2) + Math.pow((pts[2][2]+pts[3][2]), 2));
+
+		return dist1 +  dist2 + dist3;
+	}
+
+	/**
+	 * @description Updates the mid points of casteljau algorithm
+	 * @param base_pts 3 Nested arrays that correspond to the curve, then the points, then the xyz coordinates
+	 * @param mid_pts 3 Nestes arrays that correspond to the curvee, then the mid points, then the xyz coordinates
+	 * @param index Index to store the update
+	 */
+	updateMidPts (base_pts, mid_pts, index) {
+		let temp_pt = calcMiddlePoint(base_pts[index][1], base_pts[index][2]);
+
+		mid_pts[index][0] = base_pts[index][0];
+		mid_pts[index][1] = calcMiddlePoint(base_pts[index][0],	base_pts[index][1]);
+		mid_pts[index][2] = calcMiddlePoint(mid_pts[index][1], temp_pt);
+
+		mid_pts[index+1][0] = base_pts[index][3];
+		mid_pts[index+1][1] = calcMiddlePoint(base_pts[index][3], base_pts[index][2]);
+		mid_pts[index+1][2] = calcMiddlePoint(mid_pts[index+1][1], temp_pt);
+
+		//Common point (M)
+		mid_pts[index+1][3] = calcMiddlePoint(mid_pts[index][2], mid_pts[index+1][2]);
+		mid_pts[index][3] = mid_pts[index+1][3];
+	}
+
+	/**
+	 * @description Updates the base points for the casteljau algorithm
+	 * @param base_pts 3 Nested arrays that correspond to the curve, then the points, then the xyz coordinates
+	 * @param mid_pts 3 Nestes arrays that correspond to the curvee, then the mid points, then the xyz coordinates
+	 * @param index Index to store the update
+	 */
+	updateBasePts (base_pts, mid_pts, index) {
+		base_pts[index][0] = mid_pts[index][0];
+		base_pts[index][1] = mid_pts[index][1];
+		base_pts[index][2] = mid_pts[index][4];
+		base_pts[index][3] = mid_pts[index][6];
+
+		base_pts[index+1][0] = mid_pts[index][6];
+		base_pts[index+1][1] = mid_pts[index][5];
+		base_pts[index+1][2] = mid_pts[index][3];
+		base_pts[index+1][3] = mid_pts[index][7];
 	}
 };

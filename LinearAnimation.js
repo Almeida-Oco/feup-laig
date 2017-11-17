@@ -28,14 +28,15 @@ class LinearAnimation extends Animation {
 	 * @return The new position of the object
 	 */
 	updateMatrix (assigned_index, delta, matrix) {
-		delta /= 1000;
+		super.incTotalTime(assigned_index, delta);
 		let init_pt = this.getBeginPt(assigned_index),
 				end_pt  = this.getEndPt(assigned_index),
+				perc_time = this.getTotalTime(assigned_index) / this.getDuration(assigned_index);
 				tx, ty, tz;
-		super.incTotalTime(assigned_index, delta);
-		tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], delta) - init_pt[0];
-		ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], delta) - init_pt[1];
-		tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], delta) - init_pt[2];
+
+		tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], perc_time) - init_pt[0];
+		ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], perc_time) - init_pt[1];
+		tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], perc_time) - init_pt[2];
 		mat4.translate(matrix, matrix, [tx, ty, tz]);
 
 		this.updatePts(assigned_index);

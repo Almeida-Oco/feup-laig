@@ -44,7 +44,7 @@ class GraphNode {
 	}
 
 	applyAnimations(matrix) {
-		let delta = this.getTimeElapsed();
+		let delta = this.getTimeElapsed() / 1000;
 		for (let i = 0; (i < this.animations.length && delta !== -1); i++) { //if it aint the first time running
 			let animation = this.animations[i][0], assigned_index = this.animations[i][1];
 
@@ -72,5 +72,4 @@ class GraphNode {
 			return time_elapsed;
 		}
 	}
-
 };

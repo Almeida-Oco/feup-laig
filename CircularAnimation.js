@@ -20,14 +20,15 @@ class CircularAnimation extends Animation {
 	}
 
 	updateMatrix(assigned_index, delta, matrix) {
-		delta /= 1000;
-		let start_angle = this.getCurrAngle(assigned_index),
-				angle, reset_x, reset_z;
 		super.incTotalTime(assigned_index, delta);
+		let start_angle = this.getCurrAngle(assigned_index),
+				perc_time = this.getTotalTime(assigned_index) / this.getDuration(assigned_index),
+				angle, reset_x, reset_z;
+
 
 		reset_x = (this.radius * Math.sin(start_angle));
 		reset_z = (this.radius * Math.cos(start_angle));
-		angle = super.linearInterpolation(assigned_index, start_angle, this.rotang, delta) - start_angle;
+		angle = super.linearInterpolation(assigned_index, start_angle, this.rotang, perc_time) - start_angle;
 
 	 	mat4.translate(matrix, matrix, [-reset_x, 0, -reset_z]);
 		mat4.rotate		(matrix, matrix, angle*DEGREE_TO_RAD, [0,1,0]);

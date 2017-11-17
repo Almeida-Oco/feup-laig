@@ -54,13 +54,20 @@ class Animation {
 		this.total_time[assigned_index] = 0;
 	}
 
+	/**
+	 * @description Calculates the linear interpolation between the values
+	 * @param assigned_index Index assigned to the node
+	 * @param min Start value
+	 * @param max End value
+	 * @param t Percentage of time elapsed, values between [0,1]
+	 * @return The interpolated value
+	 */
 	linearInterpolation (assigned_index, min, max, t) {
-		let duration = this.getDuration(assigned_index),
-				passed = t / duration;
-		if (t > duration) //interpolation over
+		let duration = this.getDuration(assigned_index);
+		if (this.total_time[assigned_index] > duration) //interpolation over
 			return max;
 		else{
-			return (1 - passed) * min + (passed * max);
+			return (1 - t) * min + (t * max);
 		}
 	}
 };
