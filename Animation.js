@@ -28,7 +28,13 @@ class Animation {
 		if (this.calculateDuration === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement calculateDuration()");
 		}
+
+
 	};
+
+	checkAnimationOver (assigned_index) {
+		return (this.total_time[assigned_index] >= this.durations[assigned_index]);
+	}
 
 	getDuration (assigned_index) {
 		return this.durations[assigned_index];
@@ -59,15 +65,11 @@ class Animation {
 	 * @param assigned_index Index assigned to the node
 	 * @param min Start value
 	 * @param max End value
-	 * @param t Percentage of time elapsed, values between [0,1]
+	 * @param t Time elapsed since last function call
 	 * @return The interpolated value
 	 */
 	linearInterpolation (assigned_index, min, max, t) {
-		let duration = this.getDuration(assigned_index);
-		if (this.total_time[assigned_index] > duration) //interpolation over
-			return max;
-		else{
-			return (1 - t) * min + (t * max);
-		}
+		let passed = t/this.durations[assigned_index];
+		return (1 - passed) * min + (passed * max);
 	}
 };

@@ -31,14 +31,13 @@ class LinearAnimation extends Animation {
 		super.incTotalTime(assigned_index, delta);
 		let init_pt = this.getBeginPt(assigned_index),
 				end_pt  = this.getEndPt(assigned_index),
-				perc_time = this.getTotalTime(assigned_index) / this.getDuration(assigned_index);
 				tx, ty, tz;
 
-		tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], perc_time) - init_pt[0];
-		ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], perc_time) - init_pt[1];
-		tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], perc_time) - init_pt[2];
-		mat4.translate(matrix, matrix, [tx, ty, tz]);
+		tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], delta) - init_pt[0];
+		ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], delta) - init_pt[1];
+		tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], delta) - init_pt[2];
 
+		mat4.translate(matrix, matrix, [tx, ty, tz]);
 		this.updatePts(assigned_index);
 		return matrix;
 	}
@@ -50,7 +49,7 @@ class LinearAnimation extends Animation {
 	 * @return 1 If it is the end point and the end point should be updated, 0 if it is not, -1 if animation over
 	 */
 	checkNewEndPt(assigned_index) {
-		if (super.getTotalTime(assigned_index) >= super.getDuration(assigned_index)) {
+		if (super.checkAnimationOver(assigned_index)) {
 			if (this.indexes[assigned_index] < (this.pts.length-2)) { // there are still more points
 				return 1;
 			}

@@ -93,7 +93,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-	this.setupshaders();
+	//this.setupshaders();
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
@@ -155,7 +155,7 @@ XMLscene.prototype.display = function() {
 	}
 
 
-	this.updateScaleFactor(performance.now());
+	// this.updateScaleFactor(performance.now());
 
     this.popMatrix();
 
@@ -172,19 +172,16 @@ XMLscene.prototype.setupshaders = function(){
 	this.sel_shader.setUniformsValues({uSampler2: 1});
 
 	//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
-	
+
 	this.updateScaleFactor(1);
 
 }
 
 XMLscene.prototype.updateScaleFactor=function(scale_fac)
 {
-
-	console.log('Interpolation Value:' + Math.sin(scale_fac*0.007));
 	if(scale_fac != undefined){
 		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.007)});
 	}else {
 		this.sel_shader.setUniformsValues({normScale: 1});
 	}
 }
-

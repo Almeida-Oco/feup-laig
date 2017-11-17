@@ -44,12 +44,12 @@ class GraphNode {
 	}
 
 	applyAnimations(matrix) {
-		let delta = this.getTimeElapsed() / 1000;
+		let delta = this.getTimeElapsed();
 		for (let i = 0; (i < this.animations.length && delta !== -1); i++) { //if it aint the first time running
 			let animation = this.animations[i][0], assigned_index = this.animations[i][1];
 
 			if (!animation.animationOver(assigned_index)) {
-				matrix = animation.updateMatrix(assigned_index, delta, matrix);
+				matrix = animation.updateMatrix(assigned_index, (delta / 1000), matrix);
 				break; //stop at first successfull animation
 			}
 		}

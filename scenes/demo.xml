@@ -150,7 +150,7 @@
 <ANIMATIONS>
 	<ANIMATION id="linear1" speed="1" type="linear">
 		<controlpoint xx="1" yy="1" zz="0" />
-		<controlpoint xx="1" yy="10" zz="0" />
+		<controlpoint xx="1" yy="6" zz="0" />
 		<controlpoint xx="1" yy="5" zz="0" />
 		<controlpoint xx="1" yy="1" zz="0" />
 	</ANIMATION>
@@ -398,9 +398,6 @@
     <NODE id="arvore1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-				<ANIMATIONREFS>
-					<ANIMATIONREF id="bezier1" />
-				</ANIMATIONREFS>
         <TRANSLATION x="-2" y="0" z="5" />
 
         <DESCENDANTS>
@@ -558,10 +555,14 @@
         <TRANSLATION x="12" y="5.8" z="4.75" />
         <SCALE sx="0.4" sy="2" sz="0.4" />
 
+				<ANIMATIONREFS>
+					<ANIMATIONREF id="bezier1" />
+				</ANIMATIONREFS>
+
         <DESCENDANTS>
        		<NODEREF id="meiaPiramide1" />
-            <NODEREF id="meiaPiramide2" />
-            <NODEREF id="basePiramide" />
+          <NODEREF id="meiaPiramide2" />
+          <NODEREF id="basePiramide" />
         </DESCENDANTS>
 
     </NODE>
