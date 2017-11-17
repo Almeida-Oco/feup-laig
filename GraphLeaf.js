@@ -30,24 +30,25 @@ function GraphLeaf(type, args, scene) {
  * @param boolean selectable if the object is selectable for shader thing
  */
 GraphLeaf.prototype.render = function(material, texture, scene, selectable){
-	 if (selectable) {
+	material.apply();	 
+
+if (selectable && scene.selectable) {
 	 	scene.setActiveShader(scene.sel_shader);
 	 }
 
 	if (texture != null){
-		material.apply();
+		
 		texture[0].bind();
 		material.setTextureWrap('REPEAT','REPEAT');
 		this.primitive.render(texture[1],texture[2]);
 	}
 	else {
-		material.apply();
 		this.primitive.render(1,1);
 		this.primitive.display();
 	}
 
 
-	 if (selectable) {
+	 if (selectable && scene.selectable) {
 	 	scene.setActiveShader(scene.defaultShader);
 	 }
 

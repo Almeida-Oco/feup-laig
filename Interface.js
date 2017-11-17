@@ -24,6 +24,8 @@ Interface.prototype.init = function(application) {
 
 	this.gui = new dat.GUI();
 
+	this.displayOutline = false;
+
 	// add a group of controls (and open/expand by defult)
 
 	return true;
@@ -47,3 +49,16 @@ Interface.prototype.addLightsGroup = function(lights) {
 		}
 	}
 }
+
+
+Interface.prototype.addSelectable = function(graph) {
+
+	this.select = function(){
+		graph.select_glow();
+	}
+
+	this.gui.add(this, 'select');
+
+}
+
+

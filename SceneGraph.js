@@ -1712,3 +1712,15 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 
 	this.scene.popMatrix();
 }
+
+
+
+SceneGraph.prototype.select_glow = function(){
+	if(this.scene.selectable){
+		this.scene.selectable = false;
+	} else {
+		this.scene.selectable = true;
+	}
+
+}
+
