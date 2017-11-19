@@ -179,9 +179,63 @@ XMLscene.prototype.setupshaders = function(){
 
 XMLscene.prototype.updateScaleFactor=function(scale_fac)
 {
+
+	//console.log('Interpolation Value:' + Math.sin(scale_fac*0.007));
+
+    if(this.sel_shader == undefined){
+        return;
+    }
+
 	if(scale_fac != undefined){
 		this.sel_shader.setUniformsValues({normScale: Math.sin(scale_fac*0.007)});
 	}else {
 		this.sel_shader.setUniformsValues({normScale: 1});
 	}
+}
+
+
+XMLscene.prototype.select_glow = function(){
+    if(this.selectable){
+        this.selectable = false;
+    } else {
+        this.selectable = true;
+    }
+
+}
+
+function hexToRgb(hex) {
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+
+    return [r/255.0,g/255.0,b/255.0];
+}
+
+/*  returned value: (String)
+hexToRgbA('#fbafff') -> [0.2,0.6,0.1]
+*/
+function hexToRgbA(hex){
+    var c;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length== 3){
+            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+        return [  ((c>>16)&255)/255.0, ((c>>8)&255)/255.0, (c&255)/255.0];
+    }
+    throw new Error('Bad Hex');
+}
+
+
+
+
+
+XMLscene.prototype.update_color = function(color){
+
+    color_rgb = hexToRgbA(color);
+    if(this.sel_shader != undefined){
+        this.sel_shader.setUniformsValues({red : color_rgb[0], green : color_rgb[1], blue : color_rgb[2]});
+    }
 }

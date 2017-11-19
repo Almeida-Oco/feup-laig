@@ -39,7 +39,7 @@ main=function() {
 	// Check console for loading errors
 	var myGraph = new SceneGraph(filename, myScene);
 
-	myInterface.addSelectable(myGraph);
+	myInterface.addSelectable(myScene);
 
 
 	// start

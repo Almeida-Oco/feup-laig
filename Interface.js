@@ -51,13 +51,27 @@ Interface.prototype.addLightsGroup = function(lights) {
 }
 
 
-Interface.prototype.addSelectable = function(graph) {
+Interface.prototype.addSelectable = function(scene) {
+
+	var sel_group = this.gui.addFolder("Select");
+	sel_group.open();
 
 	this.select = function(){
-		graph.select_glow();
+		scene.select_glow();
 	}
 
-	this.gui.add(this, 'select');
+	sel_group.add(this, 'select');
+
+	this.params = {color: "#ff0000" };
+
+	var sel_color = this.params;
+
+	this.color = function(){
+		scene.update_color(sel_color.color);
+	}
+	sel_group.addColor(sel_color,'color').onChange(this.color);
+
+	scene.update_color(sel_color.color);
 
 }
 

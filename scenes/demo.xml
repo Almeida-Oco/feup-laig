@@ -432,7 +432,7 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore" selectable="true">
+    <NODE id="troncoArvore" selectable="false">
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="trunk" />
 
@@ -547,7 +547,7 @@
     </NODE>
 
     <!-- A pyramid -->
-    <NODE id="piramide">
+    <NODE id="piramide" selectable="true">
 
         <MATERIAL id="null" />
         <TEXTURE id="vidral" />
