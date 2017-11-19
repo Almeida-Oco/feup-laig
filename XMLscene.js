@@ -93,7 +93,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-	//this.setupshaders();
+	this.setupshaders();
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
@@ -155,7 +155,7 @@ XMLscene.prototype.display = function() {
 	}
 
 
-	// this.updateScaleFactor(performance.now());
+	 this.updateScaleFactor(performance.now());
 
     this.popMatrix();
 
@@ -174,6 +174,7 @@ XMLscene.prototype.setupshaders = function(){
 	//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
 
 	this.updateScaleFactor(1);
+    this.update_color('#ff0000');
 
 }
 
@@ -227,9 +228,6 @@ function hexToRgbA(hex){
     }
     throw new Error('Bad Hex');
 }
-
-
-
 
 
 XMLscene.prototype.update_color = function(color){
