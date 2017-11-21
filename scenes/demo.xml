@@ -149,10 +149,9 @@
 
 <ANIMATIONS>
 	<ANIMATION id="linear1" speed="1" type="linear">
-		<controlpoint xx="1" yy="1" zz="0" />
-		<controlpoint xx="1" yy="6" zz="0" />
-		<controlpoint xx="1" yy="5" zz="0" />
-		<controlpoint xx="1" yy="1" zz="0" />
+		<controlpoint xx="0" yy="0" zz="0" />
+		<controlpoint xx="5" yy="0" zz="5" />
+		<controlpoint xx="10" yy="0" zz="0" />
 	</ANIMATION>
 
 	<ANIMATION id="circular1" speed="10" type="circular"
@@ -177,7 +176,6 @@
 
 <!-- The nodes -->
 <NODES>
-
     <ROOT id="root" />
 
     <!-- The root node -->
@@ -225,14 +223,18 @@
 
     </NODE>
 
-    <!-- The first light -->
-     <NODE id="luz1">
+  <!-- The first light -->
+   <NODE id="luz1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
         <DESCENDANTS>
             <NODEREF id="luz_candeeiro" />
         </DESCENDANTS>
+
+				<ANIMATIONREFS>
+					<ANIMATIONREF id="linear1"/>
+				</ANIMATIONREFS>
 
     </NODE>
 
@@ -301,7 +303,6 @@
 
         <DESCENDANTS>
 						<LEAF id="sphere1" type="sphere" args="2 20 20" />
-
         </DESCENDANTS>
 
     </NODE>
@@ -413,6 +414,10 @@
 
         <TRANSLATION x="22" y="0" z="5" />
 
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="circular1"/>
+        </ANIMATIONREFS>
+
         <DESCENDANTS>
             <NODEREF id="arvore" />
         </DESCENDANTS>
@@ -446,7 +451,7 @@
     </NODE>
 
     <!-- Tree leaves -->
-     <NODE id="folhasArvore">
+     <NODE id="folhasArvore" selectable="true">
         <MATERIAL id="leavesTreeMaterial" />
         <TEXTURE id="folhas" />
 
@@ -547,7 +552,7 @@
     </NODE>
 
     <!-- A pyramid -->
-    <NODE id="piramide" selectable="true">
+    <NODE id="piramide">
 
         <MATERIAL id="null" />
         <TEXTURE id="vidral" />

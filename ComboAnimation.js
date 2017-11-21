@@ -23,6 +23,14 @@ class ComboAnimation extends Animation {
 		return matrix;
 	}
 
+	calcIntermediateMatrix(assigned_index, delta, matrix) {
+		console.log("Called COmbo calcIntermediateMatrix()");
+	}
+
+	calcEndMatrix(matrix) {
+		console.log("Called combo calcEndMatrix");
+	}
+
 	calculateDuration () {
 		console.log("MEOW");
 	}

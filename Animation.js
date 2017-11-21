@@ -8,6 +8,7 @@ class Animation {
 		this.animations_over = [];		// if the animation is over
 		this.durations = []; 					// the total duration of the animations
 		this.total_time = []; 				// will hold the different progresses of the nodes
+    this.last_pt = [];            // will hold the last point of the animation
 
 		if (this.constructor === Animation) {
       throw new TypeError("Can't instantiate abstract class!");
@@ -16,6 +17,14 @@ class Animation {
 		if (this.updateMatrix === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement updateMatrix()");
 		}
+
+    if (this.calcIntermediateMatrix === undefined){
+      throw new TypeError("Classes inheriting from Animation must implement calcIntermediateMatrix()");
+    }
+
+    if (this.calcEndMatrix === undefined){
+      throw new TypeError("Classes inheriting from Animation must implement calcEndMatrix()");
+    }
 
 		if (this.getType === undefined) {
 			throw new TypeError("Classes inheriting from Animation must implement getType()");

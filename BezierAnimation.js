@@ -7,6 +7,7 @@
 class BezierAnimation extends Animation {
 	constructor(speed, args) {
 		super(speed, args);
+    this.last_pt = args[3];
 		this.pts = args;
 		this.speed = speed;
 		this.prev_pts = [];
@@ -24,11 +25,19 @@ class BezierAnimation extends Animation {
 
 
 	updateMatrix(assigned_index, delta, matrix) {
-		let bezier_x, bezier_y, bezier_z;
+    if (!super.animationOver(assigned_index)) {
+			this.calcIntermediateMatrix(assigned_index, delta, matrix);
+    }
+		else {
+			this.calcEndMatrix(matrix);
+		}
+	}
+
+	calcIntermediateMatrix(assigned_index, delta, matrix) {
 		super.incTotalTime(assigned_index, delta);
-		bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.prev_pts[assigned_index][0];
-		bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)) - this.prev_pts[assigned_index][1];
-		bezier_z = this.getPoint(assigned_index, this.getCoordinate(2)) - this.prev_pts[assigned_index][2];
+		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.prev_pts[assigned_index][0],
+				bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)) - this.prev_pts[assigned_index][1],
+				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2)) - this.prev_pts[assigned_index][2];
 
 		this.prev_pts[assigned_index][0] += bezier_x;
 		this.prev_pts[assigned_index][1] += bezier_y;
@@ -38,7 +47,10 @@ class BezierAnimation extends Animation {
 		if (super.checkAnimationOver(assigned_index)){
 			super.setAnimationOver();
 		}
-		return matrix;
+	}
+
+	calcEndMatrix(matrix) {
+		mat4.translate(matrix, matrix, this.last_pt);
 	}
 
 	get getType() {

@@ -12,40 +12,44 @@ class CircularAnimation extends Animation {
 		this.center_x = args[0];
 		this.center_y = args[1];
 		this.center_z = args[2];
+
 		this.radius 	=	args[3];
 		this.startang = args[4];
 		this.rotang 	= args[5];
 
-		this.curr_angle = [];
+    this.reset_x = (this.radius * Math.sin(this.startang));
+    this.reset_z = (this.radius * Math.cos(this.startang));
 	}
 
 	updateMatrix(assigned_index, delta, matrix) {
-		super.incTotalTime(assigned_index, delta);
-		let start_angle = this.getCurrAngle(assigned_index),
-				angle, reset_x, reset_z;
-
-
-		reset_x = (this.radius * Math.sin(start_angle));
-		reset_z = (this.radius * Math.cos(start_angle));
-		angle = super.linearInterpolation(assigned_index, start_angle, this.rotang, delta) - start_angle;
-
-	 	mat4.translate(matrix, matrix, [-reset_x, 0, -reset_z]);
-		mat4.rotate		(matrix, matrix, angle*DEGREE_TO_RAD, [0,1,0]);
-		mat4.translate(matrix, matrix, [reset_x, 0, reset_z]);
-
-		if (super.checkAnimationOver(assigned_index)) {
-			super.setAnimationOver(assigned_index);
-		}
-
-		return matrix;
+    if (!super.animationOver(assigned_index)) {
+      this.calcIntermediateMatrix(assigned_index, delta, matrix);
+    }
+    else {
+      this.calcEndMatrix(matrix);
+    }
 	}
+
+  calcIntermediateMatrix(assigned_index, delta, matrix) {
+    super.incTotalTime(assigned_index, delta);
+    let angle = super.linearInterpolation(assigned_index, this.startang, this.rotang, this.getTotalTime(assigned_index));
+    mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
+    mat4.rotateY	(matrix, matrix, angle*DEGREE_TO_RAD);
+    mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
+
+    if (super.checkAnimationOver(assigned_index)){
+      super.setAnimationOver(assigned_index);
+    }
+  }
+
+  calcEndMatrix(matrix) {
+    mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
+    mat4.rotateY	(matrix, matrix, this.rotang*DEGREE_TO_RAD);
+    mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
+  }
 
 	get getType() {
 		return "CircularAnimation";
-	}
-
-	getCurrAngle (assigned_index) {
-		return this.curr_angle[assigned_index];
 	}
 
 	assignIndex () {
@@ -53,13 +57,12 @@ class CircularAnimation extends Animation {
 		this.animations_over.push(false);
 		this.durations.push(this.calculateDuration());
 		this.total_time.push(0);
-		this.curr_angle.push(this.startang);
 
 		return assigned_index;
 	}
 
 	calculateDuration () {
-		let end = this.rotang * DEGREE_TO_RAD, begin = this.startang * DEGREE_TO_RAD;
-		return (end - begin)*this.radius/this.speed;
+		let end = this.rotang * DEGREE_TO_RAD;
+		return end*this.radius/this.speed;
 	}
 };

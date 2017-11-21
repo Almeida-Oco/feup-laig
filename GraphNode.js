@@ -43,18 +43,20 @@ class GraphNode {
 		this.animations.push([animation, animation.assignIndex()]);
 	}
 
-	applyAnimations(matrix) {
-		let delta = this.getTimeElapsed();
-		for (let i = 0; (i < this.animations.length && delta !== -1); i++) { //if it aint the first time running
-			let animation = this.animations[i][0], assigned_index = this.animations[i][1];
+	applyAnimations() {
+		let delta = this.getTimeElapsed(), temp_matrix = mat4.create(), max_i = this.animations.length;
+    mat4.identity(temp_matrix);
+		for (let i = 0; (i < max_i && delta !== -1); i++) { //if it aint the first time running
+			let animation = this.animations[i][0],
+          assigned_index = this.animations[i][1];
 
-			if (!animation.animationOver(assigned_index)) {
-				matrix = animation.updateMatrix(assigned_index, (delta / 1000), matrix);
+			if ((!animation.animationOver(assigned_index)) || i == max_i - 1) {
+				animation.updateMatrix(assigned_index, (delta / 1000), temp_matrix);
 				break; //stop at first successfull animation
 			}
 		}
 
-		return matrix;
+		return temp_matrix;
 	}
 
 	/**

@@ -1663,11 +1663,11 @@ SceneGraph.prototype.displayScene = function() {
 			mat_id = this.nodes[this.root_id].materialID;
 
 	this.scene.pushMatrix();
-	node.transformMatrix = node.applyAnimations(node.transformMatrix);
-
 
 	if (node.transformMatrix != null)
-		this.scene.multMatrix( node.transformMatrix );
+		this.scene.multMatrix(node.transformMatrix);
+
+  this.scene.multMatrix(node.applyAnimations());
 
 	for (var i = 0 ; i < leav.length ; i++)
 		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
@@ -1690,11 +1690,11 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 			mat=material_id, text=texture_id;
 
 	this.scene.pushMatrix();
-	node.transformMatrix = node.applyAnimations(node.transformMatrix);
-
 
 	if (node.transformMatrix != null)
 		this.scene.multMatrix( node.transformMatrix );
+
+  this.scene.multMatrix(node.applyAnimations());
 
 	if ( node.materialID != "null" )
 		mat = node.materialID;

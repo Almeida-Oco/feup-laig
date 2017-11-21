@@ -51,9 +51,9 @@ Interface.prototype.addLightsGroup = function(lights) {
 }
 
 
-Interface.prototype.addSelectable = function(scene) {
+Interface.prototype.addSelectable = function(scene, nodes) {
+	var sel_group = this.gui.addFolder("Selectables"); 
 
-	var sel_group = this.gui.addFolder("Select");
 	sel_group.open();
 
 	this.select = function(){
@@ -74,5 +74,3 @@ Interface.prototype.addSelectable = function(scene) {
 	scene.update_color(sel_color.color);
 
 }
-
-
