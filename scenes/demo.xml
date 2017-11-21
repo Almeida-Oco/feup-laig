@@ -307,7 +307,7 @@
     </NODE>
 
     <!-- The post in the lamp post... -->
-    <NODE id="luz_suporte">
+    <NODE id="luz_suporte" selectable="true">
         <MATERIAL id="lightPostMaterial" />
         <TEXTURE id="null" />
 
@@ -363,7 +363,7 @@
     </NODE>
 
     <!-- Generic bench -->
-    <NODE id="banco">
+    <NODE id="banco" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -432,7 +432,7 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore" selectable="true">
+    <NODE id="troncoArvore" selectable="false ">
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="trunk" />
 
