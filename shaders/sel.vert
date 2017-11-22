@@ -93,7 +93,7 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
                 Is = uLight[i].specular * uFrontMaterial.specular * specular;
             }
 
-            if (uLight[i].position.w == 1.0) 
+            if (uLight[i].position.w == 1.0)
                result += att * max(spot_effect * (Id + Is), Ia);
             else
                result += att * spot_effect * (Ia + Id + Is);
@@ -108,21 +108,21 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 }
 
 void main() {
-	
-   vec4 vertex = uMVMatrix * vec4(aVertexPosition, 1.0);
+
+	vec4 vertex = uMVMatrix * vec4(aVertexPosition, 1.0);
 
 	// Color for fragment shader
 
-    // Transformed normal position
+	// Transformed normal position
 	vec3 N = normalize(vec3(uNMatrix * vec4(aVertexNormal*0.1, 1.0)));
 
-    vec3 eyeVec = -vec3(vertex.xyz);
-    vec3 E = normalize(eyeVec);
+	vec3 eyeVec = -vec3(vertex.xyz);
+	vec3 E = normalize(eyeVec);
 
-    vFinalColor = lighting(vertex, E, N);
+	vFinalColor = lighting(vertex, E, N);
 
-    if (uUseTexture)
-        vTextureCoord = aTextureCoord;
+	if (uUseTexture)
+	vTextureCoord = aTextureCoord;
 
 
 	// Actual position calculation
@@ -132,4 +132,3 @@ void main() {
 	gl_Position = uPMatrix * uMVMatrix * vertex;
 
 }
-

@@ -35,13 +35,10 @@ class BezierAnimation extends Animation {
 
 	calcIntermediateMatrix(assigned_index, delta, matrix) {
 		super.incTotalTime(assigned_index, delta);
-		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.prev_pts[assigned_index][0],
-				bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)) - this.prev_pts[assigned_index][1],
-				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2)) - this.prev_pts[assigned_index][2];
+		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)),
+				bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)),
+				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2));
 
-		this.prev_pts[assigned_index][0] += bezier_x;
-		this.prev_pts[assigned_index][1] += bezier_y;
-		this.prev_pts[assigned_index][2] += bezier_z;
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
 
 		if (super.checkAnimationOver(assigned_index)){

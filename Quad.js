@@ -34,13 +34,13 @@ Quad.prototype.initBuffers = function () {
   ];
 
   this.normals = [
-		this.x1, this.y1, 1,
-    this.x1, this.y2, 1,
-    this.x2, this.y1, 1,
-    this.x2, this.y2, 1
+		0, 0, 1,
+    0, 0, 1,
+    0, 0, 1,
+    0, 0, 1
   ];
-  this.primitiveType=this.scene.gl.TRIANGLES;
 
+  this.primitiveType=this.scene.gl.TRIANGLES;
 };
 
 /**

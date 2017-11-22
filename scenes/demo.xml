@@ -148,7 +148,7 @@
 </MATERIALS>
 
 <ANIMATIONS>
-	<ANIMATION id="linear1" speed="1" type="linear">
+	<ANIMATION id="linear1" speed="10" type="linear">
 		<controlpoint xx="0" yy="0" zz="0" />
 		<controlpoint xx="5" yy="0" zz="5" />
 		<controlpoint xx="10" yy="0" zz="0" />
@@ -197,7 +197,7 @@
     <!-- The floor -->
     <NODE id="chao">
         <MATERIAL id="null" />
-        <TEXTURE id="rocks" />
+        <TEXTURE id="null" />
 
         <SCALE sx="6" sy="1" sz="5" />
         <TRANSLATION x="0" y="0" z="4" />
@@ -212,7 +212,7 @@
     <!-- The lights -->
      <NODE id="luzes">
         <MATERIAL id="lightMaterial" />
-        <TEXTURE id="clear" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
             <NODEREF id="luz1" />
@@ -324,7 +324,7 @@
     <!-- Street bench -->
     <NODE id="bancos">
         <MATERIAL id="lightMaterial" />
-        <TEXTURE id="banco" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
        		<NODEREF id="banco1" />
@@ -333,6 +333,7 @@
 
 				<ANIMATIONREFS>
 					<ANIMATIONREF id="linear1"/>
+					<ANIMATIONREF id="circular1"/>
 				</ANIMATIONREFS>
 
     </NODE>
@@ -386,7 +387,7 @@
     <!-- Trees -->
     <NODE id="arvores">
         <MATERIAL id="null" />
-        <TEXTURE id="clear" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
             <NODEREF id="arvore1" />
@@ -437,9 +438,9 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore" selectable="true">
+    <NODE id="troncoArvore">
         <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="trunk" />
+        <TEXTURE id="null" />
 
         <ROTATION axis="x" angle="90" />
         <TRANSLATION x="5" y="5" z="-4" />
@@ -453,7 +454,7 @@
     <!-- Tree leaves -->
      <NODE id="folhasArvore" selectable="true">
         <MATERIAL id="leavesTreeMaterial" />
-        <TEXTURE id="folhas" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
        		<NODEREF id="faceCubo1" />
@@ -552,10 +553,10 @@
     </NODE>
 
     <!-- A pyramid -->
-    <NODE id="piramide">
+    <NODE id="piramide" selectable="true">
 
         <MATERIAL id="null" />
-        <TEXTURE id="vidral" />
+        <TEXTURE id="null" />
 
         <TRANSLATION x="12" y="5.8" z="4.75" />
         <SCALE sx="0.4" sy="2" sz="0.4" />

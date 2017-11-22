@@ -36,7 +36,6 @@ class LinearAnimation extends Animation {
 	 * @return The new position of the object
 	 */
 	updateMatrix (assigned_index, delta, matrix) {
-		console.log(super.animationOver(assigned_index));
     if (!super.animationOver(assigned_index)) {
       this.calcIntermediateMatrix(assigned_index, delta, matrix);
     }

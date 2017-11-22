@@ -1663,6 +1663,7 @@ SceneGraph.prototype.displayScene = function() {
 			mat_id = this.nodes[this.root_id].materialID;
 
 	this.scene.pushMatrix();
+	node.transformMatrix = node.applyAnimations(node.transformMatrix);
 
 	if (node.transformMatrix != null)
 		this.scene.multMatrix(node.transformMatrix);
@@ -1685,9 +1686,9 @@ SceneGraph.prototype.displayScene = function() {
  * @param material_id ID of the material inherited
  * @param texture_id ID of the texture inherited
  */
-SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
+SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id, sel) {
 	var node = this.nodes[node_id],
-			mat=material_id, text=texture_id;
+			mat=material_id, text=texture_id, real_sel = sel || this.nodes[node_id].selectable;
 
 	this.scene.pushMatrix();
 
@@ -1703,12 +1704,14 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id) {
 		text = node.textureID;
 
 	for ( var i = 0 ; i < node.children.length ; i++ )
-		this.displayNodes( node.children[i], mat, text);
+		this.displayNodes( node.children[i], mat, text, real_sel);
 	for ( var i = 0 ; i < node.leaves.length ; i++)
 		if ( text == "clear" )
-			node.leaves[i].render( this.materials[mat], null, this.scene, node.selectable);
-		else
-			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene, node.selectable);
+			node.leaves[i].render( this.materials[mat], null, this.scene, real_sel);
+		else{
+			console.log(node_id)
+			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene, real_sel);
+		}
 
 	this.scene.popMatrix();
 }

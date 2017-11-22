@@ -34,6 +34,7 @@ Cylinder.prototype.initBuffers = function() {
 		var x = (this.b_radius*Math.cos(ang)) + (j*delta*Math.cos(ang)),
 				y = y = (this.b_radius*Math.sin(ang)) + (j*delta*Math.sin(ang)),
 				z = this.height * ( j / this.stacks);
+				
 		this.vertices.push(x, y,  z);
 		this.normals.push(x, y, 0);
 		this.texCoords.push(0, z / this.height );
