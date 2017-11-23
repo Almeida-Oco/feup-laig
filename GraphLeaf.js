@@ -29,13 +29,13 @@ function GraphLeaf(type, args, scene) {
  * @param matrix Matrix to apply to the primitive before rendering
  * @param boolean selectable if the object is selectable for shader thing
  */
- GraphLeaf.prototype.render = function(material, texture, scene, selectable){
+ GraphLeaf.prototype.render = function(material, texture, scene, selectable) {
 	 material.apply();
 
-	 if (selectable && scene.selectable) {
+	 if (selectable) {
 		 scene.setActiveShader(scene.sel_shader);
 	 }
-	 
+
 	 if (texture != null){
 		 texture[0].bind();
 		 material.setTextureWrap('REPEAT','REPEAT');
@@ -46,7 +46,7 @@ function GraphLeaf(type, args, scene) {
 		 this.primitive.display();
 	 }
 
-	 if (selectable && scene.selectable) {
+	 if (selectable) {
 		 scene.setActiveShader(scene.defaultShader);
 	 }
 

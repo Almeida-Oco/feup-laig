@@ -14,8 +14,6 @@ class GraphNode {
 		this.transformMatrix = mat4.create();
 		mat4.identity(this.transformMatrix);
 
-		this.selectable = selectable;
-
 		this.animations = []; //list of pairs [[Animation1, assigned_index1], [Animation2, assigned_index2] (...)]
 		this.last_time = 0;
 	}

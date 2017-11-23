@@ -6,7 +6,7 @@ function Interface() {
 	//call CGFinterface constructor
 	CGFinterface.call(this);
 }
-;
+
 
 Interface.prototype = Object.create(CGFinterface.prototype);
 Interface.prototype.constructor = Interface;
@@ -51,8 +51,8 @@ Interface.prototype.addLightsGroup = function(lights) {
 }
 
 
-Interface.prototype.addSelectable = function(scene, nodes) {
-	var sel_group = this.gui.addFolder("Selectables"); 
+Interface.prototype.addSelectables = function(scene, nodes_selec) {
+	var sel_group = this.gui.addFolder("Selectables");
 
 	sel_group.open();
 
@@ -60,6 +60,9 @@ Interface.prototype.addSelectable = function(scene, nodes) {
 		scene.select_glow();
 	}
 
+	for (let node_id in nodes_selec) {
+			sel_group.add(nodes_selec, node_id);
+	}
 	sel_group.add(this, 'select');
 
 	this.params = {color: "#ff0000" };

@@ -7,28 +7,38 @@ class ComboAnimation extends Animation {
 		super(0, args);
 		this.animations = [];
 		this.animations_id = args;
+		this.assigned_indexes = [];
 	}
 
-	updateMatrix(delta, matrix) {
-		for (let i = 0; i < this.animations.length; i++) {
-			if (!this.animations[i].animationOver()) {
-				matrix = this.animations[i].updateMatrix(delta, matrix);
-				break;
-			}
-			else{
-				continue;
-			}
+	updateMatrix(assigned_index, delta, matrix) {
+		if (!super.animationOver(assigned_index)) {
+			this.calcIntermediateMatrix(assigned_index, delta, matrix);
 		}
-
-		return matrix;
+		else {
+			this.calcEndMatrix(assigned_index, delta, matrix);
+		}
 	}
 
 	calcIntermediateMatrix(assigned_index, delta, matrix) {
-		console.log("Called COmbo calcIntermediateMatrix()");
+		let indexes = this.assigned_indexes[assigned_index];
+		for (let i = 0; i < this.animations.length; i++) {
+			let index = indexes[i];
+			this.animations[i].updateMatrix(index, delta, matrix);
+
+			if (!this.animations[i].animationOver(assigned_index)){ //stop at first successful animation
+				return;
+			}
+		}
+		//if it gets here it means that the full animation was done
+		super.setAnimationOver(assigned_index);
 	}
 
-	calcEndMatrix(matrix) {
-		console.log("Called combo calcEndMatrix");
+	calcEndMatrix(assigned_index, delta, matrix) {
+		let indexes = this.assigned_indexes[assigned_index];
+		for (let i = 0; i < this.animations.length; i++) {
+			let index = indexes[i];
+			this.animations[i].updateMatrix(index, delta, matrix);
+		}
 	}
 
 	calculateDuration () {
@@ -42,7 +52,12 @@ class ComboAnimation extends Animation {
 	}
 
 	assignIndex () {
-		console.log("MEOW");
+		let ret = this.assigned_indexes.length;
+		this.assigned_indexes[ret] = [];
+		for (let i = 0; i < this.animations.length; i++) {
+			this.assigned_indexes[ret].push(this.animations[i].assignIndex());
+		}
+		return ret;
 	}
 
 	getType() {

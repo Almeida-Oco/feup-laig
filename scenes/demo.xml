@@ -59,31 +59,31 @@
 <TEXTURES>
 	<!-- Tree trunk -->
     <TEXTURE id="trunk">
-        <file path="images/trunk-image.jpg" />
+        <file path="images/camouflage.jpg" />
         <amplif_factor s="2" t="2" />
     </TEXTURE>
 
      <!-- Tree leaves -->
     <TEXTURE id="folhas">
-        <file path="images/leaves.jpg" />
+        <file path="images/camouflage.jpg" />
         <amplif_factor s="3" t="4" />
     </TEXTURE>
 
     <!-- Rocks -->
     <TEXTURE id="rocks">
-        <file path="images/rocks.jpg" />
+        <file path="images/camouflage.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Glass work -->
     <TEXTURE id="vidral">
-        <file path="images/vidral.jpg" />
+        <file path="images/camouflage.jpg" />
         <amplif_factor s="15" t="10" />
     </TEXTURE>
 
     <!-- Street bench -->
     <TEXTURE id="banco">
-        <file path="images/bank.jpg" />
+      	<file path="images/camouflage.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -308,7 +308,7 @@
     </NODE>
 
     <!-- The post in the lamp post... -->
-    <NODE id="luz_suporte">
+    <NODE id="luz_suporte" selectable="true">
         <MATERIAL id="lightPostMaterial" />
         <TEXTURE id="null" />
 
@@ -562,7 +562,7 @@
         <SCALE sx="0.4" sy="2" sz="0.4" />
 
 				<ANIMATIONREFS>
-					<ANIMATIONREF id="bezier1" />
+					<ANIMATIONREF id="combo1" />
 				</ANIMATIONREFS>
 
         <DESCENDANTS>

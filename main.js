@@ -34,14 +34,11 @@ main=function() {
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check SceneGraph constructor)
 
 	var filename=getUrlVars()['file'] || "demo.xml";
-	
+
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors
-	var myGraph = new SceneGraph(filename, myScene);
-
-	myInterface.addSelectable(myScene);
-
-
+	var myGraph = new SceneGraph(filename, myScene, myInterface);
+	
 	// start
 	app.run();
 }]);

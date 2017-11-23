@@ -14,9 +14,8 @@ var NODES_INDEX = 6;
  * @param file_name Name of the xml file to open
  * @param scene Scene to render the graph
  */
-function SceneGraph(filename, scene) {
+function SceneGraph(filename, scene, myInterface) {
 	this.loadedOk = null;
-
 	this.start_time = 0;
 
 	// Establish bidirectional references between scene and graph.
@@ -24,7 +23,8 @@ function SceneGraph(filename, scene) {
 	scene.graph = this;
 
 	this.nodes = [];
-
+	this.nodes_selectable = [];
+	this.interface = myInterface;
 	this.root_id = null;                    // The id of the root element.
 
 	this.axisCoords = [];
@@ -1400,7 +1400,11 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 
 			// Creates node.
 			this.nodes[nodeID] = new GraphNode(nodeID, node_select);
-
+			console.log("SELECT = "+node_select);
+			if (node_select){
+				console.log("\n\n NEW SELECTABLE \n\n");
+				this.nodes_selectable[nodeID] = false;
+			}
 			// Gathers child nodes.
 			var nodeSpecs = children[i].children;
 			var specsNames = [];
@@ -1591,6 +1595,8 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 		this.onXMLMinorError("unknown tag name <" + nodeName);
 	}
 
+
+	this.interface.addSelectables(this.scene, this.nodes_selectable);
 	console.log("Parsed nodes");
 	return null ;
 }
@@ -1674,7 +1680,7 @@ SceneGraph.prototype.displayScene = function() {
 		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
 
 	for (var i = 0 ; i < child.length ; i++ )
-		this.displayNodes(child[i], mat_id, text_id);
+		this.displayNodes(child[i], mat_id, text_id, false);
 
 	this.scene.popMatrix();
 }
@@ -1688,7 +1694,9 @@ SceneGraph.prototype.displayScene = function() {
  */
 SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id, sel) {
 	var node = this.nodes[node_id],
-			mat=material_id, text=texture_id, real_sel = sel || this.nodes[node_id].selectable;
+			mat=material_id,
+			text=texture_id,
+			real_sel = (this.nodes_selectable[node_id] === true);
 
 	this.scene.pushMatrix();
 
@@ -1708,10 +1716,8 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id, sel
 	for ( var i = 0 ; i < node.leaves.length ; i++)
 		if ( text == "clear" )
 			node.leaves[i].render( this.materials[mat], null, this.scene, real_sel);
-		else{
-			console.log(node_id)
+		else
 			node.leaves[i].render( this.materials[mat], this.textures[text], this.scene, real_sel);
-		}
 
 	this.scene.popMatrix();
 }
