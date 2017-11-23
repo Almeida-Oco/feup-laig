@@ -1696,7 +1696,7 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id, sel
 	var node = this.nodes[node_id],
 			mat=material_id,
 			text=texture_id,
-			real_sel = (this.nodes_selectable[node_id] === true);
+			real_sel = ((this.nodes_selectable[node_id] === true) || sel);
 
 	this.scene.pushMatrix();
 

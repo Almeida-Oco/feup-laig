@@ -56,14 +56,6 @@ Interface.prototype.addSelectables = function(scene, nodes_selec) {
 
 	sel_group.open();
 
-	this.select = function(){
-		scene.select_glow();
-	}
-
-	for (let node_id in nodes_selec) {
-			sel_group.add(nodes_selec, node_id);
-	}
-	sel_group.add(this, 'select');
 
 	this.params = {color: "#ff0000" };
 
@@ -76,4 +68,11 @@ Interface.prototype.addSelectables = function(scene, nodes_selec) {
 
 	scene.update_color(sel_color.color);
 
+	this.select = function(){
+		scene.select_glow();
+	}
+
+	for (let node_id in nodes_selec) {
+			sel_group.add(nodes_selec, node_id);
+	}
 }
