@@ -152,6 +152,10 @@
 
 	</MATERIALS>
 
+	<ANIMATIONS>
+
+	</ANIMATIONS>
+
 	<!-- The nodes -->
 	<NODES>
 		<ROOT id="root" />
@@ -419,7 +423,7 @@
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
-			<TRANSLATION x="0" y="30" z="-30"/>
+			<TRANSLATION x="0" y="0" z="0"/>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_tail"/>

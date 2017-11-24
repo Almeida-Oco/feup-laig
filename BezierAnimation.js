@@ -1,3 +1,5 @@
+var DEGREE_TO_RAD = Math.PI / 180;
+
 /**
  * @constructor
  * @param id ID of the animation
@@ -10,26 +12,25 @@ class BezierAnimation extends Animation {
     this.last_pt = args[3];
 		this.pts = args;
 		this.speed = speed;
-		this.prev_pts = [];
+		this.prev_tangent = [];
 	}
 
 	assignIndex () {
 		let ret = this.animations_over.length;
 		this.animations_over.push(false);
 		this.total_time.push(0);
-		this.prev_pts.push([0,0,0]);
+		this.prev_tangent.push([0,0,1]);
 		this.durations.push(this.calculateDuration(5)/this.speed);
 
 		return ret;
 	}
-
 
 	updateMatrix(assigned_index, delta, matrix) {
     if (!super.animationOver(assigned_index)) {
 			this.calcIntermediateMatrix(assigned_index, delta, matrix);
     }
 		else {
-			this.calcEndMatrix(matrix);
+			this.calcEndMatrix(assigned_index, matrix);
 		}
 	}
 
@@ -40,22 +41,25 @@ class BezierAnimation extends Animation {
 				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2));
 
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
+		this.calcRotation(assigned_index, matrix);
 
 		if (super.checkAnimationOver(assigned_index)){
 			super.setAnimationOver();
 		}
 	}
 
-	calcEndMatrix(matrix) {
+	calcEndMatrix(assigned_index, matrix) {
 		mat4.translate(matrix, matrix, this.last_pt);
+		this.calcRotation(assigned_index, matrix);
 	}
 
-	get getType() {
-		return "BezierAnimation";
-	}
+	calcRotation(assigned_index, matrix) {
+		let rot_x = this.getTan(assigned_index, this.getCoordinate(0)),
+				rot_z = this.getTan(assigned_index, this.getCoordinate(2));
 
-	calculateDuration (depth) {
-		return this.deCasteljau(depth);
+		let angle = -Math.atan2(rot_x, rot_z);
+
+		mat4.rotateY(matrix, matrix, angle);
 	}
 
 	/**
@@ -77,6 +81,44 @@ class BezierAnimation extends Animation {
 		return (param1+param2+param3+param4);
 	}
 
+	getTan (assigned_index, vars) {
+		let time = super.getTotalTime(assigned_index),
+				perc = (time/super.getDuration(assigned_index));
+		if (perc > 1)
+			perc = 1;
+
+		let param1 = 3 * Math.pow((1-perc), 2) * vars[0],
+				param2 = 6 * perc * Math.pow((1-perc), 2) * vars[1],
+				param3 = 6 * Math.pow(perc, 2) * (1-perc) * vars[2],
+				param4 = 3 * Math.pow(perc, 2) * vars[3];
+
+		return (param1 + param2 + param3 + param4);
+	}
+
+	normalizeVector (vector) {
+		let division = 0;
+		for (let i = 0; i < vector.length; i++) {
+			division += Math.pow(vector[i], 2);
+		}
+		division = Math.sqrt(division);
+		for (let i = 0; i < vector.length && division != 0; i++){
+			vector[i] /= division;
+		}
+
+		return vector;
+	}
+
+	dotProduct (vec1, vec2)  {
+		if (vec1.length != vec2.length){
+			throw new Error("ERROR! Vector lengths are different, vec1 = "+vec1.length+", vec2 = "+vec2.length);
+		}
+		let result = 0;
+		for (let i = 0; i < vec1.length; i++) {
+			result += vec1[i]*vec2[i];
+		}
+		return result;
+	}
+
 	/**
 	 * @description Gets the given coordinate
 	 * @param coordinate Coordinate to return (0 -> X, 1 -> Y, 2 -> Z)
@@ -85,6 +127,15 @@ class BezierAnimation extends Animation {
 	getCoordinate (coordinate) {
 		return [this.pts[0][coordinate], this.pts[1][coordinate], this.pts[2][coordinate], this.pts[3][coordinate]];
 	}
+
+	get getType() {
+		return "BezierAnimation";
+	}
+
+	calculateDuration (depth) {
+		return this.deCasteljau(depth);
+	}
+
 
 	// ---------------------- BEGIN DE CASTELJAU ----------------------
 
