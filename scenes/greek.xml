@@ -1209,7 +1209,7 @@
 
 		<NODE id="column1">
 			<MATERIAL id="null"/>
-			<TEXTURE id="hel_metal"/>
+			<TEXTURE id="pillar_text"/>
 
 			<TRANSLATION x="0" y ="-0.45" z="0"/>
 

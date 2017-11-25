@@ -51,10 +51,11 @@ Interface.prototype.addLightsGroup = function(lights) {
 }
 
 
-Interface.prototype.addSelectables = function(scene, nodes_selec) {
+Interface.prototype.addSelectables = function(scene, graph, nodes) {
 	var sel_group = this.gui.addFolder("Selectables");
-
 	sel_group.open();
+
+	this.gui.add(graph, 'selected_node', graph.nodes_selectable).name('Selectables');
 
 
 	this.params = {color: "#ff0000" };
@@ -71,8 +72,8 @@ Interface.prototype.addSelectables = function(scene, nodes_selec) {
 	this.select = function(){
 		scene.select_glow();
 	}
-
-	for (let node_id in nodes_selec) {
-			sel_group.add(nodes_selec, node_id);
-	}
+  //
+	// for (let node_id in nodes_selec) {
+	// 		sel_group.add(nodes_selec, node_id);
+	// }
 }

@@ -23,7 +23,8 @@ function SceneGraph(filename, scene, myInterface) {
 	scene.graph = this;
 
 	this.nodes = [];
-	this.nodes_selectable = [];
+	this.selected_node = "";
+	this.nodes_selectable = ['none'];
 	this.interface = myInterface;
 	this.root_id = null;                    // The id of the root element.
 
@@ -1403,7 +1404,7 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 			console.log("SELECT = "+node_select);
 			if (node_select){
 				console.log("\n\n NEW SELECTABLE \n\n");
-				this.nodes_selectable[nodeID] = false;
+				this.nodes_selectable.push(nodeID);
 			}
 			// Gathers child nodes.
 			var nodeSpecs = children[i].children;
@@ -1596,7 +1597,7 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 	}
 
 
-	this.interface.addSelectables(this.scene, this.nodes_selectable);
+	this.interface.addSelectables(this.scene, this, this.nodes_selectable);
 	console.log("Parsed nodes");
 	return null ;
 }
@@ -1680,7 +1681,7 @@ SceneGraph.prototype.displayScene = function() {
 		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
 
 	for (var i = 0 ; i < child.length ; i++ )
-		this.displayNodes(child[i], mat_id, text_id, false);
+		this.displayNodes(child[i], mat_id, text_id, (this.selected_node == this.root_id));
 
 	this.scene.popMatrix();
 }
@@ -1696,7 +1697,7 @@ SceneGraph.prototype.displayNodes = function(node_id,material_id,texture_id, sel
 	var node = this.nodes[node_id],
 			mat=material_id,
 			text=texture_id,
-			real_sel = ((this.nodes_selectable[node_id] === true) || sel);
+			real_sel = ((node_id === this.selected_node) || sel);
 
 	this.scene.pushMatrix();
 
