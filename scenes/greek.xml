@@ -158,9 +158,8 @@
 			<ambient r="0.25" g="0.25" b="0.25" a="1"/>
 			<emission r="0" g="0" b="0" a="1"/>
 		</MATERIAL>
-
-
 	</MATERIALS>
+
 
 	<ANIMATIONS>
 		<ANIMATION id="helLinear" speed ="10" type="linear">
@@ -196,6 +195,40 @@
 								centerx="-1" centery="1" centerz="-11"
 								radius="0.01" startang="0" rotang="90" loop="true" />
 
+
+
+
+		<ANIMATION id="zepBezier1" speed="2" type="bezier">
+			<controlpoint xx="5" yy="6" zz="10" />
+			<controlpoint xx="5" yy="10" zz="10" />
+			<controlpoint xx="5" yy="15" zz="10" />
+			<controlpoint xx="5" yy="25" zz="10" />
+		</ANIMATION>
+
+
+		<ANIMATION id="zepCirc" speed="1" type="circular"
+							 centerx="5" centery="25" centerz="10"
+							 radius="0.1" startang="0" rotang="0" loop="false" />
+
+
+		<ANIMATION id="zepBezier2" speed="4" type="bezier">
+			<controlpoint xx="5" yy="25" zz="10" />
+			<controlpoint xx="-15" yy="25" zz="10" />
+			<controlpoint xx="-20" yy="25" zz="10" />
+			<controlpoint xx="-30" yy="25" zz="10" />
+		</ANIMATION>
+
+
+		<ANIMATION id="zepCombo" type="combo">
+
+			<SPANREF id ="zepBezier1" />
+			<SPANREF id ="zepCirc" />
+			<SPANREF id ="zepBezier2" />
+
+		</ANIMATION>
+
+
+
 	</ANIMATIONS>
 
 	<!-- The nodes -->
@@ -220,6 +253,10 @@
 			<TEXTURE id="goodyear"/>
 
 			<TRANSLATION x="10" y="20" z="10"/>
+
+			<ANIMATIONREFS>
+				<ANIMATIONREF id="zepCombo" />
+			</ANIMATIONREFS>
 
 			<DESCENDANTS>
 				<NODEREF id="ballon"/>
