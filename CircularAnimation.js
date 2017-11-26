@@ -13,7 +13,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * @member {bool} loop Whether the animation should loop or not
  * @member {float} reset_x The reset value in X (used to translate before the rotation)
  * @member {float} reset_y The reset value in Y (used to translate before the rotation)
- * */
+ */
 class CircularAnimation extends Animation {
 	/**
 	 * @memberof CircularAnimation
@@ -99,7 +99,7 @@ class CircularAnimation extends Animation {
 
 	/**
 	 * @override
-	 * @memberof BezierAnimation
+	 * @memberof CircularAnimation
 	 * @description Assigns an index in the progression variables to the calling node
 	 * @return {int} Index assigned
 	 */
@@ -114,7 +114,7 @@ class CircularAnimation extends Animation {
 
 	/**
 	 * @override
-	 * @memberof BezierAnimation
+	 * @memberof CircularAnimation
 	 * @description Calculates the total duration of the animation
 	 * @return {float} The total duration of the animation
 	 */

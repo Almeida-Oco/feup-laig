@@ -189,20 +189,20 @@
 								radius="0.01" startang="0" rotang="90" loop="true" />
 
 
-		<ANIMATION id="zepBezier1" speed="3" type="bezier">
+		<ANIMATION id="zepBezier1" speed="5" type="bezier">
 			<controlpoint xx="10" yy="30" zz="10" />
 			<controlpoint xx="15" yy="32" zz="10" />
 			<controlpoint xx="15" yy="35" zz="10" />
-			<controlpoint xx="15" yy="45" zz="10" />
+			<controlpoint xx="15" yy="50" zz="10" />
 		</ANIMATION>
 
 
-		<ANIMATION id="zepCirc" speed="0.3" type="circular"
+		<ANIMATION id="zepCirc" speed="0.5" type="circular"
 							 centerx="15" centery="40" centerz="10"
-							 radius="0.7" startang="0" rotang="-285" loop="false" />
+							 radius="0.7" startang="0" rotang="-340" loop="false" />
 
 
-		<ANIMATION id="zepBezier2" speed="2" type="bezier">
+		<ANIMATION id="zepBezier2" speed="5" type="bezier">
 			<controlpoint xx="15" yy="45" zz="10" />
 			<controlpoint xx="11" yy="41" zz="5" />
 			<controlpoint xx="11" yy="41" zz="-15" />
@@ -853,9 +853,9 @@
 
 			<TRANSLATION x="0" y="3.5" z="4"/>
 
-			<!-- <ANIMATIONREFS>
+			<ANIMATIONREFS>
 				<ANIMATION id="helicesRot" />
-			</ANIMATIONREFS> -->
+			</ANIMATIONREFS>
 
 			<DESCENDANTS>
 				<NODEREF id="helices_base"/>
@@ -1626,9 +1626,9 @@
 			<ROTATION axis ="x" angle="-90"/>
 			<ROTATION axis="y" angle="180"/>
 
-			<!-- <ANIMATIONREFS>
+			<ANIMATIONREFS>
 				<ANIMATIONREF id="earthRot" />
-			</ANIMATIONREFS> -->
+			</ANIMATIONREFS>
 
 			<DESCENDANTS>
 				<LEAF type="sphere" args="1 190 190"/>

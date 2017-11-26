@@ -1,13 +1,18 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
-
+/**
+ * @implements Animation
+ * @class
+ * @classdesc Represents a bezier animation
+ * @member {Array<Array<float>>} pts The control points of the animation
+ */
 class BezierAnimation extends Animation {
 
 	/**
 	 * @override
 	 * @constructor
 	 * @memberof BezierAnimation
-	 * @description Constructor of class
+	 * @description Constructor of {@link BezierAnimation}
 	 * @param {float} speed The speed of the animation
 	 * @param {Array<Array<float>>} args Arguments of animation [[x,y,z],[x1,y1,z1] (...)]
 	 */

@@ -1,12 +1,22 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 /**
- * @constructor
- * @param id ID of the animation
- * @param speed Speed of the animation
- * @param args Arguments of animation [[x,y,z],[x1,y1,z1] (...)]
+ * @implements Animation
+ * @class
+ * @classdesc Represents a circular animation
+ * @member {Array<Array<float>>} pts The control points of the linear animation
+ * @member {Array<int>} indexes The different start point indexes of the nodes
+ * @member {Arrayz<float>} angles The angles between the linear segments
  */
 class LinearAnimation extends Animation {
+
+	/**
+	 * @memberof LinearAnimation
+	 * @constructor
+	 * @description Constructor of {@link LinearAnimation}
+	 * @param {float} speed Linear speed of the animation
+	 * @param {Array<Array<float>>} args The control points of the animation
+	 */
 	constructor(speed, args) {
 		super(speed, args);
     this.last_pt = args[args.length-1];
@@ -31,7 +41,7 @@ class LinearAnimation extends Animation {
 
 	/**
 	 * @override
-	 * @memberof BezierAnimation
+	 * @memberof LinearAnimation
 	 * @description Assigns an index in the progression variables to the calling node
 	 * @return {int} Index assigned
 	 */
@@ -46,7 +56,7 @@ class LinearAnimation extends Animation {
 
 	/**
 	 * @override
-	 * @memberof BezierAnimation
+	 * @memberof LinearAnimation
 	 * @description Applies the animation to the matrix
 	 * @param {int} assigned_index The index assigned to the node
 	 * @param {float} delta Time passed, in seconds, since last function call
@@ -100,9 +110,10 @@ class LinearAnimation extends Animation {
   }
 
 	/**
-	 * @description Checks if the new point of the object is an end point
-	 * @param new_point Newest point of object [x,y,z]
-	 * @return 1 If it is the end point and the end point should be updated, 0 if it is not, -1 if animation over
+	 * @memberof LinearAnimation
+	 * @description Checks if the current segment has ended
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return {int} 1 -> its the end point, 0 -> not the end point, -1 -> animation over
 	 */
 	checkNewEndPt(assigned_index) {
 		if (super.checkAnimationOver(assigned_index)) {
@@ -117,6 +128,11 @@ class LinearAnimation extends Animation {
 			return 0;
 	}
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Checks if there is a need to update the {@link indexes} and if so does it
+	 * @param {int} assigned_index The index assigned to the node
+	 */
 	updatePts (assigned_index) {
 		let ret = this.checkNewEndPt(assigned_index);
 
@@ -130,13 +146,21 @@ class LinearAnimation extends Animation {
 		}
 	}
 
+	/**
+	 * @override
+	 * @memberof LinearAnimation
+	 * @description Calculates the duration of a single segment
+	 * @param {Array<float>} pt1 Begin point
+	 * @param {Array<float>} pt2 End point
+	 * @return {float} The total duration of the segment
+	 */
 	calculateDuration (pt1, pt2) {
 		return this.ptsDistance(pt1, pt2) / this.speed;
 	};
 
 	/**
 	 * @override
-	 * @memberof ComboAnimation
+	 * @memberof LinearAnimation
 	 * @description Gets the type of the animation
 	 * @return {String} The name of the animation
 	 */
@@ -144,14 +168,33 @@ class LinearAnimation extends Animation {
 		return "LinearAnimation";
 	}
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Gets the end point of the current segment
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return {Array<int>} the begin point of the animation
+	 */
 	getBeginPt (assigned_index) {
 		return this.pts[this.indexes[assigned_index]];
 	}
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Gets the end point of the current segment
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return {Array<int>} the end point of the animation
+	 */
 	getEndPt (assigned_index) {
 		return this.pts[this.indexes[assigned_index]+1];
 	}
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Calculates the linear distance between points
+	 * @param {Array<float>} pt1 First point
+	 * @param {Array<float>} pt2 Second point
+	 * @return {float} The distance between the points
+	 */
 	ptsDistance(pt1, pt2) {
 		return Math.sqrt(Math.pow(pt1[0]-pt2[0], 2) + Math.pow(pt1[1]-pt2[1], 2) + Math.pow(pt1[2]-pt2[2], 2));
 	};

@@ -156,6 +156,7 @@ class Animation {
 			result += vec1[i]*vec2[i];
 		}
 		return result;
+	}
 
 
 	/**
