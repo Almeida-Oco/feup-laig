@@ -177,7 +177,6 @@
 			<controlpoint xx="0" yy="2" zz="20" />
 			<controlpoint xx="-10" yy="-2" zz="30" />
 			<controlpoint xx="0" yy="20" zz="0" />
-			<controlpoint xx="10" yy="20" zz="-5" />
 		</ANIMATION>
 
 		<ANIMATION id="helicesRot" speed="0.1" type="circular"
@@ -1416,7 +1415,7 @@
 
 		</NODE>
 
-		<NODE id="column12">
+		<NODE id="column12" selectable="true">
 			<MATERIAL id="null"/>
 			<TEXTURE id="null"/>
 
@@ -1616,7 +1615,7 @@
 
 		</NODE>
 
-		<NODE id="globe">
+		<NODE id="globe" selectable="true">
 			<MATERIAL id="earth_mat"/>
 			<TEXTURE id="earth"/>
 
@@ -1634,17 +1633,6 @@
 			</DESCENDANTS>
 
 		</NODE>
-
-
-
-
-
-
-
-
-
-
-
 
 		<NODE id="cube">
 			<MATERIAL id="null"/>
