@@ -44,7 +44,7 @@ class BezierAnimation extends Animation {
 		this.calcRotation(assigned_index, matrix);
 
 		if (super.checkAnimationOver(assigned_index)){
-			super.setAnimationOver();
+			super.setAnimationOver(assigned_index);
 		}
 	}
 

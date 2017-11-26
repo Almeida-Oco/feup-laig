@@ -177,7 +177,7 @@
 			<controlpoint xx="0" yy="2" zz="20" />
 			<controlpoint xx="-10" yy="-2" zz="30" />
 			<controlpoint xx="0" yy="20" zz="0" />
-			<controlpoint xx="10" yy="20" zz="-5" />	
+			<controlpoint xx="10" yy="20" zz="-5" />
 		</ANIMATION>
 
 		<ANIMATION id="helBezier" speed="4" type="bezier">
@@ -196,9 +196,7 @@
 								radius="0.01" startang="0" rotang="90" loop="true" />
 
 
-
-
-		<ANIMATION id="zepBezier1" speed="2" type="bezier">
+		<ANIMATION id="zepBezier1" speed="10" type="bezier">
 			<controlpoint xx="5" yy="6" zz="10" />
 			<controlpoint xx="5" yy="10" zz="10" />
 			<controlpoint xx="5" yy="15" zz="10" />
@@ -208,7 +206,7 @@
 
 		<ANIMATION id="zepCirc" speed="1" type="circular"
 							 centerx="5" centery="25" centerz="10"
-							 radius="0.1" startang="0" rotang="0" loop="false" />
+							 radius="0.1" startang="0" rotang="180" loop="false" />
 
 
 		<ANIMATION id="zepBezier2" speed="4" type="bezier">
@@ -220,11 +218,9 @@
 
 
 		<ANIMATION id="zepCombo" type="combo">
-
 			<SPANREF id ="zepBezier1" />
 			<SPANREF id ="zepCirc" />
 			<SPANREF id ="zepBezier2" />
-
 		</ANIMATION>
 
 
