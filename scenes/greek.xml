@@ -180,16 +180,10 @@
 			<controlpoint xx="10" yy="20" zz="-5" />
 		</ANIMATION>
 
-		<ANIMATION id="helBezier" speed="4" type="bezier">
-			<controlpoint xx="5" yy="6" zz="10" />
-			<controlpoint xx="-10" yy="15" zz="20" />
-			<controlpoint xx="-10" yy="-5" zz="0" />
-			<controlpoint xx="-10" yy="3" zz="10" />
-		</ANIMATION>
-
 		<ANIMATION id="helicesRot" speed="0.1" type="circular"
 							 centerx="0" centery="3.5" centerz="4"
 							 radius="0.01" startang="0" rotang="90" loop="true" />
+
 
 		<ANIMATION id="earthRot" speed="0.005" type="circular"
 								centerx="-1" centery="1" centerz="-11"
@@ -400,7 +394,7 @@
 			<SCALE sx="1.2" sy="1.2" sz="1.2"/>
 
 			<DESCENDANTS>
-				<LEAF type="patch" orderU="8" orderV="6" partsU="40" partsV="40" >
+				<LEAF type="patch" partsU="40" partsV="40" >
 					<CPLINE>
 						<CPOINT xx="0" yy="0" zz="-6" ww="2"/>
 						<CPOINT xx="0" yy="-0.5" zz="-5" ww="0.3"/>
