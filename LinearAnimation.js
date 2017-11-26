@@ -15,9 +15,12 @@ class LinearAnimation extends Animation {
     this.angles = [];
     this.angles.push(0);
     for (let i = 1; i < (this.pts.length-1); i++) {
-      let diff_x1 = this.pts[i][0] - this.pts[i-1][0], diff_x2 = this.pts[i+1][0] - this.pts[i][0],
-          diff_z1 = this.pts[i][2] - this.pts[i-1][2], diff_z2 = this.pts[i+1][2] - this.pts[i][2];
-      this.angles.push(Math.atan2((diff_z2-diff_z1), (diff_x2-diff_x1)));
+      let vec1 = [this.pts[i][0] - this.pts[i-1][0], this.pts[i+1][0] - this.pts[i][0]],
+          vec2 = [this.pts[i][2] - this.pts[i-1][2], this.pts[i+1][2] - this.pts[i][2]];
+					
+			super.normalizeVector(vec1);
+			super.normalizeVector(vec2);
+      this.angles.push(Math.acos(super.dotProduct(vec1, vec2)));
     }
 	}
 
@@ -48,6 +51,7 @@ class LinearAnimation extends Animation {
     super.incTotalTime(assigned_index, delta);
     let init_pt = this.getBeginPt(assigned_index),
         end_pt  = this.getEndPt(assigned_index),
+				angle = this.angles[this.indexes[assigned_index]],
         tx, ty, tz;
 
     tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], this.getTotalTime(assigned_index));
@@ -55,15 +59,17 @@ class LinearAnimation extends Animation {
     tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], this.getTotalTime(assigned_index));
 
     mat4.translate(matrix, matrix, [tx, ty, tz]);
-    mat4.rotateY(matrix, matrix, this.angles[this.indexes[assigned_index]]);
+    mat4.rotateY(matrix, matrix, angle);
+		console.log(angle/DEGREE_TO_RAD)
     this.updatePts(assigned_index);
   }
 
   calcEndMatrix(assigned_index, matrix) {
-    let end_pt = this.getEndPt(assigned_index);
+    let end_pt = this.getEndPt(assigned_index),
+				angle = this.angles[this.indexes[assigned_index]];
 
     mat4.translate(matrix, matrix, end_pt);
-    mat4.rotateY(matrix, matrix, this.angles[this.indexes[assigned_index]]);
+    mat4.rotateY(matrix, matrix, angle);
   }
 
 	/**

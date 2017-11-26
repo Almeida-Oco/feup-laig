@@ -153,7 +153,11 @@
 	</MATERIALS>
 
 	<ANIMATIONS>
-
+		<ANIMATION id="helLinear" speed ="2" type="linear">
+			<controlpoint xx="0" yy="0" zz="0" />
+			<controlpoint xx="0" yy="0" zz="5" />
+			<controlpoint xx="5" yy="6" zz="5" />
+		</ANIMATION>
 	</ANIMATIONS>
 
 	<!-- The nodes -->
@@ -423,7 +427,9 @@
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
-			<TRANSLATION x="0" y="0" z="0"/>
+			<ANIMATIONREFS>
+				<ANIMATIONREF id="helLinear" />
+			</ANIMATIONREFS>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_tail"/>

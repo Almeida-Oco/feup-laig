@@ -94,31 +94,7 @@ class BezierAnimation extends Animation {
 
 		return (param1 + param2 + param3 + param4);
 	}
-
-	normalizeVector (vector) {
-		let division = 0;
-		for (let i = 0; i < vector.length; i++) {
-			division += Math.pow(vector[i], 2);
-		}
-		division = Math.sqrt(division);
-		for (let i = 0; i < vector.length && division != 0; i++){
-			vector[i] /= division;
-		}
-
-		return vector;
-	}
-
-	dotProduct (vec1, vec2)  {
-		if (vec1.length != vec2.length){
-			throw new Error("ERROR! Vector lengths are different, vec1 = "+vec1.length+", vec2 = "+vec2.length);
-		}
-		let result = 0;
-		for (let i = 0; i < vec1.length; i++) {
-			result += vec1[i]*vec2[i];
-		}
-		return result;
-	}
-
+	
 	/**
 	 * @description Gets the given coordinate
 	 * @param coordinate Coordinate to return (0 -> X, 1 -> Y, 2 -> Z)
