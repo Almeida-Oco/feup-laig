@@ -197,9 +197,9 @@
 		</ANIMATION>
 
 
-		<ANIMATION id="zepCirc" speed="1" type="circular"
-							 centerx="15" centery="35" centerz="5"
-							 radius="5" startang="0" rotang="120" loop="false" />
+		<ANIMATION id="zepCirc" speed="0.3" type="circular"
+							 centerx="15" centery="30" centerz="10"
+							 radius="0.7" startang="0" rotang="-115" loop="false" />
 
 
 		<ANIMATION id="zepBezier2" speed="2" type="bezier">

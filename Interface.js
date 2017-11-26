@@ -51,6 +51,9 @@ Interface.prototype.addLightsGroup = function(lights) {
 }
 
 
+/**
+* Adds a folder containing the selection parameters such as color and the selectables themselves.
+*/
 Interface.prototype.addSelectables = function(scene, graph, nodes) {
 	var sel_group = this.gui.addFolder("Selectables");
 	sel_group.open();

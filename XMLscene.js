@@ -163,6 +163,9 @@ XMLscene.prototype.display = function() {
 
 }
 
+/**
+* Defines the selection shader and sets it to its initial color of red.
+*/
 XMLscene.prototype.setupshaders = function(){
 
 	this.sel_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/sel.frag");
@@ -178,6 +181,10 @@ XMLscene.prototype.setupshaders = function(){
 
 }
 
+/**
+* Sets the uniform value normscale for the effect of growing and glowing
+* @param scale_fac a rising value such as time
+*/
 XMLscene.prototype.updateScaleFactor=function(scale_fac)
 {
     if(this.sel_shader == undefined){
@@ -191,7 +198,9 @@ XMLscene.prototype.updateScaleFactor=function(scale_fac)
 	}
 }
 
-
+/**
+* Triggers the selection effect for the nodes
+*/
 XMLscene.prototype.select_glow = function(){
     if(this.selectable){
         this.selectable = false;
@@ -201,6 +210,10 @@ XMLscene.prototype.select_glow = function(){
 
 }
 
+/**
+* Converts string of hex color to normalized vec3
+* @param hex string of hex color ex:(#ff0000)
+*/
 function hexToRgb(hex) {
     var bigint = parseInt(hex, 16);
     var r = (bigint >> 16) & 255;
@@ -227,6 +240,10 @@ function hexToRgbA(hex){
 }
 
 
+/**
+* Changes the color that the shader will use trough uniforms
+* @param color the color in hex string
+*/
 XMLscene.prototype.update_color = function(color){
 
     color_rgb = hexToRgbA(color);

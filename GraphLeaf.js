@@ -23,7 +23,7 @@ function GraphLeaf(type, args, scene) {
 }
 
 /**
- * @description Renders the leaf with correct parameters
+ * @description Renders the leaf with correct parameters and selects the correct shader
  * @param material The material to apply to the primitive
  * @param texture The texture to apply to the primitive, null if no texture to apply
  * @param matrix Matrix to apply to the primitive before rendering

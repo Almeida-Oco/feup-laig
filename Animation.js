@@ -1,7 +1,19 @@
 /**
+<<<<<<< HEAD
  * @class
  * @abstract
  * @classdesc Represents a single abstract animation, holds the common parameters of animations
+=======
+ * @description Abstract class which all the animations have to derive from
+ * 				every implementation has to have defined the following methods:
+ *				updateMatrix -> Calculates a transf matrix with the current animation
+ *				calcIntermediateMatrix -> Returns the updateMatrix
+ *				calcEndMatrix -> Returns the final Matrix
+ *				getType -> Returns the type of animation
+ *				assignIndex -> The current animation
+ *				calculateDuration -> Time that the animation lasts
+ * @constructor
+>>>>>>> 7ca4ce59687a3aa10ab8f34d1b19353522149660
  * @abstract
  */
 class Animation {
@@ -42,35 +54,61 @@ class Animation {
 
 
 	};
-
+	/**
+	 * @description Sees if a animation has finished
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	checkAnimationOver (assigned_index) {
 		return (this.total_time[assigned_index] >= this.durations[assigned_index]);
 	}
-
+	/**
+	 * @description Gets the duration of a animation
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	getDuration (assigned_index) {
 		return this.durations[assigned_index];
 	}
-
+	/**
+	 * @description Returns the animation that has already finished
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	animationOver (assigned_index) {
 		return this.animations_over[assigned_index];
 	}
-
+	/**
+	 * @description Returns the time that will take to finish until the animation
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	getTotalTime (assigned_index) {
 		return this.total_time[assigned_index];
 	}
-
+	/**
+	 * @description Sets a animation to be finished
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	setAnimationOver (assigned_index) {
 		this.animations_over[assigned_index] = true;
 	}
-
+	/**
+	 * @description Increments the total time of a animation by a amount (inc)
+	 * @param assigned_index the index of the animation that we want to check
+	 * @param inc the value to add
+	 */
 	incTotalTime (assigned_index, inc) {
 		this.total_time[assigned_index] += inc;
 	}
-
+	/**
+	 * @description Resets the timed passed in the assigned index animation
+	 * @param assigned_index the index of the animation that we want to check
+	 */
 	resetTotalTime (assigned_index) {
 		this.total_time[assigned_index] = 0;
 	}
-
+	/**
+	 * @description Normalizes all the coordinates of a vector
+	 * @param vec1 vec1
+	 * @return vec1/||vec1||
+	 */
 	normalizeVector (vector) {
 		let division = 0;
 		for (let i = 0; i < vector.length; i++) {
@@ -83,7 +121,12 @@ class Animation {
 
 		return vector;
 	}
-
+	/**
+	 * @description Calculates the dot product of two vectors (vec3)
+	 * @param vec1 vec1
+	 * @param vec2 vec2
+	 * @return vec1 . vec2
+	 */
 	dotProduct (vec1, vec2)  {
 		if (vec1.length != vec2.length){
 			throw new Error("ERROR! Vector lengths are different, vec1 = "+vec1.length+", vec2 = "+vec2.length);
@@ -94,7 +137,12 @@ class Animation {
 		}
 		return result;
 	}
-
+	/**
+	 * @description Calculates the Cross product of two vectors (vec3)
+	 * @param vec1 vec1
+	 * @param vec2 vec2
+	 * @return vec1 x vec2
+	 */
 	crossProduct (vec1, vec2) {
 		return [vec1[1]*vec2[2] - vec1[2]*vec2[1],
 						vec1[0]*vec2[2] - vec1[2]*vec2[0],
