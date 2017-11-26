@@ -8,6 +8,25 @@ var DEGREE_TO_RAD = Math.PI / 180;
  */
 class LinearAnimation extends Animation {
 	constructor(speed, args) {
+		function calcAngle(vec1, vec2, distance) {
+			let c_angle = (vec2[0] - vec1[0]) / distance,
+					s_angle = (vec2[2] - vec2[2]) / distance,
+					ret = Math.acos(c_angle);
+
+			if (0 == c_angle){
+				if (s_angle == -1) return Math.PI /2;
+				else return 3 * Math.PI / 2;
+			}
+			else if (0 == s_angle) {
+				if (c_angle == 0) return 0;
+				else return Math.PI;
+			}
+			else if (c_angle > 0 && s_angle > 0) return ret;
+			else if (c_angle > 0 && s_angle < 0) return (Math.PI * 3/2) + ret;
+			else if (c_angle < 0 && s_angle > 0) return (Math.PI / 2) + ret;
+			else if (c_angle < 0 && s_angle < 0) return Math.PI + ret;
+		}
+
 		super(speed, args);
     this.last_pt = args[args.length-1];
 		this.pts = args;
@@ -23,9 +42,9 @@ class LinearAnimation extends Animation {
 					cross = super.crossProduct(vec2, vec1),
 					angle = Math.acos(dt_prod);
 
-			if ((super.dotProduct(cross, [0,1,0])) < 0)
-				angle*=-1;
-			console.log("VEC1 = "+vec1+", VEC2 = "+vec2+"\nANGLE = "+(angle/DEGREE_TO_RAD)+" dt = "+(super.dotProduct(cross, [0,1,0]) < 0));
+			// if (cross[1] < 0 && i <= 1)
+			// 	angle*=-1;
+			console.log("VEC1 = "+vec1+", VEC2 = "+vec2+"\nANGLE = "+(angle/DEGREE_TO_RAD)+"\n cross ="+cross+" dot = "+dt_prod);
 			this.angles.push(angle);
     }
 	}

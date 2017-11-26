@@ -562,7 +562,7 @@
         <SCALE sx="0.4" sy="2" sz="0.4" />
 
 				<ANIMATIONREFS>
-					<ANIMATIONREF id="bezier1" />
+					<ANIMATIONREF id="combo1" />
 				</ANIMATIONREFS>
 
         <DESCENDANTS>
