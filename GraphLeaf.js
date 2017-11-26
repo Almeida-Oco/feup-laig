@@ -1,7 +1,7 @@
 /**
  * @description Constructor for GraphLeaf
- * @param type Type of leaf to create
- * @param args Arguments of given leaf, will vary according to type
+ * @param {String} type Type of leaf to create
+ * @param {Array<T>} args Arguments of given leaf, will vary according to type
  * @param scene The scene to render the leaf in
  */
 function GraphLeaf(type, args, scene) {

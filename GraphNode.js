@@ -3,7 +3,6 @@
  * @param nodeID ID of the node
  * @param selectable if the node is able to be selected
  */
-
 class GraphNode {
 	constructor (nodeID, selectable) {
 		this.nodeID = nodeID;
@@ -43,18 +42,18 @@ class GraphNode {
 		this.animations.push([animation, animation.assignIndex()]);
 	}
 
-    /**
-     * @description Applies the animations to the node
-     */
+	/**
+	 * @description Applies the animations to the node
+	 */
 	applyAnimations() {
 		let delta = this.getTimeElapsed(),
-				temp_matrix = mat4.create(),
-				max_i = this.animations.length;
+		temp_matrix = mat4.create(),
+		max_i = this.animations.length;
 
-    mat4.identity(temp_matrix);
+		mat4.identity(temp_matrix);
 		for (let i = 0; (i < max_i && delta !== -1); i++) { //if it aint the first time running
 			let animation = this.animations[i][0],
-          assigned_index = this.animations[i][1];
+			assigned_index = this.animations[i][1];
 
 			animation.updateMatrix(assigned_index, (delta/1000), temp_matrix);
 			if (!animation.animationOver(assigned_index)) {

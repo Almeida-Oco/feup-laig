@@ -29,6 +29,12 @@ class LinearAnimation extends Animation {
     }
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Assigns an index in the progression variables to the calling node
+	 * @return {int} Index assigned
+	 */
 	assignIndex() {
 		let assigned_index = this.animations_over.length;
 		this.indexes.push(0);
@@ -39,9 +45,12 @@ class LinearAnimation extends Animation {
 	}
 
 	/**
-	 * @description Updates the position of the object
-	 * @param curr_pos Current position of the object
-	 * @return The new position of the object
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Applies the animation to the matrix
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {float} delta Time passed, in seconds, since last function call
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
 	 */
 	updateMatrix (assigned_index, delta, matrix) {
     if (!super.animationOver(assigned_index)) {
@@ -52,6 +61,13 @@ class LinearAnimation extends Animation {
     }
 	}
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Computes an intermediate matrix of the animation
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {float} delta Time passed, in seconds, since last function call
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
+	 */
   calcIntermediateMatrix(assigned_index, delta, matrix) {
     super.incTotalTime(assigned_index, delta);
     let init_pt = this.getBeginPt(assigned_index),
@@ -69,6 +85,12 @@ class LinearAnimation extends Animation {
     this.updatePts(assigned_index);
   }
 
+	/**
+	 * @memberof LinearAnimation
+	 * @description Computes the end matrix of the animation
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
+	 */
   calcEndMatrix(assigned_index, matrix) {
     let end_pt = this.getEndPt(assigned_index),
 				angle = this.angles[this.indexes[assigned_index]];
@@ -112,6 +134,12 @@ class LinearAnimation extends Animation {
 		return this.ptsDistance(pt1, pt2) / this.speed;
 	};
 
+	/**
+	 * @override
+	 * @memberof ComboAnimation
+	 * @description Gets the type of the animation
+	 * @return {String} The name of the animation
+	 */
 	get getType () {
 		return "LinearAnimation";
 	}

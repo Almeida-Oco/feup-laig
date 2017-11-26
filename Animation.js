@@ -1,28 +1,29 @@
 /**
-<<<<<<< HEAD
+ * @description Holds the variables which are common between animations.
+ * 							Should multiple nodes use the same animation, the variables which store the progress of the
+ *							animation will be stored inside arrays, and the node shall be given an index to access those variables
+ *								see assignIndex().
  * @class
  * @abstract
- * @classdesc Represents a single abstract animation, holds the common parameters of animations
-=======
- * @description Abstract class which all the animations have to derive from
- * 				every implementation has to have defined the following methods:
- *				updateMatrix -> Calculates a transf matrix with the current animation
- *				calcIntermediateMatrix -> Returns the updateMatrix
- *				calcEndMatrix -> Returns the final Matrix
- *				getType -> Returns the type of animation
- *				assignIndex -> The current animation
- *				calculateDuration -> Time that the animation lasts
- * @constructor
->>>>>>> 7ca4ce59687a3aa10ab8f34d1b19353522149660
- * @abstract
+ * @member {float} speed The speed of the animation
+ * @member {Array<bool>} animations_over An array containing booleans that says if the animation of the index is over
+ * @member {Array<float>} durations An array with the total duration of the animations
+ * @member {Array<float>} total_time Time passed since start of animation
  */
 class Animation {
+	/**
+	 * @constructor
+	 * @description Constructor of class
+	 * @memberof Animation
+	 * @param {float} speed The speed of the animation
+	 * @param {Array<T>} args Arguments of the animation
+	 */
 	constructor(speed, args) {
-		this.speed = speed; 					// 1unit / s
-		this.animations_over = [];		// if the animation is over
-		this.durations = []; 					// the total duration of the animations
-		this.total_time = []; 				// will hold the different progresses of the nodes
-    this.last_pt = [];            // will hold the last point of the animation
+		this.speed = speed;
+		this.animations_over = [];
+		this.durations = [];
+		this.total_time = [];
+    this.last_pt = [];
 
 		if (this.constructor === Animation) {
       throw new TypeError("Can't instantiate abstract class!");
@@ -54,60 +55,79 @@ class Animation {
 
 
 	};
+
 	/**
-	 * @description Sees if a animation has finished
-	 * @param assigned_index the index of the animation that we want to check
+	 * @memberof Animation
+	 * @description Checks if a animation has finished
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return true if animation over, false otherwise
 	 */
 	checkAnimationOver (assigned_index) {
 		return (this.total_time[assigned_index] >= this.durations[assigned_index]);
 	}
+
 	/**
+	 * @memberof Animation
 	 * @description Gets the duration of a animation
-	 * @param assigned_index the index of the animation that we want to check
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return The duration of the animation
 	 */
 	getDuration (assigned_index) {
 		return this.durations[assigned_index];
 	}
+
 	/**
-	 * @description Returns the animation that has already finished
-	 * @param assigned_index the index of the animation that we want to check
+	 * @memberof Animation
+	 * @description Gets the {@link animations_over} in the given index
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return true if animation over, false otherwise
 	 */
 	animationOver (assigned_index) {
 		return this.animations_over[assigned_index];
 	}
+
 	/**
-	 * @description Returns the time that will take to finish until the animation
-	 * @param assigned_index the index of the animation that we want to check
+	 * @memberof Animation
+	 * @description Gets the {@link total_time} in the given index
+	 * @param {int} assigned_index The index assigned to the node
+	 * @return The total time elapsed since the start of the animation
 	 */
 	getTotalTime (assigned_index) {
 		return this.total_time[assigned_index];
 	}
+
 	/**
-	 * @description Sets a animation to be finished
-	 * @param assigned_index the index of the animation that we want to check
+	 * @memberof Animation
+	 * @description Sets {@link animations_over} to true in the given index
+	 * @param {int} assigned_index The index assigned to the node
 	 */
 	setAnimationOver (assigned_index) {
 		this.animations_over[assigned_index] = true;
 	}
+
 	/**
-	 * @description Increments the total time of a animation by a amount (inc)
-	 * @param assigned_index the index of the animation that we want to check
-	 * @param inc the value to add
+	 * @memberof Animation
+	 * @description Increments the {@link total_time} in the given index
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param inc The value to increment
 	 */
 	incTotalTime (assigned_index, inc) {
 		this.total_time[assigned_index] += inc;
 	}
+
 	/**
-	 * @description Resets the timed passed in the assigned index animation
-	 * @param assigned_index the index of the animation that we want to check
+	 * @memberof Animation
+	 * @description Resets the {@link total_time}, in the given index, to zero
+	 * @param {int} assigned_index The index assigned to the node
 	 */
 	resetTotalTime (assigned_index) {
 		this.total_time[assigned_index] = 0;
 	}
+
 	/**
-	 * @description Normalizes all the coordinates of a vector
-	 * @param vec1 vec1
-	 * @return vec1/||vec1||
+	 * @memberof Animation
+	 * @description Normalizes the given vector
+	 * @param vec1 The vector to normalize
 	 */
 	normalizeVector (vector) {
 		let division = 0;
@@ -118,14 +138,14 @@ class Animation {
 		for (let i = 0; i < vector.length && division != 0; i++){
 			vector[i] /= division;
 		}
-
-		return vector;
 	}
+
 	/**
-	 * @description Calculates the dot product of two vectors (vec3)
-	 * @param vec1 vec1
-	 * @param vec2 vec2
-	 * @return vec1 . vec2
+	 * @memberof Animation
+	 * @description Calculates the dot product of two vectors (The vectors should be normalized using {@link normalizeVector})
+	 * @param vec1 The first normalized vector
+	 * @param vec2 The second normalized vector
+	 * @return The result of the dot product
 	 */
 	dotProduct (vec1, vec2)  {
 		if (vec1.length != vec2.length){
@@ -136,12 +156,14 @@ class Animation {
 			result += vec1[i]*vec2[i];
 		}
 		return result;
-	}
+
+
 	/**
-	 * @description Calculates the Cross product of two vectors (vec3)
-	 * @param vec1 vec1
-	 * @param vec2 vec2
-	 * @return vec1 x vec2
+	 * @memberof Animation
+	 * @description Calculates the Cross product of two vectors (The vectors should be normalized using {@link normalizeVector})
+	 * @param vec1 The first normalized vector
+	 * @param vec2 The second normalized vector
+	 * @return The result of the cross product
 	 */
 	crossProduct (vec1, vec2) {
 		return [vec1[1]*vec2[2] - vec1[2]*vec2[1],
@@ -149,12 +171,14 @@ class Animation {
 						vec1[0]*vec2[1] - vec1[1]*vec2[0]];
 	}
 
+
 	/**
+	 * @memberof Animation
 	 * @description Calculates the linear interpolation between the values
-	 * @param assigned_index Index assigned to the node
-	 * @param min Start value
-	 * @param max End value
-	 * @param t Time elapsed since last function call
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {float} min Start value
+	 * @param {float} max End value
+	 * @param {float} t Time elapsed since last function call
 	 * @return The interpolated value
 	 */
 	linearInterpolation (assigned_index, min, max, t) {

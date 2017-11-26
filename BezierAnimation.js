@@ -1,30 +1,46 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
-/**
- * @constructor
- * @param id ID of the animation
- * @param speed Speed of the animation
- * @param args Arguments of animation [[x,y,z],[x1,y1,z1] (...)]
- */
+
 class BezierAnimation extends Animation {
+
+	/**
+	 * @override
+	 * @constructor
+	 * @memberof BezierAnimation
+	 * @description Constructor of class
+	 * @param {float} speed The speed of the animation
+	 * @param {Array<Array<float>>} args Arguments of animation [[x,y,z],[x1,y1,z1] (...)]
+	 */
 	constructor(speed, args) {
 		super(speed, args);
-    this.last_pt = [args[3][0]-args[0][0], args[3][1]-args[0][1], args[3][2] - args[3][2]];
+    this.last_pt = [args[3][0]-args[0][0], args[3][1]-args[0][1], args[3][2] - args[0][2]];
 		this.pts = args;
 		this.speed = speed;
-		this.prev_tangent = [];
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Assigns an index in the progression variables to the calling node
+	 * @return {int} Index assigned
+	 */
 	assignIndex () {
 		let ret = this.animations_over.length;
 		this.animations_over.push(false);
 		this.total_time.push(0);
-		this.prev_tangent.push([0,0,1]);
 		this.durations.push(this.calculateDuration(8)/this.speed);
 
 		return ret;
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Applies the animation to the matrix
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {float} delta Time passed, in seconds, since last function call
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
+	 */
 	updateMatrix(assigned_index, delta, matrix) {
     if (!super.animationOver(assigned_index)) {
 			this.calcIntermediateMatrix(assigned_index, delta, matrix);
@@ -34,6 +50,13 @@ class BezierAnimation extends Animation {
 		}
 	}
 
+	/**
+	 * @memberof BezierAnimation
+	 * @description Computes an intermediate matrix of the animation
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {float} delta Time passed, in seconds, since last function call
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
+	 */
 	calcIntermediateMatrix(assigned_index, delta, matrix) {
 		super.incTotalTime(assigned_index, delta);
 		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.pts[0][0],
@@ -42,17 +65,30 @@ class BezierAnimation extends Animation {
 
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
 		this.calcRotation(assigned_index, matrix);
-		console.log(bezier_x+" , "+bezier_y+" , "+bezier_z);
+
 		if (super.checkAnimationOver(assigned_index)){
 			super.setAnimationOver(assigned_index);
 		}
 	}
 
+	/**
+	 * @memberof BezierAnimation
+	 * @description Computes the end matrix of the animation
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {Array<Array<float>>} matrix The matrix to apply the animation
+	 */
 	calcEndMatrix(assigned_index, matrix) {
 		mat4.translate(matrix, matrix, this.last_pt);
 		this.calcRotation(assigned_index, matrix);
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Computes the rotation to apply to the object
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {Array<Array<float>>} matrix The matrix to apply the rotation
+	 */
 	calcRotation(assigned_index, matrix) {
 		let rot_x = this.getTan(assigned_index, this.getCoordinate(0)),
 				rot_z = this.getTan(assigned_index, this.getCoordinate(2));
@@ -63,9 +99,11 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
-	 * @description Gets the point correspondent with vars[4]
-	 * @param assigned_index Index assigned to node
-	 * @param vars The array with the 4 variables to use
+	 * @memberof BezierAnimation
+	 * @description Gets the point interpolated through bezier formula
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {Array<float>} vars The array with the 4 X, Y or Z coordinates of the bezier control points
+	 * @return {float} The interpolated X, Y or Z coordinate
 	 */
 	getPoint (assigned_index, vars) {
 		let time = super.getTotalTime(assigned_index),
@@ -81,6 +119,13 @@ class BezierAnimation extends Animation {
 		return (param1+param2+param3+param4);
 	}
 
+	/**
+	 * @memberof BezierAnimation
+	 * @description Gets the tangent interpolated through bezier formula
+	 * @param {int} assigned_index The index assigned to the node
+	 * @param {Array<float>} vars The array with the 4 X, Y or Z coordinates of the bezier control points
+	 * @return {float} The interpolated X, Y or Z tangent coordinate
+	 * */
 	getTan (assigned_index, vars) {
 		let time = super.getTotalTime(assigned_index),
 				perc = (time/super.getDuration(assigned_index));
@@ -96,18 +141,32 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
+	 * @memberof BezierAnimation
 	 * @description Gets the given coordinate
-	 * @param coordinate Coordinate to return (0 -> X, 1 -> Y, 2 -> Z)
-	 * @return A vector with the 4 coordinates
+	 * @param {int} coordinate Coordinate to return (0 -> X, 1 -> Y, 2 -> Z)
+	 * @return {Array<float>} An array with the 4 X, Y or Z coordinates
 	 */
 	getCoordinate (coordinate) {
 		return [this.pts[0][coordinate], this.pts[1][coordinate], this.pts[2][coordinate], this.pts[3][coordinate]];
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Gets the type of the animation
+	 * @return {String} The name of the animation
+	 */
 	get getType() {
 		return "BezierAnimation";
 	}
 
+	/**
+	 * @override
+	 * @memberof BezierAnimation
+	 * @description Calculates the total duration of the animation
+	 * @param {int} depth How many subdivisions to use
+	 * @return {float} The total duration of the animation based on {@link speed}
+	 */
 	calculateDuration (depth) {
 		return this.deCasteljau(depth);
 	}
@@ -116,9 +175,11 @@ class BezierAnimation extends Animation {
 	// ---------------------- BEGIN DE CASTELJAU ----------------------
 
 	/**
+	 * @private
+	 * @memberof BezierAnimation
 	 * @description Calculates the length of the bezier curve based on De Casteljau algorithm
-	 * @param depth Number of sudivisions to do (Higher means more precision) recommended = 7
-	 * @return Length of bezier curve
+	 * @param {int} depth Number of sudivisions to do (Higher means more precision) recommended = 8
+	 * @return {float} Length of bezier curve
 	 */
 	deCasteljau (depth) {
 		let arrs = this.initializeArrays(depth),
@@ -142,10 +203,11 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
-	 * @description Calculates the middle point between two points can be any dimension
-	 * @param pt1 Point 1
-	 * @param pt2 Point 2
-	 * @return Middle point
+	 * @memberof BezierAnimation
+	 * @description Calculates the middle point between two points, can be any dimension
+	 * @param {Array<float>} pt1 Point 1
+	 * @param {Array<float>} pt2 Point 2
+	 * @return {Array<float>} The moddle point
 	 */
 	calcMiddlePoint (pt1, pt2) {
 		let ret = [];
@@ -159,9 +221,10 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
-	 * @description Calculates the given segment total distance
-	 * @param pts Array of arrays that contain the 4 points of the segment
-	 * @return The total length of the segment
+	 * @memberof BezierAnimation
+	 * @description Calculates the given segment linear length
+	 * @param {Array<float>} pts Array of arrays that contain the 4 points of the segment
+	 * @return {float} The total length of the segment
 	 */
 	calcSegmentLength (pts) {
 		let dist1 = Math.sqrt(Math.pow((pts[0][0]-pts[1][0]), 2) + Math.pow((pts[0][1]-pts[1][1]), 2) + Math.pow((pts[0][2]-pts[1][2]), 2)),
@@ -172,10 +235,10 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
-	 * @description Updates the mid points of casteljau algorithm
-	 * @param base_pts 3 Nested arrays that correspond to the curve, then the points, then the xyz coordinates
-	 * @param mid_pts 3 Nestes arrays that correspond to the curvee, then the mid points, then the xyz coordinates
-	 * @param index Index to store the update
+	 * @memberof BezierAnimation
+	 * @description Updates the mid points of casteljau algorithm, return value in {@link mid_pts}
+	 * @param {Array<Array<Array<float>>>} base_pts Points of the algorithm, 1st depth -> curve, 2nd depth -> points, 3rd depth -> xyz coordinates
+	 * @param {Array<Array<Array<float>>>} mid_pts  Points of the algorithm, 1st depth -> curve, 2nd depth -> mid points, 3rd depth -> xyz coordinates
 	 */
 	updateMidPts (base_pts, mid_pts, index) {
 		let temp_pt = this.calcMiddlePoint(base_pts[index/2][1], base_pts[index/2][2]);
@@ -194,9 +257,10 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
-	 * @description Updates the base points for the casteljau algorithm
-	 * @param base_pts 3 Nested arrays that correspond to the curve, then the points, then the xyz coordinates
-	 * @param mid_pts 3 Nestes arrays that correspond to the curvee, then the mid points, then the xyz coordinates
+	 * @memberof BezierAnimation
+	 * @description Updates the base points for the casteljau algorithm, return value in {@link base_pts}
+	 * @param {Array<Array<Array<float>>>} base_pts Points of the algorithm, 1st depth -> curve, 2nd depth -> points, 3rd depth -> xyz coordinates
+	 * @param {Array<Array<Array<float>>>} mid_pts  Points of the algorithm, 1st depth -> curve, 2nd depth -> mid points, 3rd depth -> xyz coordinates
 	 */
 	updateBasePts (base_pts, mid_pts) {
 		for (let i = 0; i < mid_pts.length; i++) {
@@ -207,9 +271,10 @@ class BezierAnimation extends Animation {
 	}
 
 	/**
+	 * @memberof BezierAnimation
 	 * @description Initializes the needed arrays for the De Casteljau algorithm
-	 * @param depth Number of subdivisions to do
-	 * @return Array containing: [<base_points>, <subdivided_points>]
+	 * @param {int} depth Number of subdivisions to do
+	 * @return <Array<Array<Array<Array<float>>>> Array containing: [<base_points>, <subdivided_points>]
 	 */
 	initializeArrays (depth) {
 		let base = [], mid = [];
