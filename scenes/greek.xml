@@ -196,7 +196,7 @@
 								radius="0.01" startang="0" rotang="90" loop="true" />
 
 
-		<ANIMATION id="zepBezier1" speed="10" type="bezier">
+		<ANIMATION id="zepBezier1" speed="2" type="bezier">
 			<controlpoint xx="5" yy="6" zz="10" />
 			<controlpoint xx="5" yy="10" zz="10" />
 			<controlpoint xx="5" yy="15" zz="10" />

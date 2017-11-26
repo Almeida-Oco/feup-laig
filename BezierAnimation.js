@@ -36,9 +36,9 @@ class BezierAnimation extends Animation {
 
 	calcIntermediateMatrix(assigned_index, delta, matrix) {
 		super.incTotalTime(assigned_index, delta);
-		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)),
-				bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)),
-				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2));
+		let bezier_x = this.getPoint(assigned_index, this.getCoordinate(0)) - this.pts[0][0],
+				bezier_y = this.getPoint(assigned_index, this.getCoordinate(1)) - this.pts[0][1],
+				bezier_z = this.getPoint(assigned_index, this.getCoordinate(2)) - this.pts[0][2];
 
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
 		this.calcRotation(assigned_index, matrix);
