@@ -93,6 +93,12 @@ class Animation {
 		return result;
 	}
 
+	crossProduct (vec1, vec2) {
+		return [vec1[1]*vec2[2] - vec1[2]*vec2[1],
+						vec1[0]*vec2[2] - vec1[2]*vec2[0],
+						vec1[0]*vec2[1] - vec1[1]*vec2[0]];
+	}
+
 	/**
 	 * @description Calculates the linear interpolation between the values
 	 * @param assigned_index Index assigned to the node

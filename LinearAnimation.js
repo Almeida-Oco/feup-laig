@@ -15,12 +15,18 @@ class LinearAnimation extends Animation {
     this.angles = [];
     this.angles.push(0);
     for (let i = 1; i < (this.pts.length-1); i++) {
-      let vec1 = [this.pts[i][0] - this.pts[i-1][0], this.pts[i+1][0] - this.pts[i][0]],
-          vec2 = [this.pts[i][2] - this.pts[i-1][2], this.pts[i+1][2] - this.pts[i][2]];
+      let vec1 = [this.pts[i][0] - this.pts[i-1][0], 0, this.pts[i][2] - this.pts[i-1][2]],
+          vec2 = [this.pts[i+1][0] - this.pts[i][0], 0, this.pts[i+1][2] - this.pts[i][2]];
 
-			super.normalizeVector(vec1);
-			super.normalizeVector(vec2);
-      this.angles.push(Math.acos(super.dotProduct(vec1, vec2)));
+			super.normalizeVector(vec1); super.normalizeVector(vec2);
+			let dt_prod  = super.dotProduct(vec2, vec1),
+					cross = super.crossProduct(vec2, vec1),
+					angle = Math.acos(dt_prod);
+
+			if ((super.dotProduct(cross, [0,1,0])) < 0)
+				angle*=-1;
+			console.log("VEC1 = "+vec1+", VEC2 = "+vec2+"\nANGLE = "+(angle/DEGREE_TO_RAD)+" dt = "+(super.dotProduct(cross, [0,1,0]) < 0));
+			this.angles.push(angle);
     }
 	}
 

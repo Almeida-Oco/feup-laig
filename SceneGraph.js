@@ -1284,6 +1284,7 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 			radius  = this.reader.getFloat(animation_node, 'radius'  ),
 			startang= this.reader.getFloat(animation_node, 'startang'),
 			rotang  = this.reader.getFloat(animation_node, 'rotang'  ),
+			loop 		= this.reader.getBoolean(animation_node, 'loop'),
 			args 	 	= [];
 
 	if (centerx == null)
@@ -1298,9 +1299,13 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 		return "no startang defined for animation: " + id;
 	if (rotang == null)
 		return "no rotang defined for animation: " + id;
+	if (loop == null)
+		loop = false;
 
+	console.log(loop);
 	args.push(centerx); args.push(centery); 	args.push(centerz);
 	args.push(radius);  args.push(startang);	args.push(rotang);
+	args.push(loop);
 
 	let value = new CircularAnimation(speed, args);
 	this.animations.set(id, value);

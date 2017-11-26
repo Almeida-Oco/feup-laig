@@ -12,10 +12,10 @@ class CircularAnimation extends Animation {
 		this.center_x = args[0];
 		this.center_y = args[1];
 		this.center_z = args[2];
-
 		this.radius 	=	args[3];
 		this.startang = args[4];
 		this.rotang 	= args[5];
+		this.loop			= args[6];
 
     this.reset_x = (this.radius * Math.sin(this.startang));
     this.reset_z = (this.radius * Math.cos(this.startang));
@@ -37,7 +37,7 @@ class CircularAnimation extends Animation {
     mat4.rotateY	(matrix, matrix, angle*DEGREE_TO_RAD);
     mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
 
-    if (super.checkAnimationOver(assigned_index)){
+    if (!this.loop && super.checkAnimationOver(assigned_index)){
       super.setAnimationOver(assigned_index);
     }
   }
