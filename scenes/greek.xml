@@ -190,23 +190,23 @@
 
 
 		<ANIMATION id="zepBezier1" speed="3" type="bezier">
-			<controlpoint xx="10" yy="20" zz="10" />
-			<controlpoint xx="15" yy="22" zz="10" />
-			<controlpoint xx="15" yy="25" zz="10" />
+			<controlpoint xx="10" yy="30" zz="10" />
+			<controlpoint xx="15" yy="32" zz="10" />
 			<controlpoint xx="15" yy="35" zz="10" />
+			<controlpoint xx="15" yy="45" zz="10" />
 		</ANIMATION>
 
 
 		<ANIMATION id="zepCirc" speed="0.3" type="circular"
-							 centerx="15" centery="30" centerz="10"
-							 radius="0.7" startang="0" rotang="-115" loop="false" />
+							 centerx="15" centery="40" centerz="10"
+							 radius="0.7" startang="0" rotang="-285" loop="false" />
 
 
 		<ANIMATION id="zepBezier2" speed="2" type="bezier">
-			<controlpoint xx="15" yy="35" zz="10" />
-			<controlpoint xx="11" yy="31" zz="15" />
-			<controlpoint xx="11" yy="31" zz="25" />
-			<controlpoint xx="14" yy="31" zz="30" />
+			<controlpoint xx="15" yy="45" zz="10" />
+			<controlpoint xx="11" yy="41" zz="5" />
+			<controlpoint xx="11" yy="41" zz="-15" />
+			<controlpoint xx="14" yy="41" zz="-30" />
 		</ANIMATION>
 
 
@@ -493,11 +493,11 @@
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
-			<!-- <ANIMATIONREFS>
+			<ANIMATIONREFS>
 				<ANIMATIONREF id="helLinear" />
 				<ANIMATIONREF id="helRot" />
 				<ANIMATIONREF id="helLinear2" />
-			</ANIMATIONREFS> -->
+			</ANIMATIONREFS>
 
 			<DESCENDANTS>
 				<NODEREF id="chopper_tail"/>
