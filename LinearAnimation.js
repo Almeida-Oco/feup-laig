@@ -57,11 +57,12 @@ class LinearAnimation extends Animation {
     let init_pt = this.getBeginPt(assigned_index),
         end_pt  = this.getEndPt(assigned_index),
 				angle = this.angles[this.indexes[assigned_index]],
+				time = this.getTotalTime(assigned_index),
         tx, ty, tz;
 
-    tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], this.getTotalTime(assigned_index));
-    ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], this.getTotalTime(assigned_index));
-    tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], this.getTotalTime(assigned_index));
+    tx = super.linearInterpolation(assigned_index, init_pt[0], end_pt[0], time);
+    ty = super.linearInterpolation(assigned_index, init_pt[1], end_pt[1], time);
+    tz = super.linearInterpolation(assigned_index, init_pt[2], end_pt[2], time);
 
     mat4.translate(matrix, matrix, [tx, ty, tz]);
     mat4.rotateY(matrix, matrix, angle);

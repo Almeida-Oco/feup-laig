@@ -9,7 +9,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 class BezierAnimation extends Animation {
 	constructor(speed, args) {
 		super(speed, args);
-    this.last_pt = args[3];
+    this.last_pt = [args[3][0]-args[0][0], args[3][1]-args[0][1], args[3][2] - args[3][2]];
 		this.pts = args;
 		this.speed = speed;
 		this.prev_tangent = [];
@@ -20,7 +20,7 @@ class BezierAnimation extends Animation {
 		this.animations_over.push(false);
 		this.total_time.push(0);
 		this.prev_tangent.push([0,0,1]);
-		this.durations.push(this.calculateDuration(5)/this.speed);
+		this.durations.push(this.calculateDuration(8)/this.speed);
 
 		return ret;
 	}
@@ -42,7 +42,7 @@ class BezierAnimation extends Animation {
 
 		mat4.translate(matrix, matrix, [bezier_x, bezier_y, bezier_z]);
 		this.calcRotation(assigned_index, matrix);
-
+		console.log(bezier_x+" , "+bezier_y+" , "+bezier_z);
 		if (super.checkAnimationOver(assigned_index)){
 			super.setAnimationOver(assigned_index);
 		}

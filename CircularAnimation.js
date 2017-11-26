@@ -33,9 +33,10 @@ class CircularAnimation extends Animation {
   calcIntermediateMatrix(assigned_index, delta, matrix) {
     super.incTotalTime(assigned_index, delta);
     let angle = super.linearInterpolation(assigned_index, this.startang, this.rotang, this.getTotalTime(assigned_index));
-    mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
+
+		mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
     mat4.rotateY	(matrix, matrix, angle*DEGREE_TO_RAD);
-    mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
+		mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
 
     if (!this.loop && super.checkAnimationOver(assigned_index)){
       super.setAnimationOver(assigned_index);
@@ -43,9 +44,9 @@ class CircularAnimation extends Animation {
   }
 
   calcEndMatrix(matrix) {
-    mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
+		mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
     mat4.rotateY	(matrix, matrix, this.rotang*DEGREE_TO_RAD);
-    mat4.translate(matrix, matrix, [this.reset_x, 0, this.reset_z]);
+		mat4.translate(matrix, matrix, [-this.reset_x, 0, -this.reset_z]);
   }
 
 	get getType() {

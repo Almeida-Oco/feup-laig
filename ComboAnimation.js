@@ -53,7 +53,7 @@ class ComboAnimation extends Animation {
 
 	assignIndex () {
 		let ret = this.assigned_indexes.length;
-		this.assigned_indexes[ret] = [];
+		this.assigned_indexes.push([]);
 		for (let i = 0; i < this.animations.length; i++) {
 			this.assigned_indexes[ret].push(this.animations[i].assignIndex());
 		}

@@ -1,5 +1,7 @@
 /**
- * @constructor
+ * @class
+ * @abstract
+ * @classdesc Represents a single abstract animation, holds the common parameters of animations
  * @abstract
  */
 class Animation {
