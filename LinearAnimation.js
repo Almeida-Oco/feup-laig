@@ -17,7 +17,7 @@ class LinearAnimation extends Animation {
     for (let i = 1; i < (this.pts.length-1); i++) {
       let vec1 = [this.pts[i][0] - this.pts[i-1][0], this.pts[i+1][0] - this.pts[i][0]],
           vec2 = [this.pts[i][2] - this.pts[i-1][2], this.pts[i+1][2] - this.pts[i][2]];
-					
+
 			super.normalizeVector(vec1);
 			super.normalizeVector(vec2);
       this.angles.push(Math.acos(super.dotProduct(vec1, vec2)));
@@ -60,7 +60,6 @@ class LinearAnimation extends Animation {
 
     mat4.translate(matrix, matrix, [tx, ty, tz]);
     mat4.rotateY(matrix, matrix, angle);
-		console.log(angle/DEGREE_TO_RAD)
     this.updatePts(assigned_index);
   }
 

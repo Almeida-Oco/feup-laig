@@ -63,6 +63,6 @@ class CircularAnimation extends Animation {
 
 	calculateDuration () {
 		let end = this.rotang * DEGREE_TO_RAD;
-		return end*this.radius/this.speed;
+		return Math.abs(end*this.radius/this.speed);
 	}
 };

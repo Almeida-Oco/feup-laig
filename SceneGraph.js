@@ -1401,9 +1401,7 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 
 			// Creates node.
 			this.nodes[nodeID] = new GraphNode(nodeID, node_select);
-			console.log("SELECT = "+node_select);
 			if (node_select){
-				console.log("\n\n NEW SELECTABLE \n\n");
 				this.nodes_selectable.push(nodeID);
 			}
 			// Gathers child nodes.

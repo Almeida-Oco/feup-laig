@@ -180,9 +180,6 @@ XMLscene.prototype.setupshaders = function(){
 
 XMLscene.prototype.updateScaleFactor=function(scale_fac)
 {
-
-	//console.log('Interpolation Value:' + Math.sin(scale_fac*0.007));
-
     if(this.sel_shader == undefined){
         return;
     }

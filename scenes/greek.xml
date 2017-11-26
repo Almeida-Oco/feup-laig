@@ -156,7 +156,18 @@
 		<ANIMATION id="helLinear" speed ="2" type="linear">
 			<controlpoint xx="0" yy="0" zz="0" />
 			<controlpoint xx="0" yy="0" zz="5" />
-			<controlpoint xx="5" yy="6" zz="5" />
+			<controlpoint xx="5" yy="6" zz="10" />
+		</ANIMATION>
+
+		<ANIMATION id="helRot" speed="4" type="circular"
+							 centerx="5" centery="6" centerz="0"
+							 radius="10" startang="0" rotang="-100"/>
+
+		<ANIMATION id="helBezier" speed="4" type="bezier">
+			<controlpoint xx="5" yy="6" zz="10" />
+			<controlpoint xx="-10" yy="15" zz="20" />
+			<controlpoint xx="-10" yy="-5" zz="0" />
+			<controlpoint xx="-10" yy="3" zz="10" />
 		</ANIMATION>
 	</ANIMATIONS>
 
@@ -423,12 +434,13 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="helicopter" >
+		<NODE id="helicopter" selectable="true">
 			<MATERIAL id="metal"/>
 			<TEXTURE id="hel_metal"/>
 
 			<ANIMATIONREFS>
 				<ANIMATIONREF id="helLinear" />
+				<ANIMATIONREF id="helRot" />
 			</ANIMATIONREFS>
 
 			<DESCENDANTS>

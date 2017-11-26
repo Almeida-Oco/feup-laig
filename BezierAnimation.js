@@ -94,7 +94,7 @@ class BezierAnimation extends Animation {
 
 		return (param1 + param2 + param3 + param4);
 	}
-	
+
 	/**
 	 * @description Gets the given coordinate
 	 * @param coordinate Coordinate to return (0 -> X, 1 -> Y, 2 -> Z)
