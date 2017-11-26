@@ -15,9 +15,8 @@ uniform float red;
 uniform float green;
 uniform float blue;
 
+// Changes the color of the object in function of a normscale that varies between -1, 1
 void main() {
-	// Branching should be reduced to a minimal. 
-	// When based on a non-changing uniform, it is usually optimized.
 
 	vec4 sel_col = vec4(red, green, blue, 1.0);
 

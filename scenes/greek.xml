@@ -205,7 +205,7 @@
 
 
 		<ANIMATION id="zepCirc" speed="0.3" type="circular"
-							 centerx="15" centery="35" centerz="10"
+							 centerx="15" centery="30" centerz="10"
 							 radius="0.7" startang="0" rotang="-115" loop="false" />
 
 

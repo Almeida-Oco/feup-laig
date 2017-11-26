@@ -1183,7 +1183,11 @@ SceneGraph.prototype.parseMaterials = function(materialsNode) {
 
 	console.log("Parsed materials");
 }
-
+/**
+ * @description Parses All of the defined animations, with the <ANIMATIONS /> block
+ * @param animation_node The root node of the animations
+ * @return null if there was no error, error message otherwise
+ */
 SceneGraph.prototype.parseAnimations = function(animations_node) {
 	let children = animations_node.children;
 	this.animations = new Map();
@@ -1240,7 +1244,13 @@ SceneGraph.prototype.parseAnimations = function(animations_node) {
 
 }
 
-
+/**
+ * @description Parses the Linear animation block
+ * @param animation_node The root node of the animations
+ * @param id The id node of the animation
+ * @param speed The speed of the animation
+ * @return null if there was no error, error message otherwise
+ */
 SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) {
 	let children = animation_node.children, args = [], i = 0;
 	if (children.length < 2) {
@@ -1276,7 +1286,13 @@ SceneGraph.prototype.parseLinearAnimation = function(animation_node, id, speed) 
 
 	return null;
 }
-
+/**
+ * @description Parses the Circular animation block
+ * @param animation_node The root node of the animations
+ * @param id The id node of the animation
+ * @param speed The speed of the animation
+ * @return null if there was no error, error message otherwise
+ */
 SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed) {
 	let centerx = this.reader.getFloat(animation_node, 'centerx' ),
 			centery = this.reader.getFloat(animation_node, 'centery' ),
@@ -1312,7 +1328,13 @@ SceneGraph.prototype.parseCircularAnimation = function(animation_node, id, speed
 
 	return null;
 }
-
+/**
+ * @description Parses the Bezier animation block
+ * @param animation_node The root node of the animations
+ * @param id The id node of the animation
+ * @param speed The speed of the animation
+ * @return null if there was no error, error message otherwise
+ */
 SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) {
 	let children = animation_node.children, args = [];
 	for (let i = 0; i < children.length; i++) {
@@ -1338,7 +1360,12 @@ SceneGraph.prototype.parseBezierAnimation = function(animation_node, id, speed) 
 
 	return null
 }
-
+/**
+ * @description Parses the Combo animation block
+ * @param animation_node The root node of the animations
+ * @param id The id node of the animation
+ * @return null if there was no error, error message otherwise
+ */
 SceneGraph.prototype.parseComboAnimation = function(animation_node, id) {
 	let children = animation_node.children,
 			i = 0,

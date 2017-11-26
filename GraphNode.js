@@ -1,6 +1,7 @@
 /**
  * @description Constructor for GraphNode
  * @param nodeID ID of the node
+ * @param selectable if the node is able to be selected
  */
 
 class GraphNode {
@@ -42,6 +43,9 @@ class GraphNode {
 		this.animations.push([animation, animation.assignIndex()]);
 	}
 
+    /**
+     * @description Applies the animations to the node
+     */
 	applyAnimations() {
 		let delta = this.getTimeElapsed(),
 				temp_matrix = mat4.create(),
