@@ -24,6 +24,8 @@ class LinearAnimation extends Animation {
 		this.indexes = []; //indexes of the begin point
     this.angles = [];
     this.angles.push(0);
+
+		let total_ang = 0;
     for (let i = 1; i < (this.pts.length-1); i++) {
       let vec1 = [this.pts[i][0] - this.pts[i-1][0], 0, this.pts[i][2] - this.pts[i-1][2]], //first segment vector
           vec2 = [this.pts[i+1][0] - this.pts[i][0], 0, this.pts[i+1][2] - this.pts[i][2]]; //second segment vector
@@ -31,11 +33,11 @@ class LinearAnimation extends Animation {
 			super.normalizeVector(vec1); super.normalizeVector(vec2);
 
 			let dt_prod  = super.dotProduct(vec2, vec1),
-					cross = super.crossProduct(vec2, vec1),
-					angle = Math.atan2( super.dotProduct(cross, [0,1,0]), dt_prod);
+					cross = super.crossProduct(vec2, vec1);
+			total_ang += Math.atan2( super.dotProduct(cross, [0,1,0]), dt_prod);
 
 			console.log("VEC1 = "+vec1+", VEC2 = "+vec2+"\nANGLE = "+(angle/DEGREE_TO_RAD)+"\n cross ="+cross+" dot = "+dt_prod);
-			this.angles.push(angle);
+			this.angles.push(total_ang);
     }
 	}
 

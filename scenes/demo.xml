@@ -171,6 +171,14 @@
 		<SPANREF id="bezier1" />
 	</ANIMATION>
 
+	<ANIMATION id="teste" speed="4" type="linearNCircular" rotation="720" >
+   <controlpoint xx="0" yy="0" zz="0" />
+   <controlpoint xx="10" yy="0" zz="0" />
+   <controlpoint xx="10" yy="0" zz="10" />
+   <controlpoint xx="0" yy="10" zz="0" />
+   <controlpoint xx="0" yy="0" zz="0" />
+	</ANIMATION>
+
 </ANIMATIONS>
 
 
@@ -184,12 +192,8 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-
-            <NODEREF id="luzes" />
             <NODEREF id="piramide" />
-            <NODEREF id="arvores" />
             <NODEREF id="chao" />
-            <NODEREF id="bancos" />
         </DESCENDANTS>
 
     </NODE>
@@ -206,264 +210,6 @@
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
 				</DESCENDANTS>
-
-    </NODE>
-
-    <!-- The lights -->
-     <NODE id="luzes">
-        <MATERIAL id="lightMaterial" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-            <NODEREF id="luz1" />
-            <NODEREF id="luz2" />
-            <NODEREF id="luz3" />
-            <NODEREF id="luz4" />
-        </DESCENDANTS>
-
-    </NODE>
-
-  <!-- The first light -->
-   <NODE id="luz1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-            <NODEREF id="luz_candeeiro" />
-        </DESCENDANTS>
-
-				<ANIMATIONREFS>
-					<ANIMATIONREF id="linear1"/>
-				</ANIMATIONREFS>
-
-    </NODE>
-
-   <!-- The second light -->
-    <NODE id="luz2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="30" y="0" z="0" />
-
-        <DESCENDANTS>
-            <NODEREF id="luz_candeeiro" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- The third light -->
-    <NODE id="luz3">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="0" z="20" />
-
-        <DESCENDANTS>
-           <NODEREF id="luz_candeeiro" />
-        </DESCENDANTS>
-
-				<ANIMATIONREFS>
-					<ANIMATIONREF id="circular1"/>
-				</ANIMATIONREFS>
-
-    </NODE>
-
-    <!-- The fourth light -->
-    <NODE id="luz4">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="30" y="0" z="20" />
-
-        <DESCENDANTS>
-           <NODEREF id="luz_candeeiro" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Lamp post -->
-    <NODE id="luz_candeeiro">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-           <NODEREF id="luz_esfera" />
-           <NODEREF id="luz_suporte" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Light bulb -->
-    <NODE id="luz_esfera">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="10" z="0" />
-        <SCALE sx="-1" sy="1" sz="1" />
-
-        <DESCENDANTS>
-						<LEAF id="sphere1" type="sphere" args="2 20 20" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- The post in the lamp post... -->
-    <NODE id="luz_suporte" selectable="true">
-        <MATERIAL id="lightPostMaterial" />
-        <TEXTURE id="null" />
-
-        <SCALE sx="0.5" sy="2.02" sz="0.5" />
-        <ROTATION axis="x" angle="-90" />
-
-        <DESCENDANTS>
-					<LEAF id="cylinder1" type="cylinder" args="4 1 1 20 20" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Street bench -->
-    <NODE id="bancos">
-        <MATERIAL id="lightMaterial" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-       		<NODEREF id="banco1" />
-            <NODEREF id="banco2" />
-        </DESCENDANTS>
-
-				<ANIMATIONREFS>
-					<ANIMATIONREF id="linear1"/>
-					<ANIMATIONREF id="circular1"/>
-				</ANIMATIONREFS>
-
-    </NODE>
-
-    <!-- One bench -->
-    <NODE id="banco2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="7.5" y="-2" z="21" />
-
-        <DESCENDANTS>
-            <NODEREF id="banco" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Another bench -->
-     <NODE id="banco1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="7.5" y="-2" z="4" />
-
-        <DESCENDANTS>
-            <NODEREF id="banco" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Generic bench -->
-    <NODE id="banco">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <ROTATION axis="y" angle="90" />
-        <SCALE sx="0.5" sy="0.5" sz="1.5" />
-
-        <DESCENDANTS>
-
-       		<NODEREF id="faceCubo1" />
-            <NODEREF id="faceCubo2" />
-            <NODEREF id="faceCubo3" />
-            <NODEREF id="faceCubo4" />
-            <NODEREF id="faceCubo5" />
-            <NODEREF id="faceCubo6" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Trees -->
-    <NODE id="arvores">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-            <NODEREF id="arvore1" />
-            <NODEREF id="arvore2" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- One tree -->
-    <NODE id="arvore1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="-2" y="0" z="5" />
-
-        <DESCENDANTS>
-            <NODEREF id="arvore" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Another tree -->
-    <NODE id="arvore2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="22" y="0" z="5" />
-
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="circular1"/>
-        </ANIMATIONREFS>
-
-        <DESCENDANTS>
-            <NODEREF id="arvore" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Generic tree -->
-    <NODE id="arvore">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-            <NODEREF id="troncoArvore" />
-            <NODEREF id="folhasArvore" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Tree trunk -->
-    <NODE id="troncoArvore">
-        <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="null" />
-
-        <ROTATION axis="x" angle="90" />
-        <TRANSLATION x="5" y="5" z="-4" />
-
-        <DESCENDANTS>
-					<LEAF type="cylinder" args="4 1 1 20 20" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Tree leaves -->
-     <NODE id="folhasArvore" selectable="true">
-        <MATERIAL id="leavesTreeMaterial" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-       		<NODEREF id="faceCubo1" />
-            <NODEREF id="faceCubo2" />
-            <NODEREF id="faceCubo3" />
-            <NODEREF id="faceCubo4" />
-            <NODEREF id="faceCubo5" />
-            <NODEREF id="faceCubo6" />
-        </DESCENDANTS>
 
     </NODE>
 
@@ -486,7 +232,7 @@
         <TEXTURE id="null" />
 
         <TRANSLATION x="2.5" y="4" z="2.5" />
-		<ROTATION axis="y" angle="-90" />
+				<ROTATION axis="y" angle="-90" />
 
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
@@ -494,13 +240,13 @@
 
     </NODE>
 
-    <!-- Another cube face -->
-    <NODE id="faceCubo3">
+    			<!-- Ano	ther cube face -->
+    		<NODE id="faceCubo3">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
         <TRANSLATION x="7.5" y="4" z="7.5" />
-		<ROTATION axis="y" angle="90" />
+				<ROTATION axis="y" angle="90" />
 
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
@@ -558,17 +304,17 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="12" y="5.8" z="4.75" />
-        <SCALE sx="0.4" sy="2" sz="0.4" />
 
 				<ANIMATIONREFS>
-					<ANIMATIONREF id="combo1" />
+					<ANIMATIONREF id="teste" />
 				</ANIMATIONREFS>
+
+				<TRANSLATION x="0" y="3" z="0"/>
 
         <DESCENDANTS>
        		<NODEREF id="meiaPiramide1" />
           <NODEREF id="meiaPiramide2" />
-          <NODEREF id="basePiramide" />
+          <!-- <NODEREF id="basePiramide" /> -->
         </DESCENDANTS>
 
     </NODE>
@@ -579,8 +325,8 @@
         <TEXTURE id="null" />
 
        	<ROTATION axis="x" angle="90" />
-       	<TRANSLATION x="1" y="6" z="2.87" />
-       	<SCALE sx="2.8" sy="3.5" sz="1" />
+       	<!-- <TRANSLATION x="1" y="6" z="2.87" />
+       	<SCALE sx="2.8" sy="3.5" sz="1" /> -->
 
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
@@ -604,7 +350,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-		<TRANSLATION x="16" y="0" z="26"	/>
+		<!-- <TRANSLATION x="16" y="0" z="26"	/> -->
 		<ROTATION axis="y" angle="180" />
 
         <DESCENDANTS>
@@ -630,7 +376,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-		<TRANSLATION x="8" y="4" z="13" />
+		<!-- <TRANSLATION x="8" y="4" z="13" /> -->
 		<ROTATION axis="x" angle="44.42" />
        	<ROTATION axis="y" angle="-45" />
 
@@ -645,8 +391,8 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-       	<TRANSLATION x="10" y="4" z="15" />
-        <TRANSLATION x="-2" y="0" z="-2" />
+       	<!-- <TRANSLATION x="10" y="4" z="15" />
+        <TRANSLATION x="-2" y="0" z="-2" /> -->
        	<ROTATION axis="z" angle="-44.42" />
        	<ROTATION axis="y" angle="45" />
 
