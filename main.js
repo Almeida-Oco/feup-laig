@@ -11,11 +11,16 @@ function getUrlVars() {
 	return vars;
 }
 
-serialInclude(['../lib/CGF.js', 'SceneGraph.js', 'XMLscene.js',
-'GraphNode.js', 'GraphLeaf.js', 'Interface.js', 'Triangle.js',
-'Animation.js', 'Sphere.js', 'Quad.js', 'Cylinder.js',
-'LinearAnimation.js', 'CircularAnimation.js', 'BezierAnimation.js',
-'ComboAnimation.js', 'Patch.js',
+serialInclude([ '../lib/CGF.js',
+//ANIMATIONS
+'animations/Animation.js', 'animations/LinearAnimation.js', 'animations/CircularAnimation.js', 'animations/BezierAnimation.js', 'animations/ComboAnimation.js',
+
+//OBJECTS
+'objs/Triangle.js', 'objs/Sphere.js', 'objs/Quad.js', 'objs/Cylinder.js',
+'objs/Patch.js',
+
+
+'SceneGraph.js', 'XMLscene.js', 'GraphNode.js', 'GraphLeaf.js', 'Interface.js',
 
 main=function() {
 	// Standard application, scene and interface setup
@@ -33,7 +38,7 @@ main=function() {
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check SceneGraph constructor)
 
-	var filename=getUrlVars()['file'] || "greek.xml";
+	var filename=getUrlVars()['file'] || "table.xml";
 
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors

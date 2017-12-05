@@ -89,12 +89,12 @@
 
     <!-- The root node -->
     <NODE id="root">
-        <MATERIAL id="defaultMaterial" />
+        <MATERIAL id="leavesTreeMaterial" />
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-            <EAF id="quad" type="rectangle" args="5 0 0 5" />
-        </DESCENDANTS>
+            <LEAF id="quad" type="rectangle" args="5 0 0 5" />
+				</DESCENDANTS>
     </NODE>
 </NODES>
 

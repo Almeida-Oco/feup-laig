@@ -35,8 +35,7 @@ class LinearAnimation extends Animation {
 			let dt_prod  = super.dotProduct(vec2, vec1),
 					cross = super.crossProduct(vec2, vec1);
 			total_ang += Math.atan2( super.dotProduct(cross, [0,1,0]), dt_prod);
-
-			console.log("VEC1 = "+vec1+", VEC2 = "+vec2+"\nANGLE = "+(angle/DEGREE_TO_RAD)+"\n cross ="+cross+" dot = "+dt_prod);
+			
 			this.angles.push(total_ang);
     }
 	}
