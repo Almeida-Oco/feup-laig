@@ -1574,7 +1574,7 @@ SceneGraph.prototype.parseNodes = function(nodesNode) {
 				else
 				if (descendants[j].nodeName == "LEAF")
 				{
-					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle','patch']);
+					var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle','patch', 'circle']);
 					if (type != null)
 						this.log("   Leaf: "+ type);
 					else
@@ -1697,7 +1697,8 @@ SceneGraph.prototype.displayScene = function() {
 			leav = this.nodes[this.root_id].leaves,
 			node = this.nodes[this.root_id],
 	 		text_id = this.nodes[this.root_id].textureID,
-			mat_id = this.nodes[this.root_id].materialID;
+			mat_id = this.nodes[this.root_id].materialID,
+			real_sel = (this.selected_node == this.root_id);
 
 	this.scene.pushMatrix();
 	node.transformMatrix = node.applyAnimations(node.transformMatrix);
@@ -1708,10 +1709,10 @@ SceneGraph.prototype.displayScene = function() {
   this.scene.multMatrix(node.applyAnimations());
 
 	for (var i = 0 ; i < leav.length ; i++)
-		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene);
+		leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene, real_sel);
 
 	for (var i = 0 ; i < child.length ; i++ )
-		this.displayNodes(child[i], mat_id, text_id, (this.selected_node == this.root_id));
+		this.displayNodes(child[i], mat_id, text_id, real_sel);
 
 	this.scene.popMatrix();
 }

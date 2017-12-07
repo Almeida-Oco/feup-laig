@@ -57,19 +57,19 @@
 
 <!-- Textures -->
 <TEXTURES>
-    <TEXTURE id="folhas">
-        <file path="images/camouflage.jpg" />
-        <amplif_factor s="3" t="4" />
+    <TEXTURE id="wood_text">
+        <file path="images/wood.jpg" />
+        <amplif_factor s="5" t="5" />
     </TEXTURE>
 </TEXTURES>
 
 
 <MATERIALS>
-	<MATERIAL id="leavesTreeMaterial">
+	<MATERIAL id="wood_mat">
         <shininess value="1" />
-        <specular r="0.2" g="0.2" b="0.2" a="1" />
-        <diffuse r="0.0" g="0.207" b="0.0" a="1" />
-        <ambient r="0.1" g="0.1" b="0.1" a="1" />
+        <specular r="0.1" g="0.1" b="0.05" a="1" />
+        <diffuse r="0.8" g="0.8" b="0.6" a="1" />
+        <ambient r="0.5" g="0.5" b="0.5" a="1" />
         <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 </MATERIALS>
@@ -88,12 +88,12 @@
     <ROOT id="root" />
 
     <!-- The root node -->
-    <NODE id="root">
-        <MATERIAL id="leavesTreeMaterial" />
-        <TEXTURE id="null" />
+    <NODE id="root" selectable="true">
+        <MATERIAL id="wood_mat" />
+        <TEXTURE id="wood_text" />
 
         <DESCENDANTS>
-            <LEAF id="quad" type="rectangle" args="5 0 0 5" />
+            <LEAF id="quad" type="circle" args="50 10" />
 				</DESCENDANTS>
     </NODE>
 </NODES>

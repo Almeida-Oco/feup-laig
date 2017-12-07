@@ -1,3 +1,24 @@
+let prim_selector = {
+	'triangle': 	function (scene, args) {
+		return new Triangle(scene, args);
+	},
+	'sphere': 		function (scene, args) {
+		return new Sphere(scene, args);
+	},
+	'rectangle': 	function (scene, args) {
+		return new Quad(scene, args);
+	},
+	'cylinder': 	function (scene, args) {
+		return new Cylinder(scene, args);
+	},
+	'patch': 			function (scene, args) {
+		return new Patch(scene, args);
+	},
+	'circle': 		function (scene, args) {
+		return new Circle(scene, args);
+	}
+};
+
 /**
  * @description Constructor for GraphLeaf
  * @param {String} type Type of leaf to create
@@ -6,20 +27,7 @@
  */
 function GraphLeaf(type, args, scene) {
 	this.type = type;
-	this.primitive;
-
-	if ( "triangle" == this.type )
-		this.primitive = new Triangle(scene,args);
-	else if ("sphere" == this.type)
-		this.primitive = new Sphere(scene,args);
-	else if ("rectangle" == this.type)
-		this.primitive = new Quad(scene,args);
-	else if ("cylinder" == this.type)
-		this.primitive = new Cylinder(scene,args);
-	else if ("patch" == this.type)
-		this.primitive = new Patch(scene,args);
-	else
-		console.log("Unknown type: "+this.type+" aborting!");
+	this.primitive = prim_selector[type](scene, args);
 }
 
 /**

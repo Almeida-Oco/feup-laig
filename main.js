@@ -17,7 +17,7 @@ serialInclude([ '../lib/CGF.js',
 
 //OBJECTS
 'objs/Triangle.js', 'objs/Sphere.js', 'objs/Quad.js', 'objs/Cylinder.js',
-'objs/Patch.js',
+'objs/Patch.js', 'objs/Circle.js',
 
 
 'SceneGraph.js', 'XMLscene.js', 'GraphNode.js', 'GraphLeaf.js', 'Interface.js',

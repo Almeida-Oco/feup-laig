@@ -1,7 +1,7 @@
 /**
 * @description Constructor for Cylinder
-* @param scene The scene to render the cylinder
-* @param args An array with following arguments [height, bottom base radius, top base radius, slices, stacks]
+* @param CGFScene scene The scene to render the cylinder
+* @param Array<int> args An array with following arguments [height, bottom base radius, top base radius, slices, stacks]
 */
 function Cylinder(scene, args) {
 	CGFobject.call(this,scene);
@@ -57,7 +57,6 @@ Cylinder.prototype.initBuffers = function() {
 	}
 
 	this.primitiveType = this.scene.gl.TRIANGLES;
-
 	this.initGLBuffers();
 };
 
