@@ -26,12 +26,12 @@ Circle.prototype.initBuffers = function(afs, aft) {
 	var center = this.index;
 
 	this.vertices.push(0, 0, 0);
-	this.texCoords.push(0.5 * afs, 0.5 * aft);
+	this.texCoords.push(0.5 / afs, 0.5 / aft);
 	this.index++;
 
 	for(j = 0; j < this.slices; j++){
 		this.vertices.push(this.radius*Math.cos(theta)); this.vertices.push(this.radius*Math.sin(theta)); this.vertices.push(0);
-		this.texCoords.push((Math.cos(theta)+1) * afs/2.0,((-Math.sin(theta)+1) * aft/2.0));
+		this.texCoords.push((Math.cos(theta)+1) / (afs * 2.0),((-Math.sin(theta)+1) / (aft * 2.0)));
 
  		this.index++;
 		theta += this.angle;
@@ -41,7 +41,7 @@ Circle.prototype.initBuffers = function(afs, aft) {
 
 
 
-		this.texCoords.push((Math.cos(theta)+1) * afs/2.0,((-Math.sin(theta)+1) * aft/2.0));
+		this.texCoords.push((Math.cos(theta)+1) / (afs * 2.0),((-Math.sin(theta)+1) / (aft * 2.0)));
 
 
 		this.indices.push(center, this.index-2, this.index-1);

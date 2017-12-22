@@ -49,12 +49,12 @@ Quad.prototype.initBuffers = function () {
  * @param aft Amplification factor in the Y axis
  */
 Quad.prototype.defTextCoords = function(afs, aft){
-	var s = this.x1-this.x2, t = this.y1-this.y2;
+	var s = Math.abs(this.x2 - this.x1), t = Math.abs(this.y2 - this.y1);
 	this.texCoords = [
 		0, 0,
+		s/afs,0,
 		0, t/aft,
-		s/afs, t/aft,
-		s/afs,0
+		s/afs, t/aft
 	];
 	this.initGLBuffers();
 }
