@@ -57,10 +57,16 @@
 
 <!-- Textures -->
 <TEXTURES>
-    <TEXTURE id="wood_text">
-        <file path="images/wood.jpg" />
-        <amplif_factor s="5" t="5" />
+    <TEXTURE id="light_wood_text">
+        <file path="images/light_wood.jpg" />
+        <amplif_factor s="2" t="2" />
     </TEXTURE>
+
+		<TEXTURE id="dark_wood_text">
+			<file path="images/dark_wood.jpg" />
+			<amplif_factor s="0.2" t="0.2" />
+		</TEXTURE>
+
 </TEXTURES>
 
 
@@ -89,13 +95,286 @@
 
     <!-- The root node -->
     <NODE id="root" selectable="true">
-        <MATERIAL id="wood_mat" />
-        <TEXTURE id="wood_text" />
+        <MATERIAL id="null" />
+        <TEXTURE 	id="null" />
 
-        <DESCENDANTS>
-            <LEAF id="quad" type="circle" args="50 10" />
+				<DESCENDANTS>
+					<NODEREF id="board" />
+					<NODEREF id="tables" />
 				</DESCENDANTS>
     </NODE>
+
+		<NODE id="board" selectable="false">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE  id="light_wood_text" />
+
+			<DESCENDANTS>
+				<NODEREF id="board_face1" />
+				<NODEREF id="board_face2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="board_face1">
+			<MATERIAL id="null"/>
+			<TEXTURE  id="null"/>
+
+			<DESCENDANTS>
+				<LEAF type="circle" args="50 20" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="board_face2">
+			<MATERIAL id="null"/>
+			<TEXTURE  id="null"/>
+
+			<ROTATION axis="x" angle="180"/>
+
+			<DESCENDANTS>
+				<LEAF type="circle" args="50 20" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="tables" selectable="false">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE id="dark_wood_text" />
+
+			<TRANSLATION x="0" y="0" z="0.1"/>
+
+			<DESCENDANTS>
+				<NODEREF id="table0" />
+				<NODEREF id="table1" />
+				<NODEREF id="table2" />
+				<NODEREF id="table3" />
+				<NODEREF id="table4" />
+				<NODEREF id="table5" />
+				<NODEREF id="table6" />
+				<NODEREF id="table7" />
+				<NODEREF id="table8" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="table0" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table1" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="13" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table2" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="9.1923" y="9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table3" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="0" y="13" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table4" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-9.1923" y="9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table5" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-13" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table6" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-9.1923" y="-9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table7" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="0" y="-13" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table8" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="9.1923" y="-9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+
+
+		<NODE id="seats" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat0" />
+				<NODEREF id="seat1" />
+				<NODEREF id="seat2" />
+				<NODEREF id="seat3" />
+				<NODEREF id="seat4" />
+				<NODEREF id="seat5" />
+				<NODEREF id="seat6" />
+				<NODEREF id="seat7" />
+				<NODEREF id="seat8" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat0" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat1" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="3" y="0" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat2" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="2.1213" y="2.1213" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat3" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="0" y="3" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat4" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-2.1213" y="2.1213" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat5" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-3" y="0" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat6" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-2.1213" y="-2.1213" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat7" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="0" y="-3" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat8" selectable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="2.1213" y="-2.1213" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+			</DESCENDANTS>
+		</NODE>
+
 </NODES>
 
 </SCENE>
