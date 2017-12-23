@@ -75,8 +75,21 @@ Interface.prototype.addSelectables = function(scene, graph, nodes) {
 	this.select = function(){
 		scene.select_glow();
 	}
-  //
-	// for (let node_id in nodes_selec) {
-	// 		sel_group.add(nodes_selec, node_id);
-	// }
+
+}
+
+Interface.prototype.addServerComs = function(server_coms){
+
+	var server_folder = this.gui.addFolder("Server");
+	server_folder.open();
+
+	server = server_coms;
+
+	var obj = { ping:function(){
+	 console.log("Pinging PL Server");
+	 server.plRequest('handshake');
+	 }};
+
+	this.gui.add(obj,'ping');
+
 }

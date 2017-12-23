@@ -11,6 +11,8 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
+
+    this.server_coms = new ServerComs(8081, 'localhost');
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -97,6 +99,8 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+
+    this.interface.addServerComs(this.server_coms);
 }
 
 /**
