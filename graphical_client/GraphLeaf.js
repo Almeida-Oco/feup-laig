@@ -1,22 +1,22 @@
 let prim_selector = {
-	'triangle': 	function (scene, args) {
-		return new Triangle(scene, args);
-	},
-	'sphere': 		function (scene, args) {
-		return new Sphere(scene, args);
-	},
-	'rectangle': 	function (scene, args) {
-		return new Quad(scene, args);
-	},
-	'cylinder': 	function (scene, args) {
-		return new Cylinder(scene, args);
-	},
-	'patch': 			function (scene, args) {
-		return new Patch(scene, args);
-	},
-	'circle': 		function (scene, args) {
-		return new Circle(scene, args);
-	}
+  'triangle': function(scene, args) {
+    return new Triangle(scene, args);
+  },
+  'sphere': function(scene, args) {
+    return new Sphere(scene, args);
+  },
+  'rectangle': function(scene, args) {
+    return new Quad(scene, args);
+  },
+  'cylinder': function(scene, args) {
+    return new Cylinder(scene, args);
+  },
+  'patch': function(scene, args) {
+    return new Patch(scene, args);
+  },
+  'circle': function(scene, args) {
+    return new Circle(scene, args);
+  }
 };
 
 /**
@@ -26,8 +26,8 @@ let prim_selector = {
  * @param scene The scene to render the leaf in
  */
 function GraphLeaf(type, args, scene) {
-	this.type = type;
-	this.primitive = prim_selector[type](scene, args);
+  this.type = type;
+  this.primitive = prim_selector[type](scene, args);
 }
 
 /**
@@ -37,26 +37,25 @@ function GraphLeaf(type, args, scene) {
  * @param matrix Matrix to apply to the primitive before rendering
  * @param boolean selectable if the object is selectable for shader thing
  */
- GraphLeaf.prototype.render = function(material, texture, scene, selectable) {
-	 material.apply();
+GraphLeaf.prototype.render = function(material, texture, scene, selectable) {
+  material.apply();
 
-	 if (selectable) {
-		 scene.setActiveShader(scene.sel_shader);
-	 }
+  if (selectable) {
+    scene.setActiveShader(scene.sel_shader);
+  }
 
-	 if (texture != null){
-		 texture[0].bind();
-		 material.setTextureWrap('REPEAT','REPEAT');
-		 this.primitive.render(texture[1],texture[2]);
-	 }
-	 else {
-		 this.primitive.render(1,1);
-		 this.primitive.display();
-	 }
+  if (texture != null) {
+    texture[0].bind();
+    material.setTextureWrap('REPEAT', 'REPEAT');
+    this.primitive.render(texture[1], texture[2]);
+  } else {
+    this.primitive.render(1, 1);
+    this.primitive.display();
+  }
 
-	 if (selectable) {
-		 scene.setActiveShader(scene.defaultShader);
-	 }
+  if (selectable) {
+    scene.setActiveShader(scene.defaultShader);
+  }
 
 
- }
+}
