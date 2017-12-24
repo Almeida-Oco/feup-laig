@@ -15,7 +15,7 @@ Interface.prototype.constructor = Interface;
  * Initializes the interface.
  * @param {CGFapplication} application
  */
-Interface.prototype.init = function(application) {
+Interface.prototype.init = function (application) {
   // call CGFinterface init
   CGFinterface.prototype.init.call(this, application);
 
@@ -34,7 +34,7 @@ Interface.prototype.init = function(application) {
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
  */
-Interface.prototype.addLightsGroup = function(lights) {
+Interface.prototype.addLightsGroup = function (lights) {
 
   var group = this.gui.addFolder("Lights");
   group.open();
@@ -50,32 +50,7 @@ Interface.prototype.addLightsGroup = function(lights) {
   }
 }
 
-
-/**
- * Adds a folder containing the selection parameters such as color and the selectables themselves.
- */
-Interface.prototype.addSelectables = function(scene, graph, nodes) {
-  var sel_group = this.gui.addFolder("Selectables");
-  sel_group.open();
-
-  this.gui.add(graph, 'selected_node', graph.nodes_selectable).name('Selectables');
-
-
-  this.params = {
-    color: "#ff0000"
-  };
-
-  var sel_color = this.params;
-
-  this.color = function() {
-    scene.updateColor(sel_color.color);
-  }
-  sel_group.addColor(sel_color, 'color').onChange(this.color);
-
-  scene.updateColor(sel_color.color);
-}
-
-Interface.prototype.addServerComs = function(server_coms) {
+Interface.prototype.addServerComs = function (server_coms) {
 
   var server_folder = this.gui.addFolder("Server");
   server_folder.open();
@@ -83,7 +58,7 @@ Interface.prototype.addServerComs = function(server_coms) {
   server = server_coms;
 
   var obj = {
-    ping: function() {
+    ping: function () {
       console.log("Pinging PL Server");
       server.plRequest('handshake');
     }

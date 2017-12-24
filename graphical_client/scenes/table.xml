@@ -120,6 +120,14 @@
 		<ambient r="0.6" g="0.6" b="0.6" a="1" />
 		<emission r="0.0" g="0.0" b="0.0" a="1" />
 	</MATERIAL>
+
+	<MATERIAL id="transparent_mat">
+		<shininess value="0.1" />
+		<specular r="0" g="0" b="0" a="0" />
+		<diffuse r="0" g="0" b="0" a="0" />
+		<ambient r="0" g="0" b="0" a="0" />
+		<emission r="0" g="0" b="0" a="0" />
+	</MATERIAL>
 </MATERIALS>
 
 <ANIMATIONS>
@@ -311,7 +319,7 @@
 
 
 
-		<NODE id="seats">
+		<NODE id="seats" selectable="true">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -425,7 +433,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat" selectable="true">
+		<NODE id="seat">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -531,7 +539,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special" selectable="true">
+		<NODE id="special">
 			<MATERIAL id="plastic_mat" />
 			<TEXTURE  id="null" />
 

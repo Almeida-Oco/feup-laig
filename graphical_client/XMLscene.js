@@ -5,28 +5,6 @@ class XMLscene extends CGFscene {
    */
   constructor(Interface) {
     super();
-
-    this.hexToRgb = function (hex) {
-      var bigint = parseInt(hex, 16);
-      var r = (bigint >> 16) & 255;
-      var g = (bigint >> 8) & 255;
-      var b = bigint & 255;
-
-      return [r / 255.0, g / 255.0, b / 255.0];
-    }
-    this.hexToRgbA = function (hex) {
-      var c;
-      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length == 3) {
-          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
-        return [((c >> 16) & 255) / 255.0, ((c >> 8) & 255) / 255.0, (c & 255) / 255.0];
-      }
-      throw new Error('Bad Hex');
-    }
-
     this.interface = Interface;
 
     this.lightValues = {};
@@ -51,6 +29,8 @@ class XMLscene extends CGFscene {
     this.selectable = false;
 
     this.axis = new CGFaxis(this);
+
+    this.transparent_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/transparent.frag");
   }
 
   /**
@@ -108,18 +88,35 @@ class XMLscene extends CGFscene {
 
     this.initLights();
 
-    this.setupShaders();
-
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
     this.interface.addServerComs(this.server_coms);
 
   }
 
+  logPicking() {
+    if (this.pickMode == false) {
+      if (this.pickResults != null && this.pickResults.length > 0) {
+        for (var i = 0; i < this.pickResults.length; i++) {
+          var obj = this.pickResults[i][0];
+          if (obj) {
+            let customId = this.pickResults[i][1],
+              table = Math.floor(customId / 10),
+              seat = customId % 9;
+
+            console.log("Picked table " + table + ", seat = " + seat);
+          }
+        }
+        this.pickResults.splice(0, this.pickResults.length);
+      }
+    }
+  }
+
   /**
    * Displays the scene.
    */
   display() {
+    this.logPicking();
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -160,71 +157,19 @@ class XMLscene extends CGFscene {
 
       // Displays the scene.
       let root = this.graph.nodes[this.graph.root_id];
+      this.graph.id = 0;
       this.graph.displayScene(this.graph.root_id, root.materialID, root.textureID, false);
-
+      this.setActiveShader(this.transparent_shader);
+      this.graph.displayPickables(this.graph.root_id, false);
+      this.registerForPick(this.graph.id, null);
+      this.setActiveShader(this.defaultShader);
     }
     else {
       // Draw axis
       this.axis.display();
     }
 
-
-    this.updateScaleFactor(performance.now());
-
     this.popMatrix();
   }
 
-  /**
-   * Defines the selection shader and sets it to its initial color of red.
-   */
-  setupShaders() {
-    this.sel_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/sel.frag");
-
-    // texture will have to be bound to unit 1 later, when using the shader, with "this.texture2.bind(1);"
-    //this.testShaders[4].setUniformsValues({uSampler2: 1});
-    this.sel_shader.setUniformsValues({
-      uSampler2: 1
-    });
-
-    //this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
-
-    this.updateScaleFactor(1);
-    this.updateColor('#ff0000');
-  }
-
-  /**
-   * Sets the uniform value normscale for the effect of growing and glowing
-   * @param scale_fac a rising value such as time
-   */
-  updateScaleFactor(scale_fac) {
-    if (this.sel_shader == undefined) {
-      return;
-    }
-
-    if (scale_fac != undefined) {
-      this.sel_shader.setUniformsValues({
-        normScale: Math.sin(scale_fac * 0.007)
-      });
-    }
-    else {
-      this.sel_shader.setUniformsValues({
-        normScale: 1
-      });
-    }
-  }
-
-  /**
-   * Changes the color that the shader will use trough uniforms
-   * @param color the color in hex string
-   */
-  updateColor(color) {
-    let color_rgb = this.hexToRgbA(color);
-    if (this.sel_shader != undefined) {
-      this.sel_shader.setUniformsValues({
-        red: color_rgb[0],
-        green: color_rgb[1],
-        blue: color_rgb[2]
-      });
-    }
-  }
 };

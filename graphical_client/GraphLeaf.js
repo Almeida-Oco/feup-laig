@@ -27,13 +27,14 @@ class GraphLeaf {
    * @param scene The scene to render the leaf in
    */
   constructor(type, args, scene) {
+    this.scene = scene;
     this.type = type;
+    this.args = args;
     this.primitive = prim_selector[type](scene, args);
-    this.id = "";
   }
 
   getPrimitive() {
-    return this.primitive;
+    return prim_selector[this.type](this.scene, this.args);
   }
 
   /**
@@ -45,11 +46,6 @@ class GraphLeaf {
    */
   render(material, texture, scene, selectable) {
     material.apply();
-
-    if (selectable) {
-      scene.setActiveShader(scene.sel_shader);
-    }
-
     if (texture != null) {
       texture[0].bind();
       material.setTextureWrap('REPEAT', 'REPEAT');
@@ -57,11 +53,6 @@ class GraphLeaf {
     }
     else {
       this.primitive.render(1, 1);
-      this.primitive.display();
-    }
-
-    if (selectable) {
-      scene.setActiveShader(scene.defaultShader);
     }
   }
 };

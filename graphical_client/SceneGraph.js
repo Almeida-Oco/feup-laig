@@ -37,6 +37,8 @@ class SceneGraph {
     // File reading
     this.reader = new CGFXMLreader();
 
+
+    this.id = 0;
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -1639,8 +1641,6 @@ class SceneGraph {
         this.onXMLMinorError("unknown tag name <" + nodeName);
     }
 
-
-    this.interface.addSelectables(this.scene, this, this.nodes_selectable);
     console.log("Parsed nodes");
     return null;
   }
@@ -1708,8 +1708,8 @@ class SceneGraph {
     var node = this.nodes[node_id],
       mat = material_id,
       text = texture_id,
-      real_sel = ((node_id === this.selected_node) || sel);
-
+      real_sel = node.selectable || sel;
+    // console.log("Node = " + node_id);
     this.scene.pushMatrix();
 
     if (node.transformMatrix != null)
@@ -1725,14 +1725,31 @@ class SceneGraph {
 
     for (var i = 0; i < node.children.length; i++)
       this.displayScene(node.children[i], mat, text, real_sel);
-    for (var i = 0; i < node.leaves.length; i++)
-      if (text == "clear")
-        node.leaves[i].render(this.materials[mat], null, this.scene, real_sel);
-      else
-        node.leaves[i].render(this.materials[mat], this.textures[text], this.scene, real_sel);
+    for (var i = 0; i < node.leaves.length; i++) {
+      node.leaves[i].render(this.materials[mat], (text == "clear" ? null : this.textures[text]), this.scene);
+    }
 
     this.scene.popMatrix();
   }
 
+  displayPickables(node_id, sel) {
+    var node = this.nodes[node_id],
+      real_sel = node.selectable || sel;
 
+    this.scene.pushMatrix();
+
+    if (node.transformMatrix != null)
+      this.scene.multMatrix(node.transformMatrix);
+    this.scene.multMatrix(node.applyAnimations());
+
+    for (var i = 0; i < node.children.length; i++)
+      this.displayPickables(node.children[i], real_sel);
+    for (var i = 0; real_sel && i < node.leaves.length; i++) {
+      let obj = node.leaves[i].getPrimitive();
+      this.scene.registerForPick(this.id++, obj);
+      obj.render(null, null);
+    }
+
+    this.scene.popMatrix();
+  }
 };
