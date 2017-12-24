@@ -136,7 +136,7 @@
     <ROOT id="root" />
 
     <!-- The root node -->
-    <NODE id="root" selectable="true">
+    <NODE id="root">
         <MATERIAL id="null" />
         <TEXTURE 	id="null" />
 
@@ -146,7 +146,7 @@
 				</DESCENDANTS>
     </NODE>
 
-		<NODE id="board" selectable="false">
+		<NODE id="board">
 			<MATERIAL id="wood_mat" />
 			<TEXTURE  id="light_wood_text" />
 
@@ -176,7 +176,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="tables" selectable="false">
+		<NODE id="tables">
 			<MATERIAL id="wood_mat" />
 			<TEXTURE id="dark_wood_text" />
 
@@ -195,7 +195,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="table0" selectable="true">
+		<NODE id="table0">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -205,7 +205,7 @@
 
 		</NODE>
 
-		<NODE id="table1" selectable="true">
+		<NODE id="table1">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -218,7 +218,7 @@
 
 		</NODE>
 
-		<NODE id="table2" selectable="true">
+		<NODE id="table2">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -231,7 +231,7 @@
 
 		</NODE>
 
-		<NODE id="table3" selectable="true">
+		<NODE id="table3">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -244,7 +244,7 @@
 
 		</NODE>
 
-		<NODE id="table4" selectable="true">
+		<NODE id="table4">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -257,7 +257,7 @@
 
 		</NODE>
 
-		<NODE id="table5" selectable="true">
+		<NODE id="table5">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -270,7 +270,7 @@
 
 		</NODE>
 
-		<NODE id="table6" selectable="true">
+		<NODE id="table6">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -283,7 +283,7 @@
 
 		</NODE>
 
-		<NODE id="table7" selectable="true">
+		<NODE id="table7">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -296,7 +296,7 @@
 
 		</NODE>
 
-		<NODE id="table8" selectable="true">
+		<NODE id="table8">
 			<MATERIAL id="null" />
 			<TEXTURE id="null"  />
 
@@ -311,7 +311,7 @@
 
 
 
-		<NODE id="seats" selectable="true">
+		<NODE id="seats">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -328,7 +328,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat0" selectable="true">
+		<NODE id="seat0">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -337,7 +337,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat1" selectable="true">
+		<NODE id="seat1">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -348,7 +348,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat2" selectable="true">
+		<NODE id="seat2">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -359,7 +359,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat3" selectable="true">
+		<NODE id="seat3">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -370,7 +370,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat4" selectable="true">
+		<NODE id="seat4">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -381,7 +381,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat5" selectable="true">
+		<NODE id="seat5">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -392,7 +392,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat6" selectable="true">
+		<NODE id="seat6">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -403,7 +403,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat7" selectable="true">
+		<NODE id="seat7">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -414,7 +414,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat8" selectable="true">
+		<NODE id="seat8">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -425,7 +425,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat" selectable="true" >
+		<NODE id="seat" selectable="true">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -436,7 +436,7 @@
 
 
 
-		<NODE id="special1" selectable="false">
+		<NODE id="special1">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_mv_unc_black" />
 
@@ -448,7 +448,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special2" selectable="false">
+		<NODE id="special2">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_rotate" />
 
@@ -460,7 +460,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special3" selectable="false">
+		<NODE id="special3">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_mv_wait_black" />
 
@@ -471,7 +471,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special4" selectable="false">
+		<NODE id="special4">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_mv_unc_green" />
 
@@ -483,7 +483,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special5" selectable="false">
+		<NODE id="special5">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_rotate" />
 
@@ -495,7 +495,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special6" selectable="false">
+		<NODE id="special6">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_swp_unc" />
 
@@ -507,7 +507,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special7" selectable="false">
+		<NODE id="special7">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_mv_wait_green" />
 
@@ -519,7 +519,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special8" selectable="false">
+		<NODE id="special8">
 			<MATERIAL id="null" />
 			<TEXTURE  id="spec_swp_claimed" />
 
@@ -531,7 +531,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special" selectable="false">
+		<NODE id="special" selectable="true">
 			<MATERIAL id="plastic_mat" />
 			<TEXTURE  id="null" />
 

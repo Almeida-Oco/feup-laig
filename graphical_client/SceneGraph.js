@@ -189,23 +189,28 @@ class SceneGraph {
     var indexFrustum = nodeNames.indexOf("frustum");
     if (indexFrustum == -1) {
       this.onXMLMinorError("frustum planes missing; assuming 'near = 0.1' and 'far = 500'");
-    } else {
+    }
+    else {
       this.near = this.reader.getFloat(children[indexFrustum], 'near');
       this.far = this.reader.getFloat(children[indexFrustum], 'far');
 
       if (this.near == null) {
         this.near = 0.1;
         this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
-      } else if (this.far == null) {
+      }
+      else if (this.far == null) {
         this.far = 500;
         this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 500'");
-      } else if (isNaN(this.near)) {
+      }
+      else if (isNaN(this.near)) {
         this.near = 0.1;
         this.onXMLMinorError("non-numeric value found for near plane; assuming 'near = 0.1'");
-      } else if (isNaN(this.far)) {
+      }
+      else if (isNaN(this.far)) {
         this.far = 500;
         this.onXMLMinorError("non-numeric value found for far plane; assuming 'far = 500'");
-      } else if (this.near <= 0) {
+      }
+      else if (this.near <= 0) {
         this.near = 0.1;
         this.onXMLMinorError("'near' must be positive; assuming 'near = 0.1'");
       }
@@ -250,7 +255,8 @@ class SceneGraph {
       if (tx == null) {
         tx = 0;
         this.onXMLMinorError("failed to parse x-coordinate of initial translation; assuming tx = 0");
-      } else if (isNaN(tx)) {
+      }
+      else if (isNaN(tx)) {
         tx = 0;
         this.onXMLMinorError("found non-numeric value for x-coordinate of initial translation; assuming tx = 0");
       }
@@ -258,7 +264,8 @@ class SceneGraph {
       if (ty == null) {
         ty = 0;
         this.onXMLMinorError("failed to parse y-coordinate of initial translation; assuming ty = 0");
-      } else if (isNaN(ty)) {
+      }
+      else if (isNaN(ty)) {
         ty = 0;
         this.onXMLMinorError("found non-numeric value for y-coordinate of initial translation; assuming ty = 0");
       }
@@ -266,7 +273,8 @@ class SceneGraph {
       if (tz == null) {
         tz = 0;
         this.onXMLMinorError("failed to parse z-coordinate of initial translation; assuming tz = 0");
-      } else if (isNaN(tz)) {
+      }
+      else if (isNaN(tz)) {
         tz = 0;
         this.onXMLMinorError("found non-numeric value for z-coordinate of initial translation; assuming tz = 0");
       }
@@ -301,7 +309,8 @@ class SceneGraph {
           if (!rotationDefined[axis])
             rotationOrder.push(axis);
           rotationDefined[axis] = true;
-        } else this.onXMLMinorError("failed to parse third initial rotation 'angle'");
+        }
+        else this.onXMLMinorError("failed to parse third initial rotation 'angle'");
       }
     }
 
@@ -315,7 +324,8 @@ class SceneGraph {
           if (!rotationDefined[axis])
             rotationOrder.push(axis);
           rotationDefined[axis] = true;
-        } else this.onXMLMinorError("failed to parse second initial rotation 'angle'");
+        }
+        else this.onXMLMinorError("failed to parse second initial rotation 'angle'");
       }
     }
 
@@ -329,7 +339,8 @@ class SceneGraph {
           if (!rotationDefined[axis])
             rotationOrder.push(axis);
           rotationDefined[axis] = true;
-        } else this.onXMLMinorError("failed to parse first initial rotation 'angle'");
+        }
+        else this.onXMLMinorError("failed to parse first initial rotation 'angle'");
       }
     }
 
@@ -356,7 +367,8 @@ class SceneGraph {
       if (sx == null) {
         sx = 1;
         this.onXMLMinorError("failed to parse x parameter of initial scaling; assuming sx = 1");
-      } else if (isNaN(sx)) {
+      }
+      else if (isNaN(sx)) {
         sx = 1;
         this.onXMLMinorError("found non-numeric value for x parameter of initial scaling; assuming sx = 1");
       }
@@ -364,7 +376,8 @@ class SceneGraph {
       if (sy == null) {
         sy = 1;
         this.onXMLMinorError("failed to parse y parameter of initial scaling; assuming sy = 1");
-      } else if (isNaN(sy)) {
+      }
+      else if (isNaN(sy)) {
         sy = 1;
         this.onXMLMinorError("found non-numeric value for y parameter of initial scaling; assuming sy = 1");
       }
@@ -372,7 +385,8 @@ class SceneGraph {
       if (sz == null) {
         sz = 1;
         this.onXMLMinorError("failed to parse z parameter of initial scaling; assuming sz = 1");
-      } else if (isNaN(sz)) {
+      }
+      else if (isNaN(sz)) {
         sz = 1;
         this.onXMLMinorError("found non-numeric value for z parameter of initial scaling; assuming sz = 1");
       }
@@ -401,7 +415,8 @@ class SceneGraph {
           this.onXMLMinorError("reference length must be a positive value; assuming 'length = 1'");
         else
           this.referenceLength = length;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse reference length; assuming 'length = 1'");
 
     }
@@ -436,7 +451,8 @@ class SceneGraph {
           return "ambient 'r' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.ambientIllumination[0] = r;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse R component of the ambient illumination; assuming R = 0");
 
       // G.
@@ -448,7 +464,8 @@ class SceneGraph {
           return "ambient 'g' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.ambientIllumination[1] = g;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse G component of the ambient illumination; assuming G = 0");
 
       // B.
@@ -460,7 +477,8 @@ class SceneGraph {
           return "ambient 'b' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.ambientIllumination[2] = b;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse B component of the ambient illumination; assuming B = 0");
 
       // A.
@@ -472,9 +490,11 @@ class SceneGraph {
           return "ambient 'a' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.ambientIllumination[3] = a;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse A component of the ambient illumination; assuming A = 1");
-    } else
+    }
+    else
       this.onXMLMinorError("global ambient illumination undefined; assuming Ia = (0, 0, 0, 1)");
 
     // Retrieves the background clear color.
@@ -490,7 +510,8 @@ class SceneGraph {
           return "background 'r' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.background[0] = r;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse R component of the background colour; assuming R = 0");
 
       // G.
@@ -502,7 +523,8 @@ class SceneGraph {
           return "background 'g' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.background[1] = g;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse G component of the background colour; assuming G = 0");
 
       // B.
@@ -514,7 +536,8 @@ class SceneGraph {
           return "background 'b' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.background[2] = b;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse B component of the background colour; assuming B = 0");
 
       // A.
@@ -526,9 +549,11 @@ class SceneGraph {
           return "background 'a' must be a value between 0 and 1 on the ILLUMINATION block"
         else
           this.background[3] = a;
-      } else
+      }
+      else
         this.onXMLMinorError("unable to parse A component of the background colour; assuming A = 1");
-    } else
+    }
+    else
       this.onXMLMinorError("background clear colour undefined; assuming (R, G, B, A) = (0, 0, 0, 1)");
 
     console.log("Parsed illumination");
@@ -587,11 +612,13 @@ class SceneGraph {
       var enableLight = true;
       if (enableIndex == -1) {
         this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
-      } else {
+      }
+      else {
         var aux = this.reader.getFloat(grandChildren[enableIndex], 'value');
         if (aux == null) {
           this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
-        } else if (isNaN(aux))
+        }
+        else if (isNaN(aux))
           return "'enable value' is a non numeric value on the LIGHTS block";
         else if (aux != 0 && aux != 1)
           return "'enable value' must be 0 or 1 on the LIGHTS block"
@@ -609,7 +636,8 @@ class SceneGraph {
             return "'x' is a non numeric value on the LIGHTS block";
           else
             positionLight.push(x);
-        } else
+        }
+        else
           return "unable to parse x-coordinate of the light position for ID = " + lightId;
 
         // y
@@ -619,7 +647,8 @@ class SceneGraph {
             return "'y' is a non numeric value on the LIGHTS block";
           else
             positionLight.push(y);
-        } else
+        }
+        else
           return "unable to parse y-coordinate of the light position for ID = " + lightId;
 
         // z
@@ -629,7 +658,8 @@ class SceneGraph {
             return "'z' is a non numeric value on the LIGHTS block";
           else
             positionLight.push(z);
-        } else
+        }
+        else
           return "unable to parse z-coordinate of the light position for ID = " + lightId;
 
         // w
@@ -641,9 +671,11 @@ class SceneGraph {
             return "'w' must be a value between 0 and 1 on the LIGHTS block"
           else
             positionLight.push(w);
-        } else
+        }
+        else
           return "unable to parse w-coordinate of the light position for ID = " + lightId;
-      } else
+      }
+      else
         return "light position undefined for ID = " + lightId;
 
       // Retrieves the ambient component.
@@ -658,7 +690,8 @@ class SceneGraph {
             return "ambient 'r' must be a value between 0 and 1 on the LIGHTS block"
           else
             ambientIllumination.push(r);
-        } else
+        }
+        else
           return "unable to parse R component of the ambient illumination for ID = " + lightId;
 
         // G
@@ -670,7 +703,8 @@ class SceneGraph {
             return "ambient 'g' must be a value between 0 and 1 on the LIGHTS block"
           else
             ambientIllumination.push(g);
-        } else
+        }
+        else
           return "unable to parse G component of the ambient illumination for ID = " + lightId;
 
         // B
@@ -682,7 +716,8 @@ class SceneGraph {
             return "ambient 'b' must be a value between 0 and 1 on the LIGHTS block"
           else
             ambientIllumination.push(b);
-        } else
+        }
+        else
           return "unable to parse B component of the ambient illumination for ID = " + lightId;
 
         // A
@@ -693,9 +728,11 @@ class SceneGraph {
           else if (a < 0 || a > 1)
             return "ambient 'a' must be a value between 0 and 1 on the LIGHTS block"
           ambientIllumination.push(a);
-        } else
+        }
+        else
           return "unable to parse A component of the ambient illumination for ID = " + lightId;
-      } else
+      }
+      else
         return "ambient component undefined for ID = " + lightId;
 
       // Retrieves the diffuse component
@@ -710,7 +747,8 @@ class SceneGraph {
             return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block"
           else
             diffuseIllumination.push(r);
-        } else
+        }
+        else
           return "unable to parse R component of the diffuse illumination for ID = " + lightId;
 
         // G
@@ -722,7 +760,8 @@ class SceneGraph {
             return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block"
           else
             diffuseIllumination.push(g);
-        } else
+        }
+        else
           return "unable to parse G component of the diffuse illumination for ID = " + lightId;
 
         // B
@@ -734,7 +773,8 @@ class SceneGraph {
             return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block"
           else
             diffuseIllumination.push(b);
-        } else
+        }
+        else
           return "unable to parse B component of the diffuse illumination for ID = " + lightId;
 
         // A
@@ -746,9 +786,11 @@ class SceneGraph {
             return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block"
           else
             diffuseIllumination.push(a);
-        } else
+        }
+        else
           return "unable to parse A component of the diffuse illumination for ID = " + lightId;
-      } else
+      }
+      else
         return "diffuse component undefined for ID = " + lightId;
 
       // Retrieves the specular component
@@ -763,7 +805,8 @@ class SceneGraph {
             return "specular 'r' must be a value between 0 and 1 on the LIGHTS block"
           else
             specularIllumination.push(r);
-        } else
+        }
+        else
           return "unable to parse R component of the specular illumination for ID = " + lightId;
 
         // G
@@ -775,7 +818,8 @@ class SceneGraph {
             return "specular 'g' must be a value between 0 and 1 on the LIGHTS block"
           else
             specularIllumination.push(g);
-        } else
+        }
+        else
           return "unable to parse G component of the specular illumination for ID = " + lightId;
 
         // B
@@ -787,7 +831,8 @@ class SceneGraph {
             return "specular 'b' must be a value between 0 and 1 on the LIGHTS block"
           else
             specularIllumination.push(b);
-        } else
+        }
+        else
           return "unable to parse B component of the specular illumination for ID = " + lightId;
 
         // A
@@ -799,9 +844,11 @@ class SceneGraph {
             return "specular 'a' must be a value between 0 and 1 on the LIGHTS block"
           else
             specularIllumination.push(a);
-        } else
+        }
+        else
           return "unable to parse A component of the specular illumination for ID = " + lightId;
-      } else
+      }
+      else
         return "specular component undefined for ID = " + lightId;
 
       // Light global information.
@@ -857,7 +904,8 @@ class SceneGraph {
             filepath = this.reader.getString(texSpecs[j], 'path');
             if (filepath == null)
               return "unable to parse texture file path for ID = " + textureID;
-          } else if (name == "amplif_factor") {
+          }
+          else if (name == "amplif_factor") {
             if (amplifFactorS != null || amplifFactorT != null)
               return "duplicate amplification factors in texture with ID = " + textureID;
 
@@ -872,7 +920,8 @@ class SceneGraph {
               return "'amplifFactorT' is a non numeric value";
             else if (amplifFactorS <= 0 || amplifFactorT <= 0)
               return "value for amplifFactor must be positive";
-          } else
+          }
+          else
             this.onXMLMinorError("unknown tag name <" + name + ">");
         }
 
@@ -887,7 +936,8 @@ class SceneGraph {
 
         this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
         oneTextureDefined = true;
-      } else
+      }
+      else
         this.onXMLMinorError("unknown tag name <" + nodeName + ">");
     }
 
@@ -1377,7 +1427,8 @@ class SceneGraph {
 
           this.root_id = root;
         }
-      } else if (nodeName == "NODE") {
+      }
+      else if (nodeName == "NODE") {
         let nodeID = this.reader.getString(children[i], 'id'),
           node_select = null;
 
@@ -1457,7 +1508,8 @@ class SceneGraph {
               continue;
             }
             mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
-          } else if ("ROTATION" == name) {
+          }
+          else if ("ROTATION" == name) {
             let axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']),
               angle = this.reader.getFloat(nodeSpecs[j], 'angle');
 
@@ -1471,7 +1523,8 @@ class SceneGraph {
             }
 
             mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-          } else if ("SCALE" == name) {
+          }
+          else if ("SCALE" == name) {
             let sx = this.reader.getFloat(nodeSpecs[j], 'sx'),
               sy = this.reader.getFloat(nodeSpecs[j], 'sy'),
               sz = this.reader.getFloat(nodeSpecs[j], 'sz');
@@ -1490,7 +1543,8 @@ class SceneGraph {
             }
 
             mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
-          } else if ("ANIMATIONREFS" == name) {
+          }
+          else if ("ANIMATIONREFS" == name) {
             let animation_childs = nodeSpecs[j].children;
             for (let k = 0; k < animation_childs.length; k++) {
               let animation_id = this.reader.getString(animation_childs[k], 'id');
@@ -1529,7 +1583,8 @@ class SceneGraph {
               this.nodes[nodeID].addChild(curId);
               sizeChildren++;
             }
-          } else
+          }
+          else
           if (descendants[j].nodeName == "LEAF") {
             var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch', 'circle']);
             if (type != null)
@@ -1564,20 +1619,23 @@ class SceneGraph {
               }
 
               args.push(control_points);
-            } else {
+            }
+            else {
               args = this.reader.getString(descendants[j], 'args').split(' ');
             }
 
             this.nodes[nodeID].addLeaf(new GraphLeaf(type, args, this.scene));
 
             sizeChildren++;
-          } else
+          }
+          else
             this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
         }
         if (sizeChildren == 0)
           return "at least one descendant must be defined for each intermediate node";
-      } else
+      }
+      else
         this.onXMLMinorError("unknown tag name <" + nodeName);
     }
 
@@ -1646,38 +1704,7 @@ class SceneGraph {
   /**
    * @description Used to start rendering the scene, handles only the root node
    */
-  displayScene() {
-    let child = this.nodes[this.root_id].children,
-      leav = this.nodes[this.root_id].leaves,
-      node = this.nodes[this.root_id],
-      text_id = this.nodes[this.root_id].textureID,
-      mat_id = this.nodes[this.root_id].materialID,
-      real_sel = (this.selected_node == this.root_id);
-
-    this.scene.pushMatrix();
-    node.transformMatrix = node.applyAnimations(node.transformMatrix);
-
-    if (node.transformMatrix != null)
-      this.scene.multMatrix(node.transformMatrix);
-
-    this.scene.multMatrix(node.applyAnimations());
-
-    for (var i = 0; i < leav.length; i++)
-      leav[i].render(this.materials[mat_id], this.textures[text_id], this.scene, real_sel);
-
-    for (var i = 0; i < child.length; i++)
-      this.displayNodes(child[i], mat_id, text_id, real_sel);
-
-    this.scene.popMatrix();
-  }
-
-  /**
-   * @description Handles the inheritance of nodes
-   * @param node_id ID of the father node
-   * @param material_id ID of the material inherited
-   * @param texture_id ID of the texture inherited
-   */
-  displayNodes(node_id, material_id, texture_id, sel) {
+  displayScene(node_id, material_id, texture_id, sel) {
     var node = this.nodes[node_id],
       mat = material_id,
       text = texture_id,
@@ -1697,7 +1724,7 @@ class SceneGraph {
       text = node.textureID;
 
     for (var i = 0; i < node.children.length; i++)
-      this.displayNodes(node.children[i], mat, text, real_sel);
+      this.displayScene(node.children[i], mat, text, real_sel);
     for (var i = 0; i < node.leaves.length; i++)
       if (text == "clear")
         node.leaves[i].render(this.materials[mat], null, this.scene, real_sel);
@@ -1706,4 +1733,6 @@ class SceneGraph {
 
     this.scene.popMatrix();
   }
+
+
 };

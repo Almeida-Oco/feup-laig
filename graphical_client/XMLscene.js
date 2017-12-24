@@ -6,7 +6,7 @@ class XMLscene extends CGFscene {
   constructor(Interface) {
     super();
 
-    this.hexToRgb = function(hex) {
+    this.hexToRgb = function (hex) {
       var bigint = parseInt(hex, 16);
       var r = (bigint >> 16) & 255;
       var g = (bigint >> 8) & 255;
@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
 
       return [r / 255.0, g / 255.0, b / 255.0];
     }
-    this.hexToRgbA = function(hex) {
+    this.hexToRgbA = function (hex) {
       var c;
       if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
         c = hex.substring(1).split('');
@@ -148,7 +148,8 @@ class XMLscene extends CGFscene {
           if (this.lightValues[key]) {
             this.lights[i].setVisible(true);
             this.lights[i].enable();
-          } else {
+          }
+          else {
             this.lights[i].setVisible(false);
             this.lights[i].disable();
           }
@@ -158,9 +159,11 @@ class XMLscene extends CGFscene {
       }
 
       // Displays the scene.
-      this.graph.displayScene();
+      let root = this.graph.nodes[this.graph.root_id];
+      this.graph.displayScene(this.graph.root_id, root.materialID, root.textureID, false);
 
-    } else {
+    }
+    else {
       // Draw axis
       this.axis.display();
     }
@@ -202,7 +205,8 @@ class XMLscene extends CGFscene {
       this.sel_shader.setUniformsValues({
         normScale: Math.sin(scale_fac * 0.007)
       });
-    } else {
+    }
+    else {
       this.sel_shader.setUniformsValues({
         normScale: 1
       });
@@ -224,14 +228,3 @@ class XMLscene extends CGFscene {
     }
   }
 };
-
-// /**
-//  * Triggers the selection effect for the nodes
-//  */
-// XMLscene.prototype.selectGlow = function() {
-//   if (this.selectable) {
-//     this.selectable = false;
-//   } else {
-//     this.selectable = true;
-//   }
-// }
