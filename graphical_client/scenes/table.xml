@@ -22,7 +22,7 @@
 <!-- Lights -->
 <LIGHTS>
 	<LIGHT id="light0">
-        <enable value ="1" />
+        <enable value="true" />
         <position  x="0" y="10" z="0" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -30,7 +30,7 @@
     </LIGHT>
 
 	<LIGHT id="light1">
-        <enable value ="1" />
+        <enable value="true" />
         <position x="30" y="10" z="0" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -38,7 +38,7 @@
     </LIGHT>
 
 	<LIGHT id="light2">
-        <enable value ="1" />
+        <enable value="true" />
         <position x="0" y="10" z="20" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -46,7 +46,7 @@
     </LIGHT>
 
     <LIGHT id="light3">
-        <enable value ="1" />
+        <enable value="true" />
         <position x="30" y="10" z="20" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
@@ -132,9 +132,9 @@
 
 <ANIMATIONS>
 	<ANIMATION id="linear1" speed="10" type="linear">
-		<controlpoint xx="0" yy="0" zz="0" />
-		<controlpoint xx="5" yy="0" zz="5" />
-		<controlpoint xx="10" yy="0" zz="0" />
+		<controlpoint x="0" y="0" z="0" />
+		<controlpoint x="5" y="0" z="5" />
+		<controlpoint x="10" y="0" z="0" />
 	</ANIMATION>
 </ANIMATIONS>
 

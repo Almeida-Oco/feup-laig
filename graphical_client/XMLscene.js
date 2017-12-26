@@ -9,6 +9,7 @@ class XMLscene extends CGFscene {
 
     this.lightValues = {};
     this.server_coms = new ServerComs(8081, 'localhost');
+    this.game = new Oolong();
   }
 
   /**
@@ -100,11 +101,11 @@ class XMLscene extends CGFscene {
         for (var i = 0; i < this.pickResults.length; i++) {
           var obj = this.pickResults[i][0];
           if (obj) {
-            let customId = this.pickResults[i][1],
-              table = Math.floor(customId / 10),
-              seat = customId % 9;
+            let pick_result = this.pickResults[i][1],
+              table = Math.floor(pick_result / 10),
+              seat = pick_result % 9;
 
-            console.log("Picked table " + table + ", seat = " + seat);
+            this.game.play(table, seat);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -156,9 +157,11 @@ class XMLscene extends CGFscene {
       }
 
       // Displays the scene.
-      let root = this.graph.nodes[this.graph.root_id];
+      let root = this.graph.dynamics[this.graph.root_id];
       this.graph.id = 0;
+
       this.graph.displayScene(this.graph.root_id, root.materialID, root.textureID, false);
+
       this.setActiveShader(this.transparent_shader);
       this.graph.displayPickables(this.graph.root_id, false);
       this.registerForPick(this.graph.id, null);
@@ -172,4 +175,7 @@ class XMLscene extends CGFscene {
     this.popMatrix();
   }
 
+  setMaterial(table, seat) {
+
+  }
 };

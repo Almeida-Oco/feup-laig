@@ -41,3 +41,7 @@ aiTurn(TeaToken, CurrTableNumber, Board, NewBoard, NewTableNumber) :-
 	serveTea(Board, NewTableNumber1, SeatNumber, TeaToken, NewBoard1),
 	checkSpecials(NewBoard1, NewTableNumber1, SeatNumber,  TeaToken, NewBoard, NewTableNumber, 1),
 	drawBoard(NewBoard).
+
+aiNextPlay(Board, CurrTableNumber, Result) :-
+	aiPlay(CurrTableNumber, NewTableNumber, SeatNumber, Board),
+	Result = [SeatNumber, NewTableNumber].

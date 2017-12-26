@@ -1,40 +1,71 @@
-class ServerComs {
+let isPrimitive = function (data) {
+  return (data !== Object(data));
+}
 
+class ServerComs {
   constructor(port, url) {
     if (port == undefined) {
       this.port = 8081;
       console.log("Undefined port, defaulting to 8081");
-    } else {
+    }
+    else {
       this.port = port;
     }
 
     if (url == undefined) {
       this.url = 'localhost';
       console.log("Undefined url, defaulting to localhost");
-    } else {
+    }
+    else {
       this.url = url;
     }
 
   }
 
-  plRequest(request_str) {
-    console.log('Doing a Prolog Request with str: ' + request_str);
+  doRequest(request_str) {
+    let reply = null,
+      request = new XMLHttpRequest();
 
-    var request = new XMLHttpRequest();
+    request.onload = function (data) {
+      reply = data;
+    }
 
-    request.onload = function(data) {
-      console.log("Request successful from PL server . Reply: " + data.target.response);
-      //alert( data.target.response);
-    };
-
-    request.onerror = function() {
-      console.log('ERROR on PL request');
-    };
-
-    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str, true);
-
+    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
 
+    return reply;
+  }
+
+  validatePlay(Board, TableNumber, SeatNumber) {
+    let request_str = "validPlay(";
+    request_str += this.arrayToString(Board) + ",";
+    request_str += TableNumber + ",";
+    request_str += SeatNumber + ")";
+
+    return this.doRequest(request_str);
+  }
+
+  nextAIPlay(Board, TableNumber) {
+    let request_str = "aiNextPlay(";
+    request_str += arrayToString(Board) + ",";
+    request_str += TableNumber + ")";
+
+    let reply = doRequest(request_str);
+  }
+
+  arrayToString(array) {
+    let result = "[";
+    for (let i = 0; i < array.length; i++) {
+      if (isPrimitive(array[i]))
+        result += array[i];
+      else
+        result += arrayToString(array[i]);
+
+      result += ",";
+    }
+    result.slice(0, result.length - 1);
+    result += "]";
+    return result;
   }
 }
