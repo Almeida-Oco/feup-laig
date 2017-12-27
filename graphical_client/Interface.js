@@ -31,65 +31,47 @@ Interface.prototype.init = function (application) {
   return true;
 };
 
-/**
- * Adds a folder containing the IDs of the lights passed as parameter.
- */
-Interface.prototype.addLightsGroup = function (lights) {
-
-  var group = this.gui.addFolder("Lights");
-  group.open();
-
-  // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
-  // e.g. this.option1=true; this.option2=false;
-
-  for (var key in lights) {
-    if (lights.hasOwnProperty(key)) {
-      this.scene.lightValues[key] = lights[key][0];
-      group.add(this.scene.lightValues, key);
-    }
-  }
-}
-
 Interface.prototype.addServerComs = function (server_coms) {
+  var server_folder = this.gui.addFolder("Server");
+  server_folder.open();
 
-  this.server_folder = this.gui.addFolder("Server");
-  this.server_folder.open();
+  server = server_coms;
 
   this.server = server_coms;
   var server = server_coms;
-/*
-  var obj = {
-    ping: function () {
-      console.log("Pinging PL Server");
-      server.plRequest('handshake');
-    }
+  /*
+    var obj = {
+      ping: function () {
+        console.log("Pinging PL Server");
+        server.plRequest('handshake');
+      }
 
 
-    startgame: function(){
-      console.log('Starting Game.');
-      server.plRequest('startgame');
-    }
+      startgame: function(){
+        console.log('Starting Game.');
+        server.plRequest('startgame');
+      }
 
-  };
-*/
+    };
+  */
   this.start_opts = {
 
-    humanVShuman : function() {
+    humanVShuman: function () {
       console.log('Starting Human Vs Human.');
       server.plStartRequest('startgame_4');
     },
 
-    easy : function() {
+    easy: function () {
       console.log('Starting Human Vs AI EASY.');
       server.plStartRequest('startgame_1');
     },
 
-    medium : function(){
+    medium: function () {
       console.log('Starting Human Vs AI MEDIUM.');
       server.plStartRequest('startgame_2');
     },
 
-    hard : function(){
+    hard: function () {
       console.log('Starting Human Vs AI HARD.');
       server.plStartRequest('startgame_3');
     }
@@ -106,12 +88,12 @@ Interface.prototype.addServerComs = function (server_coms) {
 
   this.game_opts = {
 
-    getstate : function(){
+    getstate: function () {
       console.log('Getting GameState');
       server.plGameStateRequest('gamestate');
     },
 
-    getturn : function(){
+    getturn: function () {
       console.log('Getting Whose Turn');
       server.plRequest('geturn');
     }
@@ -127,16 +109,17 @@ Interface.prototype.addServerComs = function (server_coms) {
 
   this.game_movs = {
 
-    testmove : function(){
+    testmove: function () {
       console.log('Doing A Move');
 
       /* Example Test Move Dont Forget to init Game*/
 
-      if( this.scene.gameState.board_string == undefined){
+      if (this.scene.gameState.board_string == undefined) {
         alert('Board is Undefined maybe start game first ');
-      } else{
+      }
+      else {
 
-      server.plSendMove('x', 0, 3,  this.scene.gameState.board_string);
+        server.plSendMove('x', 0, 3, this.scene.gameState.board_string);
       }
     }
 

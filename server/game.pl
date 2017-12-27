@@ -5,7 +5,13 @@
 :-include('waiter.pl').
 :-include('ai.pl').
 :-use_module(library(system)).
+:-use_module(library(lists)).
 
+
+validPlay(Board, TableNumber, SeatNumber) :-
+	nth0(TableNumber, Board, BoardTable),
+	nth0(SeatNumber, BoardTable, SeatToken),
+	SeatToken == '.'.
 
 normalPlay(TableNumber, SeatNumber, TeaToken, Board) :-
 	write('Player '), write(TeaToken), write(' turn: '),

@@ -1,102 +1,84 @@
 class XMLscene extends CGFscene {
-  /**
-   * XMLscene class, representing the scene that is to be rendered.
-   * @constructor
-   */
   constructor(Interface) {
     super();
-    this.interface = Interface;
+    CGFscene.call(this);
 
-    this.lightValues = {};
+    this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
+    this.game = new Oolong();
+    this.clear_color = [0.1, 0.1, 0.1, 0];
   }
 
-  /**
-   * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
-   */
   init(application) {
     CGFscene.prototype.init.call(this, application);
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 0, 40), vec3.fromValues(0, 0, 0));
 
-    this.initCameras();
+    this.lights[0].setPosition(1, 4, 1, 1);
+    this.lights[0].setAmbient(0.25, 0.25, 0.25, 1);
+    this.lights[0].setDiffuse(0.9, 0.9, 0.9, 1);
+    this.lights[0].setSpecular(0.9, 0.9, 0.9, 1);
+    this.lights[0].enable();
+    this.lights[0].update();
 
-    this.enableTextures(true);
-
-    this.gl.clearDepth(100.0);
+    this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-    this.selectable = false;
-
     this.axis = new CGFaxis(this);
-
+    this.enableTextures(true);
     this.transparent_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/transparent.frag");
   }
 
-  initGame(startString){
+  initGame(startString) {
     this.gameState = new GameState(this, startString);
     console.log('From XMLscene got a gameState');
   }
 
-  /**
-   * Initializes the scene lights with the values read from the LSX file.
-   */
-  initLights() {
-    var i = 0; // Lights index.
-
-    // Reads the lights from the scene graph.
-    for (var key in this.graph.lights) {
-      if (i >= 8)
-        break; // Only eight lights allowed by WebGL.
-
-      if (this.graph.lights.hasOwnProperty(key)) {
-        var light = this.graph.lights[key];
-
-        this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
-        this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
-        this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
-        this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
-
-        this.lights[i].setVisible(true);
-        if (light[0])
-          this.lights[i].enable();
-        else
-          this.lights[i].disable();
-
-        this.lights[i].update();
-
-        i++;
-      }
-    }
+  readSceneInitials() {
+    this.camera.near = this.graph.initials.get("frustum")["near"];
+    this.camera.far = this.graph.initials.get("frustum")["far"];
+    this.axis = new CGFaxis(this, this.graph.initials.get("reference"));
   }
 
-  /**
-   * Initializes the scene cameras.
-   */
-  initCameras() {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+  readSceneIllumination() {
+    this.setGlobalAmbientLight(this.graph.illumination.get("ambient")["r"],
+      this.graph.illumination.get("ambient")["g"],
+      this.graph.illumination.get("ambient")["b"],
+      this.graph.illumination.get("ambient")["a"]);
+
+    this.gl.clearColor(this.graph.illumination.get("background")["r"],
+      this.graph.illumination.get("background")["g"],
+      this.graph.illumination.get("background")["b"],
+      this.graph.illumination.get("background")["a"]);
   }
 
-  /*
-   * Handler called when the graph is finally loaded.
-   * As loading is asynchronous, this may be called already after the application has started the run loop
-   */
+  readSceneLights() {
+    this.lights = [];
+    let i = 0;
+    this.graph.lights.forEach(function (value, key, map) {
+      let light = new CGFlight(this, i);
+      light.setPosition(value.get("position")["x"], value.get("position")["y"], value.get("position")["z"], value.get("position")["w"]);
+      light.setAmbient(value.get("ambient")["r"], value.get("ambient")["g"], value.get("ambient")["b"], value.get("ambient")["a"]);
+      light.setDiffuse(value.get("diffuse")["r"], value.get("diffuse")["g"], value.get("diffuse")["b"], value.get("diffuse")["a"]);
+      light.setSpecular(value.get("specular")["r"], value.get("specular")["g"], value.get("specular")["b"], value.get("specular")["a"]);
+      light.setVisible(true);
+      light.enable(value.get("enable"));
+      this.lights[i++] = light;
+    }.bind(this));
+
+    for (i = 0; i < this.lights.length; i++)
+      this.lights[i].update();
+  }
+
   onGraphLoaded() {
-    this.camera.near = this.graph.near;
-    this.camera.far = this.graph.far;
-    this.axis = new CGFaxis(this, this.graph.referenceLength);
+    this.readSceneInitials();
+    this.readSceneIllumination();
+    this.readSceneLights();
+    console.log("Graph loaded successfully\n");
 
-    this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
-      this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
 
-    this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-
-    this.initLights();
-
-    // Adds lights group.
-    this.interface.addLightsGroup(this.graph.lights);
     this.interface.addServerComs(this.server_coms);
-
   }
 
   logPicking() {
@@ -105,11 +87,11 @@ class XMLscene extends CGFscene {
         for (var i = 0; i < this.pickResults.length; i++) {
           var obj = this.pickResults[i][0];
           if (obj) {
-            let customId = this.pickResults[i][1],
-              table = Math.floor(customId / 10),
-              seat = customId % 9;
+            let pick_result = this.pickResults[i][1],
+              table = Math.floor(pick_result / 10),
+              seat = pick_result % 9;
 
-            console.log("Picked table " + table + ", seat = " + seat);
+            this.game.play(table, seat);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -117,16 +99,12 @@ class XMLscene extends CGFscene {
     }
   }
 
-  /**
-   * Displays the scene.
-   */
   display() {
-    this.logPicking();
+    //this.logPicking();
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-    this.gl.clearColor(0.1, 0.1, 0.1, 1.0);
-
+    this.gl.enable(this.gl.DEPTH_TEST);
 
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
@@ -134,47 +112,25 @@ class XMLscene extends CGFscene {
 
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
-
-    this.pushMatrix();
+    this.lights.forEach(function (value) {
+      value.update();
+    });
 
     if (this.graph.loadedOk) {
-      // Applies initial transformations.
-      this.multMatrix(this.graph.initialTransforms);
-
-      // Draw axis
+      this.pushMatrix();
+      this.multMatrix(this.graph.initials.get("matrix"));
       this.axis.display();
 
-      var i = 0;
-      for (var key in this.lightValues) {
-        if (this.lightValues.hasOwnProperty(key)) {
-          if (this.lightValues[key]) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
-          }
-          else {
-            this.lights[i].setVisible(false);
-            this.lights[i].disable();
-          }
-          this.lights[i].update();
-          i++;
-        }
-      }
+      this.graph.displayScene();
 
-      // Displays the scene.
-      let root = this.graph.nodes[this.graph.root_id];
-      this.graph.id = 0;
-      this.graph.displayScene(this.graph.root_id, root.materialID, root.textureID, false);
-      this.setActiveShader(this.transparent_shader);
-      this.graph.displayPickables(this.graph.root_id, false);
-      this.registerForPick(this.graph.id, null);
-      this.setActiveShader(this.defaultShader);
+      // this.setActiveShader(this.transparent_shader);
+      // this.graph.displayPickables(this.graph.root_id, false);
+      // this.registerForPick(this.graph.id, null);
+      // this.setActiveShader(this.defaultShader);
+      this.popMatrix();
     }
     else {
-      // Draw axis
       this.axis.display();
     }
-
-    this.popMatrix();
   }
-
 };
