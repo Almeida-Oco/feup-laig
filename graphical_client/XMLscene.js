@@ -8,7 +8,7 @@ class XMLscene extends CGFscene {
     this.interface = Interface;
 
     this.lightValues = {};
-    this.server_coms = new ServerComs(8081, 'localhost');
+    this.server_coms = new ServerComs(8081, 'localhost', this);
   }
 
   /**
@@ -31,6 +31,11 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
 
     this.transparent_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/transparent.frag");
+  }
+
+  initGame(startString){
+    this.gameState = new GameState(this, startString);
+    console.log('From XMLscene got a gameState');
   }
 
   /**

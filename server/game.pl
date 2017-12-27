@@ -41,6 +41,11 @@ play(CurrTableNumber, NewTableNumber, SeatNumber, TeaToken, Board) :-
 		endPlay(NewTableNumber, SeatNumber, TeaToken, Board)
 	).
 
+play_server(CurrTableNumber, NewTableNumber1, SeatNumber, TeaToken, Board) :-
+	at(BoardTable, CurrTableNumber, Board),
+	at('.', SeatNumber, BoardTable).
+
+
 serveTea(Board, Table, Seat, TeaToken, NewBoard) :-
 	at(Elem, Table, Board),
 	replace(TeaToken, Seat, Elem, NewElem),
@@ -163,6 +168,33 @@ start(AI) :-
 	moveWaiter(Board, 0, 0, NewBoard),
 	drawBoard(NewBoard),
 	gameLoop(0, 0, NewBoard, AI).
+
+
+/* ------------- LAIG -------------------- */
+
+start_laig(AI, BoardRes) :-
+	createTables(Board,0,10),
+	moveWaiter(Board, 0, 0, NewBoard),
+	BoardRes = NewBoard.
+/*	gameLoopLAIG(0, 0, BoardRes, AI). */
+
+gameLoopLAIG(End, Table, Board, 0) :- % Human Version
+	turn('X', Table, Board, NewBoard1, NewTable),
+	\+ endCondition(NewBoard1, 'X'),
+	turn('O', NewTable, NewBoard1, NewBoard2, NewTable1),
+	\+ endCondition(NewBoard2, 'O'),
+	gameLoop(End, NewTable1, NewBoard2, 0).
+
+gameLoopLAIG(End, Table, Board, 1) :- % Ai Version human becomes 'X'
+  turn('X', Table, Board, NewBoard1, NewTable),
+	\+ endCondition(NewBoard1, 'X'),
+  aiTurn('O', NewTable, NewBoard1, NewBoard2, NewTable1),
+	\+ endCondition(NewBoard2, 'O'),
+  gameLoop(End, NewTable1, NewBoard2, 1).
+
+
+
+/* ------------- END LAIG -------------------- */
 
 playMenu :-
 	clearScreen,

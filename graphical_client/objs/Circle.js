@@ -17,8 +17,8 @@ Circle.prototype.constructor = Circle;
 
 Circle.prototype.initBuffers = function(afs, aft) {
 	this.vertices 	= [];
-	this.indices 		= [];
-	this.normals 		= [];
+	this.indices 	= [];
+	this.normals 	= [];
 	this.texCoords 	= [];
 
   this.index = 0;

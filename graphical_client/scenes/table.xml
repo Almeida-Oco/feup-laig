@@ -150,7 +150,7 @@
 
 				<DESCENDANTS>
 					<NODEREF id="board" />
-					<NODEREF id="tables" />
+				<!--	<NODEREF id="tables" /> -->
 				</DESCENDANTS>
     </NODE>
 
