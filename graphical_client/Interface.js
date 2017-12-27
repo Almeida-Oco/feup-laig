@@ -31,27 +31,7 @@ Interface.prototype.init = function (application) {
   return true;
 };
 
-/**
- * Adds a folder containing the IDs of the lights passed as parameter.
- */
-Interface.prototype.addLightsGroup = function (lights) {
-
-  var group = this.gui.addFolder("Lights");
-  group.open();
-
-  // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
-  // e.g. this.option1=true; this.option2=false;
-
-  for (var key in lights) {
-    if (lights.hasOwnProperty(key)) {
-      this.scene.lightValues[key] = lights[key][0];
-      group.add(this.scene.lightValues, key);
-    }
-  }
-}
-
 Interface.prototype.addServerComs = function (server_coms) {
-
   var server_folder = this.gui.addFolder("Server");
   server_folder.open();
 

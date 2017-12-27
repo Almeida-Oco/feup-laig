@@ -56,12 +56,12 @@ serialInclude(['../lib/CGF.js',
   'server_interface/server.js',
 
 	//Game
-	'game.js', 'aiStrategy.js', 'strategy.js', 'playerStrategy.js',
+	'game.js', 'strategy.js', 'aiStrategy.js', 'playerStrategy.js',
+	'GraphLeaf.js', 'DynamicLeaf.js', 'StaticLeaf.js',
 
-  'SceneGraph.js', 'XMLscene.js', 'GraphNode.js', 'GraphLeaf.js', 'Interface.js',
+  'GraphParser.js', 'SceneGraph.js', 'XMLscene.js', 'GraphNode.js', 'Interface.js',
 
   main = function () {
-    // Standard application, scene and interface setup
     var app = new CGFapplication(document.body);
     var myInterface = new Interface();
     var myScene = new XMLscene(myInterface);
@@ -80,7 +80,8 @@ serialInclude(['../lib/CGF.js',
 
     // create and load graph, and associate it to scene.
     // Check console for loading errors
-    var myGraph = new SceneGraph(filename, myScene, myInterface);
+    var myGraph = new SceneGraph(myScene);
+    myGraph.loadGraph(filename);
 
     // start
     app.run();

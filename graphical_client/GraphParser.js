@@ -1,237 +1,59 @@
 let leaves_types = ["circle", "rectangle", "triangle", "patch", "cylinder", "sphere"];
-let DEGREE_TO_RAD = Math.PI / 180;
+
+let initials_req = ["frustum", "reference"];
+let illumins_req = ["ambient", "background"];
+let lights_req = ["enable", "position", "ambient", "diffuse", "specular"];
+let texture_req = ["file", "amplif_factor"];
+let material_req = ["shininess", "specular", "diffuse", "ambient", "emission"];
+let nodes_req = ["material", "texture", "descendants"];
+
+let node_infos = ["id", "static"];
 
 class GraphParser {
-  constructor(reader, graph) {
+  constructor(reader) {
     this.reader = reader;
-    this.graph = graph;
-    this.animations_id = [];
     this.axisCoords = {
       'x': [1, 0, 0],
       'y': [0, 1, 0],
       'z': [0, 0, 1]
     };
 
+    this.parseNodeInfo = function (node) {
+      let needed_infos = ["id"];
+      let optional_info = ["static", "selectable"];
+      let values = new Map();
+
+      for (let i = 0; i < node_infos.length; i++) {
+        let info_name = node_infos[i],
+          info = null;
+        if (this.reader.hasAttribute(node, info_name))
+          info = this.reader.getString(node, info_name);
+
+        if (this.hasKey(needed_infos, info_name) && info === null) {
+          console.error("Node has no '" + info_name + "'!");
+          return null;
+        }
+        else if (info !== null)
+          values.set(info_name, info);
+      }
+
+      //insert optional informations
+      optional_info.forEach(function (value, key, arr) {
+        if (!values.has(value))
+          values.set(value, false);
+      });
+
+      return values;
+    };
+
     this.hasKey = function (obj, key, msg) {
-      if (!obj.has(key)) {
-        console.error(msg);
+      if (!obj.hasOwnProperty(key)) {
+        if (msg !== undefined && msg !== null)
+          console.error(msg);
         return false;
       }
       return true;
-    }
-
-    this.parseNodeSpec = {
-      "MATERIAL": function (node_id, spec) {
-        let mat_id = this.reader.getString(spec, 'id');
-        if (mat_id === null) {
-          console.error("Cannot parse material ID (node ID = " + node_id + ")");
-          return null;
-        }
-
-        return ["material", mat_id];
-      },
-      "TEXTURE": function (node_id, spec) {
-        let text_id = this.reader.getString(spec, 'id');
-        if (text_id === null) {
-          console.error("Cannot parse texture ID (node ID = " + node_id + ")");
-          return null;
-        }
-
-        return ["texture", text_id];
-      },
-      "TRANSLATION": function (node_id, spec) {
-        let xyz = this.parseXYZ(spec, "Parse error on translation of node ID = " + node_id),
-          mat = mat4.identity();
-        if (xyz !== null)
-          mat4.translate(mat, mat, [xyz['x'], xyz['y'], xyz['z']]);
-
-        return mat;
-      },
-      "ROTATION": function (node_id, spec) {
-        let rot = this.parseRotation(spec, "Parse error on rotation of node ID = " + node_id),
-          mat = mat4.identity();
-        if (rot !== null)
-          mat4.rotate(mat, mat, rot['angle'] * DEGREE_TO_RAD, this.axisCoords[rot['axis']]);
-
-        return mat;
-      },
-      "SCALE": function (node_id, spec) {
-        let scale = this.parseScaling(spec, "Parse error on scale of node ID = " + node_id),
-          mat = mat4.identity();
-        if (scale !== null)
-          mat4.scale(mat, mat, [scale['sx'], scale['sy'], scale['sz']]);
-
-        return mat;
-      },
-      "ANIMATIONREFS": function (node_id, spec) {
-        let anim_childs = spec.children,
-          anim_ids = [];
-        for (let i = 0; i < anim_childs.length; i++) {
-          let anim_id = this.reader.getString(anim_childs[i], 'id');
-          if (anim_id !== null)
-            anim_ids.push(anim_id);
-          else
-            console.log("Animationref #" + i + " of node ID = " + node_id + " has no id defined! Discarding");
-        }
-
-        return ["animations", anim_ids];
-      },
-      "DESCENDANTS": function (node_id, spec) {
-        let children = spec.children,
-          descendants = [[], []];
-        for (let i = 0; i < children.length; i++) {
-          let descendant = children[i],
-            result = this.parseDescendants[descendant.nodeName](node_id, spec);
-          if (result !== null)
-            descendants[result[0]] = result[1];
-          else
-            console.log("	ignoring descendant");
-        }
-        return ["descendants", descendants];
-      }
-    }
-
-    this.parseDescendants = {
-      "NODEREF": function (node_id, spec) {
-        let id = this.reader.getString(spec, 'id', "No ID found in NODEREF of node ID = " + node_id);
-        if (id === null)
-          return null;
-
-        return [0, id];
-      },
-      "LEAF": function (node_id, spec) {
-        let type = this.reader.getItem(spec, 'type', leaves_types, "Unknown type of leaf in node ID = " + node_id),
-          args = this.reader.getString(spec, 'args', "No field 'args' found in leaf of node ID = " + node_id).split(' ');
-
-        if (type === null || args === null)
-          return null;
-
-        return [1, new GraphLeaf(this.scene, type, args)];
-      }
     };
-
-    this.parseAnimationSpecs = {
-      "linear": function (node, id) {
-        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
-        if (speed === null || isNaN(speed))
-          speed = 1;
-        return this.parseLinearAnimation(node, id, speed);
-      },
-      "circular": function (node, id) {
-        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
-        if (speed === null || isNaN(speed))
-          speed = 1;
-        return this.parseCircularAnimation(node, id, speed);
-      },
-      "bezier": function (node, id) {
-        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
-        if (speed === null || isNaN(speed))
-          speed = 1;
-        return this.parseBezierAnimation(node, id, speed);
-      },
-      "combo": function (node, id) {
-        return this.parseComboAnimation(node, id);
-      }
-    };
-
-    this.parseIlluminationSpecs = {
-      "ambient": function (spec) {
-        let ret = this.parseRGBA(spec, "Parse error on illumination ambient");
-        if (ret !== null)
-          return ["ambient", ret];
-
-        return null;
-      },
-      "background": function (spec) {
-        let ret = this.parseRGBA(spec, "Parse error on illumination background");
-        if (ret !== null)
-          return ["background", ret];
-
-        return null;
-      }
-    }
-
-    this.parseInitialsSpecs = {
-      "frustum": function (spec) {
-        let ret = this.parseFrustum(spec, "Parse error on Initials frustum");
-        if (ret !== null) {
-          return ["frustum", ret];
-        }
-        return null;
-      },
-      "translation": function (spec) {
-        let ret = this.parseXYZ(spec, "Parse error on Initials translation"),
-          mat = mat4.identity();
-        if (ret !== null)
-          mat4.translate(mat, mat, [xyz['x'], xyz['y'], xyz['z']]);
-
-        return mat;
-      },
-      "rotation": function (spec) {
-        let rot = this.parseRotation(spec, "Parse error on rotation of initials");
-        mat = mat4.identity();
-        if (rot !== null)
-          mat4.rotate(mat, mat, rot['angle'] * DEGREE_TO_RAD, this.axisCoords[rot['axis']]);
-
-        return mat;
-      },
-      "scale": function (spec) {
-        let scale = this.parseScaling(spec, "Parse error on scale of intials");
-        mat = mat4.identity();
-        if (scale !== null)
-          mat4.scale(mat, mat, [scale['sx'], scale['sy'], scale['sz']]);
-
-        return mat;
-      },
-      "reference": function (spec) {
-        let length = this.reader.getFloat(spec, 'length');
-        if (length !== null || !isNaN(length) || length <= 0) {
-          console.log("Error on Initials reference parse! assuming length = 0");
-          length = 1;
-        }
-
-        return ["length", length];
-      }
-    }
-
-    this.parseLightsSpecs = {
-      "enable": function (spec, light_id) {
-        let value = this.reader.getBoolean(spec, 'value', "No spec 'value' in light " + light_id);
-        if (value === null) {
-          console.error("Failed to parse Light enable spec!");
-          return null;
-        }
-        return ["value", value];
-      },
-      "position": function (spec, light_id) {
-        let xyzw = this.parseLightPosition(spec, null);
-        if (xyzw === null)
-          return null;
-
-        return ["position", xyzw];
-      },
-      "ambient": function (spec, light_id) {
-        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " ambient component!");
-        if (rgba === null)
-          return null;
-
-        return ["ambient", rgba];
-      },
-      "diffuse": function (spec, light_id) {
-        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " diffuse component!");
-        if (rgba === null)
-          return null;
-
-        return ["diffuse", rgba];
-      },
-      "specular": function (spec, light_id) {
-        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " specular component!");
-        if (rgba === null)
-          return null;
-
-        return ["specular", rgba];
-      }
-    }
 
     this.parseRGBA = function (spec, msg) {
       let r = this.reader.getFloat(spec, 'r', "No component R found in RGBA!"),
@@ -249,23 +71,23 @@ class GraphParser {
       }
 
       return {
-        'r': r,
-        'g': g,
-        'b': b,
-        'a': a
+        "r": r,
+        "g": g,
+        "b": b,
+        "a": a
       };
     };
 
     this.parseLightPosition = function (spec, msg) {
-      let xyz = this.parseTranslation(spec, "Error extracting light position!"),
+      let xyz = this.parseXYZ(spec, "Error extracting light position!"),
         w = this.reader.getFloat(spec, 'w', "No component W found in Light position!");
       if (xyz === null || w === null || isNaN(w)) {
         console.error(msg);
         return null;
       }
-      xyz.insert('w', w);
+      xyz['w'] = w;
       return xyz;
-    }
+    };
     //TODO change controlpoints 'xx' and 'yy' into 'x' and 'y'
     this.parseXYZ = function (spec, msg) {
       let x = this.reader.getFloat(spec, 'x', "No X component found in XYZ!"),
@@ -282,10 +104,10 @@ class GraphParser {
         'y': y,
         'z': z
       };
-    }
+    };
 
     this.parseRotation = function (spec, msg) {
-      let axis = this.reader.getItem(spec, ['x', 'y', 'z'], "No axis found in rotation!"),
+      let axis = this.reader.getItem(spec, 'axis', ["x", "y", "z"], "No axis found in rotation!"),
         angle = this.reader.getFloat(spec, 'angle', "No angle found in rotation!"),
         all_ok = (axis !== null && angle !== null && !isNaN(angle));
 
@@ -297,7 +119,7 @@ class GraphParser {
         'axis': axis,
         'angle': angle
       };
-    }
+    };
 
     this.parseScaling = function (spec, msg) {
       let sx = this.reader.getFloat(spec, 'sx', "No X component found in scale!"),
@@ -314,7 +136,7 @@ class GraphParser {
         'sy': sy,
         'sz': sz
       };
-    }
+    };
 
     this.parseFrustum = function (spec, msg) {
       let near = this.reader.getFloat(spec, 'near', "No component 'near' found in frustum!"),
@@ -332,27 +154,292 @@ class GraphParser {
         'near': near,
         'far': far
       };
+    }.bind(this)
+
+    this.parseTextureSpec = {
+      "file": function (spec, text_id) {
+        let file = this.reader.getString(spec, 'path', "No texture file specified! (Texture ID = " + text_id + ")");
+        if (file === null)
+          return null;
+
+        return ["file", file];
+      }.bind(this),
+      "amplif_factor": function (spec, text_id) {
+        let s = this.reader.getFloat(spec, 's', "No texture amplif_factor s defined! (Texture ID = " + text_id + ")"),
+          t = this.reader.getFloat(spec, 't', "No texture amplif_factor t defined! (Texture ID = " + text_id + ")");
+
+        if (s === null || t === null || isNaN(s) || isNaN(t))
+          return null;
+
+        return ["amplif_factor", {
+          "s": s,
+          "t": t
+				}];
+      }.bind(this)
     }
 
-    this.parseAmpFactor = function (spec, msg) {
-      let s = this.reader.getFloat(spec, 's', "No component S found in amplif_factor!"),
-        t = this.reader.getFloat(spec, 't', "No component T found in amplif_factor!");
+    this.parseMaterialSpec = {
+      "shininess": function (spec, mat_id) {
+        let shine = this.reader.getFloat(spec, 'value', "No shininess defined for material! (Material ID = " + mat_id + "), assuming shininess = 1");
+        if (shine === null)
+          shine = 1;
+        return ["shininess", shine];
+      }.bind(this),
+      "specular": function (spec, mat_id) {
+        let rgba = this.parseRGBA(spec, "Material specular rgba parse error! (Material ID = " + mat_id + ")");
+        if (rgba === null)
+          return null;
 
-      if (s === null || t === null || isNaN(s) || isNaN(t)) {
-        console.error(msg);
+        return ["specular", rgba];
+      }.bind(this),
+      "diffuse": function (spec, mat_id) {
+        let rgba = this.parseRGBA(spec, "Material diffuse rgba parse error! (Material ID = " + mat_id + ")");
+        if (rgba === null)
+          return null;
+
+        return ["diffuse", rgba];
+      }.bind(this),
+      "ambient": function (spec, mat_id) {
+        let rgba = this.parseRGBA(spec, "Material ambient rgba parse error! (Material ID = " + mat_id + ")");
+        if (rgba === null)
+          return null;
+
+        return ["ambient", rgba];
+      }.bind(this),
+      "emission": function (spec, mat_id) {
+        let rgba = this.parseRGBA(spec, "Material emission rgba parse error! (Material ID = " + mat_id + ")");
+        if (rgba === null)
+          return null;
+
+        return ["emission", rgba];
+      }.bind(this)
+    }
+
+    this.parseNodeSpec = {
+      "MATERIAL": function (node_id, spec) {
+        let mat_id = this.reader.getString(spec, 'id');
+        if (mat_id === null) {
+          console.error("Cannot parse material ID (node ID = " + node_id + ")");
+          return null;
+        }
+
+        return ["material", mat_id];
+      }.bind(this),
+      "TEXTURE": function (node_id, spec) {
+        let text_id = this.reader.getString(spec, 'id');
+        if (text_id === null) {
+          console.error("Cannot parse texture ID (node ID = " + node_id + ")");
+          return null;
+        }
+
+        return ["texture", text_id];
+      }.bind(this),
+      "TRANSLATION": function (node_id, spec) {
+        let xyz = this.parseXYZ(spec, "Parse error on translation of node ID = " + node_id),
+          mat = mat4.create();
+        if (xyz !== null)
+          mat4.translate(mat, mat, [xyz['x'], xyz['y'], xyz['z']]);
+
+        return mat;
+      }.bind(this),
+      "ROTATION": function (node_id, spec) {
+        let rot = this.parseRotation(spec, "Parse error on rotation of node ID = " + node_id),
+          mat = mat4.create();
+        if (rot !== null)
+          mat4.rotate(mat, mat, rot['angle'] * DEGREE_TO_RAD, this.axisCoords[rot['axis']]);
+
+        return mat;
+      }.bind(this),
+      "SCALE": function (node_id, spec) {
+        let scale = this.parseScaling(spec, "Parse error on scale of node ID = " + node_id),
+          mat = mat4.create();
+        if (scale !== null)
+          mat4.scale(mat, mat, [scale['sx'], scale['sy'], scale['sz']]);
+
+        return mat;
+      }.bind(this),
+      "ANIMATIONREFS": function (node_id, spec) {
+        let anim_childs = spec.children,
+          anim_ids = [];
+        for (let i = 0; i < anim_childs.length; i++) {
+          let anim_id = this.reader.getString(anim_childs[i], 'id');
+          if (anim_id !== null)
+            anim_ids.push(anim_id);
+          else
+            console.log("Animationref #" + i + " of node ID = " + node_id + " has no id defined! Discarding");
+        }
+
+        return ["animations", anim_ids];
+      }.bind(this),
+      "DESCENDANTS": function (node_id, spec) {
+        let children = spec.children,
+          descendants = [[], []];
+        for (let i = 0; i < children.length; i++) {
+          let descendant = children[i],
+            result = this.parseDescendants[descendant.nodeName](node_id, descendant);
+          if (result !== null)
+            descendants[result[0]].push(result[1]);
+          else
+            console.log("	ignoring descendant");
+        }
+        return ["descendants", descendants];
+      }.bind(this)
+    }
+
+    this.parseDescendants = {
+      "NODEREF": function (node_id, spec) {
+        let id = this.reader.getString(spec, 'id', "No ID found in NODEREF of node ID = " + node_id);
+        if (id === null)
+          return null;
+
+        return [0, id];
+      }.bind(this),
+      "LEAF": function (node_id, spec) {
+        let type = this.reader.getItem(spec, 'type', leaves_types, "Unknown type of leaf in node ID = " + node_id),
+          args = this.reader.getString(spec, 'args', "No field 'args' found in leaf of node ID = " + node_id).split(' ');
+
+        if (type === null || args === null)
+          return null;
+
+        args.forEach(function (value, key, obj) {
+          obj[key] = parseInt(value);
+        });
+
+        return [1, {
+          "type": type,
+          "args": args
+        }];
+      }.bind(this)
+    };
+
+    this.parseAnimationSpecs = {
+      "linear": function (node, id) {
+        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
+        if (speed === null || isNaN(speed))
+          speed = 1;
+        return this.parseLinearAnimation(node, id, speed);
+      }.bind(this),
+      "circular": function (node, id) {
+        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
+        if (speed === null || isNaN(speed))
+          speed = 1;
+        return this.parseCircularAnimation(node, id, speed);
+      }.bind(this),
+      "bezier": function (node, id) {
+        let speed = this.reader.getFloat(node, 'speed', "No speed defined! (animation ID = " + node.nodeName + "), assuming speed = 1");
+        if (speed === null || isNaN(speed))
+          speed = 1;
+        return this.parseBezierAnimation(node, id, speed);
+      }.bind(this),
+      "combo": function (node, id) {
+        return this.parseComboAnimation(node, id);
+      }.bind(this)
+    };
+
+    this.parseIlluminationSpecs = {
+      "ambient": function (spec) {
+        let ret = this.parseRGBA(spec, "Parse error on illumination ambient");
+        if (ret !== null)
+          return ["ambient", ret];
+
         return null;
-      }
-      return {
-        's': s,
-        't': t
-      };
+      }.bind(this),
+      "background": function (spec) {
+        let ret = this.parseRGBA(spec, "Parse error on illumination background");
+        if (ret !== null)
+          return ["background", ret];
+
+        return null;
+      }.bind(this)
+    }
+
+    this.parseInitialsSpecs = {
+      "frustum": function (spec) {
+        let ret = this.parseFrustum(spec, "Parse error on Initials frustum");
+        if (ret !== null) {
+          return ["frustum", ret];
+        }
+        return null;
+      }.bind(this),
+      "translation": function (spec) {
+        let xyz = this.parseXYZ(spec, "Parse error on Initials translation"),
+          mat = mat4.create();
+        if (xyz !== null)
+          mat4.translate(mat, mat, [xyz['x'], xyz['y'], xyz['z']]);
+
+        return mat;
+      }.bind(this),
+      "rotation": function (spec) {
+        let rot = this.parseRotation(spec, "Parse error on rotation of initials"),
+          mat = mat4.create();
+        if (rot !== null)
+          mat4.rotate(mat, mat, rot['angle'] * DEGREE_TO_RAD, this.axisCoords[rot['axis']]);
+
+        return mat;
+      }.bind(this),
+      "scale": function (spec) {
+        let scale = this.parseScaling(spec, "Parse error on scale of intials"),
+          mat = mat4.create();
+        if (scale !== null)
+          mat4.scale(mat, mat, [scale['sx'], scale['sy'], scale['sz']]);
+
+        return mat;
+      }.bind(this),
+      "reference": function (spec) {
+        let length = this.reader.getFloat(spec, 'length');
+        if (length === null || isNaN(length) || length <= 0) {
+          console.log("Error on Initials reference parse! assuming length = 0");
+          length = 1;
+        }
+
+        return ["reference", length];
+      }.bind(this)
+    }
+
+    this.parseLightsSpecs = {
+      "enable": function (spec, light_id) {
+        let value = this.reader.getBoolean(spec, 'value', "No spec 'value' in light " + light_id);
+        if (value === null) {
+          console.error("Failed to parse Light enable spec!");
+          return null;
+        }
+        return ["enable", value];
+      }.bind(this),
+      "position": function (spec, light_id) {
+        let xyzw = this.parseLightPosition(spec, null);
+        if (xyzw === null)
+          return null;
+
+        return ["position", xyzw];
+      }.bind(this),
+      "ambient": function (spec, light_id) {
+        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " ambient component!");
+        if (rgba === null)
+          return null;
+
+        return ["ambient", rgba];
+      }.bind(this),
+      "diffuse": function (spec, light_id) {
+        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " diffuse component!");
+        if (rgba === null)
+          return null;
+
+        return ["diffuse", rgba];
+      }.bind(this),
+      "specular": function (spec, light_id) {
+        let rgba = this.parseRGBA(spec, "Parse error on light " + light_id + " specular component!");
+        if (rgba === null)
+          return null;
+
+        return ["specular", rgba];
+      }.bind(this)
     }
   }
 
   parseInitials() {
     let node, values = new Map(),
-      matrix = mat4.identity();
-    if ((node = this.getLSXNode("INITIALS")))
+      matrix = mat4.create();
+    if ((node = this.getLSXNode("INITIALS")) === null)
       return null;
 
     let children = node.children;
@@ -366,15 +453,19 @@ class GraphParser {
       if (name === "translation" || name === "scale" || name == "rotation")
         mat4.mul(matrix, matrix, ret);
       else
-        values.insert(ret[0], ret[1]);
+        values.set(ret[0], ret[1]);
     }
-    values.insert("matrix", matrix);
+    values.set("matrix", matrix);
+    if (!this.hasRequiredKeys(values, initials_req, "Initials has no: "))
+      return null;
+
+    console.log("Parsed Initials");
     return values;
   }
 
   parseIllumination() {
     let node, values = new Map();
-    if ((node = this.getLSXNode("ILLUMINATION")))
+    if ((node = this.getLSXNode("ILLUMINATION")) === null)
       return null;
     let children = node.children;
 
@@ -386,8 +477,12 @@ class GraphParser {
         (ret = this.parseIlluminationSpecs[spec](children[i])) == null)
         return null;
 
-      values.insert(ret[0], ret[1]);
+      values.set(ret[0], ret[1]);
     }
+
+    if (!this.hasRequiredKeys(values, illumins_req, "Illumination has no: "))
+      return null;
+
     console.log("Parsed illumination");
     return values;
   }
@@ -395,7 +490,7 @@ class GraphParser {
   parseLights() {
     let node, ret = new Map(),
       num_lights = 0;
-    if ((node = this.getLSXNode("LIGHTS")))
+    if ((node = this.getLSXNode("LIGHTS")) === null)
       return null;
     let children = node.children;
 
@@ -419,30 +514,102 @@ class GraphParser {
       let grand_children = children[i].children,
         light_values = new Map();
       for (var j = 0; j < grand_children.length; j++) {
-        let parsed_ret, name = grand_children[i].nodeName;
-        if (!this.hasKey(this.parseLightsSpecs, name, "Light spec '" + spec + "' not valid! (light ID = " + id + ")") ||
-          (parsed_ret = this.parseLightsSpecs(grand_children[i])) == null)
+        let parsed_ret, name = grand_children[j].nodeName;
+        if (!this.hasKey(this.parseLightsSpecs, name, "Light spec '" + name + "' not valid! (light ID = " + id + ")") ||
+          (parsed_ret = this.parseLightsSpecs[name](grand_children[j])) == null)
           return null;
 
-        light_values.insert(parsed_ret[0], parsed_ret[1]);
+        light_values.set(parsed_ret[0], parsed_ret[1]);
       }
-      ret.insert(id, light_values);
+
+      if (!this.hasRequiredKeys(light_values, lights_req, "Light " + id + " has no: "))
+        return null;
+      ret.set(id, light_values);
     }
 
-    if (num_lights == 0 || num_lights > 0) {
+    if (num_lights == 0 || num_lights > 8) {
       console.error("Number of defined lights is incorrect! " + num_lights + " where defined but number must be within [1,8]");
       return null;
     }
-    console.log("Parsed lights");
 
+    console.log("Parsed lights");
     return ret;
+  }
+
+  parseTextures() {
+    let node, values = new Map();
+    if ((node = this.getLSXNode("TEXTURES")) === null)
+      return null;
+
+    let textures = node.children;
+    for (let i = 0; i < textures.length; i++) {
+      let texture = textures[i],
+        id = this.reader.getString(texture, 'id', "No ID defined for texture#" + i);
+      if (id === null)
+        return null;
+      if (this.hasKey(values, id)) {
+        console.error("Duplicate texture ID (conflict ID = " + id + ")");
+        return null;
+      }
+
+      let specs = texture.children,
+        text_specs = new Map();
+      for (let j = 0; j < specs.length; j++) {
+        let ret, spec_name = specs[j].nodeName;
+        if ((ret = this.parseTextureSpec[spec_name](specs[j], id)) === null)
+          return null;
+
+        text_specs.set(ret[0], ret[1]);
+      }
+      if (!this.hasRequiredKeys(text_specs, texture_req, "Texture " + id + " has no: "))
+        return null;
+
+      values.set(id, text_specs);
+    }
+
+    return values;
+  }
+
+  parseMaterials() {
+    let node, values = new Map();
+    if ((node = this.getLSXNode("MATERIALS")) === null)
+      return null;
+
+    let materials = node.children;
+    for (let i = 0; i < materials.length; i++) {
+      let material = materials[i],
+        id = this.reader.getString(material, 'id', "No ID defined for material#" + i);
+
+      if (id === null)
+        return null;
+      if (this.hasKey(values, id)) {
+        console.log("Duplicate material ID (conflict ID = " + id + ")");
+        return null;
+      }
+
+      let specs = material.children,
+        mat_specs = new Map();
+      for (let j = 0; j < specs.length; j++) {
+        let ret, spec_name = specs[j].nodeName;
+        if ((ret = this.parseMaterialSpec[spec_name](specs[j], id)) === null)
+          return null;
+
+        mat_specs.set(ret[0], ret[1]);
+      }
+      if (!this.hasRequiredKeys(mat_specs, material_req, "Texture " + id + " has no: "))
+        return null;
+
+      values.set(id, mat_specs);
+    }
+
+    return values;
   }
 
   parseAnimations() {
     let node, animations = new Map();
     if ((node = this.getLSXNode("ANIMATIONS")) === null)
       return null;
-    anims = node.children;
+    let anims = node.children;
     for (let i = 0; i < anims.length; i++) {
       let animation = anims[i],
         anim_speed = 0,
@@ -451,24 +618,26 @@ class GraphParser {
         console.log("unknown tag name <" + animation.nodeName + ">");
         continue;
       }
+
       let id = this.reader.getString(animation, 'id'),
         type = this.reader.getString(animation, 'type');
 
-      if (anim_id === null || type === null) {
+      if (id === null || type === null) {
         console.error("Header of animation is incorrect! (#" + i + ")");
         return null;
       }
-      if (animations.get(anim_id) !== null) {
-        console.error("ID for animation must be unique: (conflict: " + anim_id + ")");
+      if (this.hasKey(animations, id)) {
+        console.error("ID for animation must be unique: (conflict: " + id + ")");
         return null;
       }
+
       if (!this.hasKey(this.parseAnimationSpecs, type, "Unknown animation type '" + type + "' (animation ID " + id + ")") ||
-        (ret = this.parseAnimationSpecs(animation, id)) == null)
+        (ret = this.parseAnimationSpecs[type](animation, id)) == null)
         return null;
 
-      animations.insert(id, ret);
+      animations.set(id, ret);
     }
-
+    console.log("Parsed Animations");
     return animations;
   }
 
@@ -480,18 +649,19 @@ class GraphParser {
    * @return null if there was an error, error message otherwise
    */
   parseLinearAnimation(node, id, speed) {
-    let ret = new Map(),
-      cpts = node.children;
-    ret.insert("speed", speed);
-    if (children.length < 2) {
+    let ret = new Map();
+    let control_points = node.children;
+    ret.set("speed", speed);
+    ret.set("type", "linear");
+    if (control_points.length < 2) {
       console.error("At least 2 controlpoints must be defined for linear animation: " + id);
       return null;
     }
 
     let pts;
-    if ((pts = this.parseControlPoints(cpts)) === null)
+    if ((pts = this.parseControlPoints(node)) === null)
       return null;
-    ret.insert("controlpoints", pts);
+    ret.set("args", pts);
     return ret;
   }
 
@@ -516,12 +686,8 @@ class GraphParser {
     }
 
     return {
-      "centerx": centerx,
-      "centery": centery,
-      "centerz": centerz,
-      "radius": radius,
-      "startang": startang,
-      "rotang": rotang
+      "type": "circular",
+      "args": [centerx, centery, centerz, radius, startang, rotang]
     };
   }
 
@@ -535,7 +701,8 @@ class GraphParser {
   parseBezierAnimation(animation_node, id, speed) {
     let ret = new Map(),
       cpts = node.children;
-    ret.insert("speed", speed);
+    ret.set("speed", speed);
+    ret.set("type", "bezier");
     if (children.length != 4) {
       console.error("Only 4 points may be defined for bezier animation: " + id);
       return null;
@@ -545,7 +712,7 @@ class GraphParser {
     if ((pts = this.parseControlPoints(cpts)) === null)
       return null;
 
-    ret.insert("controlpoints", pts);
+    ret.set("args", pts);
     return ret;
   }
 
@@ -579,7 +746,8 @@ class GraphParser {
     }
 
     return {
-      "animations": anims
+      "type": "combo",
+      "args": anims
     };
   }
 
@@ -594,7 +762,7 @@ class GraphParser {
       }
 
       let pt;
-      if ((pt = this.parseXYZ(cpt, "Parse error on controlpoint #" + i + " of animation: " + id)) === null)
+      if ((pt = this.parseXYZ(cpt, "Parse error on controlpoint #" + i + " of animation: " + node.nodeName)) === null)
         return null;
       pts.push(pt);
     }
@@ -610,11 +778,6 @@ class GraphParser {
       return null;
 
     for (let i = 0, nodes = node.children; i < nodes.length; i++) {
-      let needed_specs = {
-        "MATERIAL": false,
-        "TEXTURE": false,
-      };
-      let specs_values = new Map();
       node = nodes[i];
       let node_name = node.nodeName;
       if (node_name === "ROOT") {
@@ -628,53 +791,60 @@ class GraphParser {
         }
       }
       else if (node_name === "NODE") {
-        let node_id = this.reader.getString(node, 'id', "Failed to retrieve node ID!"),
-          is_static = (this.reader.getBoolean(node, 'static') === true);
+        let node_infos = this.parseNodeInfo(node);
 
-        if (node_id === null || this.hasKey(nodes_vec, node_id, "Node ID must be unique! (conflict: ID = " + node_id + ")"))
+        if (node_infos === null || this.hasKey(values, node_infos["id"])) {
+          console.error("Node ID must be unique! (conflict: ID = " + node_infos["id"] + ")");
           return null;
-
+        }
+        let node_id = node_infos.get("id");
+        node_infos.delete("id");
         let specs = node.children,
-          matrix = mat4.identity();
+          matrix = mat4.create();
         for (let j = 0; j < specs.length; j++) { //Parses node specifications
-          let spec = specs[i],
+          let spec = specs[j],
             spec_name = spec.nodeName,
             spec_ret;
-
-          if (this.hasKey(this.parseNodeSpec, spec_name, "Unknown node spec: '" + spec_name "' (node ID = " + node_id ")") ||
-            (spec_ret = this.parseNodeSpecs[spec_name](node_id, spec)) === null)
+          if (!this.hasKey(this.parseNodeSpec, spec_name, "Unknown node spec: '" + spec_name + "' (node ID = " + node_id + ")") ||
+            (spec_ret = this.parseNodeSpec[spec_name](node_id, spec)) === null)
             return null;
 
           if (spec_name === "TRANSLATION" || spec_name === "ROTATION" || spec_name === "SCALE")
             mat4.mul(matrix, matrix, spec_ret);
           else
-            specs_values.insert(spec_ret[0], spec_ret[1]);
-
-          if (needed_specs.has(spec_name))
-            needed_specs[spec_name] = true;
+            node_infos.set(spec_ret[0], spec_ret[1]);
         }
 
-        let all_needed = true;
-        specs_values.forEach(function (value, key, map) {
-          if (needed_specs.has(key))
-            all_needed = all_needed && value
-        });
-
-        if (!all_needed) {
-          console.error("Node " + node_id + " must define both MATERIAL and TEXTURE!");
+        node_infos.set("matrix", matrix);
+        if (!this.hasRequiredKeys(node_infos, nodes_req, "Node " + node_id + " has no: "))
           return null;
-        }
-
-        values.insert(node_id, specs_values);
+        values.set(node_id, node_infos);
       }
     }
 
-    return values;
+    if (root_id === null) {
+      console.error("No root node defined!!");
+      return null;
+    }
+
+    console.log("Parsed nodes");
+    return [root_id, values];
   }
 
 
+  hasRequiredKeys(obj, values, msg) {
+    for (let i = 0; i < values.length; i++) {
+      if (!obj.has(values[i])) {
+        console.error(msg + values[i]);
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   getLSXNode(node_name) {
-    let root = this.reader.xmlDocElement,
+    let root = this.reader.xmlDoc.documentElement,
       nodes = root.children,
       nodes_node = null;
 

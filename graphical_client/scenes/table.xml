@@ -14,8 +14,8 @@
 
 <!-- Illumination and clear colour -->
 <ILLUMINATION>
-    <ambient r="0.2" g="0.2" b="0.2" a="1" />
-    <background r="0" g="0" b="0" a="1" />
+    <ambient r="0" g="0" b="0" a="1" />
+    <background r="0.1" g="0.15" b="0.1" a="1" />
 </ILLUMINATION>
 
 
@@ -23,32 +23,32 @@
 <LIGHTS>
 	<LIGHT id="light0">
         <enable value="true" />
-        <position  x="0" y="10" z="0" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        <position  x="10" y="10" z="20" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
     </LIGHT>
 
 	<LIGHT id="light1">
         <enable value="true" />
-        <position x="30" y="10" z="0" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        <position x="-10" y="-10" z="20" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
     </LIGHT>
 
 	<LIGHT id="light2">
         <enable value="true" />
-        <position x="0" y="10" z="20" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        <position x="10" y="-10" z="20" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
     </LIGHT>
 
     <LIGHT id="light3">
         <enable value="true" />
-        <position x="30" y="10" z="20" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <position x="-10" y="10" z="20" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
         <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
         <specular r="0.6" g="0.6" b="0.6" a="1.0" />
     </LIGHT>
@@ -59,12 +59,12 @@
 <TEXTURES>
     <TEXTURE id="light_wood_text">
         <file path="images/light_wood.jpg" />
-        <amplif_factor s="2" t="2" />
+        <amplif_factor s="1" t="1" />
     </TEXTURE>
 
 		<TEXTURE id="dark_wood_text">
 			<file path="images/dark_wood.jpg" />
-			<amplif_factor s="5" t="5" />
+			<amplif_factor s="8" t="8" />
 		</TEXTURE>
 
 		<TEXTURE id="spec_mv_unc_black">
@@ -154,7 +154,7 @@
 				</DESCENDANTS>
     </NODE>
 
-		<NODE id="board">
+		<NODE id="board" static="true">
 			<MATERIAL id="wood_mat" />
 			<TEXTURE  id="light_wood_text" />
 
@@ -169,7 +169,7 @@
 			<TEXTURE  id="null"/>
 
 			<DESCENDANTS>
-				<LEAF type="circle" args="50 21" />
+				<LEAF type="circle" args="75 21" />
 			</DESCENDANTS>
 		</NODE>
 
@@ -180,7 +180,7 @@
 			<ROTATION axis="x" angle="180"/>
 
 			<DESCENDANTS>
-				<LEAF type="circle" args="50 21" />
+				<LEAF type="circle" args="75 21" />
 			</DESCENDANTS>
 		</NODE>
 

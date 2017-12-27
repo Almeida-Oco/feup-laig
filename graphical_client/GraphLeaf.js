@@ -40,7 +40,7 @@ class GraphLeaf {
    */
   render(material, texture) {
     material.apply();
-    if (texture != null) {
+    if (texture !== undefined && texture !== null && texture[0] !== null) {
       texture[0].bind();
       material.setTextureWrap('REPEAT', 'REPEAT');
       this.primitive.render(texture[1], texture[2]);

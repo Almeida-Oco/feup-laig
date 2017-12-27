@@ -1,12 +1,13 @@
 class StaticLeaf extends GraphLeaf {
-  constructor(scene, type, args, position) {
+  constructor(scene, type, args, matrix) {
     super(scene, type, args);
-    this.position = position;
+    this.matrix = matrix;
   }
 
   render(mat, text) {
     this.scene.pushMatrix();
-    this.scene.multMatrix(this.position);
+    let quad = [];
+    this.scene.multMatrix(this.matrix);
     super.render(mat, text);
     this.scene.popMatrix();
   }
