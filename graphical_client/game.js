@@ -72,17 +72,16 @@ class Oolong {
 
   play(table_number, seat_number) {
     if (this.next_player !== null && this.next_table == table_number) {
-      if (this.next_player.play(this.board, table_number, seat_number)) {
-        console.log("Play successful!\n");
+      let board = this.next_player.play(this.board, table_number, seat_number);
+      if (board !== null) {
+        this.board = board;
         this.next_table = seat_number;
         this.nextPlayer();
+        console.log("Play successful! seat = " + seat_number);
         return [this.board[table_number][seat_number], this.board[seat_number][seat_number]];
       }
-      else
-        console.log("Play not successful!\n");
     }
+    console.log("Play not successful!");
     return null;
   }
-
-
 };

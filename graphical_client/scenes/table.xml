@@ -62,7 +62,32 @@
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
-		<TEXTURE id="dark_wood_text">
+		<TEXTURE id="player1_text">
+			<file path="images/player1.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="player2_text">
+			<file path="images/player2.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="player1_waiter_text">
+			<file path="images/player1_waiter.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="player2_waiter_text">
+			<file path="images/player2_waiter.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="waiter_text">
+			<file path="images/waiter.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="empty_cell_text">
 			<file path="images/dark_wood.jpg" />
 			<amplif_factor s="5" t="5" />
 		</TEXTURE>
@@ -186,7 +211,7 @@
 
 		<NODE id="tables">
 			<MATERIAL id="wood_mat" />
-			<TEXTURE id="dark_wood_text" />
+			<TEXTURE id="empty_cell_text" />
 
 			<TRANSLATION x="0" y="0" z="0.1"/>
 

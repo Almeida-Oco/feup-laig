@@ -47,4 +47,4 @@ eraseWaiter(Board, Index, -1, NewBoard) :-
 handleWaiter(Board, Seat, NewBoard, NewSeat) :-
 	eraseWaiter(Board, 0, -1, NewBoard1),
 	moveWaiter(NewBoard1, Seat, Seat, NewBoard),
-	assignValue(Seat, NewSeat).
+	NewSeat = Seat.

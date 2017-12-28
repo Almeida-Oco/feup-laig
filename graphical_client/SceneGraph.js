@@ -3,7 +3,8 @@ let tokens_prop = {
   'O': "player2_text",
   '@': "player2_waiter_text",
   '%': "player2_waiter_text",
-  'W': "waiter_text"
+  'W': "waiter_text",
+  '.': "dark_wood_text"
 };
 
 let anim_parser = {
@@ -183,8 +184,8 @@ class SceneGraph {
         is_token = (table !== -1 && seat !== -1);
 
       if (is_pickable && is_token) {
-        this.tokens[table * 10 + seat] = leaf;
-        leaf.setPickable(table * 10 + seat);
+        this.tokens[table * 10 + seat + 1] = leaf;
+        leaf.setPickable(table * 10 + seat + 1);
       }
       this.statics.push(leaf);
     }
@@ -290,8 +291,13 @@ class SceneGraph {
   }
 
   updateTokenTexture(table, seat, token_chr) {
-    let text = tokens_prop[token_chr];
-    this.tokens[table * 10 + seat].setTexture(text);
+    let text_name = tokens_prop[token_chr],
+      text = this.textures[text_name];
+    console.log("Texture name = " + text_name);
+    if (text !== null && text !== undefined)
+      this.tokens[table * 10 + seat + 1].setTexture(text);
+    else
+      console.log("No texture associated with token: " + token_chr);
   }
 
   displayScene() {

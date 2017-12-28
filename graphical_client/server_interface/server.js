@@ -31,31 +31,31 @@ class ServerComs {
    * @return The reply of the server
    */
   doRequest(request_str) {
-    let reply = "undefined",
-      request = new XMLHttpRequest();
-
-    request.onload = function (data) {
-      reply = data;
-    }
-
-    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str, true);
+    let request = new XMLHttpRequest();
+    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str, false);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    request.send();
-    return reply;
+    request.send(null);
+
+    if (request.status === 200) {
+      console.log("Reply ==== " + request.responseText);
+      return request.responseText;
+    }
+    return null;
   }
 
   tryMove(board, table_n, seat_n, token) {
     let request_str = "turn(";
-    request_str += this.arrayToString(board) + ", ";
-    request_str += table_n + ", ";
-    request_str += seat_n + ", ";
+    request_str += this.arrayToString(board) + ",";
+    request_str += table_n + ",";
+    request_str += seat_n + ",";
     request_str += "'" + token + "')";
 
     let ret = this.doRequest(request_str);
-    if (ret !== "" && ret !== "undefined")
+
+    if (ret !== null && ret !== undefined)
       return this.stringToArray(ret);
     else
-      return ret;
+      return null;
   }
 
   validatePlay(Board, TableNumber, SeatNumber) {

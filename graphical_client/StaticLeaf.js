@@ -11,7 +11,7 @@ class StaticLeaf extends GraphLeaf {
   }
 
   setTexture(text) {
-    if (text !== null && text !== undefined && text instanceof CGFtexture)
+    if (text !== null && text !== undefined)
       this.texture = text;
     else
       console.log("Could not set texture of leaf!");

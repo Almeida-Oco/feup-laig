@@ -92,10 +92,10 @@ class XMLscene extends CGFscene {
           if (obj) {
             let pick_result = this.pickResults[i][1],
               table = Math.floor(pick_result / 10),
-              seat = pick_result % 10;
+              seat = pick_result % 10 - 1;
             console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
             let ret = this.game.play(table, seat);
-            if (ret !== null) {
+            if (ret !== null && ret !== undefined) {
               this.graph.updateTokenTexture(table, seat, ret[0]);
               this.graph.updateTokenTexture(seat, seat, ret[1]);
             }

@@ -35,7 +35,7 @@ server_loop(Socket) :-
 			read_request(Stream, Request),
 			read_header(Stream)
 		),_Exception,(
-			% write('Error parsing request.'),nl,
+			write('Error parsing request!\n'),
 			close_stream(Stream),
 			fail
 		)),
@@ -43,7 +43,6 @@ server_loop(Socket) :-
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
-		write('Request: \''), write(Request), write('\'\n'),
 		format('Reply: ~q~n', [MyReply]),
 
 		% Output Response
@@ -61,7 +60,10 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Handles parsed HTTP requests
 % Returns 200 OK on successful aplication of parseInput on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parseInput
-handle_request(Request, MyReply, '200 OK') :- catch(parseInput(Request, MyReply),error(_,_),fail), !.
+handle_request(Request, MyReply, '200 OK') :-
+	catch(parse_input(Request, MyReply),
+		error(_,_),fail),
+	!.
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
 handle_request(_, 'Bad Request', '400 Bad Request').
 
@@ -74,7 +76,6 @@ read_request(Stream, Request) :-
 
 	% Parse Request
 	atom_codes('GET /',Get),
-	write('GET = '), write(Get), nl,
 	append(Get,RL,LineCodes),
 	read_request_aux(RL,RL2),
 	catch(read_from_codes(RL2, Request),
@@ -138,14 +139,14 @@ parse_input('geturn', Res):-
 parse_input('gamestate', Res):-
     write('Getting The entire gamestate'), Res = 'OK', nl.
 
-
-parse_input(turn(Board, TableNumber, SeatNumber, Token), Reply) :-
+parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	\+ validPlay(Board, TableNumber, SeatNumber),
 	Reply = "".
 
-parse_input(turn(Board, Table, Seat, Token), Reply) :-
+parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	validPlay(Board, TableNumber, SeatNumber),
-	serveTea(Board, Table, Seat, Token, Reply).
+	serveTea(Board, TableNumber, SeatNumber, Token, MiddleBoard),
+	handleWaiter(MiddleBoard, SeatNumber, Reply, _).
 
 
 parse_input(playerMove(TeaToken, CurrTableNumber, SeatNumber, Board, NewBoard, NewTableNumber), NewBoard) :-
