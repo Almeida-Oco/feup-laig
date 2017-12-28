@@ -141,10 +141,10 @@
 
 <!-- The nodes -->
 <NODES>
-    <ROOT id="root" />
+    <ROOT id="table_root" />
 
     <!-- The root node -->
-    <NODE id="root">
+    <NODE id="table_root" static="true">
         <MATERIAL id="null" />
         <TEXTURE 	id="null" />
 
@@ -154,7 +154,7 @@
 				</DESCENDANTS>
     </NODE>
 
-		<NODE id="board" static="true">
+		<NODE id="board">
 			<MATERIAL id="wood_mat" />
 			<TEXTURE  id="light_wood_text" />
 

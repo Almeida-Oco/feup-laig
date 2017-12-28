@@ -100,7 +100,8 @@ class SceneGraph {
     this.setupAnimations();
     this.scene.pushMatrix();
     mat4.identity(this.scene.activeMatrix);
-    this.setupStatics(this.nodes.get(this.root_id), this.nodes.get(this.root_id).get("static"));
+    let root = this.nodes.get(this.root_id);
+    this.setupStatics(root, root.get("material"), root.get("texture"), root.get("static"));
     this.scene.popMatrix();
     this.clipStaticNodes(this.nodes.get(this.root_id));
     this.setupNodes();
@@ -147,28 +148,35 @@ class SceneGraph {
     }.bind(this));
   }
 
-  setupStatics(node, was_static) {
+  setupStatics(node, mat, text, was_static) {
     let is_static = (node.get("static") || was_static),
       children = node.get("descendants")[0],
       leaves = node.get("descendants")[1];
+
+    if (node.get("material") !== "null" && node.get("material") !== undefined)
+      mat = node.get("material");
+    if (node.get("texture") !== "null" && node.get("texture") !== undefined)
+      text = node.get("texture");
 
     this.scene.pushMatrix();
     this.scene.multMatrix(node.get("matrix"));
 
     children.forEach(function (value) {
-      this.setupStatics(this.nodes.get(value), is_static);
+      this.setupStatics(this.nodes.get(value), mat, text, is_static);
     }.bind(this));
     if (is_static) {
       leaves.forEach(function (value, key) {
-        this.statics.push(new StaticLeaf(this.scene, value["type"], value["args"], this.scene.getMatrix()));
+        let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]];
+        this.statics.push(new StaticLeaf(this.scene, value["type"], value["args"], leaf_args));
       }.bind(this));
     }
     this.scene.popMatrix();
   }
 
   clipStaticNodes(node) {
+    let is_static = node.get("static");
     node.get("descendants")[0].forEach(function (value, key, obj) {
-      if (this.nodes.get(value).get("static"))
+      if (this.nodes.get(value).get("static") || is_static)
         obj[key] = null;
       else
         this.clipStaticNodes(this.nodes.get(value))
@@ -258,17 +266,14 @@ class SceneGraph {
 
   displayScene() {
     let root = this.nodes[this.root_id];
-    this.displayStatics("wood_mat", "light_wood_text");
+    this.displayStatics();
     this.displayDynamics(root, root.materialID, root.textureID, root.selectable);
   }
 
   //TODO check way to change mat/text of specific leaves (assign ID's to them?)
-  displayStatics(mat, text) {
+  displayStatics() {
     this.statics.forEach(function (leaf) {
-      let material = this.materials[mat],
-        texture = this.textures[text];
-
-      leaf.render(material, texture);
+      leaf.render();
     }.bind(this));
   }
 

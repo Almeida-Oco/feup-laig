@@ -39,7 +39,9 @@ class GraphLeaf {
    * @param texture The texture to apply to the primitive, null if no texture to apply
    */
   render(material, texture) {
-    material.apply();
+    if (material !== null && material !== undefined)
+      material.apply();
+
     if (texture !== undefined && texture !== null && texture[0] !== null) {
       texture[0].bind();
       material.setTextureWrap('REPEAT', 'REPEAT');
