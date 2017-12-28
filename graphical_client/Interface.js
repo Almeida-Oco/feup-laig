@@ -78,7 +78,7 @@ Interface.prototype.addServerComs = function (server_coms) {
 
   };
 
-  this.ai_opts = this.server_folder.addFolder("vsAI");
+  this.ai_opts = server_folder.addFolder("vsAI");
   this.ai_opts.open();
 
   this.ai_opts.add(this.start_opts, 'humanVShuman');
@@ -100,7 +100,7 @@ Interface.prototype.addServerComs = function (server_coms) {
 
   };
 
-  this.game_opts_folder = this.server_folder.addFolder("Opts");
+  this.game_opts_folder = server_folder.addFolder("Opts");
   this.game_opts_folder.open();
 
 
@@ -127,7 +127,7 @@ Interface.prototype.addServerComs = function (server_coms) {
 
   this.game_movs.scene = this.scene;
 
-  this.game_movs_folder = this.server_folder.addFolder("Moves");
+  this.game_movs_folder = server_folder.addFolder("Moves");
   this.game_movs_folder.open();
 
   this.game_movs_folder.add(this.game_movs, 'testmove');
