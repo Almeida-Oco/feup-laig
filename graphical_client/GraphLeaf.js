@@ -34,8 +34,10 @@ class GraphLeaf {
     this.pickable = false;
   }
 
-  setPickable(bool) {
-    this.pickable = bool;
+  setPickable(id) {
+    this.pickable = true;
+    this.id = id;
+    this.pick_obj = (prim_selector[this.type])(this.scene, this.args);
   }
 
   /**
@@ -62,6 +64,8 @@ class GraphLeaf {
     applyMaterial(material);
     applyTexture(texture[0]);
     render(texture[1], texture[2]);
+    if (this.pickable) {
+      this.scene.registerForPick(this.id, this.pick_obj);
+    }
   }
-}
 };
