@@ -19,6 +19,8 @@ function MyGraphLeaf(graph, type, args, scene) {
 		this.primitive = new MyCylinder(scene,args);
 	else if ("patch" == this.type)
 		this.primitive = new MyPatch(scene,args);
+	else if ("wave_obj" == this.type)
+		this.primitive = new MyObject(scene,args);
 }
 
 //TODO render primitive
