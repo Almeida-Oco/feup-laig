@@ -318,7 +318,6 @@
 		</NODE>
 
 
-
 		<NODE id="seats" selectable="true">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />

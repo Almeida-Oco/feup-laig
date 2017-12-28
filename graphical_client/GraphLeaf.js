@@ -31,6 +31,11 @@ class GraphLeaf {
     this.type = type;
     this.args = args;
     this.primitive = (prim_selector[type])(scene, args);
+    this.pickable = false;
+  }
+
+  setPickable(bool) {
+    this.pickable = bool;
   }
 
   /**
@@ -39,16 +44,24 @@ class GraphLeaf {
    * @param texture The texture to apply to the primitive, null if no texture to apply
    */
   render(material, texture) {
-    if (material !== null && material !== undefined)
-      material.apply();
+    let applyMaterial = function (mat) {
+      if (mat !== null && mat !== undefined)
+        mat.apply();
+    };
+    let applyTexture = function (tex) {
+      if (tex !== undefined && tex !== null)
+        tex.bind();
+    };
+    let render = function (afs, aft) {
+      if (afs !== undefined && aft !== undefined && afs > 0 && aft > 0)
+        this.primitive.render(afs, aft);
+      else
+        this.primitive.render(1, 1);
+    }.bind(this);
 
-    if (texture !== undefined && texture !== null && texture[0] !== null) {
-      texture[0].bind();
-      material.setTextureWrap('REPEAT', 'REPEAT');
-      this.primitive.render(texture[1], texture[2]);
-    }
-    else {
-      this.primitive.render(1, 1);
-    }
+    applyMaterial(material);
+    applyTexture(texture[0]);
+    render(texture[1], texture[2]);
   }
+}
 };

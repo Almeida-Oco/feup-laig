@@ -8,8 +8,9 @@ class StaticLeaf extends GraphLeaf {
       this.material = leaf_args[1];
     if (leaf_args[2] !== null && leaf_args[2] !== undefined)
       this.texture = leaf_args[2];
-
   }
+
+
 
   render() {
     this.scene.pushMatrix();
