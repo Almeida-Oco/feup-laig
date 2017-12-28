@@ -4,7 +4,6 @@ let isPrimitive = function (data) {
 
 class ServerComs {
   constructor(port, url, scene) {
-
     if (port == undefined) {
       this.port = 8081;
       console.log("Undefined port, defaulting to 8081");
@@ -21,23 +20,42 @@ class ServerComs {
       this.url = url;
     }
 
+    // while (this.doRequest("handshake") != "handshake");
+    console.log("Server communication established!");
     this.scene = scene;
-
   }
 
+  /**
+   * Performs a request to the prolog server with the given string
+   * @param request_str The string to send to the server
+   * @return The reply of the server
+   */
   doRequest(request_str) {
-    let reply = null,
+    let reply = "undefined",
       request = new XMLHttpRequest();
 
     request.onload = function (data) {
       reply = data;
     }
 
-    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str);
+    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
-
     return reply;
+  }
+
+  tryMove(board, table_n, seat_n, token) {
+    let request_str = "turn(";
+    request_str += this.arrayToString(board) + ", ";
+    request_str += table_n + ", ";
+    request_str += seat_n + ", ";
+    request_str += "'" + token + "')";
+
+    let ret = this.doRequest(request_str);
+    if (ret !== "" && ret !== "undefined")
+      return this.stringToArray(ret);
+    else
+      return ret;
   }
 
   validatePlay(Board, TableNumber, SeatNumber) {
@@ -61,15 +79,46 @@ class ServerComs {
     let result = "[";
     for (let i = 0; i < array.length; i++) {
       if (isPrimitive(array[i]))
-        result += array[i];
+        result += "'" + array[i] + "'";
       else
-        result += arrayToString(array[i]);
+        result += this.arrayToString(array[i]);
 
       result += ",";
     }
-    result.slice(0, result.length - 1);
+    result = result.substr(0, result.length - 1);
     result += "]";
     return result;
+  }
+
+  stringToArray(str) {
+    let nextPar = function (strstr) {
+      for (let i = 0, cont = 0; i < strstr.length; i++) {
+        let chrchr = strstr[i];
+        if (chrchr === ']' && cont === 0)
+          return i + 1;
+        else if (chrchr === ']' && cont > 0)
+          cont--;
+        else if (chrchr === '[')
+          cont++;
+      }
+    };
+
+    let result = [];
+    let cut_str = str.substr(1, str.length - 1); //extract the first '['
+
+    for (let i = 0; i < cut_str.length; i++) {
+      let chr = cut_str[i];
+      if (chr !== ',') {
+        if (chr === '[') {
+          result.push(this.stringToArray(cut_str.substr(i, cut_str.length - i)));
+          i += nextPar(cut_str.substr(i + 1, cut_str.length - i - 1));
+        }
+        else if (chr === ']')
+          return result;
+        else
+          result.push(chr);
+      }
+    }
   }
 
   plStartRequest(request_str) {

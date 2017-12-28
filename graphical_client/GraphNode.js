@@ -4,13 +4,13 @@
  * @param selectable if the node is able to be selected
  */
 class GraphNode {
-  constructor(nodeID, selectable) {
+  constructor(nodeID, pickable) {
     this.nodeID = nodeID;
     this.children = [];
     this.leaves = new Array();
     this.materialID = null;
     this.textureID = null;
-    this.selectable = selectable;
+    this.pickable = pickable;
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
@@ -19,8 +19,8 @@ class GraphNode {
     this.last_time = 0;
   }
 
-  isSelectable() {
-    return this.selectable;
+  isPickable() {
+    return this.pickable;
   }
 
   /**

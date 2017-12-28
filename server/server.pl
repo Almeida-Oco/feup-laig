@@ -43,6 +43,7 @@ server_loop(Socket) :-
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
+		write('Request: \''), write(Request), write('\'\n'),
 		format('Reply: ~q~n', [MyReply]),
 
 		% Output Response
@@ -73,10 +74,12 @@ read_request(Stream, Request) :-
 
 	% Parse Request
 	atom_codes('GET /',Get),
+	write('GET = '), write(Get), nl,
 	append(Get,RL,LineCodes),
 	read_request_aux(RL,RL2),
-
-	catch(read_from_codes(RL2, Request), error(syntax_error(_),_), fail), !.
+	catch(read_from_codes(RL2, Request),
+	 error(syntax_error(_),_), fail),
+	!.
 read_request(_,syntax_error).
 
 read_request_aux([32|_],[46]) :- !.
@@ -135,6 +138,14 @@ parse_input('geturn', Res):-
 parse_input('gamestate', Res):-
     write('Getting The entire gamestate'), Res = 'OK', nl.
 
+
+parse_input(turn(Board, TableNumber, SeatNumber, Token), Reply) :-
+	\+ validPlay(Board, TableNumber, SeatNumber),
+	Reply = "".
+
+parse_input(turn(Board, Table, Seat, Token), Reply) :-
+	validPlay(Board, TableNumber, SeatNumber),
+	serveTea(Board, Table, Seat, Token, Reply).
 
 
 parse_input(playerMove(TeaToken, CurrTableNumber, SeatNumber, Board, NewBoard, NewTableNumber), NewBoard) :-

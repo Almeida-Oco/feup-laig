@@ -6,6 +6,8 @@ class XMLscene extends CGFscene {
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
     this.game = new Oolong();
+    this.game.setPlayer1(new Player());
+    this.game.setPlayer2(new Player());
     this.clear_color = [0.1, 0.1, 0.1, 0];
   }
 
@@ -27,6 +29,7 @@ class XMLscene extends CGFscene {
 
     this.axis = new CGFaxis(this);
     this.enableTextures(true);
+    this.setPickEnabled(true);
     this.transparent_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/transparent.frag");
   }
 
@@ -89,9 +92,13 @@ class XMLscene extends CGFscene {
           if (obj) {
             let pick_result = this.pickResults[i][1],
               table = Math.floor(pick_result / 10),
-              seat = pick_result % 9;
-
-            this.game.play(table, seat);
+              seat = pick_result % 10;
+            console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
+            let ret = this.game.play(table, seat);
+            if (ret !== null) {
+              this.graph.updateTokenTexture(table, seat, ret[0]);
+              this.graph.updateTokenTexture(seat, seat, ret[1]);
+            }
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -100,7 +107,7 @@ class XMLscene extends CGFscene {
   }
 
   display() {
-    //this.logPicking();
+    this.logPicking();
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -122,10 +129,8 @@ class XMLscene extends CGFscene {
       this.axis.display();
 
       this.graph.displayScene();
-
       // this.setActiveShader(this.transparent_shader);
       // this.graph.displayPickables(this.graph.root_id, false);
-      // this.registerForPick(this.graph.id, null);
       // this.setActiveShader(this.defaultShader);
       this.popMatrix();
     }

@@ -318,7 +318,7 @@
 		</NODE>
 
 
-		<NODE id="seats" selectable="true">
+		<NODE id="seats">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 
@@ -432,7 +432,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="seat">
+		<NODE id="seat" pickable="true">
 			<MATERIAL id="null" />
 			<TEXTURE  id="null" />
 

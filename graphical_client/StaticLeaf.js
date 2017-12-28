@@ -10,7 +10,19 @@ class StaticLeaf extends GraphLeaf {
       this.texture = leaf_args[2];
   }
 
+  setTexture(text) {
+    if (text !== null && text !== undefined && text instanceof CGFtexture)
+      this.texture = text;
+    else
+      console.log("Could not set texture of leaf!");
+  }
 
+  setMaterial(mat) {
+    if (mat !== null && mat !== undefined && mat instanceof CGFappearance)
+      this.mat = mat;
+    else
+      console.log("Could not set material of leaf!");
+  }
 
   render() {
     this.scene.pushMatrix();

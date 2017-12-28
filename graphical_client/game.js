@@ -3,17 +3,17 @@ let host = 'localhost';
 
 class Oolong {
   constructor() {
-    this.board = {
-      0: ['.', '.', '.', '.', 'W', '.', '.', '.', '.'],
-      1: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      2: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      3: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      4: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      5: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      6: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      7: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      8: ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-    };
+    this.board = [
+      ['W', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+    ];
 
     this.p1_token = 'X';
     this.waiter_token = 'W';
@@ -21,7 +21,7 @@ class Oolong {
     this.p1_waiter_token = '%';
     this.p2_waiter_token = '@';
 
-    this.server_coms = new ServerComs(port, host);
+    this.server = new ServerComs(port, host);
     this.next_player = null;
     this.next_table = 0;
     this.nextPlayer = function () {
@@ -36,6 +36,8 @@ class Oolong {
 
   setPlayer1(player_strategy) {
     if (this.next_player === null) {
+      player_strategy.setServerComs(this.server);
+      player_strategy.setToken(this.p1_token);
       this.player1 = player_strategy;
       this.player1.token = this.p1_token;
       this.next_player = this.player1;
@@ -46,6 +48,8 @@ class Oolong {
 
   setPlayer2(player_strategy) {
     if (this.next_player !== null) {
+      player_strategy.setServerComs(this.server);
+      player_strategy.setToken(this.p2_token);
       this.player2 = player_strategy;
       this.player2.token = this.p2_token;
     }
@@ -57,11 +61,27 @@ class Oolong {
     return this.board;
   }
 
+  nextPlayer() {
+    if (this.next_player === this.player1)
+      this.next_player = this.player2;
+    else if (this.next_player === this.player2)
+      this.next_player = this.player1;
+    else
+      throw new Error("Game::next_player does not match any player!");
+  }
+
   play(table_number, seat_number) {
     if (this.next_player !== null && this.next_table == table_number) {
-      this.next_player.play(table_number, seat_number);
-      this.nextPlayer();
+      if (this.next_player.play(this.board, table_number, seat_number)) {
+        console.log("Play successful!\n");
+        this.next_table = seat_number;
+        this.nextPlayer();
+        return [this.board[table_number][seat_number], this.board[seat_number][seat_number]];
+      }
+      else
+        console.log("Play not successful!\n");
     }
+    return null;
   }
 
 

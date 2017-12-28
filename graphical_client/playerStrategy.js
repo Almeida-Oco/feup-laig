@@ -1,13 +1,17 @@
 class Player extends Strategy {;
-
   constructor() {
     super();
   }
 
-  play(board, table_number, seat_number) {
-    //TODO should this be here or in server?
-    if (this.server.validatePlay(Board, table_number, seat_number) == 'true') {
-      board[table_number][seat_number] = this.token;
+  play(board, table_n, seat_n) {
+    let reply = this.server.tryMove(board, table_n, seat_n, this.token);
+    if (reply !== undefined && reply.length > 0) {
+      board = reply;
+      console.log("Reply = " + reply);
+      console.log("Board = " + board);
+      return true;
     }
+
+    return false;
   }
 };

@@ -4530,7 +4530,9 @@ CGFscene.prototype.onPick = function (a) {
   }
 };
 CGFscene.prototype.getNextPickRequest = function () {
-  if (this.picksRequests.length == 0) return null;
+  if (this.picksRequests.length == 0)
+    return null;
+
   return this.picksRequests.splice(0, 1);
 };
 CGFscene.prototype.registerForPick = function (a, b) {
@@ -4541,7 +4543,8 @@ CGFscene.prototype.registerForPick = function (a, b) {
   }
 };
 CGFscene.prototype.clearPickRegistration = function () {
-  if (this.pickMode) this.gl.uniform4fv(this.pickShader.uniforms.uPickColor, [0, 0, 0, 0]);
+  if (this.pickMode)
+    this.gl.uniform4fv(this.pickShader.uniforms.uPickColor, [0, 0, 0, 0]);
 };
 CGFscene.prototype.intToRGB = function (a) {
   var b = a >> 16;

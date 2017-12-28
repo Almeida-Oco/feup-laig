@@ -7,7 +7,9 @@ let texture_req = ["file", "amplif_factor"];
 let material_req = ["shininess", "specular", "diffuse", "ambient", "emission"];
 let nodes_req = ["material", "texture", "descendants"];
 
-let node_infos = ["id", "static"];
+let node_infos = ["id", "static", "pickable"];
+let node_needed_infos = ["id"];
+let node_optional_infos = ["static", "pickable"];
 
 class GraphParser {
   constructor(reader) {
@@ -18,30 +20,19 @@ class GraphParser {
       'z': [0, 0, 1]
     };
 
-    this.parseNodeInfo = function (node) {
-      let needed_infos = ["id"];
-      let optional_info = ["static", "selectable"];
+    this.parseNodeOptionals = function (node) {
       let values = new Map();
 
-      for (let i = 0; i < node_infos.length; i++) {
-        let info_name = node_infos[i],
+      for (let i = 0; i < node_optional_infos.length; i++) {
+        let info_name = node_optional_infos[i],
           info = null;
         if (this.reader.hasAttribute(node, info_name))
-          info = this.reader.getString(node, info_name);
+          info = this.reader.getBoolean(node, info_name);
+        else
+          info = false;
 
-        if (this.hasKey(needed_infos, info_name) && info === null) {
-          console.error("Node has no '" + info_name + "'!");
-          return null;
-        }
-        else if (info !== null)
-          values.set(info_name, info);
+        values.set(info_name, info);
       }
-
-      //insert optional informations
-      optional_info.forEach(function (value, key, arr) {
-        if (!values.has(value))
-          values.set(value, false);
-      });
 
       return values;
     };
@@ -791,14 +782,18 @@ class GraphParser {
         }
       }
       else if (node_name === "NODE") {
-        let node_infos = this.parseNodeInfo(node);
+        let node_id = this.reader.getString(node, 'id'),
+          node_infos = this.parseNodeOptionals(node);
 
-        if (node_infos === null || this.hasKey(values, node_infos["id"])) {
+        if (node_id === null || node_id === undefined) {
+          console.error("Node #" + i + " must have an ID!");
+          return null;
+        }
+        if (this.hasKey(values, node_infos["id"])) {
           console.error("Node ID must be unique! (conflict: ID = " + node_infos["id"] + ")");
           return null;
         }
-        let node_id = node_infos.get("id");
-        node_infos.delete("id");
+
         let specs = node.children,
           matrix = mat4.create();
         for (let j = 0; j < specs.length; j++) { //Parses node specifications

@@ -11,4 +11,8 @@ class Strategy {
   setServerComs(server) {
     this.server = server;
   }
+
+  setToken(token) {
+    this.token = token;
+  }
 };

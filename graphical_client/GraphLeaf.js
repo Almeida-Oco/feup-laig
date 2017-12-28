@@ -35,9 +35,14 @@ class GraphLeaf {
   }
 
   setPickable(id) {
-    this.pickable = true;
-    this.id = id;
-    this.pick_obj = (prim_selector[this.type])(this.scene, this.args);
+    if (!this.pickable) {
+      this.pickable = true;
+      this.id = id;
+    }
+  }
+
+  isPickable() {
+    return this.pickable;
   }
 
   /**
@@ -63,9 +68,12 @@ class GraphLeaf {
 
     applyMaterial(material);
     applyTexture(texture[0]);
-    render(texture[1], texture[2]);
     if (this.pickable) {
-      this.scene.registerForPick(this.id, this.pick_obj);
+      this.scene.registerForPick(this.id, this.primitive);
+      render(texture[1], texture[2]);
+      this.scene.clearPickRegistration();
     }
+    else
+      render(texture[1], texture[2]);
   }
 };

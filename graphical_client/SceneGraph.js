@@ -1,9 +1,9 @@
 let tokens_prop = {
-  'X': ["player1_mat", "player1_text"],
-  'O': ["player2_mat", "player2_text"],
-  '@': ["player2_waiter_mat", "player2_waiter_text"],
-  '%': ["player2_waiter_mat", "player2_waiter_text"],
-  'W': ["waiter_mat", "waiter_text"]
+  'X': "player1_text",
+  'O': "player2_text",
+  '@': "player2_waiter_text",
+  '%': "player2_waiter_text",
+  'W': "waiter_text"
 };
 
 let anim_parser = {
@@ -21,6 +21,9 @@ let anim_parser = {
   }
 };
 
+let table_regex = /table(\d)$/;
+let seat_regex = /seat(\d)$/
+
 class SceneGraph {
   /**
    * @description Contructor for SceneGraph
@@ -37,6 +40,7 @@ class SceneGraph {
 
     this.statics = [];
     this.nodes = [];
+    this.tokens = [];
     this.root_id = null; // The id of the root element.
     this.tables_root = "tables";
 
@@ -101,7 +105,7 @@ class SceneGraph {
     this.scene.pushMatrix();
     mat4.identity(this.scene.activeMatrix);
     let root = this.nodes.get(this.root_id);
-    this.setupStatics(root, root.get("material"), root.get("texture"), root.get("static"));
+    this.setupStatics(this.root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
     this.scene.popMatrix();
     this.clipStaticNodes(this.nodes.get(this.root_id));
     this.setupNodes();
@@ -148,8 +152,11 @@ class SceneGraph {
     }.bind(this));
   }
 
-  setupStatics(node, mat, text, was_static) {
-    let is_static = (node.get("static") || was_static),
+  //TODO is there a better way to do this? 6 parameters is a very nasty code smell
+  setupStatics(node_id, mat, text, table, seat, was_static) {
+    let node = this.nodes.get(node_id),
+      is_static = (node.get("static") || was_static),
+      is_pickable = node.get("pickable"),
       children = node.get("descendants")[0],
       leaves = node.get("descendants")[1];
 
@@ -158,17 +165,28 @@ class SceneGraph {
     if (node.get("texture") !== "null" && node.get("texture") !== undefined)
       text = node.get("texture");
 
+    let arr;
+    if (table === -1 && (arr = table_regex.exec(node_id)) !== null)
+      table = parseInt(arr[1]);
+    if (seat === -1 && (arr = seat_regex.exec(node_id)) !== null)
+      seat = parseInt(arr[1]);
+
     this.scene.pushMatrix();
     this.scene.multMatrix(node.get("matrix"));
 
-    children.forEach(function (value) {
-      this.setupStatics(this.nodes.get(value), mat, text, is_static);
-    }.bind(this));
-    if (is_static) {
-      leaves.forEach(function (value, key) {
-        let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]];
-        this.statics.push(new StaticLeaf(this.scene, value["type"], value["args"], leaf_args));
-      }.bind(this));
+    for (let i = 0; i < children.length; i++)
+      this.setupStatics(children[i], mat, text, table, seat, is_static);
+
+    for (let i = 0; is_static && i < leaves.length; i++) {
+      let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
+        leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args),
+        is_token = (table !== -1 && seat !== -1);
+
+      if (is_pickable && is_token) {
+        this.tokens[table * 10 + seat] = leaf;
+        leaf.setPickable(table * 10 + seat);
+      }
+      this.statics.push(leaf);
     }
     this.scene.popMatrix();
   }
@@ -186,18 +204,25 @@ class SceneGraph {
 
   setupNodes() {
     this.nodes.forEach(function (value, key, map) {
-      let node = new GraphNode(key, value.get("selectable")),
+      let node = new GraphNode(key, value.get("pickable")),
         animations = value.get("animations"),
         descendants = value.get("descendants");
 
       for (let i = 0; animations !== undefined && i < animations.length; i++)
         node.addAnimation(this.animations[animations[i]]);
+
       for (let i = 0; descendants !== undefined && i < descendants[0].length; i++) {
         if (descendants[0][i] !== null)
           node.addChild(descendants[0][i]);
       }
-      for (let i = 0; descendants !== undefined && i < descendants[1].length; i++)
-        node.addLeaf(new DynamicLeaf(this.scene, descendants[1][i]["type"], descendants[1][i]["args"]));
+
+      for (let i = 0; descendants !== undefined && i < descendants[1].length; i++) {
+        let leaf = new DynamicLeaf(this.scene, descendants[1][i]["type"], descendants[1][i]["args"]);
+        if (node.isPickable())
+          leaf.setPickable();
+
+        node.addLeaf(leaf);
+      }
 
 
       node.transformMatrix = value.get("matrix");
@@ -264,6 +289,11 @@ class SceneGraph {
     return String.fromCharCode.apply(null, numbers);
   }
 
+  updateTokenTexture(table, seat, token_chr) {
+    let text = tokens_prop[token_chr];
+    this.tokens[table * 10 + seat].setTexture(text);
+  }
+
   displayScene() {
     let root = this.nodes[this.root_id];
     this.displayStatics();
@@ -272,9 +302,8 @@ class SceneGraph {
 
   //TODO check way to change mat/text of specific leaves (assign ID's to them?)
   displayStatics() {
-    this.statics.forEach(function (leaf) {
-      leaf.render();
-    }.bind(this));
+    for (let i = 0; i < this.statics.length; i++)
+      this.statics[i].render();
   }
 
   /**
@@ -301,39 +330,5 @@ class SceneGraph {
       node.leaves[i].render(this.materials[mat], (text == "clear" ? null : this.textures[text]), this.scene);
 
     this.scene.popMatrix();
-  }
-
-  displayPickables(node_id, sel) {
-    var node = this.statics[node_id],
-      real_sel = node.selectable || sel;
-
-    this.scene.pushMatrix();
-
-    if (node.transformMatrix != null)
-      this.scene.multMatrix(node.transformMatrix);
-    this.scene.multMatrix(node.applyAnimations());
-
-    for (var i = 0; i < node.children.length; i++)
-      this.displayPickables(node.children[i], real_sel);
-    for (var i = 0; real_sel && i < node.leaves.length; i++) {
-      let leaf = this.seat_picker[Math.floor(id / 10)][id % 9];
-      this.scene.registerForPick(this.id++, leaf.getPrimitive());
-      leaf.render()
-    }
-
-    this.scene.popMatrix();
-  }
-
-  displayBoard(game_board) {
-    let tables_root = this.nodes[this.tables_root],
-      tables = tables_root.children;
-
-    for (let i = 0, table = this.nodes[tables[i]]; i < tables.length; i++) {
-      let table_number = (new RegExp('table(\d)')).exec(table)[1];
-      for (let j = 0, seat = this.nodes[table.children[j]]; j < table.children.length; j++) {
-        let seat_number = (new RegExp('seat(\d)')).exec(seat)[1],
-          props = tokens_prop[board[table_number][seat_number]];
-      }
-    }
   }
 };
