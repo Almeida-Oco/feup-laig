@@ -42,6 +42,14 @@ class ServerComs {
     return null;
   }
 
+  newBoard() {
+    let ret = this.doRequest("newboard");
+    if (ret !== null && ret !== undefined)
+      return this.stringToArray(this.doRequest("newboard"));
+    else
+      return null;
+  }
+
   tryMove(board, table_n, seat_n, token) {
     let request_str = "turn(";
     request_str += this.arrayToString(board) + ",";

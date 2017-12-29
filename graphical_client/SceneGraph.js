@@ -22,8 +22,20 @@ let anim_parser = {
   }
 };
 
+let specials_prop = {
+  0: "spec_mv_green",
+  1: "spec_mv_black",
+  2: "spec_mv_wait_green",
+  3: "spec_mv_wait_black",
+  4: "spec_rotate",
+  5: "spec_rotate",
+  6: "spec_swp_unc",
+  7: "spec_swp_claimed",
+}
+
 let table_regex = /table(\d)$/;
-let seat_regex = /seat(\d)$/
+let seat_regex = /seat(\d)$/;
+let special_regex = /special(\d)$/;
 
 class SceneGraph {
   /**
@@ -46,6 +58,7 @@ class SceneGraph {
     this.statics = [];
     this.nodes = [];
     this.tokens = [];
+    this.specials = [];
     this.root_ids = [];
     this.tables_root = "tables";
 
@@ -114,7 +127,7 @@ class SceneGraph {
     mat4.identity(this.scene.activeMatrix);
 
     let root = nodes.get(root_id);
-    this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
+    this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, -1, root.get("static"));
     this.scene.popMatrix();
     this.clipStaticNodes(nodes, nodes.get(root_id));
     this.nodes[root_id] = nodes;
@@ -175,8 +188,8 @@ class SceneGraph {
     }.bind(this));
   }
 
-  //TODO is there a better way to do this? 7 parameters is a very nasty code smell
-  setupStatics(nodes, node_id, mat, text, table, seat, was_static) {
+  //TODO is there a better way to do this? 8 parameters is a very nasty code smell
+  setupStatics(nodes, node_id, mat, text, table, seat, special, was_static) {
     let node = nodes.get(node_id),
       is_static = (node.get("static") || was_static),
       is_pickable = node.get("pickable"),
@@ -193,22 +206,27 @@ class SceneGraph {
       table = parseInt(arr[1]);
     if (seat === -1 && (arr = seat_regex.exec(node_id)) !== null)
       seat = parseInt(arr[1]);
+    if (special === -1 && (arr = special_regex.exec(node_id)) !== null)
+      special = parseInt(arr[1]);
 
     this.scene.pushMatrix();
     this.scene.multMatrix(node.get("matrix"));
 
     for (let i = 0; i < children.length; i++)
-      this.setupStatics(nodes, children[i], mat, text, table, seat, is_static);
+      this.setupStatics(nodes, children[i], mat, text, table, seat, special, is_static);
 
     for (let i = 0; is_static && i < leaves.length; i++) {
       let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
-        leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args),
-        is_token = (table !== -1 && seat !== -1);
+        leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args);
 
-      if (is_pickable && is_token) {
+      if (is_pickable && table !== -1 && seat !== -1) {
         this.tokens[table * 10 + seat + 1] = leaf;
         leaf.setPickable(table * 10 + seat + 1);
       }
+      if (special !== -1) {
+        this.specials[special] = leaf;
+      }
+
       this.statics.push(leaf);
     }
     this.scene.popMatrix();
@@ -313,12 +331,21 @@ class SceneGraph {
   }
 
   updateTokens(board) {
-    console.log(board);
-    for (let table_n = 0; table_n < board.length; table_n++)
+    let table_n = 0;
+    for (; table_n < board.length - 1; table_n++) {
       for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
         let text = this.textures[tokens_prop[board[table_n][seat_n]]];
         this.tokens[table_n * 10 + seat_n + 1].setTexture(text);
       }
+    }
+
+    for (let i = 0; i < board[table_n].length; i++) {
+      let spec_number = parseInt(board[table_n][i]),
+        text2 = this.textures[specials_prop[spec_number]];
+
+      this.specials[spec_number].setTexture(text2);
+    }
+
   }
 
   displayScene() {

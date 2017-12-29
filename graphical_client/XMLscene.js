@@ -72,6 +72,7 @@ class XMLscene extends CGFscene {
     this.readSceneLights();
     console.log("Graph loaded successfully\n");
 
+    this.graph.updateTokens(this.game.getBoard());
     this.interface.addServerComs(this.server_coms);
     this.interface.addUndo(this);
   }

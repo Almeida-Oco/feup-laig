@@ -66,14 +66,20 @@ class GraphLeaf {
         this.primitive.render(1, 1);
     }.bind(this);
 
+    let afs = 1,
+      aft = 1;
     applyMaterial(material);
-    applyTexture(texture[0]);
+    if (texture !== null && texture !== undefined) {
+      applyTexture(texture[0]);
+      afs = texture[1], aft = texture[2];
+    }
+
     if (this.pickable) {
       this.scene.registerForPick(this.id, this.primitive);
       render(texture[1], texture[2]);
       this.scene.clearPickRegistration();
     }
     else
-      render(texture[1], texture[2]);
+      render(afs, aft);
   }
 };

@@ -139,6 +139,11 @@ parse_input('geturn', Res):-
 parse_input('gamestate', Res):-
     write('Getting The entire gamestate'), Res = 'OK', nl.
 
+
+parse_input(newboard, Reply) :-
+	createTables(Reply,0,10).
+
+
 parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	\+ validPlay(Board, TableNumber, SeatNumber),
 	Reply = "".

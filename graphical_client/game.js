@@ -3,19 +3,6 @@ let host = 'localhost';
 
 class Oolong {
   constructor() {
-    this.board = [
-      ['W', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
-    ];
-
-
     this.p1_token = 'X';
     this.waiter_token = 'W';
     this.p2_token = 'O';
@@ -23,6 +10,9 @@ class Oolong {
     this.p2_waiter_token = '@';
 
     this.server = new ServerComs(port, host);
+    this.board = this.server.newBoard();
+    this.board[0][0] = "W";
+
     this.next_player = null;
     this.next_table = 0;
 

@@ -92,12 +92,12 @@
 			<amplif_factor s="5" t="5" />
 		</TEXTURE>
 
-		<TEXTURE id="spec_mv_unc_black">
+		<TEXTURE id="spec_mv_black">
 			<file path="images/move_unclaimed_black.png" />
 			<amplif_factor s="2" t="2" />
 		</TEXTURE>
 
-		<TEXTURE id="spec_mv_unc_green">
+		<TEXTURE id="spec_mv_green">
 			<file path="images/move_unclaimed_green.png" />
 			<amplif_factor s="2" t="2" />
 		</TEXTURE>
@@ -246,7 +246,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special1" />
+				<NODEREF id="special0" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -259,7 +259,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special2" />
+				<NODEREF id="special1" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -272,7 +272,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special3" />
+				<NODEREF id="special2" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -285,7 +285,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special4" />
+				<NODEREF id="special3" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -298,7 +298,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special5" />
+				<NODEREF id="special4" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -311,7 +311,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special6" />
+				<NODEREF id="special5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -324,7 +324,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special7" />
+				<NODEREF id="special6" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -337,7 +337,7 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special8" />
+				<NODEREF id="special7" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -468,9 +468,9 @@
 
 
 
-		<NODE id="special1">
+		<NODE id="special0">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_mv_unc_black" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="-90" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -480,9 +480,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special2">
+		<NODE id="special1">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_rotate" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="-45" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -492,9 +492,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special3">
+		<NODE id="special2">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_mv_wait_black" />
+			<TEXTURE  id="null" />
 
 			<TRANSLATION x="0" y="6" z="0" />
 
@@ -503,9 +503,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special4">
+		<NODE id="special3">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_mv_unc_green" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="45" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -515,9 +515,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special5">
+		<NODE id="special4">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_rotate" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="90" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -527,9 +527,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special6">
+		<NODE id="special5">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_swp_unc" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="135" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -539,9 +539,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special7">
+		<NODE id="special6">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_mv_wait_green" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="180" />
 			<TRANSLATION x="0" y="6" z="0" />
@@ -551,9 +551,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="special8">
+		<NODE id="special7">
 			<MATERIAL id="null" />
-			<TEXTURE  id="spec_swp_claimed" />
+			<TEXTURE  id="null" />
 
 			<ROTATION axis="z" angle="215" />
 			<TRANSLATION x="0" y="6" z="0" />

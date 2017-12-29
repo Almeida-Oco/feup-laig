@@ -70,7 +70,7 @@ class GraphNode {
     return temp_matrix;
   }
 
-  /**
+  /** 
    * @description Gets the time elapsed from previous function call
    * @return Number of milliseconds passed
    */
