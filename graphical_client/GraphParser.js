@@ -1,4 +1,4 @@
-let leaves_types = ["circle", "rectangle", "triangle", "patch", "cylinder", "sphere"];
+let leaves_types = ["circle", "rectangle", "triangle", "patch", "cylinder", "sphere", "cup"];
 
 let initials_req = ["frustum", "reference"];
 let illumins_req = ["ambient", "background"];

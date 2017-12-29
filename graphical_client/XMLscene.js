@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, -10, 10), vec3.fromValues(0, 0, 0));
     this.lights = [];
 
-    this.cup = new Cup(this, 3, 0.01);
+    this.cup = new Cup(this, [3, 0.01]);
 
     this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
@@ -37,7 +37,6 @@ class XMLscene extends CGFscene {
   update(time_elapsed) {
     // this.cup.nextLiquid();
   }
-
 
 
   readSceneInitials() {
@@ -95,10 +94,12 @@ class XMLscene extends CGFscene {
             let pick_result = this.pickResults[i][1],
               table = Math.floor(pick_result / 10),
               seat = pick_result % 10 - 1;
+
+            alert(this.pickResults);
             console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
-            let ret = this.game.play(table, seat);
-            if (ret !== null && ret !== undefined)
-              this.graph.updateTokens(ret);
+            // let ret = this.game.play(table, seat);
+            // if (ret !== null && ret !== undefined)
+            // this.graph.updateTokens(ret);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
