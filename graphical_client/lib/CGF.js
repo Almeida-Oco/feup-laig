@@ -3751,7 +3751,8 @@ function CGFshader(a, b, c) {
   this.gl = a;
   this.uniforms = {};
   this.attributes = {};
-  if (b != undefined && c != undefined) this.init(b, c);
+  if (b != undefined && c != undefined)
+    this.init(b, c);
   this.textureUnit = 0;
 }
 CGFshader.prototype.init = function (a, b) {
@@ -3866,8 +3867,8 @@ CGFshader.prototype.compile_program = function (a, b) {
   };
   c.linkProgram(d);
   if (!c.getProgramParameter(d, c.LINK_STATUS)) {
-    console.log(c.getProgramInfoLog(d));
-    alert('Could not initialise shaders');
+    let n = c.getProgramInfoLog(d);
+    alert('Could not initialise shaders: ' + n);
   }
   this.program = d;
   c.useProgram(d);

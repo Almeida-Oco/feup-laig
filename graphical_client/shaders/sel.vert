@@ -2,8 +2,6 @@ attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
 
-uniform bool uUseTexture;
-
 struct lightProperties {
     vec4 position;                  // Default: (0, 0, 1, 0)
     vec4 ambient;                   // Default: (0, 0, 0, 1)
@@ -108,27 +106,22 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 }
 
 void main() {
-
 	vec4 vertex = uMVMatrix * vec4(aVertexPosition, 1.0);
 
 	// Color for fragment shader
 
 	// Transformed normal position
 	vec3 N = normalize(vec3(uNMatrix * vec4(aVertexNormal*0.1, 1.0)));
-
 	vec3 eyeVec = -vec3(vertex.xyz);
 	vec3 E = normalize(eyeVec);
 
-	vFinalColor = lighting(vertex, E, N);
 
-	if (uUseTexture)
+	vFinalColor = lighting(vertex, E, N);
 	vTextureCoord = aTextureCoord;
 
 
 	// Actual position calculation
-
 	vertex=vec4(aVertexPosition+aVertexNormal*normScale*0.1, 1.0);
-
 	gl_Position = uPMatrix * uMVMatrix * vertex;
 
 }

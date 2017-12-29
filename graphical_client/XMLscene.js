@@ -1,7 +1,6 @@
 class XMLscene extends CGFscene {
   constructor(Interface) {
     super();
-    CGFscene.call(this);
 
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
@@ -23,17 +22,18 @@ class XMLscene extends CGFscene {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.DST_ALPHA);
 
     this.axis = new CGFaxis(this);
     this.enableTextures(true);
     this.setPickEnabled(true);
     this.transparent_shader = new CGFshader(this.gl, "shaders/sel.vert", "shaders/transparent.frag");
+    this.blend_shader = new CGFshader(this.gl, 'shaders/sel.vert', 'shaders/blend.frag');
+    this.blend_shader.setUniformsValues({
+      'uSampler': 0
+    });
   }
 
-  initGame(startString) {
-    this.gameState = new GameState(this, startString);
-    console.log('From XMLscene got a gameState');
-  }
 
   readSceneInitials() {
     this.camera.near = this.graph.initials.get("frustum")["near"];
@@ -126,10 +126,10 @@ class XMLscene extends CGFscene {
     if (this.graph.loadedOk) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
-      this.cup.render(1, 1);
       this.axis.display();
 
       this.graph.displayScene();
+      this.cup.render(1, 1);
       // this.setActiveShader(this.transparent_shader);
       // this.graph.displayPickables(this.graph.root_id, false);
       // this.setActiveShader(this.defaultShader);

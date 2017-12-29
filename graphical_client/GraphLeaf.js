@@ -57,7 +57,7 @@ class GraphLeaf {
     };
     let applyTexture = function (tex) {
       if (tex !== undefined && tex !== null)
-        tex.bind();
+        tex.bind(0);
     };
     let render = function (afs, aft) {
       if (afs !== undefined && aft !== undefined && afs > 0 && aft > 0)
