@@ -77,8 +77,8 @@ class Oolong {
         this.board = board;
         this.next_table = seat_number;
         this.nextPlayer();
-        console.log("Play successful! seat = " + seat_number);
-        return [this.board[table_number][seat_number], this.board[seat_number][seat_number]];
+        console.log("Play successful!");
+        return this.board;
       }
     }
     console.log("Play not successful!");

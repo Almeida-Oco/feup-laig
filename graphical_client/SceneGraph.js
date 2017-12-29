@@ -4,7 +4,7 @@ let tokens_prop = {
   '@': "player2_waiter_text",
   '%': "player2_waiter_text",
   'W': "waiter_text",
-  '.': "dark_wood_text"
+  '.': "empty_cell_text"
 };
 
 let anim_parser = {
@@ -290,14 +290,12 @@ class SceneGraph {
     return String.fromCharCode.apply(null, numbers);
   }
 
-  updateTokenTexture(table, seat, token_chr) {
-    let text_name = tokens_prop[token_chr],
-      text = this.textures[text_name];
-    console.log("Texture name = " + text_name);
-    if (text !== null && text !== undefined)
-      this.tokens[table * 10 + seat + 1].setTexture(text);
-    else
-      console.log("No texture associated with token: " + token_chr);
+  updateTokens(board) {
+    for (let table_n = 0; table_n < board.length; table_n++)
+      for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
+        let text = this.textures[tokens_prop[board[table_n][seat_n]]];
+        this.tokens[table_n * 10 + seat_n + 1].setTexture(text);
+      }
   }
 
   displayScene() {
