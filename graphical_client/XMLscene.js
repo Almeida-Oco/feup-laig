@@ -14,14 +14,7 @@ class XMLscene extends CGFscene {
   init(application) {
     CGFscene.prototype.init.call(this, application);
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 0, 40), vec3.fromValues(0, 0, 0));
-
-    this.lights[0].setPosition(1, 4, 1, 1);
-    this.lights[0].setAmbient(0.25, 0.25, 0.25, 1);
-    this.lights[0].setDiffuse(0.9, 0.9, 0.9, 1);
-    this.lights[0].setSpecular(0.9, 0.9, 0.9, 1);
-    this.lights[0].enable();
-    this.lights[0].update();
-
+    this.lights = [];
     this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
@@ -57,8 +50,7 @@ class XMLscene extends CGFscene {
   }
 
   readSceneLights() {
-    this.lights = [];
-    let i = 0;
+    let i = this.lights.length;
     this.graph.lights.forEach(function (value, key, map) {
       let light = new CGFlight(this, i);
       light.setPosition(value.get("position")["x"], value.get("position")["y"], value.get("position")["z"], value.get("position")["w"]);
@@ -80,10 +72,8 @@ class XMLscene extends CGFscene {
     this.readSceneLights();
     console.log("Graph loaded successfully\n");
 
-
     this.interface.addServerComs(this.server_coms);
     this.interface.addUndo(this);
-    // this.graph.updateTokens(this.game.board);
   }
 
   logPicking() {

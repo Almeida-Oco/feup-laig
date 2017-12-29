@@ -34,15 +34,19 @@ class SceneGraph {
   constructor(scene) {
     this.loadedOk = null;
     this.start_time = 0;
-
+    this.xml_n = 0;
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
 
+    this.materials = [];
+    this.textures = [];
+    this.animations = [];
+
     this.statics = [];
     this.nodes = [];
     this.tokens = [];
-    this.root_id = null; // The id of the root element.
+    this.root_ids = [];
     this.tables_root = "tables";
 
     // File reading
@@ -57,6 +61,7 @@ class SceneGraph {
      * After the file is read, the reader calls onXMLReady on this object.
      * If any error occurs, the reader calls onXMLError on this object, with an error message
      */
+
     this.reader.open("scenes/" + filename, this);
   }
 
@@ -65,7 +70,8 @@ class SceneGraph {
    */
   onXMLReady() {
     console.log("XML Loading finished.");
-    let parser = new GraphParser(this.reader);
+    let parser = new GraphParser(this.reader),
+      texts, mats, anims;
 
     if ((this.initials = parser.parseInitials()) === null) {
       console.error("parseInitials() failed!\n");
@@ -79,37 +85,41 @@ class SceneGraph {
       console.error("parseLights() failed!\n");
       return null;
     }
-    if ((this.textures = parser.parseTextures()) === null) {
+    if ((texts = parser.parseTextures()) === null) {
       console.error("parseTextures() failed!\n");
       return null;
     }
-    if ((this.materials = parser.parseMaterials()) === null) {
+    if ((mats = parser.parseMaterials()) === null) {
       console.error("parseMaterials() failed!\n");
       return null;
     }
-    if ((this.animations = parser.parseAnimations()) === null) {
+    if ((anims = parser.parseAnimations()) === null) {
       console.error("parseAnimations() failed!\n");
       return null;
     }
-    console.log("Got here\n");
+
     let nodes_ret;
     if ((nodes_ret = parser.parseNodes()) === null)
       return null;
-    console.log("After parse Nodes\n");
+    let root_id = nodes_ret[0],
+      nodes = nodes_ret[1];
 
-    this.root_id = nodes_ret[0];
-    this.nodes = nodes_ret[1];
+    this.root_ids.push([root_id]);
 
-    this.setupMaterials();
-    this.setupTextures();
-    this.setupAnimations();
+    this.setupMaterials(mats);
+    this.setupTextures(texts);
+    this.setupAnimations(anims);
+
     this.scene.pushMatrix();
     mat4.identity(this.scene.activeMatrix);
-    let root = this.nodes.get(this.root_id);
-    this.setupStatics(this.root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
+
+    let root = nodes.get(root_id);
+    this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
     this.scene.popMatrix();
-    this.clipStaticNodes(this.nodes.get(this.root_id));
-    this.setupNodes();
+    this.clipStaticNodes(nodes, nodes.get(root_id));
+    this.nodes[root_id] = nodes;
+
+    this.setupNodes(root_id);
     console.log("Loaded OK\n");
     this.loadedOk = true;
 
@@ -117,22 +127,27 @@ class SceneGraph {
     this.scene.onGraphLoaded();
   }
 
-  setupAnimations() {
+  setupAnimations(animations) {
     let combo_anims = [];
-    this.animations.forEach(function (value, key, map) {
+    animations.forEach(function (value, key) {
       let type = value.get("type");
+      let anim = anim_parser[type](value.get("speed"), value.get("args"));
       if (type === "combo")
-        combo_anims.push(key);
+        combo_anims.push(anim);
 
-      map[key] = anim_parser[type](value.get("speed"), value.get("args"));
-    });
+      if (this.animations[key] === undefined)
+        this.animations[key] = anim;
+      else
+        throw new Error("Animations ID must be different! (conflict ID = " + key + ")");
+    }.bind(this));
+    //TODO its possible combo animations are not well defined!
     combo_anims.forEach(function (value, key, map) {
       value.setAnimations(this.animations);
     })
   }
 
-  setupMaterials() {
-    this.materials.forEach(function (value, key, map) {
+  setupMaterials(materials) {
+    materials.forEach(function (value, key) {
       if (value !== null && value !== undefined) {
         let material = new CGFappearance(this.scene);
         material.setAmbient(value.get("ambient")["r"], value.get("ambient")["g"], value.get("ambient")["b"], value.get("ambient")["a"]);
@@ -141,21 +156,28 @@ class SceneGraph {
         material.setEmission(value.get("emission")["r"], value.get("emission")["g"], value.get("emission")["b"], value.get("emission")["a"]);
         material.setShininess(value.get("shininess"));
 
-        map[key] = material;
+        if (this.materials[key] === undefined)
+          this.materials[key] = material;
+        else
+          throw new Error("Materials ID must be different! (conflict ID = " + key + ")")
       }
     }.bind(this));
   }
 
-  setupTextures() {
-    this.textures.forEach(function (value, key, map) {
+  setupTextures(textures) {
+    textures.forEach(function (value, key) {
       let texture = new CGFtexture(this.scene, "./scenes/" + value.get("file"));
-      map[key] = [texture, value.get("amplif_factor")["s"], value.get("amplif_factor")["t"]];
+
+      if (this.textures[key] === undefined)
+        this.textures[key] = [texture, value.get("amplif_factor")["s"], value.get("amplif_factor")["t"]];
+      else
+        throw new Error("Textures ID must be different! (conflict ID = " + key + ")");
     }.bind(this));
   }
 
-  //TODO is there a better way to do this? 6 parameters is a very nasty code smell
-  setupStatics(node_id, mat, text, table, seat, was_static) {
-    let node = this.nodes.get(node_id),
+  //TODO is there a better way to do this? 7 parameters is a very nasty code smell
+  setupStatics(nodes, node_id, mat, text, table, seat, was_static) {
+    let node = nodes.get(node_id),
       is_static = (node.get("static") || was_static),
       is_pickable = node.get("pickable"),
       children = node.get("descendants")[0],
@@ -176,7 +198,7 @@ class SceneGraph {
     this.scene.multMatrix(node.get("matrix"));
 
     for (let i = 0; i < children.length; i++)
-      this.setupStatics(children[i], mat, text, table, seat, is_static);
+      this.setupStatics(nodes, children[i], mat, text, table, seat, is_static);
 
     for (let i = 0; is_static && i < leaves.length; i++) {
       let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
@@ -192,19 +214,19 @@ class SceneGraph {
     this.scene.popMatrix();
   }
 
-  clipStaticNodes(node) {
+  clipStaticNodes(nodes, node) {
     let is_static = node.get("static");
     node.get("descendants")[0].forEach(function (value, key, obj) {
-      if (this.nodes.get(value).get("static") || is_static)
+      if (nodes.get(value).get("static") || is_static)
         obj[key] = null;
       else
-        this.clipStaticNodes(this.nodes.get(value))
+        this.clipStaticNodes(nodes.get(value))
 
     }.bind(this));
   }
 
-  setupNodes() {
-    this.nodes.forEach(function (value, key, map) {
+  setupNodes(root_id) {
+    this.nodes[root_id].forEach(function (value, key, map) {
       let node = new GraphNode(key, value.get("pickable")),
         animations = value.get("animations"),
         descendants = value.get("descendants");
@@ -300,9 +322,12 @@ class SceneGraph {
   }
 
   displayScene() {
-    let root = this.nodes[this.root_id];
     this.displayStatics();
-    this.displayDynamics(root, root.materialID, root.textureID, root.selectable);
+
+    this.root_ids.forEach(function (value, key) {
+      let root = this.nodes[value][value];
+      this.displayDynamics(this.nodes[root], root, root.materialID, root.textureID, root.selectable);
+    }.bind(this));
   }
 
   //TODO check way to change mat/text of specific leaves (assign ID's to them?)
@@ -314,7 +339,7 @@ class SceneGraph {
   /**
    * @description Used to start rendering the scene, handles only the root node
    */
-  displayDynamics(node, mat, text, sel) {
+  displayDynamics(nodes, node, mat, text, sel) {
     var children = node.children,
       leaves = node.leaves,
       real_sel = node.selectable || sel;
@@ -330,7 +355,7 @@ class SceneGraph {
       text = node.textureID;
 
     for (var i = 0; i < node.children.length; i++)
-      this.displayDynamics(this.nodes[node.children[i]], mat, text, real_sel);
+      this.displayDynamics(nodes, nodes[node.children[i]], mat, text, real_sel);
     for (var i = 0; i < node.leaves.length; i++)
       node.leaves[i].render(this.materials[mat], (text == "clear" ? null : this.textures[text]), this.scene);
 
