@@ -15,6 +15,10 @@ class XMLscene extends CGFscene {
     CGFscene.prototype.init.call(this, application);
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 0, 40), vec3.fromValues(0, 0, 0));
     this.lights = [];
+
+    this.cup = new Cup(this);
+    this.cyl = new Cylinder(this, [2, 2, 3, 10, 10]);
+
     this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
@@ -122,6 +126,7 @@ class XMLscene extends CGFscene {
     if (this.graph.loadedOk) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
+      this.cup.render(1, 1);
       this.axis.display();
 
       this.graph.displayScene();
