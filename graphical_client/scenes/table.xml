@@ -213,7 +213,7 @@
 			<MATERIAL id="wood_mat" />
 			<TEXTURE id="empty_cell_text" />
 
-			<TRANSLATION x="0" y="0" z="0.1"/>
+			<TRANSLATION x="0" y="0" z="0.01"/>
 
 			<DESCENDANTS>
 				<NODEREF id="table0" />

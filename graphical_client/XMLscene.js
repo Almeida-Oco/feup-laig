@@ -7,22 +7,20 @@ class XMLscene extends CGFscene {
     this.game = new Oolong();
     this.game.setPlayer1(new Player());
     this.game.setPlayer2(new Player());
-    this.clear_color = [0.1, 0.1, 0.1, 0];
   }
 
   init(application) {
     CGFscene.prototype.init.call(this, application);
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 0, 40), vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, -10, 10), vec3.fromValues(0, 0, 0));
     this.lights = [];
 
-    this.cup = new Cup(this);
-    this.cyl = new Cylinder(this, [2, 2, 3, 10, 10]);
+    this.cup = new Cup(this, 3, 0.01);
 
     this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.DST_ALPHA);
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE);
 
     this.axis = new CGFaxis(this);
     this.enableTextures(true);
@@ -32,7 +30,14 @@ class XMLscene extends CGFscene {
     this.blend_shader.setUniformsValues({
       'uSampler': 0
     });
+    this.setUpdatePeriod(16.666667); //60 FPS
   }
+
+  //TODO all the animations should go here!
+  update(time_elapsed) {
+    // this.cup.nextLiquid();
+  }
+
 
 
   readSceneInitials() {
@@ -126,7 +131,7 @@ class XMLscene extends CGFscene {
     if (this.graph.loadedOk) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
-      this.axis.display();
+      // this.axis.display();
 
       this.graph.displayScene();
       this.cup.render(1, 1);
