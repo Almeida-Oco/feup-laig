@@ -82,6 +82,8 @@ class XMLscene extends CGFscene {
 
 
     this.interface.addServerComs(this.server_coms);
+    this.interface.addUndo(this);
+    // this.graph.updateTokens(this.game.board);
   }
 
   logPicking() {
@@ -102,6 +104,11 @@ class XMLscene extends CGFscene {
         this.pickResults.splice(0, this.pickResults.length);
       }
     }
+  }
+
+  undoAction() {
+    console.log("Do undo action! \n");
+    this.graph.updateTokens(this.game.popAction());
   }
 
   display() {

@@ -37,7 +37,6 @@ class ServerComs {
     request.send(null);
 
     if (request.status === 200) {
-      console.log("Reply ==== " + request.responseText);
       return request.responseText;
     }
     return null;

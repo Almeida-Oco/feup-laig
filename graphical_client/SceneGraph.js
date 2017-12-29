@@ -291,6 +291,7 @@ class SceneGraph {
   }
 
   updateTokens(board) {
+    console.log(board);
     for (let table_n = 0; table_n < board.length; table_n++)
       for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
         let text = this.textures[tokens_prop[board[table_n][seat_n]]];
