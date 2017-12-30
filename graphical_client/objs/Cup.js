@@ -2,9 +2,8 @@ let max_liq_height = 0.666;
 class Cup extends CGFobject {
   //TODO each cup creates the same textures, change that
   constructor(scene, args) {
-    let anim_time = args[0],
-      inc = args[1];
     super(scene);
+    this.anim_time = args[0];
     this.scene = scene;
     this.cylinder1 = new Cylinder(scene, [1, 0.5, 0.8, 1, 25]);
     this.cylinder2 = new Cylinder(scene, [1, 0.5, 0.8, 1, 25], true);
@@ -12,8 +11,6 @@ class Cup extends CGFobject {
     this.liquids = [];
 
     this.height = 0;
-    this.height_inc = max_liq_height / (anim_time / inc);
-
     this.liquid = null
   }
 
@@ -25,9 +22,13 @@ class Cup extends CGFobject {
       this.liquids.initBuffers(afs, aft);
   }
 
-  nextLiquid() {
+  nextLiquid(time_elapsed) {
+    console.log(time_elapsed);
     if (this.height < max_liq_height) {
-      this.height += this.height_inc;
+      this.height += this.linearInterpolation(0, max_liq_height, time_elapsed);
+      if (this.height > max_liq_height)
+        this.height = max_liq_height;
+
       this.liquid = new Liquid(this.scene, this.height);
       return false;
     }
@@ -35,9 +36,12 @@ class Cup extends CGFobject {
     return true;
   }
 
-  prevLiquid() {
+  prevLiquid(time_elapsed) {
     if (this.height > 0) {
-      this.height -= this.height_inc;
+      this.height -= this.linearInterpolation(0, max_liq_height, time_elapsed);
+      if (this.height < 0)
+        this.height = 0;
+
       this.liquid = new Liquid(this.scene, this.height);
       return false;
     }
@@ -84,5 +88,10 @@ class Cup extends CGFobject {
     this.cylinder1.render(afs, aft);
 
     this.scene.popMatrix();
+  }
+
+  linearInterpolation(min, max, t) {
+    let passed = t / this.anim_time;
+    return (1 - passed) * min + (passed * max);
   }
 }

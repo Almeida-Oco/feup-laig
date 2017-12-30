@@ -84,11 +84,11 @@ class Oolong {
 
   play(table_number, seat_number) {
     if (this.next_player !== null && this.next_table == table_number) {
-      let board = this.next_player.play(this.board, table_number, seat_number);
-      if (board !== null) {
+      let ret = this.next_player.play(this.board, table_number, seat_number);
+      if (ret !== null) {
         this.pushAction();
-        this.board = board;
-        this.next_table = seat_number;
+        this.board = ret[1];
+        this.next_table = ret[0];
         this.nextPlayer();
         return this.board;
       }

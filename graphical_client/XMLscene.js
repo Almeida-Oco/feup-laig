@@ -1,7 +1,7 @@
 class XMLscene extends CGFscene {
   constructor(Interface) {
     super();
-
+    this.prev_time = Date.now();
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
     this.game = new Oolong();
@@ -34,13 +34,14 @@ class XMLscene extends CGFscene {
   }
 
   //TODO all the animations should go here!
-  update(time_elapsed) {
+  update(curr_time) {
+    let time_elapsed = curr_time - this.prev_time;
     if (this.graph.fill_cup !== 0 &&
-      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid()) {
+      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed * 1.0 / 1000.0)) {
       this.graph.fill_cup = 0;
       this.setPickEnabled(true);
     }
-
+    this.prev_time = curr_time;
   }
 
 
@@ -86,7 +87,7 @@ class XMLscene extends CGFscene {
       this.readSceneIllumination();
       this.readSceneLights();
 
-      this.interface.addServerComs(this.server_coms);
+      this.interface.addGameType(this.game, this.server_coms);
       this.interface.addUndo(this);
     }
 

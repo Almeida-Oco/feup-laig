@@ -35,13 +35,9 @@ aiPlay(CurrTableNumber, NewTableNumber, SeatNumber, Board) :-
 		aiEndPlay(NewTableNumber, SeatNumber, Board)
 	).
 
-aiTurn(TeaToken, CurrTableNumber, Board, NewBoard, NewTableNumber) :-
+% Receives the token, the table number to play, the board and returns [NewTableNumber, Board]
+aiTurn(TeaToken, CurrTableNumber, Board, Result) :-
 	write('AI '), write(TeaToken), write(' turn:'),
-	aiPlay(CurrTableNumber, NewTableNumber1, SeatNumber, Board),
-	serveTea(Board, NewTableNumber1, SeatNumber, TeaToken, NewBoard1),
-	checkSpecials(NewBoard1, NewTableNumber1, SeatNumber,  TeaToken, NewBoard, NewTableNumber, 1),
-	drawBoard(NewBoard).
-
-aiNextPlay(Board, CurrTableNumber, Result) :-
-	aiPlay(CurrTableNumber, NewTableNumber, SeatNumber, Board),
-	Result = [SeatNumber, NewTableNumber].
+	aiPlay(CurrTableNumber, NewTable, SeatNumber, Board),
+	serveTea(Board, NewTable, SeatNumber, TeaToken, NewBoard),
+	Result = [SeatNumber, NewBoard].

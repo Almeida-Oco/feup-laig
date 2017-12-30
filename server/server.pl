@@ -110,41 +110,11 @@ print_header_line(_).
 
 parse_input(handshake, handshake).
 
-/*
-parse_input(Input, Res):-
-    write(Input), Res = 'ok understood', nl.
-*/
-
-parse_input('startgame_0', Res):-
-    write('Started Game AI vs AI '), Res = 'OK', nl.
-
-parse_input('startgame_1', Res):-
-    write('Started Game Human vs AI diff 1 '), start_laig(1, Res),  nl.
-
-parse_input('startgame_2', Res):-
-    write('Started Game Human vs AI diff 2 '), start_laig(1, Res),  nl.
-
-parse_input('startgame_3', Res):-
-    write('Started Game Human vs AI diff 3 '), start_laig(1, Res),  nl.
-
-parse_input('startgame_4', Res):-
-    write('Starting Game Multiplayer from Player 1'), start_laig(0, Res),  nl.
-
-parse_input('startgame_5', Res):-
-    write('Starting Game Multiplayer from Player 2'), start_laig(0, Res), write(Res), nl.
-
-parse_input('geturn', Res):-
-    write('Getting whose Turn'), Res = 'OK', nl.
-
-parse_input('gamestate', Res):-
-    write('Getting The entire gamestate'), Res = 'OK', nl.
-
-
 parse_input(newboard, Reply) :-
 	createTables(Reply,0,10).
 
 
-parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
+parse_input(turn(Board,TableNumber,SeatNumber,_), Reply) :-
 	\+ validPlay(Board, TableNumber, SeatNumber),
 	Reply = "".
 
@@ -153,15 +123,10 @@ parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	serveTea(Board, TableNumber, SeatNumber, Token, MiddleBoard),
 	handleWaiter(MiddleBoard, SeatNumber, Reply, _).
 
-
-parse_input(playerMove(TeaToken, CurrTableNumber, SeatNumber, Board, NewBoard, NewTableNumber), NewBoard) :-
-    play_server(CurrTableNumber, NewTableNumber1, SeatNumber, TeaToken, Board),
-    serveTea(Board, NewTableNumber1, SeatNumber, TeaToken, NewBoard1),
-    checkSpecials(NewBoard1, NewTableNumber1, SeatNumber, TeaToken, NewBoard, NewTableNumber, 0).
+parse_input(aiTurn(Board, TableNumber, Token), Reply) :-
+	aiTurn(Token, TableNumber, Board, Reply).
 
 
-parse_input(playerMove(_, _, _, _), Res) :-
-    Res = 'InvalidMove'.
 
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).

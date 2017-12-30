@@ -65,21 +65,18 @@ class ServerComs {
       return null;
   }
 
-  validatePlay(Board, TableNumber, SeatNumber) {
-    let request_str = "validPlay(";
-    request_str += this.arrayToString(Board) + ",";
-    request_str += TableNumber + ",";
-    request_str += SeatNumber + ")";
+  aiMove(board, table_n, token) {
+    let request_str = "aiTurn(";
+    request_str += this.arrayToString(board) + ",";
+    request_str += table_n + ",";
+    request_str += "'" + token + "')";
 
-    return this.doRequest(request_str);
-  }
+    let ret = this.doRequest(request_str);
 
-  nextAIPlay(Board, TableNumber) {
-    let request_str = "aiNextPlay(";
-    request_str += arrayToString(Board) + ",";
-    request_str += TableNumber + ")";
-
-    let reply = doRequest(request_str);
+    if (ret !== null && ret !== undefined)
+      return this.stringToArray(ret);
+    else
+      return null;
   }
 
   arrayToString(array) {

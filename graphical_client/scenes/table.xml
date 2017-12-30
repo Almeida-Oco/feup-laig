@@ -478,7 +478,7 @@
 
 			<DESCENDANTS>
 				<LEAF id="seat" type="circle" args="25 1" />
-				<LEAF id="cup" type="cup" args="2 0.05" />
+				<LEAF id="cup" type="cup" args="2" />
 			</DESCENDANTS>
 		</NODE>
 

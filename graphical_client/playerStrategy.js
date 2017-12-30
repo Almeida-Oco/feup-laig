@@ -5,6 +5,11 @@ class Player extends Strategy {;
 
   play(board, table_n, seat_n) {
     let reply = this.server.tryMove(board, table_n, seat_n, this.token);
-    return reply;
+    if (reply !== null && reply !== undefined)
+      return [seat_n, reply];
+    else {
+      console.error("Play failed!");
+      return null;
+    }
   }
 };
