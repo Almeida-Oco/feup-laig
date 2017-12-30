@@ -1,4 +1,4 @@
-let leaves_types = ["circle", "rectangle", "triangle", "patch", "cylinder", "sphere"];
+let leaves_types = ["circle", "rectangle", "triangle", "patch", "cylinder", "sphere", "wave_obj"];
 
 let initials_req = ["frustum", "reference"];
 let illumins_req = ["ambient", "background"];
@@ -293,7 +293,8 @@ class GraphParser {
           return null;
 
         args.forEach(function (value, key, obj) {
-          obj[key] = parseInt(value);
+          //obj[key] = parseInt(value);
+          obj[key] = value;
         });
 
         return [1, {

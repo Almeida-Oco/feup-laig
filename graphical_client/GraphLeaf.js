@@ -1,21 +1,24 @@
 var prim_selector = {
   'triangle': function (scene, args) {
-    return new Triangle(scene, args);
+    return new Triangle(scene, parseInt(args));
   },
   'sphere': function (scene, args) {
-    return new Sphere(scene, args);
+    return new Sphere(scene, parseInt(args));
   },
   'rectangle': function (scene, args) {
-    return new Quad(scene, args);
+    return new Quad(scene, parseInt(args));
   },
   'cylinder': function (scene, args) {
-    return new Cylinder(scene, args);
+    return new Cylinder(scene, parseInt(args));
   },
   'patch': function (scene, args) {
-    return new Patch(scene, args);
+    return new Patch(scene, parseInt(args));
   },
   'circle': function (scene, args) {
-    return new Circle(scene, args);
+    return new Circle(scene, parseInt(args));
+  },
+  'wave_obj': function (scene, args) {
+    return new WaveObj(scene, args);
   }
 };
 
