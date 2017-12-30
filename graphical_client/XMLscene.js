@@ -201,8 +201,12 @@ class XMLscene extends CGFscene {
   }
 
   undoAction() {
-    console.log("Do undo action! \n");
     this.graph.updateTokens(this.game.popAction());
+    let prev_play = this.curr_play;
+    this.curr_play = -1;
+    setTimeout(function () {
+      this.curr_play = prev_play;
+    }.bind(this), 2000);
   }
 
   display() {
