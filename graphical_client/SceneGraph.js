@@ -379,12 +379,11 @@ class SceneGraph {
       this.statics[i].render();
 
     this.tokens.forEach(function (value, key) {
-      for (let i = 0; i < value.length; i++) {
-        if (i === 0)
-          this.scene.registerForPick(key, value[i].getPrimitive());
+      // this.scene.registerForPick(key, value[0].getPrimitive());
 
+      for (let i = 0; i < value.length; i++)
         value[i].render();
-      }
+
       this.scene.clearPickRegistration();
     }.bind(this));
   }

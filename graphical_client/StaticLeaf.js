@@ -26,7 +26,6 @@ class StaticLeaf extends GraphLeaf {
 
   render() {
     this.scene.pushMatrix();
-    let quad = [];
     this.scene.multMatrix(this.matrix);
     super.render(this.material, this.texture);
     this.scene.popMatrix();

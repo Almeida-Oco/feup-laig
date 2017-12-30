@@ -1,23 +1,40 @@
 var prim_selector = {
   'triangle': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Triangle(scene, args);
   },
   'sphere': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Sphere(scene, args);
   },
   'rectangle': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Quad(scene, args);
   },
   'cylinder': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Cylinder(scene, args);
   },
   'patch': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Patch(scene, args);
   },
   'circle': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Circle(scene, args);
   },
+  'wave_obj': function (scene, args) {
+    return new WaveObj(scene, args);
+  },
   'cup': function (scene, args) {
+    for (let i = 0; i < args.length; i++)
+      args[i] = parseInt(args[i]);
     return new Cup(scene, args);
   }
 };

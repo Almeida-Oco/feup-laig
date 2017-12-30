@@ -16,7 +16,7 @@ class XMLscene extends CGFscene {
 
     this.cup = new Cup(this, [3, 0.01]);
 
-    this.gl.clearDepth(10000.0);
+    this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -95,7 +95,6 @@ class XMLscene extends CGFscene {
               table = Math.floor(pick_result / 10),
               seat = pick_result % 10 - 1;
 
-            alert(this.pickResults);
             console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
             // let ret = this.game.play(table, seat);
             // if (ret !== null && ret !== undefined)
