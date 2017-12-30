@@ -20,21 +20,47 @@ class Interface extends CGFinterface {
     return true;
   }
 
-  addGameType(game, server_coms) {
+  addGameType(game, scene) {
     let server_folder = this.gui.addFolder("Game Type");
     server_folder.open();
-    this.server = server_coms;
+    this.scene = scene;
     this.game = game;
 
     this.game_type = {
-      'testAI': function () {
-        let ret = this.server.aiMove(this.game.board, this.game.next_table, this.game.next_player.token);
-        console.log("AI PLAY : ");
-        console.log(ret);
+      'Player vs Player': function () {
+        this.game.setPlayers(new Player(), new Player());
+        this.scene.curr_play = 0;
+        this.scene.is_ai_play = false;
+        this.scene.setPickEnabled(true);
       }.bind(this),
+      'Player vs AI': function () {
+        let player = this.game.setPlayers(new Player(), new AI());
+        console.log("Player = " + player);
+        if (player !== 0) {
+          this.scene.curr_play = 1;
+          if (player === 1) {
+            this.scene.is_ai_play = false;
+            this.scene.setPickEnabled(true);
+          }
+          else if (player === 2) {
+            this.scene.is_ai_play = true;
+            this.scene.setPickEnabled(false);
+          }
+          else
+            throw new Error("Error setting Player vs AI, player does not match any value! (player = " + player + ")");
+        }
+      }.bind(this),
+      'AI vs AI': function () {
+        this.game.setPlayers(new AI(), new AI());
+        this.scene.curr_play = 2;
+        this.scene.is_ai_play = true;
+        this.scene.setPickEnabled(false);
+      }.bind(this)
     };
 
-    server_folder.add(this.game_type, 'testAI');
+    server_folder.add(this.game_type, 'Player vs Player');
+    server_folder.add(this.game_type, 'Player vs AI');
+    server_folder.add(this.game_type, 'AI vs AI');
   }
 
   addUndo(scene) {

@@ -1,8 +1,8 @@
 let tokens_prop = {
   'X': ["glass_text", "tea1_text"],
   'O': ["glass_text", "tea2_text"],
-  '@': ["glass_text", null],
-  '%': ["glass_text", null],
+  '%': ["waiter_text", "tea1_text"],
+  '@': ["waiter_text", "tea2_text"],
   'W': ["waiter_text", true],
   '.': ["glass_text", null]
 };

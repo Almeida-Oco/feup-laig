@@ -124,7 +124,14 @@ parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	handleWaiter(MiddleBoard, SeatNumber, Reply, _).
 
 parse_input(aiTurn(Board, TableNumber, Token), Reply) :-
-	aiTurn(Token, TableNumber, Board, Reply).
+	aiTurn(Token, TableNumber, Board, MiddleReply),
+	nth0(0, MiddleReply, TableNSeat),
+	nth0(1, MiddleReply, MiddleBoard),
+	nth0(0, TableNSeat, NewTableNumber),
+	nth0(1, TableNSeat, NewSeatNumber),
+	handleWaiter(MiddleBoard, NewSeatNumber, NewBoard, _),
+	Reply = [[NewTableNumber, NewSeatNumber], NewBoard].
+
 
 
 

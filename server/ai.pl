@@ -8,16 +8,12 @@ aiNormalPlay(TableNumber, SeatNumber, Board) :-
 	write(SeatNumber), nl.
 
 aiEndPlay(TableNumber, SeatNumber, Board) :-
-	write('Targetted table full!'), nl,
-	write('Insert table: '),
 	repeat,
 		getNumberInput(TableNumber, 0, 8, 1), % returns random number
 		at(BoardTable, TableNumber, Board),
 		find('.', 0, Index, BoardTable),
 		Index \= -1,
 
-	write(TableNumber), nl,
-	write('Insert seat: '),
 	repeat,
 		getNumberInput(SeatNumber, 0, 8, 1),
 		at(SeatToken, SeatNumber, BoardTable),
@@ -40,4 +36,4 @@ aiTurn(TeaToken, CurrTableNumber, Board, Result) :-
 	write('AI '), write(TeaToken), write(' turn:'),
 	aiPlay(CurrTableNumber, NewTable, SeatNumber, Board),
 	serveTea(Board, NewTable, SeatNumber, TeaToken, NewBoard),
-	Result = [SeatNumber, NewBoard].
+	Result = [[NewTable, SeatNumber], NewBoard].

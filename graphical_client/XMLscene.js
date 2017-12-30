@@ -1,12 +1,75 @@
+let time_between_plays = 1;
+let player = 0;
+let ai1 = 1;
+let ai2 = 2;
+
 class XMLscene extends CGFscene {
   constructor(Interface) {
     super();
+
+    this.update_game = function (ret) {
+      if (ret !== null && ret !== undefined) {
+        this.graph.updateTokens(ret[1]); //update board
+        this.graph.fill_cup = ret[0][0] * 10 + ret[0][1] + 1;
+        this.setPickEnabled(false);
+        console.log("Filling cup: " + ret[0][0] * 10 + ret[0][1] + 1);
+      }
+      else {
+        console.log("Return was null!");
+      }
+    }.bind(this);
+    this.player_play = function (table, seat) {
+      let ret;
+      if ((ret = this.game.play(table, seat)) !== null) {
+        this.update_game(ret);
+        return true;
+      }
+      else
+        return false;
+    }.bind(this);
+    this.ai_play = function () {
+      if (this.is_ai_play) {
+        let ret = this.game.play();
+        this.update_game(ret);
+      }
+    }.bind(this);
+
+    this.play = {
+      0: function (table, seat) { //Player vs Player
+        this.player_play(table, seat);
+        this.is_ai_play = false;
+        this.setPickEnabled(true);
+      }.bind(this),
+      1: function (table, seat) { //Player vs AI
+        if (this.is_ai_play) {
+          this.ai_play();
+          this.is_ai_play = false;
+        }
+        else {
+          if (this.player_play(table, seat)) {
+            this.is_ai_play = true;
+            this.setPickEnabled(false);
+          }
+        }
+      }.bind(this),
+      2: function () { //AI vs AI
+        if (this.is_ai_play) {
+          this.ai_play();
+          this.is_ai_play = true;
+          this.setPickEnabled(false);
+        }
+      }.bind(this)
+    };
+
+    this.curr_play = 0;
+    this.is_ai_play = false;
+
+    this.stop_time = 0;
     this.prev_time = Date.now();
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
     this.game = new Oolong();
-    this.game.setPlayer1(new Player());
-    this.game.setPlayer2(new Player());
+    this.game.setPlayers(new Player(), new Player());
   }
 
   init(application) {
@@ -35,16 +98,35 @@ class XMLscene extends CGFscene {
 
   //TODO all the animations should go here!
   update(curr_time) {
-    let time_elapsed = curr_time - this.prev_time;
+    let time_elapsed = (curr_time - this.prev_time) * 1.0 / 1000.0;
+
+    if (this.tickTock(time_elapsed)) {
+      console.log("Playing\n");
+      this.play[this.curr_play]();
+    }
+
     if (this.graph.fill_cup !== 0 &&
-      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed * 1.0 / 1000.0)) {
+      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
       this.graph.fill_cup = 0;
       this.setPickEnabled(true);
     }
+
     this.prev_time = curr_time;
   }
 
 
+  tickTock(time_elapsed) {
+    if (this.is_ai_play && (this.curr_play === ai1 || this.curr_play === ai2) && this.graph.fill_cup === 0) {
+      this.stop_time += time_elapsed;
+      if (this.stop_time >= time_between_plays) {
+        this.stop_time = 0;
+        return true;
+      }
+    }
+    else
+      this.stop_time = 0;
+    return false;
+  }
 
   readSceneInitials() {
     this.camera.near = this.graph.initials.get("frustum")["near"];
@@ -87,7 +169,7 @@ class XMLscene extends CGFscene {
       this.readSceneIllumination();
       this.readSceneLights();
 
-      this.interface.addGameType(this.game, this.server_coms);
+      this.interface.addGameType(this.game, this);
       this.interface.addUndo(this);
     }
 
@@ -108,14 +190,8 @@ class XMLscene extends CGFscene {
             let pick_result = this.pickResults[i][1],
               table = Math.floor(pick_result / 10),
               seat = pick_result % 10 - 1;
-
-            let ret = this.game.play(table, seat);
-            console.log(ret);
-            if (ret !== null && ret !== undefined) {
-              this.graph.updateTokens(ret);
-              this.graph.fill_cup = pick_result;
-              this.setPickEnabled(false);
-              console.log("Filling cup: " + pick_result);
+            if (this.curr_play === player || this.curr_play === ai1 && !this.is_ai_play) {
+              this.play[this.curr_play](table, seat);
             }
           }
         }

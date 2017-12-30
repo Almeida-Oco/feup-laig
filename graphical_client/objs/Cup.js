@@ -23,7 +23,6 @@ class Cup extends CGFobject {
   }
 
   nextLiquid(time_elapsed) {
-    console.log(time_elapsed);
     if (this.height < max_liq_height) {
       this.height += this.linearInterpolation(0, max_liq_height, time_elapsed);
       if (this.height > max_liq_height)
