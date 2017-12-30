@@ -14,6 +14,8 @@ class XMLscene extends CGFscene {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, -10, 10), vec3.fromValues(0, 0, 0));
     this.lights = [];
 
+    this.cup = new Cup(this, [3, 0.01]);
+
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
@@ -33,8 +35,14 @@ class XMLscene extends CGFscene {
 
   //TODO all the animations should go here!
   update(time_elapsed) {
-    // this.cup.nextLiquid();
+    if (this.graph.fill_cup !== 0 &&
+      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid()) {
+      this.graph.fill_cup = 0;
+      this.setPickEnabled(true);
+    }
+
   }
+
 
 
   readSceneInitials() {
@@ -100,10 +108,14 @@ class XMLscene extends CGFscene {
               table = Math.floor(pick_result / 10),
               seat = pick_result % 10 - 1;
 
-            console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
-            // let ret = this.game.play(table, seat);
-            // if (ret !== null && ret !== undefined)
-            // this.graph.updateTokens(ret);
+            let ret = this.game.play(table, seat);
+            console.log(ret);
+            if (ret !== null && ret !== undefined) {
+              this.graph.updateTokens(ret);
+              this.graph.fill_cup = pick_result;
+              this.setPickEnabled(false);
+              console.log("Filling cup: " + pick_result);
+            }
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -117,7 +129,8 @@ class XMLscene extends CGFscene {
   }
 
   display() {
-    this.logPicking();
+    if (this.graph.fill_cup === 0)
+      this.logPicking();
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -133,13 +146,14 @@ class XMLscene extends CGFscene {
       value.update();
     });
 
+
     if (this.graph.loadedOk) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
 
       this.graph.displayScene();
 
-
+      this.translate(0, 0, 5);
       this.popMatrix();
     }
   }

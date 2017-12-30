@@ -1,6 +1,6 @@
-let bottom_radius = 0.5;
-let top_radius = 0.7;
-let max_height = 0.666;
+let bottom_radius = 0.45;
+let top_radius = 0.65;
+let max_height = 0.6;
 
 class Liquid extends CGFobject {
   constructor(scene, height) {
@@ -12,8 +12,6 @@ class Liquid extends CGFobject {
     this.liq_cyl2 = new Cylinder(scene, [this.height, bottom_radius, this.top_radius, 1, 25], true);
     this.liq_bottom = new Circle(scene, [25, bottom_radius]);
     this.liq_top = new Circle(scene, [25, this.top_radius]);
-
-    this.liq_text = new CGFtexture(this.scene, "scenes/images/tea1.png");
   }
 
   linearInterpolation(min, max, t) {
@@ -31,11 +29,9 @@ class Liquid extends CGFobject {
   render(afs, aft) {
     this.initBuffers(afs, aft);
 
-    let prev_shader = this.activateShaders();
-
     this.scene.pushMatrix();
     this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.SRC_COLOR);
-    this.liq_text.bind(0);
+    this.scene.translate(0, 0, 0.06);
 
     this.liq_cyl2.render(afs, aft);
     this.liq_bottom.render(afs, aft);
@@ -52,21 +48,6 @@ class Liquid extends CGFobject {
     this.scene.popMatrix();
     this.liq_cyl1.render();
     this.liq_bottom.render(afs, aft);
-
-    this.disableShaders(prev_shader)
-  }
-
-  activateShaders() {
-    this.scene.gl.enable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LESS);
-    this.scene.setActiveShader(this.scene.blend_shader);
-
-    return this.scene.activeShader;
-  }
-
-  disableShaders(prev_shader) {
-    this.scene.setActiveShader(prev_shader);
-    this.scene.gl.disable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LEQUAL);
+    this.scene.popMatrix();
   }
 }

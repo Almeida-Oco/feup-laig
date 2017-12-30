@@ -57,75 +57,90 @@
 
 <!-- Textures -->
 <TEXTURES>
-    <TEXTURE id="light_wood_text">
-        <file path="images/light_wood.jpg" />
-        <amplif_factor s="1" t="1" />
-    </TEXTURE>
+	<TEXTURE id="waiter_text">
+		<file path="images/waiter.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="player1_text">
-			<file path="images/player1.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+	<TEXTURE id="glass_text">
+		<file path="images/glass.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="player2_text">
-			<file path="images/player2.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+	<TEXTURE id="tea1_text">
+		<file path="images/tea1.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="player1_waiter_text">
-			<file path="images/player1_waiter.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+	<TEXTURE id="tea2_text">
+		<file path="images/tea2.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="player2_waiter_text">
-			<file path="images/player2_waiter.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+	<TEXTURE id="light_wood_text">
+		<file path="images/light_wood.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="waiter_text">
-			<file path="images/waiter.jpg" />
-			<amplif_factor s="1" t="1" />
-		</TEXTURE>
+	<TEXTURE id="player1_text">
+		<file path="images/player1.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="empty_cell_text">
-			<file path="images/dark_wood.jpg" />
-			<amplif_factor s="5" t="5" />
-		</TEXTURE>
+	<TEXTURE id="player2_text">
+		<file path="images/player2.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_mv_black">
-			<file path="images/move_unclaimed_black.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="player1_waiter_text">
+		<file path="images/player1_waiter.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_mv_green">
-			<file path="images/move_unclaimed_green.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="player2_waiter_text">
+		<file path="images/player2_waiter.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_mv_wait_black">
-			<file path="images/move_waiter_black.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="empty_cell_text">
+		<file path="images/dark_wood.jpg" />
+		<amplif_factor s="5" t="5" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_mv_wait_green">
-			<file path="images/move_waiter_green.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="spec_mv_black">
+		<file path="images/move_unclaimed_black.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_rotate">
-			<file path="images/rotate.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="spec_mv_green">
+		<file path="images/move_unclaimed_green.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_swp_claimed">
-			<file path="images/swap_claimed.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="spec_mv_wait_black">
+		<file path="images/move_waiter_black.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
 
-		<TEXTURE id="spec_swp_unc">
-			<file path="images/swap_unclaimed.png" />
-			<amplif_factor s="2" t="2" />
-		</TEXTURE>
+	<TEXTURE id="spec_mv_wait_green">
+		<file path="images/move_waiter_green.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
+
+	<TEXTURE id="spec_rotate">
+		<file path="images/rotate.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
+
+	<TEXTURE id="spec_swp_claimed">
+		<file path="images/swap_claimed.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
+
+	<TEXTURE id="spec_swp_unc">
+		<file path="images/swap_unclaimed.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
 </TEXTURES>
 
 
@@ -146,7 +161,7 @@
 		<emission r="0.0" g="0.0" b="0.0" a="1" />
 	</MATERIAL>
 
-	<MATERIAL id="transparent_mat">
+	<MATERIAL id="glass_mat">
 		<shininess value="0.1" />
 		<specular r="0" g="0" b="0" a="0" />
 		<diffuse r="0" g="0" b="0" a="0" />
@@ -463,7 +478,7 @@
 
 			<DESCENDANTS>
 				<LEAF id="seat" type="circle" args="25 1" />
-				<LEAF id="cup" type="cup" args="3 1" />
+				<LEAF id="cup" type="cup" args="2 0.05" />
 			</DESCENDANTS>
 		</NODE>
 

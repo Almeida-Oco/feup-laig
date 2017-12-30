@@ -10,10 +10,9 @@ class Cup extends CGFobject {
     this.cylinder2 = new Cylinder(scene, [1, 0.5, 0.8, 1, 25], true);
     this.base = new Circle(scene, [25, 0.5]);
     this.liquids = [];
-    this.glass_text = new CGFtexture(this.scene, 'scenes/images/glass.png');
 
     this.height = 0;
-    this.height_inc = 0.666 / (anim_time / inc);
+    this.height_inc = max_liq_height / (anim_time / inc);
 
     this.liquid = null
   }
@@ -29,36 +28,49 @@ class Cup extends CGFobject {
   nextLiquid() {
     if (this.height < max_liq_height) {
       this.height += this.height_inc;
-      this.liquid = new Liquid(scene, this.height);
+      this.liquid = new Liquid(this.scene, this.height);
+      return false;
     }
+
+    return true;
   }
 
   prevLiquid() {
     if (this.height > 0) {
       this.height -= this.height_inc;
-      this.liquid = new Liquid(scene, this.height);
+      this.liquid = new Liquid(this.scene, this.height);
+      return false;
     }
     else {
       this.height = 0;
       this.liquid = null;
+      return true;
     }
   }
 
-  render(afs, aft) {
+  render(material, texture) {
+    let is_waiter = texture[1] === true;
+    let cup_text = texture[0],
+      liquid_text = texture[1];
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.015);
     //Render liquid
-    if (this.liquid !== null) {
+    if (this.liquid !== null && liquid_text !== null && liquid_text !== undefined) {
       this.scene.pushMatrix();
-      this.liquids[this.liquid].render(afs, aft);
+      liquid_text[0].bind();
+      this.liquid.render(liquid_text[1], liquid_text[2]);
       this.scene.popMatrix();
     }
+    cup_text[0].bind();
+    let afs = cup_text[1],
+      aft = cup_text[2];
 
+    if (!is_waiter)
+      this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE);
+    else
+      this.scene.gl.blendFunc(this.scene.gl.ONE, this.scene.gl.SRC_COLOR);
 
-    //Setup glass shaders
-    let prev_shader = this.activateShaders();
-    this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE);
-    this.glass_text.bind(0);
+    this.scene.gl.enable(this.scene.gl.BLEND);
 
     //Render cup
     this.cylinder2.render(afs, aft);
@@ -72,21 +84,5 @@ class Cup extends CGFobject {
     this.cylinder1.render(afs, aft);
 
     this.scene.popMatrix();
-
-    this.disableShaders(prev_shader);
-  }
-
-  activateShaders() {
-    this.scene.gl.enable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LESS);
-    this.scene.setActiveShader(this.scene.blend_shader);
-
-    return this.scene.activeShader;
-  }
-
-  disableShaders(prev_shader) {
-    this.scene.setActiveShader(prev_shader);
-    this.scene.gl.disable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LEQUAL);
   }
 }

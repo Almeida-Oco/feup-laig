@@ -4497,6 +4497,7 @@ CGFscene.prototype.displayWithPick = function () {
     var b = a[0][0];
     var c = a[0][1];
     this.setActiveShader(this.pickShader);
+    this.gl.disable(this.gl.CULL_FACE);
     var d = new Uint8Array(4);
     this.pickMode = true;
     var e = this.texturesEnabled;
@@ -4512,6 +4513,7 @@ CGFscene.prototype.displayWithPick = function () {
       else this.pickResults.push([undefined, undefined]);
     }
     this.setActiveShader(prevShader);
+    this.gl.enable(this.gl.CULL_FACE);
   }
   this.display();
 };
@@ -4554,6 +4556,7 @@ CGFscene.prototype.intToRGB = function (a) {
   return [b / 255.0, c / 255.0, d / 255.0, 1.0];
 };
 CGFscene.prototype.getPickData = function (a) {
+  console.log("Picked: " + a);
   var b = 65536 * a[0] + 256 * a[1] + a[2];
   return this.pickData[b];
 };
