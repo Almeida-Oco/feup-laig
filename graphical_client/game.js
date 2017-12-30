@@ -16,6 +16,7 @@ class Oolong {
     this.next_player = null;
     this.next_table = 0;
 
+    this.score = "0 - 0";
 
     this.actions = [[this.board.slice(), this.next_table]];
 
@@ -27,6 +28,21 @@ class Oolong {
       else
         throw new TypeError("Cannot set next_player before setting both players!");
     }
+  }
+
+  updateScore() {
+    if (this.player1 !== null && this.player1 !== undefined && this.player2 !== null && this.player2 !== undefined) {
+      let p1_score = this.server.getScore(this.board, this.player1.token);
+      let p2_score = this.server.getScore(this.board, this.player2.token);
+      if (p1_score !== null && p2_score !== null)
+        this.score = p1_score + " - " + p2_score;
+
+      return this.score;
+    }
+    else
+      console.error("updateScore(): Either player1 or player2 is null/undefined!\n");
+
+    return this.score;
   }
 
   /**

@@ -66,4 +66,8 @@ class Interface extends CGFinterface {
   addUndo(scene) {
     this.gui.add(scene, 'undoAction');
   }
+
+  addScore(scene) {
+    this.gui.add(scene, 'score').listen();
+  }
 };

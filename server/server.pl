@@ -132,6 +132,8 @@ parse_input(aiTurn(Board, TableNumber, Token), Reply) :-
 	handleWaiter(MiddleBoard, NewSeatNumber, NewBoard, _),
 	Reply = [[NewTableNumber, NewSeatNumber], NewBoard].
 
+parse_input(playerScore(Board, Token), Reply) :-
+	countMajorTables(Board, Token, 0, 0, Reply).
 
 
 

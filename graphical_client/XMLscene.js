@@ -12,7 +12,8 @@ class XMLscene extends CGFscene {
         this.graph.updateTokens(ret[1]); //update board
         this.graph.fill_cup = ret[0][0] * 10 + ret[0][1] + 1;
         this.setPickEnabled(false);
-        console.log("Filling cup: " + ret[0][0] * 10 + ret[0][1] + 1);
+        this.score = this.game.updateScore();
+        console.log(this.score);
       }
       else {
         console.log("Return was null!");
@@ -62,6 +63,8 @@ class XMLscene extends CGFscene {
     };
 
     this.curr_play = 0;
+    this.prev_play = -1;
+    this.timeout = null;
     this.is_ai_play = false;
 
     this.stop_time = 0;
@@ -69,6 +72,7 @@ class XMLscene extends CGFscene {
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
     this.game = new Oolong();
+    this.score = this.game.updateScore();
     this.game.setPlayers(new Player(), new Player());
   }
 
@@ -171,6 +175,7 @@ class XMLscene extends CGFscene {
 
       this.interface.addGameType(this.game, this);
       this.interface.addUndo(this);
+      this.interface.addScore(this);
     }
 
     console.log("Graph loaded successfully\n");
@@ -202,11 +207,23 @@ class XMLscene extends CGFscene {
 
   undoAction() {
     this.graph.updateTokens(this.game.popAction());
-    let prev_play = this.curr_play;
-    this.curr_play = -1;
-    setTimeout(function () {
-      this.curr_play = prev_play;
-    }.bind(this), 2000);
+    let prev_play;
+
+    if (this.curr_play !== -1) { //no undo timeout in place
+      this.prev_play = this.curr_play;
+      this.curr_play = -1;
+      this.timeout = setTimeout(function () {
+        this.curr_play = this.prev_play;
+        this.prev_play = -1;
+      }.bind(this));
+    }
+    else { //there was already a timeout
+      clearTimeout(this.timetout);
+      this.timeout = setTimeout(function () {
+        this.curr_play = this.prev_play;
+        this.prev_play = -1;
+      }.bind(this));
+    }
   }
 
   display() {
