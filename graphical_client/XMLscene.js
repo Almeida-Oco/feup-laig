@@ -95,7 +95,6 @@ class XMLscene extends CGFscene {
               table = Math.floor(pick_result / 10),
               seat = pick_result % 10 - 1;
 
-            alert(this.pickResults);
             console.log("Table = " + table + ", Seat = " + seat + " | ID = " + pick_result);
             // let ret = this.game.play(table, seat);
             // if (ret !== null && ret !== undefined)

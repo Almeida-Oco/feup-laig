@@ -1,3 +1,4 @@
+let max_liq_height = 0.666;
 class Cup extends CGFobject {
   constructor(scene, args) {
     let anim_time = args[0],
@@ -10,13 +11,10 @@ class Cup extends CGFobject {
     this.liquids = [];
     this.glass_text = new CGFtexture(this.scene, 'scenes/images/glass.png');
 
-    let height = 0,
-      height_inc = 0.666 / (anim_time / inc);
-    for (let i = 0; i < anim_time; i += inc, height += height_inc) {
-      this.liquids.push(new Liquid(scene, height));
-    }
+    this.height = 0;
+    this.height_inc = 0.666 / (anim_time / inc);
 
-    this.liquid = -1;
+    this.liquid = null
   }
 
   initBuffers(afs, aft) {
@@ -28,20 +26,28 @@ class Cup extends CGFobject {
   }
 
   nextLiquid() {
-    if (this.liquid < this.liquids.length - 1)
-      this.liquid++;
+    if (this.height < max_liq_height) {
+      this.height += this.height_inc;
+      this.liquid = new Liquid(scene, this.height);
+    }
   }
 
   prevLiquid() {
-    if (this.liquid > -1)
-      this.liquid--;
+    if (this.height > 0) {
+      this.height -= this.height_inc;
+      this.liquid = new Liquid(scene, this.height);
+    }
+    else {
+      this.height = 0;
+      this.liquid = null;
+    }
   }
 
   render(afs, aft) {
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.015);
     //Render liquid
-    if (this.liquid >= 0) {
+    if (this.liquid !== null) {
       this.scene.pushMatrix();
       this.liquids[this.liquid].render(afs, aft);
       this.scene.popMatrix();
