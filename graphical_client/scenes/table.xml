@@ -581,8 +581,6 @@
 			<MATERIAL id="wood_mat" />
 			<TEXTURE  id="light_wood_text" />
 
-			<TRANSLATION x="0" y="0" z="30" />
-
 			<DESCENDANTS>
 				<LEAF id="suzanne" type="wave_obj" args="scenes/wave_obj/suzane_tx.obj"/>
 			</DESCENDANTS>
