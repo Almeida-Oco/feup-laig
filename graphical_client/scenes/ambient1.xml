@@ -274,7 +274,7 @@
 
 		<NODE id="colher_pau">
 			<MATERIAL id="colher_mat" />
-			<TEXTURE  id="wood_texture" />
+			<TEXTURE  id="wood_table" />
 
 			<DESCENDANTS>
 				<LEAF id="colher_obj" type="wave_obj" args="scenes/wave_obj/colher_high.obj"/>
