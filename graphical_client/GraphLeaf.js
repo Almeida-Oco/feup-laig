@@ -19,6 +19,9 @@ var prim_selector = {
   },
   'wave_obj': function (scene, args) {
     return new WaveObj(scene, args);
+  },
+  'cup': function (scene, args) {
+    return new Cup(scene, args);
   }
 };
 
@@ -35,6 +38,10 @@ class GraphLeaf {
     this.args = args;
     this.primitive = (prim_selector[type])(scene, args);
     this.pickable = false;
+  }
+
+  getPrimitive() {
+    return this.primitive;
   }
 
   setPickable(id) {
@@ -77,12 +84,6 @@ class GraphLeaf {
       afs = texture[1], aft = texture[2];
     }
 
-    if (this.pickable) {
-      this.scene.registerForPick(this.id, this.primitive);
-      render(texture[1], texture[2]);
-      this.scene.clearPickRegistration();
-    }
-    else
-      render(afs, aft);
+    render(afs, aft);
   }
 };

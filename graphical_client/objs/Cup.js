@@ -1,5 +1,7 @@
 class Cup extends CGFobject {
-  constructor(scene, anim_time, inc) {
+  constructor(scene, args) {
+    let anim_time = args[0],
+      inc = args[1];
     super(scene);
     this.scene = scene;
     this.cylinder1 = new Cylinder(scene, [1, 0.5, 0.8, 1, 25]);

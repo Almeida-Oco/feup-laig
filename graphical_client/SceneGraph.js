@@ -219,17 +219,30 @@ class SceneGraph {
       let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
         leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args);
 
-      if (is_pickable && table !== -1 && seat !== -1) {
-        this.tokens[table * 10 + seat + 1] = leaf;
-        leaf.setPickable(table * 10 + seat + 1);
-      }
-      if (special !== -1) {
-        this.specials[special] = leaf;
-      }
+      this.checkSpecial(special, leaf);
+      if (!this.checkToken(is_pickable, table, seat, leaf)) //if it is a token it goes into this.tokens
+        this.statics.push(leaf);
 
-      this.statics.push(leaf);
     }
     this.scene.popMatrix();
+  }
+
+  checkToken(is_pickable, table_n, seat_n, leaf) {
+    if (is_pickable && table_n !== -1 && seat_n !== -1) {
+      let id = table_n * 10 + seat_n + 1;
+      if (this.tokens[id] === null || this.tokens[id] === undefined) {
+        this.tokens[id] = [];
+      }
+      this.tokens[id].push(leaf);
+      return true;
+    }
+    return false;
+  }
+
+  checkSpecial(special, leaf) {
+    if (special !== -1) {
+      this.specials[special] = leaf;
+    }
   }
 
   clipStaticNodes(nodes, node) {
@@ -335,7 +348,10 @@ class SceneGraph {
     for (; table_n < board.length - 1; table_n++) {
       for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
         let text = this.textures[tokens_prop[board[table_n][seat_n]]];
-        this.tokens[table_n * 10 + seat_n + 1].setTexture(text);
+
+        //Cup animation start here
+
+        // this.tokens[table_n * 10 + seat_n + 1].setTexture(text);
       }
     }
 
@@ -361,6 +377,16 @@ class SceneGraph {
   displayStatics() {
     for (let i = 0; i < this.statics.length; i++)
       this.statics[i].render();
+
+    this.tokens.forEach(function (value, key) {
+      for (let i = 0; i < value.length; i++) {
+        if (i === 0)
+          this.scene.registerForPick(key, value[i].getPrimitive());
+
+        value[i].render();
+      }
+      this.scene.clearPickRegistration();
+    }.bind(this));
   }
 
   /**
