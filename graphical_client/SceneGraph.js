@@ -84,17 +84,17 @@ class SceneGraph {
   onXMLReady() {
     console.log("XML Loading finished.");
     let parser = new GraphParser(this.reader),
-      texts, mats, anims;
+      texts, mats, anims, initials, illums, lights;
 
-    if ((this.initials = parser.parseInitials()) === null) {
+    if ((initials = parser.parseInitials()) === null) {
       console.error("parseInitials() failed!\n");
       return null;
     }
-    if ((this.illumination = parser.parseIllumination()) === null) {
+    if ((illums = parser.parseIllumination()) === null) {
       console.error("parseIllumination() failed!\n");
       return null;
     }
-    if ((this.lights = parser.parseLights()) === null) {
+    if ((lights = parser.parseLights()) === null) {
       console.error("parseLights() failed!\n");
       return null;
     }
@@ -111,6 +111,12 @@ class SceneGraph {
       return null;
     }
 
+    if (this.xml_n === 0) {
+      this.initials = initials;
+      this.illumination = illums;
+      this.lights = lights;
+    }
+
     let nodes_ret;
     if ((nodes_ret = parser.parseNodes()) === null)
       return null;
@@ -118,6 +124,7 @@ class SceneGraph {
       nodes = nodes_ret[1];
 
     this.root_ids.push([root_id]);
+
 
     this.setupMaterials(mats);
     this.setupTextures(texts);
@@ -137,6 +144,7 @@ class SceneGraph {
     this.loadedOk = true;
 
     // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+    this.xml_n++;
     this.scene.onGraphLoaded();
   }
 
@@ -251,7 +259,7 @@ class SceneGraph {
       if (nodes.get(value).get("static") || is_static)
         obj[key] = null;
       else
-        this.clipStaticNodes(nodes.get(value))
+        this.clipStaticNodes(nodes, nodes.get(value))
 
     }.bind(this));
   }
@@ -359,7 +367,8 @@ class SceneGraph {
       let spec_number = parseInt(board[table_n][i]),
         text2 = this.textures[specials_prop[spec_number]];
 
-      this.specials[spec_number].setTexture(text2);
+      if (this.specials[spec_number] !== undefined)
+        this.specials[spec_number].setTexture(text2);
     }
 
   }
@@ -369,7 +378,7 @@ class SceneGraph {
 
     this.root_ids.forEach(function (value, key) {
       let root = this.nodes[value][value];
-      this.displayDynamics(this.nodes[root], root, root.materialID, root.textureID, root.selectable);
+      this.displayDynamics(this.nodes[value], root, root.materialID, root.textureID, root.selectable);
     }.bind(this));
   }
 
@@ -379,7 +388,7 @@ class SceneGraph {
       this.statics[i].render();
 
     this.tokens.forEach(function (value, key) {
-      this.scene.registerForPick(key, value[0].getPrimitive());
+      // this.scene.registerForPick(key, value[0].getPrimitive());
 
       for (let i = 0; i < value.length; i++)
         value[i].render();

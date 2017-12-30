@@ -176,7 +176,6 @@
 				<DESCENDANTS>
 					<NODEREF id="board" />
 					<NODEREF id="tables" />
-					<NODEREF id="ambient" />
 				</DESCENDANTS>
     </NODE>
 
@@ -575,17 +574,6 @@
 				<LEAF id="special" type="rectangle" args="-1 1 1 -1" />
 			</DESCENDANTS>
 		</NODE>
-
-
-		<NODE id="ambient">
-			<MATERIAL id="wood_mat" />
-			<TEXTURE  id="light_wood_text" />
-
-			<DESCENDANTS>
-				<LEAF id="suzanne" type="wave_obj" args="scenes/wave_obj/suzane_tx.obj"/>
-			</DESCENDANTS>
-		</NODE>
-
 </NODES>
 
 </SCENE>

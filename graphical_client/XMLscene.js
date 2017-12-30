@@ -14,8 +14,6 @@ class XMLscene extends CGFscene {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, -10, 10), vec3.fromValues(0, 0, 0));
     this.lights = [];
 
-    this.cup = new Cup(this, [3, 0.01]);
-
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
@@ -75,14 +73,21 @@ class XMLscene extends CGFscene {
   }
 
   onGraphLoaded() {
-    this.readSceneInitials();
-    this.readSceneIllumination();
-    this.readSceneLights();
+    if (this.graph.xml_n === 1) {
+      this.readSceneInitials();
+      this.readSceneIllumination();
+      this.readSceneLights();
+
+      this.interface.addServerComs(this.server_coms);
+      this.interface.addUndo(this);
+    }
+
     console.log("Graph loaded successfully\n");
 
     this.graph.updateTokens(this.game.getBoard());
-    this.interface.addServerComs(this.server_coms);
-    this.interface.addUndo(this);
+
+    if (this.graph.xml_n === 1)
+      this.graph.loadGraph("ambient1.xml");
   }
 
   logPicking() {
@@ -131,17 +136,11 @@ class XMLscene extends CGFscene {
     if (this.graph.loadedOk) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
-      // this.axis.display();
 
       this.graph.displayScene();
-      this.cup.render(1, 1);
-      // this.setActiveShader(this.transparent_shader);
-      // this.graph.displayPickables(this.graph.root_id, false);
-      // this.setActiveShader(this.defaultShader);
+
+
       this.popMatrix();
-    }
-    else {
-      this.axis.display();
     }
   }
 };

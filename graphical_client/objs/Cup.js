@@ -1,5 +1,6 @@
 let max_liq_height = 0.666;
 class Cup extends CGFobject {
+  //TODO each cup creates the same textures, change that
   constructor(scene, args) {
     let anim_time = args[0],
       inc = args[1];
