@@ -34,7 +34,7 @@ var prim_selector = {
   },
   'cup': function (scene, args) {
     for (let i = 0; i < args.length; i++)
-      args[i] = parseInt(args[i]);
+      args[i] = parseFloat(args[i]);
     return new Cup(scene, args);
   }
 };

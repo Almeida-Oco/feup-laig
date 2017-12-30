@@ -17,6 +17,10 @@ class StaticLeaf extends GraphLeaf {
       console.log("Could not set texture of leaf!");
   }
 
+  getTexture() {
+    return this.texture;
+  }
+
   setMaterial(mat) {
     if (mat !== null && mat !== undefined && mat instanceof CGFappearance)
       this.mat = mat;
@@ -24,10 +28,17 @@ class StaticLeaf extends GraphLeaf {
       console.log("Could not set material of leaf!");
   }
 
+  getMaterial() {
+    return this.material;
+  }
+
   render() {
     this.scene.pushMatrix();
     this.scene.multMatrix(this.matrix);
-    super.render(this.material, this.texture);
+    if (this.primitive instanceof Cup)
+      this.primitive.render(this.material, this.texture);
+    else
+      super.render(this.material, this.texture);
     this.scene.popMatrix();
   }
 };

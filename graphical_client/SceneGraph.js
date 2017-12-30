@@ -1,10 +1,10 @@
 let tokens_prop = {
-  'X': "player1_text",
-  'O': "player2_text",
-  '@': "player2_waiter_text",
-  '%': "player2_waiter_text",
-  'W': "waiter_text",
-  '.': "empty_cell_text"
+  'X': ["glass_text", "tea1_text"],
+  'O': ["glass_text", "tea2_text"],
+  '@': ["glass_text", null],
+  '%': ["glass_text", null],
+  'W': ["waiter_text", true],
+  '.': ["glass_text", null]
 };
 
 let anim_parser = {
@@ -54,6 +54,7 @@ class SceneGraph {
     this.materials = [];
     this.textures = [];
     this.animations = [];
+    this.fill_cup = 0;
 
     this.statics = [];
     this.nodes = [];
@@ -361,15 +362,19 @@ class SceneGraph {
     let table_n = 0;
     for (; table_n < board.length - 1; table_n++) {
       for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
-        let text = this.textures[tokens_prop[board[table_n][seat_n]]];
+        let texts = tokens_prop[board[table_n][seat_n]],
+          text1, text2;
+        if (texts[1] !== null && texts[1] !== true)
+          text2 = this.textures[texts[1]];
+        else if (texts[1] === true)
+          text2 = true;
+        text1 = this.textures[texts[0]];
 
-        //Cup animation start here
-
-        // this.tokens[table_n * 10 + seat_n + 1].setTexture(text);
+        this.tokens[table_n * 10 + seat_n + 1][1].setTexture([text1, text2]);
       }
     }
 
-    for (let i = 0; i < board[table_n].length; i++) {
+    for (let i = 0, table_n = 9; i < board[table_n].length; i++) {
       let spec_number = parseInt(board[table_n][i]),
         text2 = this.textures[specials_prop[spec_number]];
 
@@ -403,8 +408,9 @@ class SceneGraph {
     this.scene.setActiveShader(this.scene.blend_shader);
 
     this.tokens.forEach(function (value, key) {
-      this.scene.registerForPick(key, value[1].getPrimitive());
-      value[1].render();
+      let leaf = value[1];
+      this.scene.registerForPick(key, leaf.getPrimitive());
+      leaf.render();
       this.scene.clearPickRegistration();
     }.bind(this));
 

@@ -50,7 +50,7 @@ serialInclude(['../lib/CGF.js',
 
   //OBJECTS
   'objs/Triangle.js', 'objs/Sphere.js', 'objs/Quad.js', 'objs/Cylinder.js',
-  'objs/Patch.js', 'objs/Circle.js', 'objs/oolong/GameState.js', 'objs/oolong/Seat.js',
+  'objs/Patch.js', 'objs/Circle.js',
 	'objs/Liquid.js', 'objs/Cup.js', 'objs/WaveObj.js',
 
   //Server

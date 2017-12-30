@@ -90,7 +90,6 @@ class Oolong {
         this.board = board;
         this.next_table = seat_number;
         this.nextPlayer();
-        console.log("Play successful!");
         return this.board;
       }
     }
