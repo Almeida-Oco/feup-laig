@@ -225,23 +225,29 @@ class SceneGraph {
 
     for (let i = 0; is_static && i < leaves.length; i++) {
       let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
+        leaf_id = leaves[i]["id"],
         leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args);
 
       this.checkSpecial(special, leaf);
-      if (!this.checkToken(is_pickable, table, seat, leaf)) //if it is a token it goes into this.tokens
+      if (!this.checkToken(is_pickable, table, seat, leaf, leaf_id)) //if it is a token it goes into this.tokens
         this.statics.push(leaf);
 
     }
     this.scene.popMatrix();
   }
 
-  checkToken(is_pickable, table_n, seat_n, leaf) {
+  checkToken(is_pickable, table_n, seat_n, leaf, leaf_id) {
     if (is_pickable && table_n !== -1 && seat_n !== -1) {
       let id = table_n * 10 + seat_n + 1;
       if (this.tokens[id] === null || this.tokens[id] === undefined) {
         this.tokens[id] = [];
       }
-      this.tokens[id].push(leaf);
+      if (leaf_id == "cup") {
+        leaf.setTexture(this.textures["glass_text"]);
+        this.tokens[id][1] = leaf;
+      }
+      else
+        this.tokens[id][0] = leaf;
       return true;
     }
     return false;
@@ -388,13 +394,23 @@ class SceneGraph {
       this.statics[i].render();
 
     this.tokens.forEach(function (value, key) {
-      // this.scene.registerForPick(key, value[0].getPrimitive());
+      value[0].render();
+    }.bind(this));
 
-      for (let i = 0; i < value.length; i++)
-        value[i].render();
+    let prev_shader = this.scene.activeShader;
+    this.scene.gl.enable(this.scene.gl.BLEND);
+    this.scene.gl.depthFunc(this.scene.gl.LESS);
+    this.scene.setActiveShader(this.scene.blend_shader);
 
+    this.tokens.forEach(function (value, key) {
+      this.scene.registerForPick(key, value[1].getPrimitive());
+      value[1].render();
       this.scene.clearPickRegistration();
     }.bind(this));
+
+    this.scene.setActiveShader(prev_shader);
+    this.scene.gl.disable(this.scene.gl.BLEND);
+    this.scene.gl.depthFunc(this.scene.gl.LEQUAL);
   }
 
   /**

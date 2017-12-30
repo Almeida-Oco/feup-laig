@@ -10,7 +10,6 @@ class Cup extends CGFobject {
     this.cylinder2 = new Cylinder(scene, [1, 0.5, 0.8, 1, 25], true);
     this.base = new Circle(scene, [25, 0.5]);
     this.liquids = [];
-    this.glass_text = new CGFtexture(this.scene, 'scenes/images/glass.png');
 
     this.height = 0;
     this.height_inc = 0.666 / (anim_time / inc);
@@ -54,11 +53,7 @@ class Cup extends CGFobject {
       this.scene.popMatrix();
     }
 
-
-    //Setup glass shaders
-    let prev_shader = this.activateShaders();
     this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE);
-    this.glass_text.bind(0);
 
     //Render cup
     this.cylinder2.render(afs, aft);
@@ -72,21 +67,5 @@ class Cup extends CGFobject {
     this.cylinder1.render(afs, aft);
 
     this.scene.popMatrix();
-
-    this.disableShaders(prev_shader);
-  }
-
-  activateShaders() {
-    this.scene.gl.enable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LESS);
-    this.scene.setActiveShader(this.scene.blend_shader);
-
-    return this.scene.activeShader;
-  }
-
-  disableShaders(prev_shader) {
-    this.scene.setActiveShader(prev_shader);
-    this.scene.gl.disable(this.scene.gl.BLEND);
-    this.scene.gl.depthFunc(this.scene.gl.LEQUAL);
   }
 }

@@ -57,6 +57,11 @@
 
 <!-- Textures -->
 <TEXTURES>
+	<TEXTURE id="glass_text">
+		<file path="images/glass.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
     <TEXTURE id="light_wood_text">
         <file path="images/light_wood.jpg" />
         <amplif_factor s="1" t="1" />
@@ -146,7 +151,7 @@
 		<emission r="0.0" g="0.0" b="0.0" a="1" />
 	</MATERIAL>
 
-	<MATERIAL id="transparent_mat">
+	<MATERIAL id="glass_mat">
 		<shininess value="0.1" />
 		<specular r="0" g="0" b="0" a="0" />
 		<diffuse r="0" g="0" b="0" a="0" />

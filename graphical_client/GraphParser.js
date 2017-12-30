@@ -287,10 +287,14 @@ class GraphParser {
       }.bind(this),
       "LEAF": function (node_id, spec) {
         let type = this.reader.getItem(spec, 'type', leaves_types, "Unknown type of leaf in node ID = " + node_id),
-          args = this.reader.getString(spec, 'args', "No field 'args' found in leaf of node ID = " + node_id).split(' ');
+          args = this.reader.getString(spec, 'args', "No field 'args' found in leaf of node ID = " + node_id).split(' '),
+          id = "null";
 
         if (type === null || args === null)
           return null;
+
+        if (this.reader.hasAttribute(spec, 'id'))
+          id = this.reader.getString(spec, 'id');
 
         args.forEach(function (value, key, obj) {
           //obj[key] = parseInt(value);
@@ -298,6 +302,7 @@ class GraphParser {
         });
 
         return [1, {
+          "id": id,
           "type": type,
           "args": args
         }];
