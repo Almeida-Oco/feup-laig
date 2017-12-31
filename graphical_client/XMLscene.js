@@ -78,7 +78,18 @@ class XMLscene extends CGFscene {
 
   init(application) {
     CGFscene.prototype.init.call(this, application);
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, -10, 10), vec3.fromValues(0, 0, 0));
+
+/*
+    var cam_position_init = [0, -10, 10];
+    var cam_position_end = [0, -10, 10];
+
+    this.cam_positions = []
+    this.cam_positions.push(cam_position_init);
+    this.cam_positions.push(cam_position_end);
+
+    this.curr_cam_position = 0; */
+    this.camera = new CGFcamera(0.4, 0.1, 500,  [0, -10, 10], vec3.fromValues(0, 0, 0));
+
     this.lights = [];
 
     this.cup = new Cup(this, [3, 0.01]);
@@ -132,6 +143,12 @@ class XMLscene extends CGFscene {
     return false;
   }
 
+  switchCamera(){
+
+    this.camera.setPosition = [0, -10, 0];
+
+  }
+
   readSceneInitials() {
     this.camera.near = this.graph.initials.get("frustum")["near"];
     this.camera.far = this.graph.initials.get("frustum")["far"];
@@ -175,6 +192,7 @@ class XMLscene extends CGFscene {
 
       this.interface.addGameType(this.game, this);
       this.interface.addUndo(this);
+      this.interface.addSwitchCamera(this);
       this.interface.addScore(this);
     }
 
@@ -183,7 +201,7 @@ class XMLscene extends CGFscene {
     this.graph.updateTokens(this.game.getBoard());
 
     if (this.graph.xml_n === 1)
-      this.graph.loadGraph("jap.xml");
+      this.graph.loadGraph("ambient1.xml");
   }
 
   logPicking() {
