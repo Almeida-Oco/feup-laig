@@ -2,6 +2,7 @@ let time_between_plays = 1;
 let player = 0;
 let ai1 = 1;
 let ai2 = 2;
+let time_between_movies = 2;
 
 let ambients = ["ambient1.xml", "ambient2.xml"];
 
@@ -68,8 +69,10 @@ class XMLscene extends CGFscene {
     this.timeout = null;
     this.is_ai_play = false;
 
+    this.display_movie = -1;
+    this.movie_time = time_between_movies;
+
     this.stop_time = 0;
-    this.display_movie = false;
     this.prev_time = Date.now();
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
@@ -117,23 +120,39 @@ class XMLscene extends CGFscene {
   //TODO all the animations should go here!
   update(curr_time) {
     let time_elapsed = (curr_time - this.prev_time) * 1.0 / 1000.0;
+    if (this.display_movie === -1) {
+      if (this.tickTock(time_elapsed)) {
+        console.log("Playing\n");
+        this.play[this.curr_play]();
+      }
 
-    if (this.tickTock(time_elapsed)) {
-      console.log("Playing\n");
-      this.play[this.curr_play]();
+      if (this.graph.fill_cup > 0 &&
+        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+        this.setPickEnabled(true);
+      }
+      else if (this.graph.fill_cup < 0 &&
+        this.graph.tokens[-this.graph.fill_cup][1].getPrimitive().prevLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+        this.graph.updateTokens(this.board);
+        this.setPickEnabled(true);
+        this.board = null;
+      }
     }
-
-    if (this.graph.fill_cup > 0 &&
-      this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
-      this.graph.fill_cup = 0;
-      this.setPickEnabled(true);
-    }
-    else if (this.graph.fill_cup < 0 &&
-      this.graph.tokens[-this.graph.fill_cup][1].getPrimitive().prevLiquid(time_elapsed)) {
-      this.graph.fill_cup = 0;
-      this.graph.updateTokens(this.board);
-      this.setPickEnabled(true);
-      this.board = null;
+    else {
+      this.setPickEnabled(false);
+      if (this.graph.fill_cup > 0 &&
+        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+      }
+      if (this.graph.fill_cup === 0 &&
+        this.display_movie <= this.game.actions.length) {
+        let ret = this.game.getNthAction(this.display_movie);
+        this.graph.updateTokens(ret[0]);
+        if (ret[1] !== null)
+          this.graph.fill_cup = ret[1][0] * 10 + ret[1][1] + 1;
+        this.display_movie++;
+      }
     }
 
     this.prev_time = curr_time;
@@ -195,7 +214,7 @@ class XMLscene extends CGFscene {
   }
 
   onGraphLoaded() {
-    if (this.graph.xml_n === 3) {
+    if (this.graph.xml_n === 1) {
       this.interface.addAmbients(this.graph);
       this.game.setTimer();
     }
@@ -212,10 +231,10 @@ class XMLscene extends CGFscene {
 
     this.graph.updateTokens(this.game.getBoard());
 
-    if (this.graph.xml_n === 1) {
+    if (this.graph.xml_n === -1) {
       this.graph.loadGraph("ambient1.xml");
     }
-    else if (this.graph.xml_n === 2) {
+    else if (this.graph.xml_n === -2) {
       this.graph.loadGraph("jap.xml");
     }
   }
@@ -240,11 +259,16 @@ class XMLscene extends CGFscene {
   }
 
   undoAction() {
-    let ret = this.game.popAction();
-    this.board = ret[0];
-    this.graph.fill_cup = -(ret[1][0] * 10 + ret[1][1] + 1);
-    this.setPickEnabled(false);
-    this.score = this.game.updateScore();
+    let ret;
+    console.log("FILL CUP = " + this.graph.fill_cup);
+    if (this.graph.fill_cup === 0) {
+      if ((ret = this.game.popAction()) !== null) {
+        this.board = ret[0];
+        this.graph.fill_cup = -(ret[1][0] * 10 + ret[1][1] + 1);
+        this.setPickEnabled(false);
+        this.score = this.game.updateScore();
+      }
+    }
 
     if (this.curr_play !== -1) { //no undo timeout in place
       this.prev_play = this.curr_play;
@@ -259,6 +283,16 @@ class XMLscene extends CGFscene {
       this.timeout = setTimeout(function () {
         this.curr_play = this.prev_play;
         this.prev_play = -1;
+      }.bind(this));
+    }
+  }
+
+  playMovie() {
+    if (this.display_movie === -1) {
+      this.display_movie = 0;
+
+      this.graph.tokens.forEach(function (value) {
+        value[1].getPrimitive().resetHeight();
       }.bind(this));
     }
   }
@@ -282,13 +316,12 @@ class XMLscene extends CGFscene {
     });
 
 
-    if (this.graph.xml_n >= 2) {
+    if (this.graph.xml_n >= 1) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
 
       this.graph.displayScene();
 
-      this.translate(0, 0, 5);
       this.popMatrix();
     }
   }

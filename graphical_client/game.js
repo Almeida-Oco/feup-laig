@@ -1,6 +1,18 @@
 let port = 8081;
 let host = 'localhost';
 
+let table_to_token = {
+  '.': function (token) {
+    return token;
+  },
+  'W': function (token) {
+    if (token === 'X')
+      return '%';
+    else
+      return '@';
+  }
+}
+
 class Oolong {
   constructor() {
     this.p1_token = 'X';
@@ -18,7 +30,7 @@ class Oolong {
 
     this.score = "0 - 0";
 
-    this.actions = [[this.board.slice(), this.next_table]];
+    this.actions = [];
     this.time_left = document.getElementById("time_left");
     this.time_left.innerHTML = "30 s";
     this.time_left_number = 30;
@@ -129,20 +141,30 @@ class Oolong {
       this.next_table = prev[1][0];
       this.nextPlayer();
       this.setTimer();
-
       return prev;
     }
 
-    return [this.board, [0, 0]];
+    return this.board;
   }
 
   pushAction(table_n, seat_n) {
-    let push = [this.board.slice(), [table_n, seat_n]];
+    let push = [this.board.slice(), [table_n, seat_n, this.next_player.token]];
     this.actions.push(push);
   }
 
-  getAllActions() {
-    return this.actions;
+  getNthAction(index) {
+    if (index < this.actions.length) {
+      let act = this.actions[index],
+        board = act[0],
+        table = act[1][0],
+        seat = act[1][1],
+        token = act[1][2];
+      board[table][seat] = table_to_token[board[table][seat]](token);
+
+      return [board, [table, seat]];
+    }
+    else
+      return this.actions[this.actions.length - 1];
   }
 
   play(table_number, seat_number) {
