@@ -96,7 +96,7 @@ class XMLscene extends CGFscene {
     this.graph.updateTokens(this.game.getBoard());
 
     if (this.graph.xml_n === 1)
-      this.graph.loadGraph("ambient1.xml");
+      this.graph.loadGraph("jap.xml");
   }
 
   logPicking() {

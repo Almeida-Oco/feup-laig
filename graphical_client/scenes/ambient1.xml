@@ -106,7 +106,8 @@
 		<specular r="0.7" g="0.7" b="0.7" a="1" />
 		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
 		<ambient r="0.2" g="0.2" b="0.2" a="1" />
-		<emission r="0.0" g="0.0" b="0.0" a="1" />
+		<!--emission r="0.0" g="0.0" b="0.0" a="1" /-->
+		<emission r="0.52" g="0.34" b="0.14" a="1" />
 	</MATERIAL>
 
 	<MATERIAL id="fitas_mat">
@@ -152,8 +153,8 @@
 				<NODEREF id="pica_sides" />
 				<NODEREF id="rail" />
 				<NODEREF id="other_side"/>
-				<NODEREF id="mesa"/>
 				<NODEREF id="colher"/>
+				<NODEREF id="mesa"/>
 			</DESCENDANTS>
 		</NODE>
 
@@ -237,6 +238,42 @@
 			</DESCENDANTS>
 		</NODE>
 
+
+
+
+		<NODE id="colher">
+
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="-1" y="1.5" z="-9" />
+			<SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+			<DESCENDANTS>
+				<NODEREF id="colher_pau"/>
+				<NODEREF id="fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="colher_pau">
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+			<DESCENDANTS>
+				<LEAF id="colher_obj" type="wave_obj" args="scenes/wave_obj/colher_high.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
 		<NODE id="mesa_object">
 			<MATERIAL id="wood_mat2" />
 			<TEXTURE  id="wood_table" />
@@ -256,39 +293,6 @@
 			</DESCENDANTS>
 		</NODE>
 
-
-		<NODE id="colher">
-			<MATERIAL id="colher_mat" />
-			<TEXTURE  id="wood_texture" />
-
-
-			<TRANSLATION x="-1" y="1.5" z="-9" />
-			<SCALE sx="0.5" sy="0.5" sz="0.5" />
-
-			<DESCENDANTS>
-				<NODEREF id="colher_pau"/>
-				<NODEREF id="fitas"/>
-			</DESCENDANTS>
-		</NODE>
-
-
-		<NODE id="colher_pau">
-			<MATERIAL id="colher_mat" />
-			<TEXTURE  id="wood_table" />
-
-			<DESCENDANTS>
-				<LEAF id="colher_obj" type="wave_obj" args="scenes/wave_obj/colher_high.obj"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="fitas">
-			<MATERIAL id="fitas_mat" />
-			<TEXTURE  id="clear" />
-
-			<DESCENDANTS>
-				<LEAF id="fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas.obj"/>
-			</DESCENDANTS>
-		</NODE>
 
 
 </NODES>
