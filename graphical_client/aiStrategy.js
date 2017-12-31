@@ -5,7 +5,11 @@ class AI extends Strategy {
 
   play(board, table_n) {
     let ret = this.server.aiMove(board, table_n, this.token);
+    console.log("AI RET : ");
+    console.log(ret);
     if (ret !== null && ret !== undefined) {
+      ret[0][0] = parseInt(ret[0][0]);
+      ret[0][1] = parseInt(ret[0][1]);
       return ret;
     }
     else {

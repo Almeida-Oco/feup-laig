@@ -79,6 +79,19 @@ class ServerComs {
       return null;
   }
 
+  getScore(board, token) {
+    let request_str = "playerScore(";
+    request_str += this.arrayToString(board) + ",";
+    request_str += "'" + token + "')";
+
+    let ret = this.doRequest(request_str);
+
+    if (ret !== null && ret !== undefined)
+      return ret;
+    else
+      return null;
+  }
+
   arrayToString(array) {
     let result = "[";
     for (let i = 0; i < array.length; i++) {

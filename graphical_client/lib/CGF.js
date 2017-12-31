@@ -3317,6 +3317,7 @@ dat.GUI = dat.gui.GUI = function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
     var f = this;
     this.__input = document.createElement("input");
     this.__input.setAttribute("type", "text");
+    this.__input.setAttribute("readonly", "text");
     b.bind(this.__input, "keyup", e);
     b.bind(this.__input, "change", e);
     b.bind(this.__input, "blur", function () {
