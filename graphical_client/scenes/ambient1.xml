@@ -131,6 +131,8 @@
         <MATERIAL id="null" />
         <TEXTURE 	id="null" />
 
+				<TRANSLATION x="4" y="-4" z="0" />
+
 				<DESCENDANTS>
 					<NODEREF id="pica" />
 				</DESCENDANTS>
