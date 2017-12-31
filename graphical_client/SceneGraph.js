@@ -134,7 +134,7 @@ class SceneGraph {
     mat4.identity(this.scene.activeMatrix);
 
     let root = nodes.get(root_id);
-    this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, -1, root.get("static"));
+    this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
     this.scene.popMatrix();
     this.clipStaticNodes(nodes, nodes.get(root_id));
     this.nodes[root_id] = nodes;
@@ -196,8 +196,8 @@ class SceneGraph {
     }.bind(this));
   }
 
-  //TODO is there a better way to do this? 8 parameters is a very nasty code smell
-  setupStatics(nodes, node_id, mat, text, table, seat, special, was_static) {
+  //TODO is there a better way to do this? 7 parameters is a very nasty code smell
+  setupStatics(nodes, node_id, mat, text, table, seat, was_static) {
     let node = nodes.get(node_id),
       is_static = (node.get("static") || was_static),
       is_pickable = node.get("pickable"),
@@ -214,21 +214,17 @@ class SceneGraph {
       table = parseInt(arr[1]);
     if (seat === -1 && (arr = seat_regex.exec(node_id)) !== null)
       seat = parseInt(arr[1]);
-    if (special === -1 && (arr = special_regex.exec(node_id)) !== null)
-      special = parseInt(arr[1]);
-
     this.scene.pushMatrix();
     this.scene.multMatrix(node.get("matrix"));
 
     for (let i = 0; i < children.length; i++)
-      this.setupStatics(nodes, children[i], mat, text, table, seat, special, is_static);
+      this.setupStatics(nodes, children[i], mat, text, table, seat, is_static);
 
     for (let i = 0; is_static && i < leaves.length; i++) {
       let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
         leaf_id = leaves[i]["id"],
         leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args);
 
-      this.checkSpecial(special, leaf);
       if (!this.checkToken(is_pickable, table, seat, leaf, leaf_id)) //if it is a token it goes into this.tokens
         this.statics.push(leaf);
 
@@ -251,12 +247,6 @@ class SceneGraph {
       return true;
     }
     return false;
-  }
-
-  checkSpecial(special, leaf) {
-    if (special !== -1) {
-      this.specials[special] = leaf;
-    }
   }
 
   clipStaticNodes(nodes, node) {
@@ -372,15 +362,6 @@ class SceneGraph {
         this.tokens[table_n * 10 + seat_n + 1][1].setTexture([text1, text2]);
       }
     }
-
-    for (let i = 0, table_n = 9; i < board[table_n].length; i++) {
-      let spec_number = parseInt(board[table_n][i]),
-        text2 = this.textures[specials_prop[spec_number]];
-
-      if (this.specials[spec_number] !== undefined)
-        this.specials[spec_number].setTexture(text2);
-    }
-
   }
 
   displayScene() {

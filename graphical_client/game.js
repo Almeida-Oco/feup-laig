@@ -123,28 +123,33 @@ class Oolong {
   }
 
   popAction() {
-    console.log(this.actions);
     if (this.actions.length > 0) {
       let prev = this.actions.pop();
       this.board = prev[0];
-      this.next_table = prev[1];
+      this.next_table = prev[1][0];
       this.nextPlayer();
       this.setTimer();
+
+      return prev;
     }
 
-    return this.board;
+    return [this.board, [0, 0]];
   }
 
-  pushAction() {
-    let push = [this.board.slice(), this.next_table];
+  pushAction(table_n, seat_n) {
+    let push = [this.board.slice(), [table_n, seat_n]];
     this.actions.push(push);
+  }
+
+  getAllActions() {
+    return this.actions;
   }
 
   play(table_number, seat_number) {
     if (this.next_player !== null && (this.next_table === table_number || table_number === undefined)) {
       let ret = this.next_player.play(this.board, this.next_table, seat_number);
       if (ret !== null) {
-        this.pushAction();
+        this.pushAction(ret[0][0], ret[0][1]);
         this.board = ret[1];
         this.next_table = ret[0][1];
         this.nextPlayer();

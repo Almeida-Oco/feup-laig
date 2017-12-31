@@ -15,7 +15,6 @@ class XMLscene extends CGFscene {
         this.graph.fill_cup = ret[0][0] * 10 + ret[0][1] + 1;
         this.setPickEnabled(false);
         this.score = this.game.updateScore();
-        console.log(this.score);
       }
       else {
         console.log("Return was null!");
@@ -70,10 +69,12 @@ class XMLscene extends CGFscene {
     this.is_ai_play = false;
 
     this.stop_time = 0;
+    this.display_movie = false;
     this.prev_time = Date.now();
     this.interface = Interface;
     this.server_coms = new ServerComs(8081, 'localhost', this);
     this.game = new Oolong();
+    this.board = null;
     this.score = this.game.updateScore();
     this.game.setPlayers(new Player(), new Player());
   }
@@ -81,7 +82,7 @@ class XMLscene extends CGFscene {
   init(application) {
     CGFscene.prototype.init.call(this, application);
 
-/*
+    /*
     var cam_position_init = [0, -10, 10];
     var cam_position_end = [0, -10, 10];
 
@@ -90,7 +91,7 @@ class XMLscene extends CGFscene {
     this.cam_positions.push(cam_position_end);
 
     this.curr_cam_position = 0; */
-    this.camera = new CGFcamera(0.4, 0.1, 500,  [0, -10, 10], vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4, 0.1, 500, [0, 10, 10], vec3.fromValues(0, 0, 0));
 
     this.lights = [];
 
@@ -122,10 +123,17 @@ class XMLscene extends CGFscene {
       this.play[this.curr_play]();
     }
 
-    if (this.graph.fill_cup !== 0 &&
+    if (this.graph.fill_cup > 0 &&
       this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
       this.graph.fill_cup = 0;
       this.setPickEnabled(true);
+    }
+    else if (this.graph.fill_cup < 0 &&
+      this.graph.tokens[-this.graph.fill_cup][1].getPrimitive().prevLiquid(time_elapsed)) {
+      this.graph.fill_cup = 0;
+      this.graph.updateTokens(this.board);
+      this.setPickEnabled(true);
+      this.board = null;
     }
 
     this.prev_time = curr_time;
@@ -145,7 +153,7 @@ class XMLscene extends CGFscene {
     return false;
   }
 
-  switchCamera(){
+  switchCamera() {
 
     this.camera.setPosition = [0, -10, 0];
 
@@ -208,7 +216,6 @@ class XMLscene extends CGFscene {
       this.graph.loadGraph("ambient1.xml");
     }
     else if (this.graph.xml_n === 2) {
-      console.log("LOADING JAPANESE XML\n");
       this.graph.loadGraph("jap.xml");
     }
   }
@@ -233,8 +240,11 @@ class XMLscene extends CGFscene {
   }
 
   undoAction() {
-    this.graph.updateTokens(this.game.popAction());
-    let prev_play;
+    let ret = this.game.popAction();
+    this.board = ret[0];
+    this.graph.fill_cup = -(ret[1][0] * 10 + ret[1][1] + 1);
+    this.setPickEnabled(false);
+    this.score = this.game.updateScore();
 
     if (this.curr_play !== -1) { //no undo timeout in place
       this.prev_play = this.curr_play;
@@ -272,7 +282,7 @@ class XMLscene extends CGFscene {
     });
 
 
-    if (this.graph.xml_n > 2) {
+    if (this.graph.xml_n >= 2) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
 

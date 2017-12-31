@@ -4606,7 +4606,7 @@ function CGFcamera(a, b, c, d, e) {
   this.position = vec4.fromValues(d[0], d[1], d[2], 0.0);
   this.target = vec4.fromValues(e[0], e[1], e[2], 0.0);
   this.direction = this.calculateDirection();
-  this._up = vec3.fromValues(0.0, 1.0, 0.0);
+  this._up = vec3.fromValues(0.0, 0.0, 1.0);
   this._viewMatrix = mat4.create();
   this._projectionMatrix = mat4.create();
 }
@@ -4689,7 +4689,7 @@ CGFinterfaceCamera.prototype.constructor = CGFinterfaceCamera;
 CGFinterfaceCamera.prototype.getViewMatrix = function () {
   vec4.set(this.position, 0, 0, this.distance, 1);
   vec4.set(this.target, 0, 0, 0, 1);
-  vec3.set(this._up, 0, 1, 0);
+  vec3.set(this._up, 0, 0, 1);
   vec4.set(this.direction, 0, 0, -1, 0);
   mat4.lookAt(this._viewMatrix, this.position, this.target, this._up);
   mat4.identity(this._positionMatrix);

@@ -40,7 +40,7 @@ class Cup extends CGFobject {
       this.height -= this.linearInterpolation(0, max_liq_height, time_elapsed);
       if (this.height < 0)
         this.height = 0;
-
+      console.log("HEight = " + this.height);
       this.liquid = new Liquid(this.scene, this.height);
       return false;
     }
