@@ -52,17 +52,23 @@
 			<file path="images/chao_garage.jpg" />
 			<amplif_factor s="1" t="1" />
 		</TEXTURE>
+
+		<!--TEXTURE id="wood_table">
+			<file path="images/wood_texture.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="ribbon_tex">
+			<file path="images/ribbon.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE-->
+
+
+
 	</TEXTURES>
 
 <MATERIALS>
 
-	<MATERIAL id="capa_mat">
-		<shininess value="0.02" />
-		<specular r="0.04" g="0.04" b="0.04" a="1" />
-		<diffuse r="0.05" g="0.05" b="0.05" a="1" />
-		<ambient r="0.03" g="0.03" b="0.03" a="1" />
-		<emission r="0.0" g="0.0" b="0.0" a="1" />
-	</MATERIAL>
 
 </MATERIALS>
 
@@ -183,9 +189,77 @@
 			<DESCENDANTS>
 				<NODEREF id="mesa_object"/>
 				<NODEREF id="capa"/>
+				<!--NODEREF id="pastas"/-->
+			</DESCENDANTS>
+		</NODE>
+<!--
+		<NODE id="pastas">
+
+			<MATERIAL id="pasta_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="0" y="0" z="2" />
+			<SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_grelada"/>
+				<NODEREF id="pasta_fitada"/>
 			</DESCENDANTS>
 		</NODE>
 
+		<NODE id="pasta">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+			<DESCENDANTS>
+				<LEAF id="pasta_obj" type="wave_obj" args="scenes/wave_obj/pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta_grelada">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="2.5" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="grelo"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="pasta_fitada">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="5" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+
+		<NODE id="pasta_fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="pasta_fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas_pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grelo">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="grelo_obj" type="wave_obj" args="scenes/wave_obj/grelo.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+-->
 
 
 

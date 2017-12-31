@@ -69,6 +69,10 @@ class Interface extends CGFinterface {
     this.gui.add(scene, 'undoAction');
   }
 
+  addSwitchCamera(scene) {
+    this.gui.add(scene, 'switchCamera');
+  }
+
   addScore(scene) {
     this.gui.add(scene, 'score').listen();
   }
