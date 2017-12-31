@@ -211,7 +211,7 @@
 			<TEXTURE  id="null"/>
 
 			<DESCENDANTS>
-				<LEAF type="circle" args="75 21" />
+				<LEAF type="circle" args="75 18" />
 			</DESCENDANTS>
 		</NODE>
 
@@ -222,7 +222,7 @@
 			<ROTATION axis="x" angle="180"/>
 
 			<DESCENDANTS>
-				<LEAF type="circle" args="75 21" />
+				<LEAF type="circle" args="75 18" />
 			</DESCENDANTS>
 		</NODE>
 
@@ -263,7 +263,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special0" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -276,7 +275,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special1" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -289,7 +287,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special2" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -302,7 +299,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special3" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -315,7 +311,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special4" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -328,7 +323,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special5" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -341,7 +335,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special6" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -354,7 +347,6 @@
 
 			<DESCENDANTS>
 				<NODEREF id="seats" />
-				<NODEREF id="special7" />
 			</DESCENDANTS>
 
 		</NODE>
@@ -481,114 +473,6 @@
 			<DESCENDANTS>
 				<LEAF id="seat" type="circle" args="25 1" />
 				<LEAF id="cup" type="cup" args="2" />
-			</DESCENDANTS>
-		</NODE>
-
-
-
-		<NODE id="special0">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="-90" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special1">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="-45" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special2">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special3">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="45" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special4">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="90" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special5">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="135" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special6">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="180" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special7">
-			<MATERIAL id="null" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="215" />
-			<TRANSLATION x="0" y="6" z="0" />
-
-			<DESCENDANTS>
-				<NODEREF id="special"/>
-			</DESCENDANTS>
-		</NODE>
-
-		<NODE id="special">
-			<MATERIAL id="plastic_mat" />
-			<TEXTURE  id="null" />
-
-			<ROTATION axis="z" angle="-90"/>
-
-			<DESCENDANTS>
-				<LEAF id="special" type="rectangle" args="-1 1 1 -1" />
 			</DESCENDANTS>
 		</NODE>
 </NODES>
