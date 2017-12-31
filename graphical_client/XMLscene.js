@@ -172,6 +172,7 @@ class XMLscene extends CGFscene {
   onGraphLoaded() {
     if (this.graph.xml_n === 3) {
       this.interface.addAmbients(this.graph);
+      this.game.setTimer();
     }
     if (this.graph.xml_n === 1) {
       this.readSceneInitials();
@@ -253,7 +254,7 @@ class XMLscene extends CGFscene {
     });
 
 
-    if (this.graph.loadedOk) {
+    if (this.graph.xml_n > 2) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
 

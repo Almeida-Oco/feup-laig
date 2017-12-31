@@ -19,6 +19,11 @@ class Oolong {
     this.score = "0 - 0";
 
     this.actions = [[this.board.slice(), this.next_table]];
+    this.time_left = document.getElementById("time_left");
+    this.time_left.innerHTML = "30 s";
+    this.time_left_number = 30;
+
+    this.interval = null;
 
     this.nextPlayer = function () {
       if (this.next_player === this.player1)
@@ -79,6 +84,35 @@ class Oolong {
     return this.board;
   }
 
+
+  setTimer() {
+    let func = function () {
+      this.time_left_number--;
+      this.time_left.innerHTML = this.time_left_number + " s";
+      if (this.time_left_number === 0) {
+        this.nextPlayer();
+        clearInterval(this.interval);
+        this.interval = null;
+        this.time_left_number = 31;
+        this.interval = setInterval(function () {
+          func();
+        }.bind(this), 1000);
+      }
+    }.bind(this);
+    if (this.interval === null) {
+      this.interval = setInterval(function () {
+        func();
+      }.bind(this), 1000);
+    }
+    else {
+      clearInterval(this.interval);
+      this.time_left_number = 31;
+      this.interval = setInterval(function () {
+        func();
+      }.bind(this), 1000);
+    }
+  }
+
   nextPlayer() {
     if (this.next_player === this.player1)
       this.next_player = this.player2;
@@ -95,6 +129,7 @@ class Oolong {
       this.board = prev[0];
       this.next_table = prev[1];
       this.nextPlayer();
+      this.setTimer();
     }
 
     return this.board;
@@ -113,6 +148,7 @@ class Oolong {
         this.board = ret[1];
         this.next_table = ret[0][1];
         this.nextPlayer();
+        this.setTimer();
         return ret;
       }
     }
