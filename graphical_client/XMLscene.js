@@ -3,6 +3,8 @@ let player = 0;
 let ai1 = 1;
 let ai2 = 2;
 
+let ambients = ["ambient1.xml", "ambient2.xml"];
+
 class XMLscene extends CGFscene {
   constructor(Interface) {
     super();
@@ -185,6 +187,9 @@ class XMLscene extends CGFscene {
   }
 
   onGraphLoaded() {
+    if (this.graph.xml_n === 3) {
+      this.interface.addAmbients(this.graph);
+    }
     if (this.graph.xml_n === 1) {
       this.readSceneInitials();
       this.readSceneIllumination();
@@ -196,12 +201,15 @@ class XMLscene extends CGFscene {
       this.interface.addScore(this);
     }
 
-    console.log("Graph loaded successfully\n");
-
     this.graph.updateTokens(this.game.getBoard());
 
-    if (this.graph.xml_n === 1)
+    if (this.graph.xml_n === 1) {
       this.graph.loadGraph("ambient1.xml");
+    }
+    else if (this.graph.xml_n === 2) {
+      console.log("LOADING JAPANESE XML\n");
+      this.graph.loadGraph("jap.xml");
+    }
   }
 
   logPicking() {

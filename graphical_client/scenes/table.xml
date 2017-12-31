@@ -107,35 +107,15 @@
 		<amplif_factor s="5" t="5" />
 	</TEXTURE>
 
-	<TEXTURE id="spec_mv_black">
-		<file path="images/move_unclaimed_black.png" />
-		<amplif_factor s="2" t="2" />
+	<TEXTURE id="wood_table">
+		<file path="images/wood_texture.jpg" />
+		<amplif_factor s="1" t="1" />
 	</TEXTURE>
 
-	<TEXTURE id="spec_mv_green">
-		<file path="images/move_unclaimed_green.png" />
-		<amplif_factor s="2" t="2" />
-	</TEXTURE>
-
-	<TEXTURE id="spec_mv_wait_black">
-		<file path="images/move_waiter_black.png" />
-		<amplif_factor s="2" t="2" />
-	</TEXTURE>
-
-	<TEXTURE id="spec_mv_wait_green">
-		<file path="images/move_waiter_green.png" />
-		<amplif_factor s="2" t="2" />
-	</TEXTURE>
-
-	<TEXTURE id="spec_rotate">
-		<file path="images/rotate.png" />
-		<amplif_factor s="2" t="2" />
-	</TEXTURE>
-
-	<TEXTURE id="spec_swp_claimed">
-		<file path="images/swap_claimed.png" />
-		<amplif_factor s="2" t="2" />
-	</TEXTURE>
+	<TEXTURE id="ribbon_tex">
+			<file path="images/ribbon.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
 
 	<TEXTURE id="spec_swp_unc">
 		<file path="images/swap_unclaimed.png" />
@@ -158,6 +138,48 @@
 		<ambient r="0.05" g="0.05" b="0.05" a="1" />
 		<emission r="0.0" g="0.0" b="0.0" a="1" />
 	</MATERIAL>
+
+	<MATERIAL id="wood_mat2">
+		<shininess value="0.9" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="metal_mat">
+		<shininess value="4" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="colher_mat">
+		<shininess value="0.9" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<!--emission r="0.0" g="0.0" b="0.0" a="1" /-->
+		<emission r="0.52" g="0.34" b="0.14" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="fitas_mat">
+		<shininess value="0.9" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.55" g="0.18" b="0.1" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="rock_mat">
+		<shininess value="0.5" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
 
 	<MATERIAL id="plastic_mat">
 		<shininess value="3" />

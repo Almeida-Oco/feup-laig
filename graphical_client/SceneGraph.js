@@ -61,7 +61,7 @@ class SceneGraph {
     this.tokens = [];
     this.specials = [];
     this.root_ids = [];
-    this.tables_root = "tables";
+    this.ambient = 1; //first ambient
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -83,7 +83,6 @@ class SceneGraph {
    * @description Called when the XML is ready to be read
    */
   onXMLReady() {
-    console.log("XML Loading finished.");
     let parser = new GraphParser(this.reader),
       texts, mats, anims, initials, illums, lights;
 
@@ -123,7 +122,7 @@ class SceneGraph {
       return null;
     let root_id = nodes_ret[0],
       nodes = nodes_ret[1];
-
+    console.log("ROOT ID = " + root_id)
     this.root_ids.push([root_id]);
 
 
@@ -388,8 +387,10 @@ class SceneGraph {
     this.displayStatics();
 
     this.root_ids.forEach(function (value, key) {
-      let root = this.nodes[value][value];
-      this.displayDynamics(this.nodes[value], root, root.materialID, root.textureID, root.selectable);
+      if (key === 0 || key == this.ambient) {
+        let root = this.nodes[value][value];
+        this.displayDynamics(this.nodes[value], root, root.materialID, root.textureID, root.selectable);
+      }
     }.bind(this));
   }
 

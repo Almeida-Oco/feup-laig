@@ -74,4 +74,13 @@ class Interface extends CGFinterface {
   addScore(scene) {
     this.gui.add(scene, 'score').listen();
   }
+
+  addAmbients(graph) {
+    this.graph = graph;
+
+    this.gui.add(this.graph, 'ambient', {
+      'FEUP': 1,
+      'Japanese': 2
+    });
+  }
 };
