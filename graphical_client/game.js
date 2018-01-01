@@ -186,7 +186,6 @@ class Oolong {
       return [[table, seat], board];
     }.bind(this);
     let validPlay = function (table) {
-      let is_free = this.server.isFree(this.board, this.next_table);
       return (this.next_table === table_number || this.next_table === -1 || table_number === undefined);
     }.bind(this);
 

@@ -20,7 +20,6 @@ class ServerComs {
       this.url = url;
     }
 
-    // while (this.doRequest("handshake") != "handshake");
     console.log("Server communication established!");
     this.scene = scene;
   }
@@ -30,9 +29,9 @@ class ServerComs {
    * @param request_str The string to send to the server
    * @return The reply of the server
    */
-  doRequest(request_str) {
+  doRequest(request_str, url, port) {
     let request = new XMLHttpRequest();
-    request.open("GET", 'http://' + this.url + ':' + this.port + '/' + request_str, false);
+    request.open("GET", 'http://' + url + ':' + port + '/' + request_str, false);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send(null);
 
@@ -43,9 +42,9 @@ class ServerComs {
   }
 
   newBoard() {
-    let ret = this.doRequest("newboard");
+    let ret = this.doRequest("newboard", this.url, this.port);
     if (ret !== null && ret !== undefined)
-      return this.stringToArray(this.doRequest("newboard"));
+      return this.stringToArray(ret);
     else
       return null;
   }
@@ -55,7 +54,7 @@ class ServerComs {
     request_str += this.arrayToString(board) + ",";
     request_str += table + ")";
 
-    let ret = this.doRequest(request_str);
+    let ret = this.doRequest(request_str, this.url, this.port);
 
     if (ret !== null && ret !== undefined)
       return ret === "true";
@@ -70,7 +69,7 @@ class ServerComs {
     request_str += seat_n + ",";
     request_str += "'" + token + "')";
 
-    let ret = this.doRequest(request_str);
+    let ret = this.doRequest(request_str, this.url, this.port);
 
     if (ret !== null && ret !== undefined)
       return this.stringToArray(ret);
@@ -84,7 +83,7 @@ class ServerComs {
     request_str += table_n + ",";
     request_str += "'" + token + "')";
 
-    let ret = this.doRequest(request_str);
+    let ret = this.doRequest(request_str, this.url, this.port);
 
     if (ret !== null && ret !== undefined)
       return this.stringToArray(ret);
@@ -97,7 +96,7 @@ class ServerComs {
     request_str += this.arrayToString(board) + ",";
     request_str += "'" + token + "')";
 
-    let ret = this.doRequest(request_str);
+    let ret = this.doRequest(request_str, this.url, this.port);
 
     if (ret !== null && ret !== undefined)
       return ret;

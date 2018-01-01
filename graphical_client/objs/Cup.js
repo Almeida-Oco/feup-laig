@@ -55,31 +55,40 @@ class Cup extends CGFobject {
     }
   }
 
-  render(material, texture) {
-    let is_waiter = texture[1] === true;
-    let cup_text = texture[0],
-      liquid_text = texture[1];
+  render(material, textures) {
+    let is_waiter = textures[1][0],
+      cup_text = textures[0],
+      liq_text = textures[1][1];
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.015);
-    //Render liquid
-    if (this.liquid !== null && liquid_text !== null && liquid_text !== undefined) {
-      this.scene.pushMatrix();
-      liquid_text[0].bind();
-      this.liquid.render(liquid_text[1], liquid_text[2]);
-      this.scene.popMatrix();
-    }
-    cup_text[0].bind();
-    let afs = cup_text[1],
-      aft = cup_text[2];
 
-    if (!is_waiter)
-      this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE);
-    else
+
+    if (this.liquid !== null && liq_text !== null)
+      this.renderLiquid(liq_text);
+
+    if (is_waiter)
       this.scene.gl.blendFunc(this.scene.gl.ONE, this.scene.gl.SRC_COLOR);
+    else
+      this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE);
 
-    this.scene.gl.enable(this.scene.gl.BLEND);
 
-    //Render cup
+    this.renderCup(cup_text);
+
+    this.scene.popMatrix();
+  }
+
+  renderLiquid(texture) {
+    this.scene.pushMatrix();
+    texture[0].bind();
+    this.liquid.render(texture[1], texture[2]);
+    this.scene.popMatrix();
+  }
+
+  renderCup(texture) {
+    texture[0].bind();
+    let afs = texture[1],
+      aft = texture[2];
+
     this.cylinder2.render(afs, aft);
     this.base.render(afs, aft);
 
@@ -89,8 +98,6 @@ class Cup extends CGFobject {
     this.scene.popMatrix();
 
     this.cylinder1.render(afs, aft);
-
-    this.scene.popMatrix();
   }
 
   linearInterpolation(min, max, t) {

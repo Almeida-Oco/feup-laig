@@ -1,10 +1,10 @@
 let tokens_prop = {
-  'X': ["glass_text", "tea1_text"],
-  'O': ["glass_text", "tea2_text"],
-  '%': ["waiter_text", "tea1_text"],
-  '@': ["waiter_text", "tea2_text"],
-  'W': ["waiter_text", true],
-  '.': ["glass_text", null]
+  'X': ["glass_text", [false, "tea1_text"]],
+  'O': ["glass_text", [false, "tea2_text"]],
+  '%': ["waiter_text", [true, "tea1_text"]],
+  '@': ["waiter_text", [true, "tea2_text"]],
+  'W': ["waiter_text", [true, null]],
+  '.': ["glass_text", [false, null]]
 };
 
 let anim_parser = {
@@ -64,7 +64,7 @@ class SceneGraph {
     this.root_ids = [];
     this.dif_objs = [[], [], []];
     this.dif_objs_node = null;
-    this.difficulty = 1;
+    this.difficulty = 0;
     this.ambient = 1; //first ambient
 
     // File reading
@@ -430,18 +430,27 @@ class SceneGraph {
   }
 
   updateTokens(board) {
-    let table_n = 0;
-    for (; table_n < board.length - 1; table_n++) {
-      for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
-        let texts = tokens_prop[board[table_n][seat_n]],
-          text1, text2;
-        if (texts[1] !== null && texts[1] !== true)
-          text2 = this.textures[texts[1]];
-        else if (texts[1] === true)
-          text2 = true;
-        text1 = this.textures[texts[0]];
+    let processTokenSpecs = function (specs) {
+      let glass_text = specs[0],
+        liq_texts = specs[1],
+        real_liq_texts = null,
+        real_glass_text = this.textures[glass_text];
 
-        this.tokens[table_n * 10 + seat_n + 1][1].setTexture([text1, text2]);
+      if (liq_texts !== null) {
+        real_liq_texts = liq_texts.slice();
+        for (let i = 1; real_liq_texts[i] !== null && i < real_liq_texts.length; i++)
+          real_liq_texts[i] = this.textures[real_liq_texts[i]];
+      }
+
+      return [real_glass_text, real_liq_texts];
+    }.bind(this);
+
+    for (let table_n = 0; table_n < board.length - 1; table_n++) {
+      for (let seat_n = 0; seat_n < board[table_n].length; seat_n++) {
+        let specs = tokens_prop[board[table_n][seat_n]],
+          real_specs = processTokenSpecs(specs);
+
+        this.tokens[table_n * 10 + seat_n + 1][1].setTexture(real_specs);
       }
     }
   }
