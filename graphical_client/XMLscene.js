@@ -30,13 +30,12 @@ class XMLscene extends CGFscene {
       }
     }.bind(this);
     this.player_play = function (table, seat) {
-      let ret;
-      if ((ret = this.game.play(table, seat)) !== null) {
+      let ret = this.game.play(table, seat);
+      if (ret !== null && ret[0][0] !== -1 && ret[0][1] !== -1) {
         this.update_game(ret);
         return true;
       }
-      else
-        return false;
+      return (ret !== null && ret[0][0] === -1 && ret[0][1] === -1); //whether it is end play or not
     }.bind(this);
     this.ai_play = function () {
       if (this.is_ai_play) {
@@ -44,6 +43,37 @@ class XMLscene extends CGFscene {
         this.update_game(ret);
       }
     }.bind(this);
+    this.play = {
+      0: function (table, seat) { //Player vs Player
+        if (this.player_play(table, seat)) {
+          this.is_ai_play = false;
+          this.setPickEnabled(true);
+        }
+      }.bind(this),
+
+      1: function (table, seat) { //Player vs AI
+        if (this.is_ai_play) {
+          this.ai_play();
+          this.is_ai_play = false;
+        }
+        else {
+          if (this.player_play(table, seat) && ret[0][0] !== -1 && ret[0][1] !== -1) {
+            this.is_ai_play = true;
+            this.setPickEnabled(false);
+          }
+        }
+      }.bind(this),
+
+      2: function () { //AI vs AI
+        if (this.is_ai_play) {
+          this.ai_play();
+          this.is_ai_play = true;
+          this.setPickEnabled(false);
+        }
+      }.bind(this)
+    };
+
+
     //key => curr_pos, param => destination
     this.move_camera = {
       '-1': function (time_elapsed, dest) {
@@ -77,33 +107,6 @@ class XMLscene extends CGFscene {
       }.bind(this)
     };
 
-
-    this.play = {
-      0: function (table, seat) { //Player vs Player
-        this.player_play(table, seat);
-        this.is_ai_play = false;
-        this.setPickEnabled(true);
-      }.bind(this),
-      1: function (table, seat) { //Player vs AI
-        if (this.is_ai_play) {
-          this.ai_play();
-          this.is_ai_play = false;
-        }
-        else {
-          if (this.player_play(table, seat)) {
-            this.is_ai_play = true;
-            this.setPickEnabled(false);
-          }
-        }
-      }.bind(this),
-      2: function () { //AI vs AI
-        if (this.is_ai_play) {
-          this.ai_play();
-          this.is_ai_play = true;
-          this.setPickEnabled(false);
-        }
-      }.bind(this)
-    };
 
     this.curr_ambient = 0;
     this.curr_play = 0;

@@ -114,7 +114,16 @@ parse_input(newboard, Reply) :-
 	createTables(Reply,0,10).
 
 
-parse_input(turn(Board,TableNumber,SeatNumber,_), Reply) :-
+parse_input(isFree(Board, TableNumber), Reply) :-
+	at(BoardTable, TableNumber, Board),
+	find('.', 0, FreeIndex, BoardTable),
+	(FreeIndex \= -1 ->
+		Reply = true;
+		Reply = false
+	).
+
+
+parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	\+ validPlay(Board, TableNumber, SeatNumber),
 	Reply = "".
 

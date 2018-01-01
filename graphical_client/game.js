@@ -25,6 +25,7 @@ class Oolong {
     this.board = this.server.newBoard();
     this.board[0][0] = "W";
 
+
     this.next_player = null;
     this.next_table = 0;
 
@@ -95,7 +96,6 @@ class Oolong {
   getBoard() {
     return this.board;
   }
-
 
   setTimer() {
     let func = function () {
@@ -168,16 +168,26 @@ class Oolong {
   }
 
   play(table_number, seat_number) {
-    if (this.next_player !== null && (this.next_table === table_number || table_number === undefined)) {
-      let ret = this.next_player.play(this.board, this.next_table, seat_number);
-      if (ret !== null) {
-        this.pushAction(ret[0][0], ret[0][1]);
-        this.board = ret[1];
-        this.next_table = ret[0][1];
-        this.nextPlayer();
-        this.setTimer();
-        return ret;
-      }
+    let normalPlay = function (board, table, seat) {
+      this.pushAction(table, seat);
+      this.board = board;
+      this.next_table = seat;
+      this.nextPlayer();
+      this.setTimer();
+      return [[table, seat], board];
+    }.bind(this);
+    let validPlay = function (table) {
+      let is_free = this.server.isFree(this.board, this.next_table);
+      return (this.next_table === table_number || !is_free || table_number === undefined);
+    }.bind(this);
+
+
+    if (this.next_player !== null && validPlay(table_number)) {
+      let ret = this.next_player.play(this.board, table_number, seat_number);
+      console.log(ret);
+      if (ret !== null)
+        return normalPlay(ret[1], ret[0][0], ret[0][1]);
+
     }
     console.log("Play not successful! Next_table = " + this.next_table + ", supplied = " + table_number);
     return null;
