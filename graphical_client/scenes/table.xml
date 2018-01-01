@@ -297,8 +297,7 @@
 			<MATERIAL id="pasta_mat" />
 			<TEXTURE  id="pasta_tex" />
 
-			<TRANSLATION x="-3.2" y="7" z="0.3" />
-			<SCALE sx="0.9" sy="0.9" sz="0.9" />
+			<TRANSLATION x="-3.5" y="7" z="0.3" />
 			<ROTATION axis="x" angle="-90"/>
 
 			<DESCENDANTS>
@@ -327,7 +326,6 @@
 				<NODEREF id="grelo"/>
 			</DESCENDANTS>
 		</NODE>
-
 
 		<NODE id="pasta_fitada">
 			<MATERIAL id="capa_mat" />

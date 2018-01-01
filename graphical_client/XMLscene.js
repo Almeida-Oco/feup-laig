@@ -341,8 +341,13 @@ class XMLscene extends CGFscene {
 
   checkCameraPos(time_elapsed) {
     let cam_pos = parseInt(this.interface.CameraPosition);
-    if (this.move_camera[this.cam_pos](time_elapsed, cam_pos))
+    if (this.move_camera[this.cam_pos](time_elapsed, cam_pos)) {
       this.cam_pos = cam_pos;
+      if (this.cam_pos === 1)
+        this.cam_orbit_ang = orbit_ang;
+      else if (this.cam_pos === 0)
+        this.cam_orbit_ang = 0;
+    }
   }
 
 
