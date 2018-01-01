@@ -62,6 +62,9 @@ class SceneGraph {
     this.tokens = [];
     this.specials = [];
     this.root_ids = [];
+    this.dif_objs = [[], [], []];
+    this.dif_objs_node = null;
+    this.difficulty = 1;
     this.ambient = 1; //first ambient
 
     // File reading
@@ -135,6 +138,15 @@ class SceneGraph {
     mat4.identity(this.scene.activeMatrix);
 
     let root = nodes.get(root_id);
+    this.findDifObjsNode(nodes, root_id);
+
+    if (this.dif_objs_node !== null && this.xml_n === 0) {
+      this.scene.pushMatrix();
+      this.scene.multMatrix(this.dif_objs_node[1]);
+      this.setupDifObjs(nodes, this.dif_objs_node[0], nodes.get(this.dif_objs_node[0]).get("material"), nodes.get(this.dif_objs_node[0]).get("texture"));
+      this.scene.popMatrix();
+    }
+
     this.setupStatics(nodes, root_id, root.get("material"), root.get("texture"), -1, -1, root.get("static"));
     this.scene.popMatrix();
     this.clipStaticNodes(nodes, nodes.get(root_id));
@@ -229,6 +241,75 @@ class SceneGraph {
       if (!this.checkToken(is_pickable, table, seat, leaf, leaf_id)) //if it is a token it goes into this.tokens
         this.statics.push(leaf);
 
+    }
+    this.scene.popMatrix();
+  }
+
+  findDifObjsNode(nodes, node_id) {
+    let node = nodes.get(node_id),
+      children = node.get("descendants")[0];
+
+    this.scene.pushMatrix();
+    this.scene.multMatrix(node.get("matrix"));
+
+    for (let i = 0; i < children.length; i++) {
+      let child = nodes.get(children[i]);
+      if (child.get("dif_objs")) {
+        this.dif_objs_node = [children[i], this.scene.getMatrix()];
+        node.get("descendants")[0].splice(i, 1);
+      }
+      else
+        this.findDifObjsNode(nodes, children[i]);
+    }
+    this.scene.popMatrix();
+  }
+
+  setupDifObjs(nodes, node_id, mat, text) {
+    let node = nodes.get(node_id),
+      children = node.get("descendants")[0],
+      leaves = node.get("descendants")[1];
+
+    if (node.get("material") !== "null" && node.get("material") !== undefined)
+      mat = node.get("material");
+    if (node.get("texture") !== "null" && node.get("texture") !== undefined)
+      text = node.get("texture");
+
+    this.scene.pushMatrix();
+    this.scene.multMatrix(node.get("matrix"));
+
+    for (let i = 0; i < children.length; i++) {
+      let child = nodes.get(children[i]);
+      if (child.get("dif_easy"))
+        this.extractDifObj(nodes, children[i], mat, text, 0);
+      else if (child.get("dif_medium"))
+        this.extractDifObj(nodes, children[i], mat, text, 1);
+      else if (child.get("dif_hard"))
+        this.extractDifObj(nodes, children[i], mat, text, 2);
+      else
+        this.setupDifObjs(nodes, children[i], mat, text);
+    }
+    this.scene.popMatrix();
+  }
+
+  extractDifObj(nodes, node_id, mat, text, dif) {
+    let node = nodes.get(node_id),
+      children = node.get("descendants")[0],
+      leaves = node.get("descendants")[1];
+
+    if (node.get("material") !== "null" && node.get("material") !== undefined)
+      mat = node.get("material");
+    if (node.get("texture") !== "null" && node.get("texture") !== undefined)
+      text = node.get("texture");
+
+    this.scene.pushMatrix();
+    this.scene.multMatrix(node.get("matrix"));
+    for (let i = 0; i < children.length; i++)
+      this.extractDifObj(nodes, children[i], mat, text, dif);
+
+    for (let i = 0; i < leaves.length; i++) {
+      let leaf_args = [this.scene.getMatrix(), this.materials[mat], this.textures[text]],
+        leaf = new StaticLeaf(this.scene, leaves[i]["type"], leaves[i]["args"], leaf_args);
+      this.dif_objs[dif].push(leaf);
     }
     this.scene.popMatrix();
   }
@@ -367,7 +448,7 @@ class SceneGraph {
 
   displayScene() {
     this.displayStatics();
-
+    this.displayDifObjs();
     this.root_ids.forEach(function (value, key) {
       if (key === 0 || key == this.ambient) {
         let root = this.nodes[value][value];
@@ -426,5 +507,25 @@ class SceneGraph {
       node.leaves[i].render(this.materials[mat], (text == "clear" ? null : this.textures[text]), this.scene);
 
     this.scene.popMatrix();
+  }
+
+  displayDifObjs() {
+    let reg_id = 100 + this.difficulty;
+    for (let i = 0; i < this.dif_objs[this.difficulty].length; i++) {
+      if (i === 0)
+        this.scene.registerForPick(reg_id, this.dif_objs[this.difficulty][i].getPrimitive());
+
+      this.dif_objs[this.difficulty][i].render();
+    }
+    this.scene.clearPickRegistration();
+  }
+
+  changeDifficulty() {
+    if (this.difficulty === 0)
+      this.difficulty = 1;
+    else if (this.difficulty === 1)
+      this.difficulty = 2;
+    else if (this.difficulty === 2)
+      this.difficulty = 0;
   }
 };

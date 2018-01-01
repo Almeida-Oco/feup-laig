@@ -292,11 +292,12 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="pastas">
+		<NODE id="pastas" dif_objs="true">
 			<MATERIAL id="pasta_mat" />
 			<TEXTURE  id="pasta_tex" />
 
-			<TRANSLATION x="-3.5" y="7" z="0.3" />
+			<TRANSLATION x="0" y="5.5" z="0.2" />
+			<SCALE sx="1.5" sy="1.5" sz="2" />
 			<ROTATION axis="x" angle="-90"/>
 
 			<DESCENDANTS>
@@ -306,7 +307,7 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="pasta">
+		<NODE id="pasta" dif_easy="true">
 			<MATERIAL id="capa_mat" />
 			<TEXTURE  id="pasta_tex" />
 			<DESCENDANTS>
@@ -314,11 +315,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="pasta_grelada">
+		<NODE id="pasta_grelada" dif_medium="true">
 			<MATERIAL id="capa_mat" />
 			<TEXTURE  id="pasta_tex" />
-
-			<TRANSLATION x="3.5" y="0" z="0" />
 
 			<DESCENDANTS>
 				<NODEREF id="pasta"/>
@@ -326,11 +325,9 @@
 			</DESCENDANTS>
 		</NODE>
 
-		<NODE id="pasta_fitada">
+		<NODE id="pasta_fitada" dif_hard="true">
 			<MATERIAL id="capa_mat" />
 			<TEXTURE  id="pasta_tex" />
-
-			<TRANSLATION x="7" y="0" z="0" />
 
 			<DESCENDANTS>
 				<NODEREF id="pasta"/>

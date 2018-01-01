@@ -7,9 +7,9 @@ let texture_req = ["file", "amplif_factor"];
 let material_req = ["shininess", "specular", "diffuse", "ambient", "emission"];
 let nodes_req = ["material", "texture", "descendants"];
 
-let node_infos = ["id", "static", "pickable"];
+let node_infos = ["id", "static", "pickable", "dif_objs", "dif_easy", "dif_medium", "dif_hard"];
 let node_needed_infos = ["id"];
-let node_optional_infos = ["static", "pickable"];
+let node_optional_infos = ["static", "pickable", "dif_objs", "dif_easy", "dif_medium", "dif_hard"];
 
 class GraphParser {
   constructor(reader) {

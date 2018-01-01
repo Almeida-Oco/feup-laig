@@ -243,11 +243,17 @@ class XMLscene extends CGFscene {
         for (var i = 0; i < this.pickResults.length; i++) {
           var obj = this.pickResults[i][0];
           if (obj) {
-            let pick_result = this.pickResults[i][1],
-              table = Math.floor(pick_result / 10),
-              seat = pick_result % 10 - 1;
-            if (this.curr_play === player || this.curr_play === ai1 && !this.is_ai_play) {
-              this.play[this.curr_play](table, seat);
+            let pick_result = this.pickResults[i][1];
+            console.log(pick_result);
+            if (pick_result < 100) { //picked a token
+              let table = Math.floor(pick_result / 10),
+                seat = pick_result % 10 - 1;
+              if (this.curr_play === player || this.curr_play === ai1 && !this.is_ai_play)
+                this.play[this.curr_play](table, seat);
+
+            }
+            else if (pick_result >= 100 && pick_result <= 102) {
+              this.graph.changeDifficulty();
             }
           }
         }
