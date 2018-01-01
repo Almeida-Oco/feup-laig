@@ -86,4 +86,16 @@ class Interface extends CGFinterface {
       'Japanese': 2
     });
   }
+
+  addCameraSpots(scene) {
+    this.scene = scene;
+
+    this.CameraPosition = 1;
+
+    this.gui.add(this, 'CameraPosition', {
+      'Free': -1,
+      'Player 1': 0,
+      'Player 2': 1
+    });
+  }
 };

@@ -3,8 +3,15 @@ let player = 0;
 let ai1 = 1;
 let ai2 = 2;
 let time_between_movies = 2;
+let orbit_ang = 180 * DEGREE_TO_RAD;
+let orbit_time = 4;
 
 let ambients = ["ambient1.xml", "ambient2.xml"];
+
+let cam_pos = {
+  1: [[0, -13, 16], [0, 13, 16]],
+  2: [[0, -23, 15], [0, 23, 15]]
+};
 
 class XMLscene extends CGFscene {
   constructor(Interface) {
@@ -36,6 +43,34 @@ class XMLscene extends CGFscene {
         this.update_game(ret);
       }
     }.bind(this);
+    //key => curr_pos, param => destination
+    this.move_camera = {
+      '-1': function (time_elapsed, dest) {
+        this.interface.setActiveCamera(null);
+        if (dest === 0 || dest === 1)
+          return this.moveToPoint(time_elapsed, dest);
+        else
+          return true;
+      }.bind(this),
+      0: function (time_elapsed, dest) {
+        if (dest === -1) {
+          this.interface.setActiveCamera(this.camera);
+          return true;
+        }
+        else if (dest === 1 || dest === 0) {
+          return this.doOrbit(time_elapsed, (dest === 1) ? orbit_ang : 0);
+        }
+      }.bind(this),
+      1: function (time_elapsed, dest) {
+        if (dest === -1) {
+          this.interface.setActiveCamera(this.camera);
+          return true;
+        }
+        else if (dest === 0 || dest === 1)
+          return this.doOrbit(time_elapsed, (dest === 1) ? orbit_ang : (orbit_ang * 2));
+      }.bind(this)
+    };
+
 
     this.play = {
       0: function (table, seat) { //Player vs Player
@@ -72,6 +107,10 @@ class XMLscene extends CGFscene {
     this.display_movie = -1;
     this.movie_time = time_between_movies;
 
+    this.cam_pos = 0;
+    this.cam_orbit_ang = orbit_ang;
+    this.mid_animation = false;
+
     this.stop_time = 0;
     this.prev_time = Date.now();
     this.interface = Interface;
@@ -84,17 +123,7 @@ class XMLscene extends CGFscene {
 
   init(application) {
     CGFscene.prototype.init.call(this, application);
-
-    /*
-    var cam_position_init = [0, -10, 10];
-    var cam_position_end = [0, -10, 10];
-
-    this.cam_positions = []
-    this.cam_positions.push(cam_position_init);
-    this.cam_positions.push(cam_position_end);
-
-    this.curr_cam_position = 0; */
-    this.camera = new CGFcamera(0.4, 0.1, 500, [0, 10, 10], vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.5, 0.1, 500, [0, 23, 15], vec3.fromValues(0, 0, 0));
 
     this.lights = [];
 
@@ -116,48 +145,6 @@ class XMLscene extends CGFscene {
     });
     this.setUpdatePeriod(16.666667); //60 FPS
   }
-
-  //TODO all the animations should go here!
-  update(curr_time) {
-    let time_elapsed = (curr_time - this.prev_time) * 1.0 / 1000.0;
-    if (this.display_movie === -1) {
-      if (this.tickTock(time_elapsed)) {
-        console.log("Playing\n");
-        this.play[this.curr_play]();
-      }
-
-      if (this.graph.fill_cup > 0 &&
-        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
-        this.graph.fill_cup = 0;
-        this.setPickEnabled(true);
-      }
-      else if (this.graph.fill_cup < 0 &&
-        this.graph.tokens[-this.graph.fill_cup][1].getPrimitive().prevLiquid(time_elapsed)) {
-        this.graph.fill_cup = 0;
-        this.graph.updateTokens(this.board);
-        this.setPickEnabled(true);
-        this.board = null;
-      }
-    }
-    else {
-      this.setPickEnabled(false);
-      if (this.graph.fill_cup > 0 &&
-        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
-        this.graph.fill_cup = 0;
-      }
-      if (this.graph.fill_cup === 0 &&
-        this.display_movie <= this.game.actions.length) {
-        let ret = this.game.getNthAction(this.display_movie);
-        this.graph.updateTokens(ret[0]);
-        if (ret[1] !== null)
-          this.graph.fill_cup = ret[1][0] * 10 + ret[1][1] + 1;
-        this.display_movie++;
-      }
-    }
-
-    this.prev_time = curr_time;
-  }
-
 
   tickTock(time_elapsed) {
     if (this.is_ai_play && (this.curr_play === ai1 || this.curr_play === ai2) && this.graph.fill_cup === 0) {
@@ -214,11 +201,11 @@ class XMLscene extends CGFscene {
   }
 
   onGraphLoaded() {
-    if (this.graph.xml_n === 1) {
+    if (this.graph.xml_n === 3) {
       this.interface.addAmbients(this.graph);
       this.game.setTimer();
     }
-    if (this.graph.xml_n === 1) {
+    if (this.graph.xml_n === 1) { //Tables loaded
       this.readSceneInitials();
       this.readSceneIllumination();
       this.readSceneLights();
@@ -227,14 +214,15 @@ class XMLscene extends CGFscene {
       this.interface.addUndo(this);
       this.interface.addSwitchCamera(this);
       this.interface.addScore(this);
+      this.interface.addCameraSpots(this);
     }
 
     this.graph.updateTokens(this.game.getBoard());
 
-    if (this.graph.xml_n === -1) {
+    if (this.graph.xml_n === 1) {
       this.graph.loadGraph("ambient1.xml");
     }
-    else if (this.graph.xml_n === -2) {
+    else if (this.graph.xml_n === 2) {
       this.graph.loadGraph("jap.xml");
     }
   }
@@ -260,7 +248,6 @@ class XMLscene extends CGFscene {
 
   undoAction() {
     let ret;
-    console.log("FILL CUP = " + this.graph.fill_cup);
     if (this.graph.fill_cup === 0) {
       if ((ret = this.game.popAction()) !== null) {
         this.board = ret[0];
@@ -297,6 +284,100 @@ class XMLscene extends CGFscene {
     }
   }
 
+  //TODO all the animations should go here!
+  update(curr_time) {
+    let time_elapsed = (curr_time - this.prev_time) * 1.0 / 1000.0;
+
+    this.checkCameraPos(time_elapsed);
+
+    if (this.display_movie === -1) {
+      if (this.tickTock(time_elapsed)) {
+        this.play[this.curr_play]();
+      }
+
+      if (this.graph.fill_cup > 0 &&
+        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+        this.setPickEnabled(true);
+      }
+      else if (this.graph.fill_cup < 0 &&
+        this.graph.tokens[-this.graph.fill_cup][1].getPrimitive().prevLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+        this.graph.updateTokens(this.board);
+        this.setPickEnabled(true);
+        this.board = null;
+      }
+    }
+    else {
+      this.setPickEnabled(false);
+      if (this.graph.fill_cup > 0 &&
+        this.graph.tokens[this.graph.fill_cup][1].getPrimitive().nextLiquid(time_elapsed)) {
+        this.graph.fill_cup = 0;
+      }
+      if (this.graph.fill_cup === 0 &&
+        this.display_movie <= this.game.actions.length) {
+        let ret = this.game.getNthAction(this.display_movie);
+        this.graph.updateTokens(ret[0]);
+        if (ret[1] !== null)
+          this.graph.fill_cup = ret[1][0] * 10 + ret[1][1] + 1;
+        this.display_movie++;
+      }
+    }
+
+    this.prev_time = curr_time;
+  }
+
+  checkCameraPos(time_elapsed) {
+    let cam_pos = parseInt(this.interface.CameraPosition);
+    if (this.move_camera[this.cam_pos](time_elapsed, cam_pos))
+      this.cam_pos = cam_pos;
+  }
+
+
+  //should cover all the cases
+  doOrbit(time_elapsed, dest_ang) {
+    if (this.cam_orbit_ang !== dest_ang) {
+      let ang_inc = this.linearInterpolation(0, orbit_ang, time_elapsed);
+
+      if (dest_ang === 0) { //destination is player1 from mid player 1->2
+        if ((this.cam_orbit_ang - ang_inc) < 0)
+          ang_inc = -this.cam_orbit_ang;
+        else
+          ang_inc = -ang_inc;
+      }
+      else if (dest_ang === orbit_ang) { //destination is player2 from player1 / mid player 2->1
+        if (this.cam_orbit_ang > orbit_ang) {
+          if ((this.cam_orbit_ang - ang_inc) < orbit_ang)
+            ang_inc = orbit_ang - this.cam_orbit_ang;
+          else
+            ang_inc = -ang_inc
+        }
+        else {
+          if ((this.cam_orbit_ang + ang_inc) > orbit_ang)
+            ang_inc = orbit_ang - this.cam_orbit_ang;
+        }
+      }
+      else if (dest_ang === orbit_ang * 2) { //destination is player1 from player2
+        if ((this.cam_orbit_ang + ang_inc) > (orbit_ang * 2))
+          ang_inc = (orbit_ang * 2) - this.cam_orbit_ang;
+      }
+
+      this.camera.orbit(CGFcameraAxis.Z, ang_inc);
+      this.cam_orbit_ang += ang_inc;
+    }
+    let ret = (this.cam_orbit_ang === dest_ang);
+    if (this.cam_orbit_ang === (orbit_ang * 2))
+      this.cam_orbit_ang = 0;
+
+    return ret;
+  }
+
+  camPosEqualTo(point) {
+    return (this.camera.position[0] === point[0] &&
+      this.camera.position[1] === point[1] &&
+      this.camera.position[2] === point[2]);
+  }
+
   display() {
     if (this.graph.fill_cup === 0)
       this.logPicking();
@@ -316,7 +397,7 @@ class XMLscene extends CGFscene {
     });
 
 
-    if (this.graph.xml_n >= 1) {
+    if (this.graph.xml_n >= 3) {
       this.pushMatrix();
       this.multMatrix(this.graph.initials.get("matrix"));
 
@@ -324,5 +405,10 @@ class XMLscene extends CGFscene {
 
       this.popMatrix();
     }
+  }
+
+  linearInterpolation(min, max, t) {
+    let passed = t / orbit_time;
+    return (1 - passed) * min + (passed * max);
   }
 };
