@@ -50,6 +50,7 @@ class SceneGraph {
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
+    this.scene.curr_ambient = 1;
 
     this.materials = [];
     this.textures = [];

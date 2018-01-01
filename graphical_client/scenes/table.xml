@@ -293,7 +293,6 @@
 		</NODE>
 
 		<NODE id="pastas">
-
 			<MATERIAL id="pasta_mat" />
 			<TEXTURE  id="pasta_tex" />
 

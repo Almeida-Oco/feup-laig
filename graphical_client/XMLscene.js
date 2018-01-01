@@ -5,7 +5,7 @@ let ai2 = 2;
 let time_between_movies = 2;
 let orbit_ang = 180 * DEGREE_TO_RAD;
 let orbit_time = 4;
-let lin_speed = 3;
+let lin_speed = 5;
 
 let ambients = ["ambient1.xml", "ambient2.xml"];
 
@@ -49,14 +49,11 @@ class XMLscene extends CGFscene {
       '-1': function (time_elapsed, dest) {
         if (dest === 0 || dest === 1) {
           this.interface.setActiveCamera(null);
-          let start_pt = [this.camera.position[0], this.camera.position[1], this.camera.position[2]],
-            end_pt = cam_pts[this.graph.ambient][dest],
-            vec = [end_pt[0] - start_pt[0], end_pt[1] - start_pt[1], end_pt[2] - start_pt[2]],
-            angles = this.xyzAngles(vec),
-            time_left = this.calcRemTime(angles, start_pt, end_pt, lin_speed);
-          console.log(time_left);
           this.camera.setTarget([0, 0, 0]);
-          return this.moveCamera(vec, time_elapsed, time_left, end_pt);
+
+          let start_pt = [this.camera.position[0], this.camera.position[1], this.camera.position[2]],
+            end_pt = cam_pts[this.graph.ambient][dest];
+          return this.moveCamera(time_elapsed, start_pt, end_pt);
         }
         else
           return true;
@@ -108,6 +105,7 @@ class XMLscene extends CGFscene {
       }.bind(this)
     };
 
+    this.curr_ambient = 0;
     this.curr_play = 0;
     this.prev_play = -1;
     this.timeout = null;
@@ -340,18 +338,29 @@ class XMLscene extends CGFscene {
   }
 
   checkCameraPos(time_elapsed) {
-    let cam_pos = parseInt(this.interface.CameraPosition);
-    if (this.move_camera[this.cam_pos](time_elapsed, cam_pos)) {
-      this.cam_pos = cam_pos;
-      if (this.cam_pos === 1)
-        this.cam_orbit_ang = orbit_ang;
-      else if (this.cam_pos === 0)
-        this.cam_orbit_ang = 0;
+    if (this.curr_ambient === this.graph.ambient || this.cam_pos === -1) {
+      let cam_pos = parseInt(this.interface.CameraPosition);
+      if (this.move_camera[this.cam_pos](time_elapsed, cam_pos)) {
+        this.cam_pos = cam_pos;
+        if (this.cam_pos === 1)
+          this.cam_orbit_ang = orbit_ang;
+        else if (this.cam_pos === 0)
+          this.cam_orbit_ang = 0;
+      }
+    }
+    else {
+      this.interface.setActiveCamera(null);
+      this.camera.setTarget([0, 0, 0]);
+
+      let start_pt = [this.camera.position[0], this.camera.position[1], this.camera.position[2]],
+        end_pt = cam_pts[this.graph.ambient][this.interface.CameraPosition];
+      if (this.moveCamera(time_elapsed, start_pt, end_pt))
+        this.curr_ambient = this.graph.ambient;
     }
   }
 
 
-  //should cover all the cases
+
   doOrbit(time_elapsed, dest_ang) {
     if (this.cam_orbit_ang !== dest_ang) {
       let ang_inc = this.linearInterpolation(0, orbit_ang, time_elapsed, orbit_time);
@@ -382,6 +391,7 @@ class XMLscene extends CGFscene {
       this.camera.orbit(CGFcameraAxis.Z, ang_inc);
       this.cam_orbit_ang += ang_inc;
     }
+
     let ret = (this.cam_orbit_ang === dest_ang);
     if (this.cam_orbit_ang === (orbit_ang * 2))
       this.cam_orbit_ang = 0;
@@ -389,11 +399,15 @@ class XMLscene extends CGFscene {
     return ret;
   }
 
-  moveCamera(dir_vec, time_elapsed, time_left, end_pt) {
+  moveCamera(time_elapsed, start_pt, end_pt) {
+    let vec = [end_pt[0] - start_pt[0], end_pt[1] - start_pt[1], end_pt[2] - start_pt[2]],
+      angles = this.xyzAngles(vec),
+      time_left = this.calcRemTime(angles, start_pt, end_pt, lin_speed);
+
     if (time_elapsed < time_left) {
-      let x = this.camera.position[0] + dir_vec[0] * lin_speed * time_elapsed,
-        y = this.camera.position[1] + dir_vec[1] * lin_speed * time_elapsed,
-        z = this.camera.position[2] + dir_vec[2] * lin_speed * time_elapsed;
+      let x = this.camera.position[0] + angles[0] * lin_speed * time_elapsed,
+        y = this.camera.position[1] + angles[1] * lin_speed * time_elapsed,
+        z = this.camera.position[2] + angles[2] * lin_speed * time_elapsed;
 
       console.log([x, y, z]);
       this.camera.setPosition([x, y, z]);
