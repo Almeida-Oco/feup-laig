@@ -90,7 +90,7 @@ class Interface extends CGFinterface {
   addCameraSpots(scene) {
     this.scene = scene;
 
-    this.CameraPosition = 1;
+    this.CameraPosition = 0;
 
     this.gui.add(this, 'CameraPosition', {
       'Free': -1,

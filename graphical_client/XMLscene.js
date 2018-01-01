@@ -5,10 +5,11 @@ let ai2 = 2;
 let time_between_movies = 2;
 let orbit_ang = 180 * DEGREE_TO_RAD;
 let orbit_time = 4;
+let lin_speed = 3;
 
 let ambients = ["ambient1.xml", "ambient2.xml"];
 
-let cam_pos = {
+let cam_pts = {
   1: [[0, -13, 16], [0, 13, 16]],
   2: [[0, -23, 15], [0, 23, 15]]
 };
@@ -46,9 +47,17 @@ class XMLscene extends CGFscene {
     //key => curr_pos, param => destination
     this.move_camera = {
       '-1': function (time_elapsed, dest) {
-        this.interface.setActiveCamera(null);
-        if (dest === 0 || dest === 1)
-          return this.moveToPoint(time_elapsed, dest);
+        if (dest === 0 || dest === 1) {
+          this.interface.setActiveCamera(null);
+          let start_pt = [this.camera.position[0], this.camera.position[1], this.camera.position[2]],
+            end_pt = cam_pts[this.graph.ambient][dest],
+            vec = [end_pt[0] - start_pt[0], end_pt[1] - start_pt[1], end_pt[2] - start_pt[2]],
+            angles = this.xyzAngles(vec),
+            time_left = this.calcRemTime(angles, start_pt, end_pt, lin_speed);
+          console.log(time_left);
+          this.camera.setTarget([0, 0, 0]);
+          return this.moveCamera(vec, time_elapsed, time_left, end_pt);
+        }
         else
           return true;
       }.bind(this),
@@ -108,8 +117,11 @@ class XMLscene extends CGFscene {
     this.movie_time = time_between_movies;
 
     this.cam_pos = 0;
-    this.cam_orbit_ang = orbit_ang;
-    this.mid_animation = false;
+    this.cam_orbit_ang = 0;
+    this.curr_time = 0;
+    this.anim_time = 0;
+    this.start_pt = [0, 0, 0];
+
 
     this.stop_time = 0;
     this.prev_time = Date.now();
@@ -123,7 +135,7 @@ class XMLscene extends CGFscene {
 
   init(application) {
     CGFscene.prototype.init.call(this, application);
-    this.camera = new CGFcamera(0.5, 0.1, 500, [0, 23, 15], vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.5, 0.1, 500, [0, -13, 16], vec3.fromValues(0, 0, 0));
 
     this.lights = [];
 
@@ -337,7 +349,7 @@ class XMLscene extends CGFscene {
   //should cover all the cases
   doOrbit(time_elapsed, dest_ang) {
     if (this.cam_orbit_ang !== dest_ang) {
-      let ang_inc = this.linearInterpolation(0, orbit_ang, time_elapsed);
+      let ang_inc = this.linearInterpolation(0, orbit_ang, time_elapsed, orbit_time);
 
       if (dest_ang === 0) { //destination is player1 from mid player 1->2
         if ((this.cam_orbit_ang - ang_inc) < 0)
@@ -370,6 +382,36 @@ class XMLscene extends CGFscene {
       this.cam_orbit_ang = 0;
 
     return ret;
+  }
+
+  moveCamera(dir_vec, time_elapsed, time_left, end_pt) {
+    if (time_elapsed < time_left) {
+      let x = this.camera.position[0] + dir_vec[0] * lin_speed * time_elapsed,
+        y = this.camera.position[1] + dir_vec[1] * lin_speed * time_elapsed,
+        z = this.camera.position[2] + dir_vec[2] * lin_speed * time_elapsed;
+
+      console.log([x, y, z]);
+      this.camera.setPosition([x, y, z]);
+      return false;
+    }
+    else {
+      this.camera.setPosition(end_pt);
+      return true;
+    }
+  }
+
+  xyzAngles(vector) {
+    let magnitude = function (vec) {
+      return Math.sqrt(Math.pow(vec[0], 2) + Math.pow(vec[1], 2) + Math.pow(vec[2], 2));
+    };
+    let mag = magnitude(vector),
+      cosa = vector[0] / mag,
+      cosb = vector[1] / mag,
+      cosj = vector[2] / mag;
+    // theta = Math.acos(vector[0] / (Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)))),
+    //   z_angle = Math.acos(vector[2] / mag);
+
+    return [cosa, cosb, cosj];
   }
 
   camPosEqualTo(point) {
@@ -407,8 +449,20 @@ class XMLscene extends CGFscene {
     }
   }
 
-  linearInterpolation(min, max, t) {
-    let passed = t / orbit_time;
+
+  calcRemTime(vec_angles, start_pt, end_pt, speed) {
+    let start_x = start_pt[0],
+      end_x = end_pt[0];
+
+    return (end_x - start_x) / (vec_angles[0] * speed);
+  }
+
+  linearInterpolation(min, max, t, t_limit) {
+    let passed = t / t_limit;
     return (1 - passed) * min + (passed * max);
   }
+
+  ptsDistance(pt1, pt2) {
+    return Math.sqrt(Math.pow(pt1[0] - pt2[0], 2) + Math.pow(pt1[1] - pt2[1], 2) + Math.pow(pt1[2] - pt2[2], 2));
+  };
 };
