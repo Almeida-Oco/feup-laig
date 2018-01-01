@@ -22,7 +22,7 @@ class StaticLeaf extends GraphLeaf {
   }
 
   setMaterial(mat) {
-    if (mat !== null && mat !== undefined && mat instanceof CGFappearance)
+    if (mat !== null && mat !== undefined)
       this.mat = mat;
     else
       console.log("Could not set material of leaf!");

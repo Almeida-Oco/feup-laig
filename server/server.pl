@@ -133,6 +133,7 @@ parse_input(turn(Board,TableNumber,SeatNumber,Token), Reply) :-
 	handleWaiter(MiddleBoard, SeatNumber, Reply, _).
 
 parse_input(aiTurn(Board, TableNumber, Token), Reply) :-
+	TableNumber \= -1,
 	aiTurn(Token, TableNumber, Board, MiddleReply),
 	nth0(0, MiddleReply, TableNSeat),
 	nth0(1, MiddleReply, MiddleBoard),
@@ -140,6 +141,10 @@ parse_input(aiTurn(Board, TableNumber, Token), Reply) :-
 	nth0(1, TableNSeat, NewSeatNumber),
 	handleWaiter(MiddleBoard, NewSeatNumber, NewBoard, _),
 	Reply = [[NewTableNumber, NewSeatNumber], NewBoard].
+
+parse_input(aiTurn(Board, -1, Token), Reply) :-
+	getNumberInput(TableNumber, 0, 8, 1),
+	parse_input(aiTurn(Board, TableNumber, Token), Reply).
 
 parse_input(playerScore(Board, Token), Reply) :-
 	countMajorTables(Board, Token, 0, 0, Reply).

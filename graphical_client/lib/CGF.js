@@ -40,6 +40,7 @@ var Detector = {
   }
 };
 if (typeof module === 'object') module.exports = Detector;
+
 (function () {
   "use strict";
   var a = {};
@@ -2065,6 +2066,7 @@ if (typeof module === 'object') module.exports = Detector;
     if (typeof a !== 'undefined') a.quat = p;;
   })(a.exports);
 })();
+
 var dat = dat || {};
 dat.gui = dat.gui || {};
 dat.utils = dat.utils || {};
@@ -3728,6 +3730,17 @@ dat.GUI = dat.gui.GUI = function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
   };
   return c;
 }(dat.dom.dom, dat.utils.common), dat.dom.dom, dat.utils.common);
+
+dat.GUI.prototype.removeFolder = function (name) {
+  var folder = this.__folders[name];
+  if (!folder) {
+    return;
+  }
+  folder.close();
+  this.__ul.removeChild(folder.domElement.parentNode);
+  delete this.__folders[name];
+  this.onResize();
+}
 
 function setProperty(a, b, c) {
   var d = b.split(/[\.\[\]]/).filter(function (a) {

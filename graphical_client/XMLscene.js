@@ -216,6 +216,7 @@ class XMLscene extends CGFscene {
     if (this.graph.xml_n === 3) {
       this.interface.addAmbients(this.graph);
       this.game.setTimer();
+      this.graph.updateTokens(this.game.getBoard());
     }
     if (this.graph.xml_n === 1) { //Tables loaded
       this.readSceneInitials();
@@ -224,12 +225,9 @@ class XMLscene extends CGFscene {
 
       this.interface.addGameType(this.game, this);
       this.interface.addUndo(this);
-      this.interface.addSwitchCamera(this);
       this.interface.addScore(this);
       this.interface.addCameraSpots(this);
     }
-
-    this.graph.updateTokens(this.game.getBoard());
 
     if (this.graph.xml_n === 1) {
       this.graph.loadGraph("ambient1.xml");
@@ -250,7 +248,7 @@ class XMLscene extends CGFscene {
             if (pick_result < 100) { //picked a token
               let table = Math.floor(pick_result / 10),
                 seat = pick_result % 10 - 1;
-              if (this.curr_play === player || this.curr_play === ai1 && !this.is_ai_play)
+              if (this.curr_play === player || this.curr_play === ai1 && !this.is_ai_play && !this.game.game_over)
                 this.play[this.curr_play](table, seat);
 
             }
@@ -299,6 +297,7 @@ class XMLscene extends CGFscene {
       this.graph.tokens.forEach(function (value) {
         value[1].getPrimitive().resetHeight();
       }.bind(this));
+      this.game.clearTimer();
     }
   }
 
@@ -342,6 +341,12 @@ class XMLscene extends CGFscene {
       }
     }
 
+    this.game.checkWin();
+    if (this.game.game_over === true) {
+      this.interface.resetGUI();
+      this.setPickEnabled(false);
+    }
+
     this.prev_time = curr_time;
   }
 
@@ -364,6 +369,11 @@ class XMLscene extends CGFscene {
         end_pt = cam_pts[this.graph.ambient][this.interface.CameraPosition];
       if (this.moveCamera(time_elapsed, start_pt, end_pt))
         this.curr_ambient = this.graph.ambient;
+
+      if (this.cam_pos === 0 && this.cam_orbit_ang > 0)
+        this.cam_orbit_ang = orbit_ang;
+      else if (this.cam_pos === 1 && this.cam_orbit_ang < orbit_ang)
+        this.cam_orbit_ang = 0;
     }
   }
 

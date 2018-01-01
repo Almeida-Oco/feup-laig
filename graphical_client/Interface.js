@@ -5,6 +5,7 @@ class Interface extends CGFinterface {
    */
   constructor() {
     super();
+    this.gui_resetted = false;
   }
 
   /**
@@ -21,8 +22,8 @@ class Interface extends CGFinterface {
   }
 
   addGameType(game, scene) {
-    let server_folder = this.gui.addFolder("Game Type");
-    server_folder.open();
+    this.server_folder = this.gui.addFolder("Game Type");
+    this.server_folder.open();
     this.scene = scene;
     this.game = game;
 
@@ -60,18 +61,14 @@ class Interface extends CGFinterface {
       }.bind(this)
     };
 
-    server_folder.add(this.game_type, 'PvP');
-    server_folder.add(this.game_type, 'Player vs AI');
-    server_folder.add(this.game_type, 'AI vs AI');
+    this.gm_type = [];
+    this.gm_type.push(this.server_folder.add(this.game_type, 'PvP'))
+    this.gm_type.push(this.server_folder.add(this.game_type, 'Player vs AI'));
+    this.gm_type.push(this.server_folder.add(this.game_type, 'AI vs AI'));
   }
 
   addUndo(scene) {
-    this.gui.add(scene, 'undoAction');
-    this.gui.add(scene, 'playMovie');
-  }
-
-  addSwitchCamera(scene) {
-    this.gui.add(scene, 'switchCamera');
+    this.undo = this.gui.add(scene, 'undoAction');
   }
 
   addScore(scene) {
@@ -97,5 +94,15 @@ class Interface extends CGFinterface {
       'Player 1': 0,
       'Player 2': 1
     });
+  }
+
+  resetGUI() {
+    if (!this.gui_resetted) {
+      this.gui.removeFolder("Game Type");
+      this.gui.remove(this.undo);
+      this.gui.add(this.scene, 'playMovie');
+    }
+
+    this.gui_resetted = true;
   }
 };

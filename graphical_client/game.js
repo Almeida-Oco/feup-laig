@@ -15,6 +15,7 @@ let table_to_token = {
 
 class Oolong {
   constructor() {
+    this.game_over = false;
     this.p1_token = 'X';
     this.waiter_token = 'W';
     this.p2_token = 'O';
@@ -24,7 +25,6 @@ class Oolong {
     this.server = new ServerComs(port, host);
     this.board = this.server.newBoard();
     this.board[0][0] = "W";
-
 
     this.next_player = null;
     this.next_table = 0;
@@ -61,6 +61,21 @@ class Oolong {
       console.error("updateScore(): Either player1 or player2 is null/undefined!\n");
 
     return this.score;
+  }
+
+  checkWin() {
+    if (parseInt(this.score[0]) >= 5) {
+      document.getElementById("YOU_WIN").innerHTML = "Player 1";
+      document.getElementById("WIN").style.visibility = "visible";
+      document.getElementById("table_full").style.visibility = "hidden";
+      this.game_over = true;
+    }
+    else if (parseInt(this.score[4] >= 5)) {
+      document.getElementById("YOU_WIN").innerHTML = "Player 2";
+      document.getElementById("WIN").style.visibility = "visible";
+      document.getElementById("table_full").style.visibility = "hidden";
+      this.game_over = true;
+    }
   }
 
   /**
@@ -123,6 +138,15 @@ class Oolong {
         func();
       }.bind(this), 1000);
     }
+  }
+
+  clearTimer() {
+    if (this.interval !== null) {
+      clearInterval(this.interval);
+      this.time_left_number = 30;
+    }
+
+
   }
 
   nextPlayer() {
@@ -189,16 +213,17 @@ class Oolong {
       return (this.next_table === table_number || this.next_table === -1 || table_number === undefined);
     }.bind(this);
 
+    if (!this.game_over) {
+      if (this.next_player !== null && validPlay(table_number)) {
+        let ret = this.next_player.play(this.board, (table_number === undefined) ? this.next_table : table_number, seat_number);
+        console.log(ret);
+        if (ret !== null)
+          return normalPlay(ret[1], ret[0][0], ret[0][1]);
 
-    if (this.next_player !== null && validPlay(table_number)) {
-      let ret = this.next_player.play(this.board, table_number, seat_number);
-      console.log(ret);
-      if (ret !== null)
-        return normalPlay(ret[1], ret[0][0], ret[0][1]);
+      }
 
+      console.log("Play not successful! Next_table = " + this.next_table + ", supplied = " + table_number);
+      return null;
     }
-
-    console.log("Play not successful! Next_table = " + this.next_table + ", supplied = " + table_number);
-    return null;
   }
 };

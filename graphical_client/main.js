@@ -44,7 +44,7 @@ function getUrlVars() {
   return vars;
 }
 
-serialInclude(['../lib/CGF.js',
+var serial_include_args = ['../lib/CGF.js',
   //ANIMATIONS
   'animations/Animation.js', 'animations/LinearAnimation.js', 'animations/CircularAnimation.js', 'animations/BezierAnimation.js', 'animations/ComboAnimation.js',
 
@@ -72,6 +72,8 @@ serialInclude(['../lib/CGF.js',
     app.setScene(myScene);
     app.setInterface(myInterface);
     document.getElementById("table_full").style.visibility = "hidden";
+    document.getElementById("WIN").style.visibility = "hidden";
+
     // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
     // or use "demo.xml" as default (assumes files in subfolder "scenes", check SceneGraph constructor)
     var filename = getUrlVars()['file'] || "table.xml";
@@ -84,4 +86,6 @@ serialInclude(['../lib/CGF.js',
     // start
     app.run();
   }
-]);
+];
+
+serialInclude(serial_include_args);
