@@ -73,7 +73,6 @@ class XMLscene extends CGFscene {
       }.bind(this)
     };
 
-
     //key => curr_pos, param => destination
     this.move_camera = {
       '-1': function (time_elapsed, dest) {

@@ -169,16 +169,25 @@ class Oolong {
 
   play(table_number, seat_number) {
     let normalPlay = function (board, table, seat) {
+      let is_free = this.server.isFree(board, seat);
       this.pushAction(table, seat);
       this.board = board;
-      this.next_table = seat;
+      if (is_free) {
+        this.next_table = seat;
+        document.getElementById("table_full").style.visibility = "hidden";
+      }
+      else {
+        this.next_table = -1;
+        document.getElementById("table_full").style.visibility = "visible";
+      }
+
       this.nextPlayer();
       this.setTimer();
       return [[table, seat], board];
     }.bind(this);
     let validPlay = function (table) {
       let is_free = this.server.isFree(this.board, this.next_table);
-      return (this.next_table === table_number || !is_free || table_number === undefined);
+      return (this.next_table === table_number || this.next_table === -1 || table_number === undefined);
     }.bind(this);
 
 
@@ -189,6 +198,7 @@ class Oolong {
         return normalPlay(ret[1], ret[0][0], ret[0][1]);
 
     }
+
     console.log("Play not successful! Next_table = " + this.next_table + ", supplied = " + table_number);
     return null;
   }

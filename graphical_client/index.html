@@ -17,32 +17,58 @@
 		height: 100%;
 	}
 
+	#table_full {
+		position: absolute;
+		width: 100%;
+		top: 5%;
+	}
 
-	#overlay {
+	#table_full_rel {
+		position: relative;
+		text-align: center;
+		margin: auto;
+
+		color: white;
+		font-family: monospace;
+		font-size: 150%;
+		font-weight: bold;
+	}
+
+
+	#tm_left {
 		position: absolute;
 		padding-top: 0.3%;
-		padding-left: 0.3%;
+		padding-left: 0.6%;
 		padding-bottom: 0.3%;
 		padding-right: 0.3%;
 		left: 2%;
 		top: 5%;
 		text-align: center;
-		width: 10%;
-		height: 5%;
+		width: 11%;
+		height: 6.5%;
 		color: white;
+		font-family: monospace;
+		font-size: 18px;
 		background-color: rgba(0, 0, 0, 0.75	);
 		border-radius: 25px;
 	}
 	</style>
 </head>
 <body>
-	<div id="overlay">
-			Time Left
+	<div id="tm_left">
+		<span id="time_left1">TIME LEFT</span>
 		<br>
-		<div>
-			<span id="time_left"></span>
+		<span id="time_left"></span>
+	</div>
+
+	<div id="table_full">
+		<div id="table_full_rel">
+			<span id="table_full1">Table is full!</span>
+			<br>
+			<span id="table_full2">Choose any empty seat</span>
 		</div>
 	</div>
+
 	<script src="main.js"></script>
 
 </body>

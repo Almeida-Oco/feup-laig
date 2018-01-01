@@ -71,7 +71,7 @@ serialInclude(['../lib/CGF.js',
 
     app.setScene(myScene);
     app.setInterface(myInterface);
-
+    document.getElementById("table_full").style.visibility = "hidden";
     // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
     // or use "demo.xml" as default (assumes files in subfolder "scenes", check SceneGraph constructor)
     var filename = getUrlVars()['file'] || "table.xml";
