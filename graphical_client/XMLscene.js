@@ -107,6 +107,7 @@ class XMLscene extends CGFscene {
     };
 
 
+
     this.curr_ambient = 0;
     this.curr_play = 0;
     this.prev_play = -1;
@@ -156,6 +157,8 @@ class XMLscene extends CGFscene {
       'uSampler': 0
     });
     this.setUpdatePeriod(16.666667); //60 FPS
+
+      this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
   }
 
   tickTock(time_elapsed) {
