@@ -1,0 +1,322 @@
+<SCENE>
+
+<INITIALS>
+	    <frustum near="0.1" far="500"/>
+	    <translation x="-1" y="1" z="0" />
+	    <rotation axis="x" angle="0" />
+	    <rotation axis="y" angle="0" />
+	    <rotation axis="z" angle="0" />
+	    <scale sx="0.25" sy="0.25" sz="0.25" />
+	    <reference length="5" />
+	</INITIALS>
+
+
+<!-- Illumination and clear colour -->
+<ILLUMINATION>
+	    <ambient r="0" g="0" b="0" a="1" />
+	    <background r="0.1" g="0.15" b="0.1" a="1" />
+	</ILLUMINATION>
+
+<LIGHTS>
+		<LIGHT id="light0">
+	        <enable value="true" />
+	        <position  x="10" y="10" z="10" w="1" />
+	        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+	        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+	        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
+	    </LIGHT>
+	</LIGHTS>
+
+<TEXTURES>
+		<TEXTURE id="pica_stairs_tx">
+			<file path="images/pica_stairs.png" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="pica_floor_tx">
+			<file path="images/pica_floor.png" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="pica_wall_side_tx">
+			<file path="images/pica_wall_side.png" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="pica_wall_other_side_tx">
+			<file path="images/wall_other_side.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="pica_floor_garage_tx">
+			<file path="images/chao_garage.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<!--TEXTURE id="wood_table">
+			<file path="images/wood_texture.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+		<TEXTURE id="ribbon_tex">
+			<file path="images/ribbon.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE-->
+
+
+
+	</TEXTURES>
+
+<MATERIALS>
+
+
+</MATERIALS>
+
+<ANIMATIONS>
+</ANIMATIONS>
+
+<!-- The nodes -->
+<NODES>
+    <ROOT id="ambient_root" />
+
+    <!-- The root node -->
+    <NODE id="ambient_root">
+        <MATERIAL id="null" />
+        <TEXTURE 	id="null" />
+
+				<TRANSLATION x="4" y="-4" z="0" />
+
+				<DESCENDANTS>
+					<NODEREF id="pica" />
+				</DESCENDANTS>
+    </NODE>
+
+
+		<NODE id="pica">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE  id="light_wood_text" />
+
+			<TRANSLATION x="-15" y="-89" z="-27.5" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="16" sy="16" sz="16" />
+
+			<DESCENDANTS>
+				<NODEREF id="pica_stairs" />
+				<NODEREF id="pica_floor" />
+				<NODEREF id="pica_floor_garage" />
+				<NODEREF id="pica_sides" />
+				<NODEREF id="rail" />
+				<NODEREF id="other_side"/>
+				<NODEREF id="colher"/>
+				<NODEREF id="mesa"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="pica_stairs">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_stairs_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="pica_stairs_obj" type="wave_obj" args="scenes/wave_obj/pica_stairs.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="pica_floor">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_floor_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="pica_floor_garage_obj" type="wave_obj" args="scenes/wave_obj/pica_floor.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="pica_floor_garage">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_floor_garage_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="pica_floor_garage_obj" type="wave_obj" args="scenes/wave_obj/pica_floor_garage.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pica_sides">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_floor_tx" />
+
+			<DESCENDANTS>
+				<NODEREF id="pica_side_bridge" />
+				<!--NODEREF id="pica_sides" /-->
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pica_side_bridge">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_wall_side_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="pica_side_bridge_obj" type="wave_obj" args="scenes/wave_obj/pica_side_bridge.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="rail">
+			<MATERIAL id="metal_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="rail_obj" type="wave_obj" args="scenes/wave_obj/rail.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="other_side">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_wall_other_side_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="other_side_obj" type="wave_obj" args="scenes/wave_obj/other_side.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="mesa">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="pica_wall_other_side_tx" />
+
+			<SCALE sx="1.3" sy="1.3" sz="1.3" />
+
+			<DESCENDANTS>
+				<NODEREF id="mesa_object"/>
+				<NODEREF id="capa"/>
+				<!--NODEREF id="pastas"/-->
+			</DESCENDANTS>
+		</NODE>
+<!--
+		<NODE id="pastas">
+
+			<MATERIAL id="pasta_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="0" y="0" z="2" />
+			<SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_grelada"/>
+				<NODEREF id="pasta_fitada"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+			<DESCENDANTS>
+				<LEAF id="pasta_obj" type="wave_obj" args="scenes/wave_obj/pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta_grelada">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="2.5" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="grelo"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="pasta_fitada">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="5" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+
+		<NODE id="pasta_fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="pasta_fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas_pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grelo">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="grelo_obj" type="wave_obj" args="scenes/wave_obj/grelo.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+-->
+
+
+
+		<NODE id="colher">
+
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="-1" y="1.5" z="-9" />
+			<SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+			<DESCENDANTS>
+				<NODEREF id="colher_pau"/>
+				<NODEREF id="fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="colher_pau">
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+			<DESCENDANTS>
+				<LEAF id="colher_obj" type="wave_obj" args="scenes/wave_obj/colher_high.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="mesa_object">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="mesa_leaf_obj" type="wave_obj" args="scenes/wave_obj/mesa.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="capa">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="capa_obj" type="wave_obj" args="scenes/wave_obj/capa.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+
+</NODES>
+
+</SCENE>

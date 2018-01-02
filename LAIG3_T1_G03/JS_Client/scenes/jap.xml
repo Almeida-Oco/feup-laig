@@ -1,0 +1,781 @@
+<SCENE>
+	<INITIALS>
+	    <frustum near="0.1" far="500"/>
+	    <translation x="-1" y="1" z="0" />
+	    <rotation axis="x" angle="0" />
+	    <rotation axis="y" angle="0" />
+	    <rotation axis="z" angle="0" />
+	    <scale sx="0.25" sy="0.25" sz="0.25" />
+	    <reference length="5" />
+	</INITIALS>
+
+
+	<!-- Illumination and clear colour -->
+	<ILLUMINATION>
+	    <ambient r="0" g="0" b="0" a="1" />
+	    <background r="0.1" g="0.15" b="0.1" a="1" />
+	</ILLUMINATION>
+
+	<LIGHTS>
+		<LIGHT id="light0">
+	        <enable value="true" />
+	        <position  x="10" y="10" z="10" w="1" />
+	        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+	        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+	        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
+	    </LIGHT>
+	</LIGHTS>
+
+<TEXTURES>
+	<TEXTURE id="dark_wood_table">
+			<file path="images/dark_wood.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+	<TEXTURE id="rug_tex">
+			<file path="images/rug_text3.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+	<TEXTURE id="rock_tex">
+			<file path="images/rock_text.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+	<TEXTURE id="jap_wallpaper_back_tx">
+			<file path="images/jap_wallpaper.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+	<TEXTURE id="jap_wallpaper_big_tx">
+			<file path="images/japanese_wallpaper_big.jpg" />
+			<amplif_factor s="1" t="0.5" />
+		</TEXTURE>
+
+	<TEXTURE id="jap_wallpaper_big2_tx">
+			<file path="images/jap_wallpaper_big3.jpg" />
+			<amplif_factor s="1" t="0.5" />
+		</TEXTURE>
+
+	<TEXTURE id="pillow_tx1">
+			<file path="images/pillow_tx6.jpg" />
+			<amplif_factor s="1" t="0.5" />
+		</TEXTURE>
+
+</TEXTURES>
+
+<MATERIALS>
+	<MATERIAL id="jap_floor_mat">
+		<shininess value="0.9" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="side_wall_mat">
+		<shininess value="0.05" />
+		<specular r="0.01" g="0.01" b="0.01" a="1" />
+		<diffuse r="0.33" g="0.33" b="0.29" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="light_support_mat">
+		<shininess value="4" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="roof_light_mat">
+		<shininess value="1" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.64" g="0.2" b="0.2" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="side_rail_mat">
+		<shininess value="0.9" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.38" g="0.38" b="0.34" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+
+	<MATERIAL id="rug_mat">
+		<shininess value="0.1" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="pillow_mat">
+		<shininess value="0.1" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="pane_mat">
+		<shininess value="0.1" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.65" g="0.65" b="0.3" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="candle_mat">
+		<shininess value="0.1" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.55" g="0.55" b="0.3" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="cup_mat">
+		<shininess value="4" />
+		<specular r="0.2" g="0.2" b="0.2" a="1" />
+		<diffuse r="0.55" g="0.55" b="0.55" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+
+	<MATERIAL id="pot_mat">
+		<shininess value="3" />
+		<specular r="0.2" g="0.2" b="0.2" a="1" />
+		<diffuse r="0.52" g="0.25" b="0.06" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="stem_mat">
+		<shininess value="0.1" />
+		<specular r="0.06" g="0.06" b="0.06" a="1" />
+		<diffuse r="0.55" g="0.35" b="0.2" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="leave_mat">
+		<shininess value="0.1" />
+		<specular r="0.06" g="0.06" b="0.06" a="1" />
+		<diffuse r="0.36" g="0.7" b="0.02" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+</MATERIALS>
+
+<ANIMATIONS>
+	</ANIMATIONS>
+<!-- The nodes -->
+<NODES>
+    <ROOT id="jap_root" />
+
+    <!-- The root node -->
+    <NODE id="jap_root">
+        <MATERIAL id="null" />
+        <TEXTURE 	id="null" />
+
+				<TRANSLATION x="4" y="-4" z="0" />
+
+				<DESCENDANTS>
+					<NODEREF id="jap" />
+				</DESCENDANTS>
+    </NODE>
+
+
+		<NODE id="jap">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE  id="light_wood_text" />
+
+			<ROTATION axis="z" angle="180" />
+			<TRANSLATION x="0" y="0" z="-16.5" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="16" sy="16" sz="16" />
+
+
+			<DESCENDANTS>
+				<NODEREF id="table" />
+				<NODEREF id="floor" />
+				<NODEREF id="rug" />
+
+				<NODEREF id="side_walls"/>
+				<NODEREF id="back_walls"/>
+
+				<NODEREF id="roof" />
+				<NODEREF id="pillows" />
+				<NODEREF id="cups" />
+				<NODEREF id="plant" />
+				<NODEREF id="candle" />
+				<NODEREF id="roof_beams" />
+
+
+				<NODEREF id="colher" />
+			</DESCENDANTS>
+		</NODE>
+
+
+
+		<NODE id="table">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="dark_wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="table_top" type="wave_obj" args="scenes/wave_obj/jap/table_top.obj"/>
+				<LEAF id="table_legs" type="wave_obj" args="scenes/wave_obj/jap/table_legs.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="floor">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<ROTATION axis="z" angle="180" />
+
+			<DESCENDANTS>
+				<LEAF id="floor_obj" type="wave_obj" args="scenes/wave_obj/jap/floor.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="rug">
+			<MATERIAL id="rug_mat" />
+			<TEXTURE  id="rug_tex" />
+
+			<DESCENDANTS>
+				<LEAF id="rug_obj" type="wave_obj" args="scenes/wave_obj/jap/rug.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="side_walls">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<DESCENDANTS>
+				<NODEREF id="side_wall1" />
+				<NODEREF id="side_wall2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="side_wall2">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<ROTATION axis="y" angle="180" />
+			<TRANSLATION x="-0.2" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="side_wall" />
+				<NODEREF id="side_rail" />
+				<NODEREF id="grid_doors" />
+				<NODEREF id="grid_beam" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="side_wall1">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<DESCENDANTS>
+				<NODEREF id="side_wall" />
+				<NODEREF id="side_rail" />
+				<NODEREF id="grid_doors" />
+				<NODEREF id="grid_beam" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="back_walls">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<DESCENDANTS>
+				<NODEREF id="back_wall1" />
+				<NODEREF id="back_wall2" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="back_wall1">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<DESCENDANTS>
+				<NODEREF id="back_wall" />
+				<NODEREF id="back_door" />
+				<NODEREF id="back_rail" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="back_wall2">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<ROTATION axis="y" angle="180" />
+
+			<DESCENDANTS>
+				<NODEREF id="back_wall" />
+				<NODEREF id="back_door" />
+				<NODEREF id="back_rail" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="side_wall">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="jap_wallpaper_big_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="side_wall_obj" type="wave_obj" args="scenes/wave_obj/jap/side_wall.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="side_rail">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="side_rail_obj" type="wave_obj" args="scenes/wave_obj/jap/side_rail.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="grid_doors">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="0" y="0" z="2" />
+
+			<DESCENDANTS>
+				<NODEREF id="grid_door1" />
+				<NODEREF id="grid_door2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grid_door1">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<NODEREF id="grid_door_base" />
+				<NODEREF id="grid_door_back" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grid_door2">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="0" y="0" z="5" />
+
+			<DESCENDANTS>
+				<NODEREF id="grid_door_base" />
+				<NODEREF id="grid_door_back" />
+			</DESCENDANTS>
+		</NODE>
+
+
+
+		<NODE id="grid_door_base">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="grid_door_obj" type="wave_obj" args="scenes/wave_obj/jap/grid_door.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grid_door_back">
+			<MATERIAL id="pane_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="grid_door_pane_obj" type="wave_obj" args="scenes/wave_obj/jap/grid_door_pane.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="grid_beam">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="grid_beam_obj" type="wave_obj" args="scenes/wave_obj/jap/grid_beam.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="back_wall">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="back_wall_obj" type="wave_obj" args="scenes/wave_obj/jap/back_wall.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="back_door">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<NODEREF id="back_door_frame" />
+				<NODEREF id="back_door_pane" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="back_door_frame">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="back_door_frame_obj" type="wave_obj" args="scenes/wave_obj/jap/back_door_frame.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="back_door_pane">
+			<MATERIAL id="pane_mat" />
+			<TEXTURE  id="jap_wallpaper_back_tx" />
+
+			<DESCENDANTS>
+				<LEAF id="back_door_pane_obj" type="wave_obj" args="scenes/wave_obj/jap/back_door_pane2.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="back_rail">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="back_rail_obj" type="wave_obj" args="scenes/wave_obj/jap/back_rail.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof">
+			<MATERIAL id="side_wall_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="roof_obj" type="wave_obj" args="scenes/wave_obj/jap/roof.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillows">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<NODEREF id="pillow1" />
+				<NODEREF id="pillow2" />
+				<NODEREF id="pillow3" />
+				<NODEREF id="pillow4" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillow1">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="pillow_tx1" />
+
+			<DESCENDANTS>
+				<LEAF id="pillow_obj" type="wave_obj" args="scenes/wave_obj/jap/pillow.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillow2">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="pillow_tx1" />
+
+			<TRANSLATION x="1.6" y="0" z="0" />
+
+			<DESCENDANTS>
+				<LEAF id="pillow_obj" type="wave_obj" args="scenes/wave_obj/jap/pillow.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillow3">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="pillow_tx1" />
+
+			<TRANSLATION x="0" y="0" z="-6.5" />
+
+			<DESCENDANTS>
+				<LEAF id="pillow_obj" type="wave_obj" args="scenes/wave_obj/jap/pillow.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pillow4">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="pillow_tx1" />
+
+			<TRANSLATION x="1.6" y="0" z="-6.5" />
+
+			<DESCENDANTS>
+				<LEAF id="pillow_obj" type="wave_obj" args="scenes/wave_obj/jap/pillow.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="cups">
+			<MATERIAL id="cup_mat" />
+			<TEXTURE  id="clear" />
+
+			<TRANSLATION x="0" y="0" z="2" />
+
+			<DESCENDANTS>
+				<NODEREF id="cup1" />
+				<NODEREF id="cup2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="cup1">
+			<MATERIAL id="cup_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<NODEREF id="cup" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="cup2">
+			<MATERIAL id="cup_mat" />
+			<TEXTURE  id="clear" />
+
+			<TRANSLATION x="-1.9" y="0" z="-3.2" />
+
+			<DESCENDANTS>
+				<NODEREF id="cup" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="cup">
+			<MATERIAL id="cup_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="cup_obj" type="wave_obj" args="scenes/wave_obj/jap/cup.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="plant">
+			<MATERIAL id="pillow_mat" />
+			<TEXTURE  id="clear" />
+
+			<ROTATION axis="y" angle="180" />
+			<TRANSLATION x="-0.02" y="0" z="1.65" />
+
+			<DESCENDANTS>
+				<NODEREF id="pot" />
+				<NODEREF id="stem" />
+				<NODEREF id="leaves" />
+				<NODEREF id="rocks" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pot">
+			<MATERIAL id="pot_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="pot_obj" type="wave_obj" args="scenes/wave_obj/jap/pot.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="stem">
+			<MATERIAL id="stem_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="stem_obj" type="wave_obj" args="scenes/wave_obj/jap/stem.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="leaves">
+			<MATERIAL id="leave_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<NODEREF id="leaves1" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="leaves1">
+			<MATERIAL id="leave_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<NODEREF id="leaves_base" />
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="leaves_base">
+			<MATERIAL id="leave_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="leaves_obj" type="wave_obj" args="scenes/wave_obj/jap/leaves2.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="rocks">
+			<MATERIAL id="rock_mat" />
+			<TEXTURE  id="rock_tex" />
+
+			<DESCENDANTS>
+				<LEAF id="rock_obj" type="wave_obj" args="scenes/wave_obj/jap/rocks.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="candle">
+			<MATERIAL id="candle_mat" />
+			<TEXTURE  id="clear" />
+
+			<TRANSLATION x="-0.02" y="0.35" z="0.65" />
+			<SCALE sx="1" sy="0.6" sz="1" />
+
+			<DESCENDANTS>
+				<LEAF id="candle_obj" type="wave_obj" args="scenes/wave_obj/jap/candle.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_beams">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_beam1" />
+				<NODEREF id="roof_beam2" />
+				<NODEREF id="roof_beam3" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_beam1">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_beam_base" />
+				<NODEREF id="roof_light1" />
+				<NODEREF id="roof_light2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_beam2">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="0" y="0" z="-4.65" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_beam_base" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_beam3">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="0" y="0" z="4.65" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_beam_base" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_beam_base">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<LEAF id="roof_beam_obj" type="wave_obj" args="scenes/wave_obj/jap/roof_beam.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_light1">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_light_base" />
+				<NODEREF id="roof_light_support" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_light2">
+			<MATERIAL id="wood_mat2" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="-5" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="roof_light_base" />
+				<NODEREF id="roof_light_support" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="roof_light_support">
+			<MATERIAL id="light_support_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="roof_light_support_obj" type="wave_obj" args="scenes/wave_obj/jap/roof_light_support.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="roof_light_base">
+			<MATERIAL id="roof_light_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="roof_light_obj" type="wave_obj" args="scenes/wave_obj/jap/roof_light.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="colher">
+
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+
+			<TRANSLATION x="5.69" y="1.3" z="7.1" />
+			<SCALE sx="0.5" sy="0.5" sz="0.5" />
+			<ROTATION axis="y" angle="210" />
+			<DESCENDANTS>
+				<NODEREF id="colher_pau"/>
+				<NODEREF id="fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+		<NODE id="colher_pau">
+			<MATERIAL id="colher_mat" />
+			<TEXTURE  id="wood_table" />
+			<DESCENDANTS>
+				<LEAF id="colher_obj" type="wave_obj" args="scenes/wave_obj/colher_high.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+
+			<DESCENDANTS>
+				<LEAF id="fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+</NODES>
+
+</SCENE>

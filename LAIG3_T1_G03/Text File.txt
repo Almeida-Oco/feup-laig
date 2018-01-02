@@ -1,0 +1,5 @@
+Turma: 1
+Grupo: 3
+Students: 
+	João Francisco Barreiros de Almeida	201505866
+	Gonçalo Vasconcelos Moreno		201503871

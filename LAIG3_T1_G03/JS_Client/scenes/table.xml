@@ -1,0 +1,593 @@
+<SCENE>
+
+<!-- Initial values -->
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="1" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+</INITIALS>
+
+
+<!-- Illumination and clear colour -->
+<ILLUMINATION>
+    <ambient r="0" g="0" b="0" a="1" />
+    <background r="0.1" g="0.15" b="0.1" a="1" />
+</ILLUMINATION>
+
+
+<!-- Lights -->
+<LIGHTS>
+	<LIGHT id="light0">
+        <enable value="true" />
+        <position  x="10" y="10" z="10" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light1">
+        <enable value="true" />
+        <position x="-10" y="-10" z="10" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light2">
+        <enable value="true" />
+        <position x="10" y="-10" z="10" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+        <specular r="0.15" g="0.15" b="0.15" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value="true" />
+        <position x="-10" y="10" z="10" w="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+    </LIGHT>
+
+</LIGHTS>
+
+<!-- Textures -->
+<TEXTURES>
+	<TEXTURE id="waiter_text">
+		<file path="images/waiter.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="glass_text">
+		<file path="images/glass.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="tea1_text">
+		<file path="images/tea1.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="tea2_text">
+		<file path="images/tea2.png" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="light_wood_text">
+		<file path="images/light_wood.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="player1_text">
+		<file path="images/player1.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="player2_text">
+		<file path="images/player2.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="player1_waiter_text">
+		<file path="images/player1_waiter.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="player2_waiter_text">
+		<file path="images/player2_waiter.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="empty_cell_text">
+		<file path="images/dark_wood.jpg" />
+		<amplif_factor s="5" t="5" />
+	</TEXTURE>
+
+	<TEXTURE id="wood_table">
+		<file path="images/wood_texture.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+	<TEXTURE id="ribbon_tex">
+			<file path="images/ribbon.jpg" />
+			<amplif_factor s="1" t="1" />
+		</TEXTURE>
+
+	<TEXTURE id="spec_swp_unc">
+		<file path="images/swap_unclaimed.png" />
+		<amplif_factor s="2" t="2" />
+	</TEXTURE>
+
+	<TEXTURE id="pasta_tex">
+		<file path="images/pasta_tex.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
+
+</TEXTURES>
+
+
+<MATERIALS>
+	<MATERIAL id="wood_mat">
+		<shininess value="1" />
+		<specular r="0.1" g="0.1" b="0.05" a="1" />
+		<diffuse r="0.8" g="0.8" b="0.6" a="1" />
+		<ambient r="0.05" g="0.05" b="0.05" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="wood_mat2">
+		<shininess value="0.9" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="metal_mat">
+		<shininess value="4" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="colher_mat">
+		<shininess value="0.9" />
+		<specular r="0.7" g="0.7" b="0.7" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<!--emission r="0.0" g="0.0" b="0.0" a="1" /-->
+		<emission r="0.52" g="0.34" b="0.14" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="fitas_mat">
+		<shininess value="0.9" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.55" g="0.18" b="0.1" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="rock_mat">
+		<shininess value="0.5" />
+		<specular r="0.3" g="0.3" b="0.3" a="1" />
+		<diffuse r="0.4" g="0.4" b="0.4" a="1" />
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+
+	<MATERIAL id="plastic_mat">
+		<shininess value="3" />
+		<specular r="0.5" g="0.5" b="0.5" a="1" />
+		<diffuse r="0.01" g="0.01" b="0.01" a="1" />
+		<ambient r="0.6" g="0.6" b="0.6" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="glass_mat">
+		<shininess value="0.1" />
+		<specular r="0" g="0" b="0" a="0" />
+		<diffuse r="0" g="0" b="0" a="0" />
+		<ambient r="0" g="0" b="0" a="0" />
+		<emission r="0" g="0" b="0" a="0" />
+	</MATERIAL>
+
+
+	<MATERIAL id="capa_mat">
+		<shininess value="0.02" />
+		<specular r="0.04" g="0.04" b="0.04" a="1" />
+		<diffuse r="0.05" g="0.05" b="0.05" a="1" />
+		<ambient r="0.03" g="0.03" b="0.03" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+	<MATERIAL id="fitas_mat">
+		<shininess value="0.9" />
+		<specular r="0.1" g="0.1" b="0.1" a="1" />
+		<diffuse r="0.55" g="0.18" b="0.1" a="1" />
+		<ambient r="0.1" g="0.1" b="0.1" a="1" />
+		<emission r="0.0" g="0.0" b="0.0" a="1" />
+	</MATERIAL>
+
+</MATERIALS>
+
+<ANIMATIONS>
+	<ANIMATION id="linear1" speed="10" type="linear">
+		<controlpoint x="0" y="0" z="0" />
+		<controlpoint x="5" y="0" z="5" />
+		<controlpoint x="10" y="0" z="0" />
+	</ANIMATION>
+</ANIMATIONS>
+
+
+<!-- The nodes -->
+<NODES>
+    <ROOT id="table_root" />
+
+    <!-- The root node -->
+    <NODE id="table_root" static="true">
+        <MATERIAL id="null" />
+        <TEXTURE 	id="null" />
+
+				<TRANSLATION x="4" y="-4" z="0" />
+
+				<DESCENDANTS>
+					<NODEREF id="board" />
+					<NODEREF id="tables" />
+				</DESCENDANTS>
+    </NODE>
+
+		<NODE id="board">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE  id="light_wood_text" />
+
+			<DESCENDANTS>
+				<NODEREF id="board_face1" />
+				<NODEREF id="board_face2" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="board_face1">
+			<MATERIAL id="null"/>
+			<TEXTURE  id="null"/>
+
+			<DESCENDANTS>
+				<LEAF type="circle" args="75 18" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="board_face2">
+			<MATERIAL id="null"/>
+			<TEXTURE  id="null"/>
+
+			<ROTATION axis="x" angle="180"/>
+
+			<DESCENDANTS>
+				<LEAF type="circle" args="75 18" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="tables">
+			<MATERIAL id="wood_mat" />
+			<TEXTURE id="empty_cell_text" />
+
+			<TRANSLATION x="0" y="0" z="0.01"/>
+
+			<DESCENDANTS>
+				<NODEREF id="table0" />
+				<NODEREF id="table1" />
+				<NODEREF id="table2" />
+				<NODEREF id="table3" />
+				<NODEREF id="table4" />
+				<NODEREF id="table5" />
+				<NODEREF id="table6" />
+				<NODEREF id="table7" />
+				<NODEREF id="table8" />
+				<NODEREF id="pastas" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pastas" dif_objs="true">
+			<MATERIAL id="pasta_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<TRANSLATION x="0" y="5.5" z="0.2" />
+			<SCALE sx="1.5" sy="1.5" sz="2" />
+			<ROTATION axis="x" angle="-90"/>
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_grelada"/>
+				<NODEREF id="pasta_fitada"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta" dif_easy="true">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+			<DESCENDANTS>
+				<LEAF id="pasta_obj" type="wave_obj" args="scenes/wave_obj/pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta_grelada" dif_medium="true">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="grelo"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta_fitada" dif_hard="true">
+			<MATERIAL id="capa_mat" />
+			<TEXTURE  id="pasta_tex" />
+
+			<DESCENDANTS>
+				<NODEREF id="pasta"/>
+				<NODEREF id="pasta_fitas"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="pasta_fitas">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="pasta_fitas_obj" type="wave_obj" args="scenes/wave_obj/fitas_pasta.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="grelo">
+			<MATERIAL id="fitas_mat" />
+			<TEXTURE  id="clear" />
+			<DESCENDANTS>
+				<LEAF id="grelo_obj" type="wave_obj" args="scenes/wave_obj/grelo.obj"/>
+			</DESCENDANTS>
+		</NODE>
+
+
+
+
+
+
+
+
+		<NODE id="table0">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table1">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="13" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table2">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="9.1923" y="9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table3">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="0" y="13" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table4">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-9.1923" y="9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table5">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-13" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table6">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="-9.1923" y="-9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table7">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="0" y="-13" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+		<NODE id="table8">
+			<MATERIAL id="null" />
+			<TEXTURE id="null"  />
+
+			<TRANSLATION x="9.1923" y="-9.1923" z="0"/>
+
+			<DESCENDANTS>
+				<NODEREF id="seats" />
+			</DESCENDANTS>
+
+		</NODE>
+
+
+		<NODE id="seats">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat0" />
+				<NODEREF id="seat1" />
+				<NODEREF id="seat2" />
+				<NODEREF id="seat3" />
+				<NODEREF id="seat4" />
+				<NODEREF id="seat5" />
+				<NODEREF id="seat6" />
+				<NODEREF id="seat7" />
+				<NODEREF id="seat8" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat0">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat1">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="3" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat2">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="2.1213" y="2.1213" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat3">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="0" y="3" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat4">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-2.1213" y="2.1213" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat5">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-3" y="0" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat6">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="-2.1213" y="-2.1213" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat7">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="0" y="-3" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat8">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<TRANSLATION x="2.1213" y="-2.1213" z="0" />
+
+			<DESCENDANTS>
+				<NODEREF id="seat" />
+			</DESCENDANTS>
+		</NODE>
+
+		<NODE id="seat" pickable="true">
+			<MATERIAL id="null" />
+			<TEXTURE  id="null" />
+
+			<DESCENDANTS>
+				<LEAF id="seat" type="circle" args="25 1" />
+				<LEAF id="cup" type="cup" args="2" />
+			</DESCENDANTS>
+		</NODE>
+</NODES>
+
+</SCENE>
